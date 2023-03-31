@@ -1,0 +1,565 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 55;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		9DB7A12829D7949D002E6F4E /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 9DB7A12729D7949D002E6F4E /* AppDelegate.m */; };
+		9DB7A12A29D7949E002E6F4E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9DB7A12929D7949E002E6F4E /* Assets.xcassets */; };
+		9DB7A12D29D7949E002E6F4E /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9DB7A12B29D7949E002E6F4E /* MainMenu.xib */; };
+		9DB7A12F29D7949E002E6F4E /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 9DB7A12E29D7949E002E6F4E /* main.m */; };
+		9DB7A13A29D7949E002E6F4E /* MacSmoovTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 9DB7A13929D7949E002E6F4E /* MacSmoovTests.m */; };
+		9DB7A14429D7949F002E6F4E /* MacSmoovUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 9DB7A14329D7949F002E6F4E /* MacSmoovUITests.m */; };
+		9DB7A14629D7949F002E6F4E /* MacSmoovUITestsLaunchTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 9DB7A14529D7949F002E6F4E /* MacSmoovUITestsLaunchTests.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		9DB7A13629D7949E002E6F4E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 9DB7A11B29D7949D002E6F4E /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 9DB7A12229D7949D002E6F4E;
+			remoteInfo = MacSmoov;
+		};
+		9DB7A14029D7949F002E6F4E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 9DB7A11B29D7949D002E6F4E /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 9DB7A12229D7949D002E6F4E;
+			remoteInfo = MacSmoov;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		9DB7A12329D7949D002E6F4E /* MacSmoov.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MacSmoov.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		9DB7A12629D7949D002E6F4E /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		9DB7A12729D7949D002E6F4E /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		9DB7A12929D7949E002E6F4E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		9DB7A12C29D7949E002E6F4E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
+		9DB7A12E29D7949E002E6F4E /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		9DB7A13029D7949E002E6F4E /* MacSmoov.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = MacSmoov.entitlements; sourceTree = "<group>"; };
+		9DB7A13529D7949E002E6F4E /* MacSmoovTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MacSmoovTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		9DB7A13929D7949E002E6F4E /* MacSmoovTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MacSmoovTests.m; sourceTree = "<group>"; };
+		9DB7A13F29D7949F002E6F4E /* MacSmoovUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MacSmoovUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		9DB7A14329D7949F002E6F4E /* MacSmoovUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MacSmoovUITests.m; sourceTree = "<group>"; };
+		9DB7A14529D7949F002E6F4E /* MacSmoovUITestsLaunchTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MacSmoovUITestsLaunchTests.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		9DB7A12029D7949D002E6F4E /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		9DB7A13229D7949E002E6F4E /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		9DB7A13C29D7949F002E6F4E /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		9DB7A11A29D7949D002E6F4E = {
+			isa = PBXGroup;
+			children = (
+				9DB7A12529D7949D002E6F4E /* MacSmoov */,
+				9DB7A13829D7949E002E6F4E /* MacSmoovTests */,
+				9DB7A14229D7949F002E6F4E /* MacSmoovUITests */,
+				9DB7A12429D7949D002E6F4E /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		9DB7A12429D7949D002E6F4E /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				9DB7A12329D7949D002E6F4E /* MacSmoov.app */,
+				9DB7A13529D7949E002E6F4E /* MacSmoovTests.xctest */,
+				9DB7A13F29D7949F002E6F4E /* MacSmoovUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		9DB7A12529D7949D002E6F4E /* MacSmoov */ = {
+			isa = PBXGroup;
+			children = (
+				9DB7A12629D7949D002E6F4E /* AppDelegate.h */,
+				9DB7A12729D7949D002E6F4E /* AppDelegate.m */,
+				9DB7A12929D7949E002E6F4E /* Assets.xcassets */,
+				9DB7A12B29D7949E002E6F4E /* MainMenu.xib */,
+				9DB7A12E29D7949E002E6F4E /* main.m */,
+				9DB7A13029D7949E002E6F4E /* MacSmoov.entitlements */,
+			);
+			path = MacSmoov;
+			sourceTree = "<group>";
+		};
+		9DB7A13829D7949E002E6F4E /* MacSmoovTests */ = {
+			isa = PBXGroup;
+			children = (
+				9DB7A13929D7949E002E6F4E /* MacSmoovTests.m */,
+			);
+			path = MacSmoovTests;
+			sourceTree = "<group>";
+		};
+		9DB7A14229D7949F002E6F4E /* MacSmoovUITests */ = {
+			isa = PBXGroup;
+			children = (
+				9DB7A14329D7949F002E6F4E /* MacSmoovUITests.m */,
+				9DB7A14529D7949F002E6F4E /* MacSmoovUITestsLaunchTests.m */,
+			);
+			path = MacSmoovUITests;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		9DB7A12229D7949D002E6F4E /* MacSmoov */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 9DB7A14929D7949F002E6F4E /* Build configuration list for PBXNativeTarget "MacSmoov" */;
+			buildPhases = (
+				9DB7A11F29D7949D002E6F4E /* Sources */,
+				9DB7A12029D7949D002E6F4E /* Frameworks */,
+				9DB7A12129D7949D002E6F4E /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = MacSmoov;
+			productName = MacSmoov;
+			productReference = 9DB7A12329D7949D002E6F4E /* MacSmoov.app */;
+			productType = "com.apple.product-type.application";
+		};
+		9DB7A13429D7949E002E6F4E /* MacSmoovTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 9DB7A14C29D7949F002E6F4E /* Build configuration list for PBXNativeTarget "MacSmoovTests" */;
+			buildPhases = (
+				9DB7A13129D7949E002E6F4E /* Sources */,
+				9DB7A13229D7949E002E6F4E /* Frameworks */,
+				9DB7A13329D7949E002E6F4E /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				9DB7A13729D7949E002E6F4E /* PBXTargetDependency */,
+			);
+			name = MacSmoovTests;
+			productName = MacSmoovTests;
+			productReference = 9DB7A13529D7949E002E6F4E /* MacSmoovTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		9DB7A13E29D7949F002E6F4E /* MacSmoovUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 9DB7A14F29D7949F002E6F4E /* Build configuration list for PBXNativeTarget "MacSmoovUITests" */;
+			buildPhases = (
+				9DB7A13B29D7949F002E6F4E /* Sources */,
+				9DB7A13C29D7949F002E6F4E /* Frameworks */,
+				9DB7A13D29D7949F002E6F4E /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				9DB7A14129D7949F002E6F4E /* PBXTargetDependency */,
+			);
+			name = MacSmoovUITests;
+			productName = MacSmoovUITests;
+			productReference = 9DB7A13F29D7949F002E6F4E /* MacSmoovUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		9DB7A11B29D7949D002E6F4E /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastUpgradeCheck = 1320;
+				TargetAttributes = {
+					9DB7A12229D7949D002E6F4E = {
+						CreatedOnToolsVersion = 13.2.1;
+					};
+					9DB7A13429D7949E002E6F4E = {
+						CreatedOnToolsVersion = 13.2.1;
+						TestTargetID = 9DB7A12229D7949D002E6F4E;
+					};
+					9DB7A13E29D7949F002E6F4E = {
+						CreatedOnToolsVersion = 13.2.1;
+						TestTargetID = 9DB7A12229D7949D002E6F4E;
+					};
+				};
+			};
+			buildConfigurationList = 9DB7A11E29D7949D002E6F4E /* Build configuration list for PBXProject "MacSmoov" */;
+			compatibilityVersion = "Xcode 13.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 9DB7A11A29D7949D002E6F4E;
+			productRefGroup = 9DB7A12429D7949D002E6F4E /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				9DB7A12229D7949D002E6F4E /* MacSmoov */,
+				9DB7A13429D7949E002E6F4E /* MacSmoovTests */,
+				9DB7A13E29D7949F002E6F4E /* MacSmoovUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		9DB7A12129D7949D002E6F4E /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9DB7A12A29D7949E002E6F4E /* Assets.xcassets in Resources */,
+				9DB7A12D29D7949E002E6F4E /* MainMenu.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		9DB7A13329D7949E002E6F4E /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		9DB7A13D29D7949F002E6F4E /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		9DB7A11F29D7949D002E6F4E /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9DB7A12F29D7949E002E6F4E /* main.m in Sources */,
+				9DB7A12829D7949D002E6F4E /* AppDelegate.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		9DB7A13129D7949E002E6F4E /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9DB7A13A29D7949E002E6F4E /* MacSmoovTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		9DB7A13B29D7949F002E6F4E /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9DB7A14429D7949F002E6F4E /* MacSmoovUITests.m in Sources */,
+				9DB7A14629D7949F002E6F4E /* MacSmoovUITestsLaunchTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		9DB7A13729D7949E002E6F4E /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 9DB7A12229D7949D002E6F4E /* MacSmoov */;
+			targetProxy = 9DB7A13629D7949E002E6F4E /* PBXContainerItemProxy */;
+		};
+		9DB7A14129D7949F002E6F4E /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 9DB7A12229D7949D002E6F4E /* MacSmoov */;
+			targetProxy = 9DB7A14029D7949F002E6F4E /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		9DB7A12B29D7949E002E6F4E /* MainMenu.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				9DB7A12C29D7949E002E6F4E /* Base */,
+			);
+			name = MainMenu.xib;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		9DB7A14729D7949F002E6F4E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 11.6;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		9DB7A14829D7949F002E6F4E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 11.6;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		9DB7A14A29D7949F002E6F4E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = MacSmoov/MacSmoov.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				INFOPLIST_KEY_NSMainNibFile = MainMenu;
+				INFOPLIST_KEY_NSPrincipalClass = NSApplication;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.tonekids.osx.MacSmoov;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+			};
+			name = Debug;
+		};
+		9DB7A14B29D7949F002E6F4E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = MacSmoov/MacSmoov.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				INFOPLIST_KEY_NSMainNibFile = MainMenu;
+				INFOPLIST_KEY_NSPrincipalClass = NSApplication;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.tonekids.osx.MacSmoov;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+			};
+			name = Release;
+		};
+		9DB7A14D29D7949F002E6F4E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 11.6;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.tonekids.osx.MacSmoovTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/MacSmoov.app/Contents/MacOS/MacSmoov";
+			};
+			name = Debug;
+		};
+		9DB7A14E29D7949F002E6F4E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 11.6;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.tonekids.osx.MacSmoovTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/MacSmoov.app/Contents/MacOS/MacSmoov";
+			};
+			name = Release;
+		};
+		9DB7A15029D7949F002E6F4E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.tonekids.osx.MacSmoovUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				TEST_TARGET_NAME = MacSmoov;
+			};
+			name = Debug;
+		};
+		9DB7A15129D7949F002E6F4E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.tonekids.osx.MacSmoovUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				TEST_TARGET_NAME = MacSmoov;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		9DB7A11E29D7949D002E6F4E /* Build configuration list for PBXProject "MacSmoov" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				9DB7A14729D7949F002E6F4E /* Debug */,
+				9DB7A14829D7949F002E6F4E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		9DB7A14929D7949F002E6F4E /* Build configuration list for PBXNativeTarget "MacSmoov" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				9DB7A14A29D7949F002E6F4E /* Debug */,
+				9DB7A14B29D7949F002E6F4E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		9DB7A14C29D7949F002E6F4E /* Build configuration list for PBXNativeTarget "MacSmoovTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				9DB7A14D29D7949F002E6F4E /* Debug */,
+				9DB7A14E29D7949F002E6F4E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		9DB7A14F29D7949F002E6F4E /* Build configuration list for PBXNativeTarget "MacSmoovUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				9DB7A15029D7949F002E6F4E /* Debug */,
+				9DB7A15129D7949F002E6F4E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 9DB7A11B29D7949D002E6F4E /* Project object */;
+}
