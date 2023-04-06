@@ -449,9 +449,6 @@
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
                         </buttonCell>
-                        <connections>
-                            <action selector="stopAudioGen:" target="Voe-Tx-rLC" id="dbA-D7-HEP"/>
-                        </connections>
                     </button>
                     <slider horizontalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="yiT-KE-WWL">
                         <rect key="frame" x="24" y="225" width="24" height="167"/>

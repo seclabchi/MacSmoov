@@ -8,6 +8,7 @@
         <customObject id="-2" userLabel="File's Owner" customClass="SignalGeneratorViewController">
             <connections>
                 <outlet property="sig_gen_panel" destination="QZo-eE-374" id="XXS-Gz-0YV"/>
+                <outlet property="view" destination="HLz-VN-oXK" id="Nti-dr-dTt"/>
             </connections>
         </customObject>
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
@@ -45,6 +46,9 @@
                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                             <font key="font" metaFont="system"/>
                         </buttonCell>
+                        <connections>
+                            <action selector="functionTypeGen1:" target="-2" id="wpF-j5-0aH"/>
+                        </connections>
                     </button>
                     <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="hdP-pR-FW7">
                         <rect key="frame" x="18" y="216" width="151" height="18"/>
@@ -53,6 +57,9 @@
                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                             <font key="font" metaFont="system"/>
                         </buttonCell>
+                        <connections>
+                            <action selector="functionTypeGen1:" target="-2" id="JpM-nj-qev"/>
+                        </connections>
                     </button>
                     <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="52q-eH-CBX">
                         <rect key="frame" x="18" y="194" width="151" height="18"/>
@@ -61,6 +68,9 @@
                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                             <font key="font" metaFont="system"/>
                         </buttonCell>
+                        <connections>
+                            <action selector="functionTypeGen1:" target="-2" id="gAp-Is-j5v"/>
+                        </connections>
                     </button>
                     <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="V4I-fU-GUU">
                         <rect key="frame" x="18" y="172" width="151" height="18"/>
@@ -69,6 +79,9 @@
                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                             <font key="font" metaFont="system"/>
                         </buttonCell>
+                        <connections>
+                            <action selector="functionTypeGen1:" target="-2" id="jx0-2R-XDC"/>
+                        </connections>
                     </button>
                     <slider horizontalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="VHL-9q-fgG">
                         <rect key="frame" x="175" y="189" width="24" height="108"/>

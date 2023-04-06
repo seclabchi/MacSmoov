@@ -12,24 +12,20 @@
 @interface AppDelegate ()
 
 @property (strong) IBOutlet NSWindow *window;
-
 @property (strong) IBOutlet NSSlider *sliderMasterVolume;
 @end
 
 @implementation AppDelegate
 
-#define BUFFER_SIZE 8192
 
-SignalGenerator* sig_gen = NULL;
-OSStatus theErr;
-AudioStreamBasicDescription asbd = {0};
-AudioQueueRef outAQ;
 
-AudioQueueBufferRef buffers[2];
+
+SignalGeneratorViewController *siggenvc;
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
     // Insert code here to initialize your application
     //TODO:  initialize signal generators here, and the eventual audio passthrough/processing chain
+    siggenvc = [[SignalGeneratorViewController alloc] init];
 }
 
 
@@ -72,6 +68,10 @@ AudioQueueBufferRef buffers[2];
     
 }
 
+- (IBAction) showSignalGenerators:(id)sender {
+    [siggenvc showPanel];
+}
+
 -(void) openAudioFile:(NSURL*)fileUrl {
     AudioFileID audioFile;
     OSStatus theErr = noErr;
@@ -105,130 +105,6 @@ AudioQueueBufferRef buffers[2];
 
 
 
-void listenerCb(void *inUserData, AudioQueueRef inAQ, AudioQueuePropertyID inID) {
-    NSLog(@"Listener CB called.");
-}
 
-void audioOutQcb(void *inUserData, AudioQueueRef inAQ, AudioQueueBufferRef inBuffer) {
-    //NSLog(@"Got AQ callback");
-    
-    float tmpBuf[BUFFER_SIZE];
-    [sig_gen getNextBuffer:tmpBuf ofSize:BUFFER_SIZE];
-    
-    memcpy(inBuffer->mAudioData, tmpBuf, BUFFER_SIZE*sizeof(float));
-    
-    AudioQueueEnqueueBuffer(inAQ, inBuffer, 0, NULL);
-}
-
--(IBAction) adjustVolume:(id)sender {
-    float volume = [_sliderMasterVolume floatValue];
-    [sig_gen adjustVolume:volume];
-}
-
--(IBAction) generateSine400Hz:(id)sender {
-    
-    sig_gen = [[SignalGenerator alloc] initWithSampleRate:48000 numberOfChannels:2];
-    [sig_gen configureWithType:SINE frequency:440];
-    
-    asbd.mFormatID = kAudioFormatLinearPCM;
-    asbd.mBitsPerChannel = 32;
-    asbd.mSampleRate = 48000;
-    asbd.mFramesPerPacket = 1;
-    asbd.mChannelsPerFrame = 2;
-    asbd.mBytesPerPacket = 8;
-    asbd.mBytesPerFrame = 8;
-    asbd.mFormatFlags = kLinearPCMFormatFlagIsFloat;
-    
-    theErr = AudioQueueNewOutput(&asbd, audioOutQcb, NULL, CFRunLoopGetMain(), kCFRunLoopCommonModes, 0, &outAQ);
-    
-    assert(theErr == noErr);
-    
-    AudioQueueAllocateBuffer(outAQ, BUFFER_SIZE*sizeof(float), &buffers[0]);
-    buffers[0]->mAudioDataByteSize = BUFFER_SIZE*sizeof(float);
-    
-    audioOutQcb(NULL, outAQ, buffers[0]);
-    
-    AudioQueueAllocateBuffer(outAQ, BUFFER_SIZE*sizeof(float), &buffers[1]);
-    buffers[1]->mAudioDataByteSize = BUFFER_SIZE*sizeof(float);
-    
-    audioOutQcb(NULL, outAQ, buffers[1]);
-    
-    theErr = AudioQueueStart(outAQ, NULL);
-    
-    assert(theErr == noErr);
-    
-}
-
--(IBAction) generateSine1kHz:(id)sender {
-    
-    sig_gen = [[SignalGenerator alloc] initWithSampleRate:48000 numberOfChannels:2];
-    [sig_gen configureWithType:SINE frequency:1000];
-    
-    asbd.mFormatID = kAudioFormatLinearPCM;
-    asbd.mBitsPerChannel = 32;
-    asbd.mSampleRate = 48000;
-    asbd.mFramesPerPacket = 1;
-    asbd.mChannelsPerFrame = 2;
-    asbd.mBytesPerPacket = 8;
-    asbd.mBytesPerFrame = 8;
-    asbd.mFormatFlags = kLinearPCMFormatFlagIsFloat;
-    
-    theErr = AudioQueueNewOutput(&asbd, audioOutQcb, NULL, CFRunLoopGetMain(), kCFRunLoopCommonModes, 0, &outAQ);
-    
-    assert(theErr == noErr);
-    
-    AudioQueueAllocateBuffer(outAQ, BUFFER_SIZE*sizeof(float), &buffers[0]);
-    buffers[0]->mAudioDataByteSize = BUFFER_SIZE*sizeof(float);
-    
-    audioOutQcb(NULL, outAQ, buffers[0]);
-    
-    AudioQueueAllocateBuffer(outAQ, BUFFER_SIZE*sizeof(float), &buffers[1]);
-    buffers[1]->mAudioDataByteSize = BUFFER_SIZE*sizeof(float);
-    
-    audioOutQcb(NULL, outAQ, buffers[1]);
-    
-    theErr = AudioQueueStart(outAQ, NULL);
-    
-    assert(theErr == noErr);
-    
-}
-
--(IBAction) generatePinkNoise(id)sender {
-    sig_gen = [[SignalGenerator alloc] initWithSampleRate:48000 numberOfChannels:2];
-    [sig_gen configureWithType:SINE frequency:1000];
-    
-    asbd.mFormatID = kAudioFormatLinearPCM;
-    asbd.mBitsPerChannel = 32;
-    asbd.mSampleRate = 48000;
-    asbd.mFramesPerPacket = 1;
-    asbd.mChannelsPerFrame = 2;
-    asbd.mBytesPerPacket = 8;
-    asbd.mBytesPerFrame = 8;
-    asbd.mFormatFlags = kLinearPCMFormatFlagIsFloat;
-    
-    theErr = AudioQueueNewOutput(&asbd, audioOutQcb, NULL, CFRunLoopGetMain(), kCFRunLoopCommonModes, 0, &outAQ);
-    
-    assert(theErr == noErr);
-    
-    AudioQueueAllocateBuffer(outAQ, BUFFER_SIZE*sizeof(float), &buffers[0]);
-    buffers[0]->mAudioDataByteSize = BUFFER_SIZE*sizeof(float);
-    
-    audioOutQcb(NULL, outAQ, buffers[0]);
-    
-    AudioQueueAllocateBuffer(outAQ, BUFFER_SIZE*sizeof(float), &buffers[1]);
-    buffers[1]->mAudioDataByteSize = BUFFER_SIZE*sizeof(float);
-    
-    audioOutQcb(NULL, outAQ, buffers[1]);
-    
-    theErr = AudioQueueStart(outAQ, NULL);
-    
-    assert(theErr == noErr);
-}
-
--(IBAction) stopAudioGen:(id)sender {
-    theErr = AudioQueueStop(outAQ, TRUE);
-    
-    assert(theErr == noErr);
-}
 
 @end
