@@ -7,6 +7,18 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9D5C638829D8E5D600E40A60 /* SignalGenerator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9D5C638629D8E5D600E40A60 /* SignalGenerator.cpp */; };
+		9D5C638929D8E5D600E40A60 /* SignalGenerator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9D5C638629D8E5D600E40A60 /* SignalGenerator.cpp */; };
+		9D5C638A29D8E5D600E40A60 /* SignalGenerator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9D5C638629D8E5D600E40A60 /* SignalGenerator.cpp */; };
+		9D5C638C29D9FF5400E40A60 /* SignalGeneratorWrapper.mm in Sources */ = {isa = PBXBuildFile; fileRef = 9D5C638B29D9FF5400E40A60 /* SignalGeneratorWrapper.mm */; };
+		9D5C638D29D9FF5400E40A60 /* SignalGeneratorWrapper.mm in Sources */ = {isa = PBXBuildFile; fileRef = 9D5C638B29D9FF5400E40A60 /* SignalGeneratorWrapper.mm */; };
+		9D5C638E29D9FF5400E40A60 /* SignalGeneratorWrapper.mm in Sources */ = {isa = PBXBuildFile; fileRef = 9D5C638B29D9FF5400E40A60 /* SignalGeneratorWrapper.mm */; };
+		9D5C639429DA5DE200E40A60 /* SignalGeneratorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D5C639229DA5DE200E40A60 /* SignalGeneratorViewController.m */; };
+		9D5C639529DA5DE200E40A60 /* SignalGeneratorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D5C639229DA5DE200E40A60 /* SignalGeneratorViewController.m */; };
+		9D5C639629DA5DE200E40A60 /* SignalGeneratorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D5C639229DA5DE200E40A60 /* SignalGeneratorViewController.m */; };
+		9D5C639729DA5DE200E40A60 /* SignalGeneratorViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9D5C639329DA5DE200E40A60 /* SignalGeneratorViewController.xib */; };
+		9D5C639829DA5DE200E40A60 /* SignalGeneratorViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9D5C639329DA5DE200E40A60 /* SignalGeneratorViewController.xib */; };
+		9D5C639929DA5DE200E40A60 /* SignalGeneratorViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9D5C639329DA5DE200E40A60 /* SignalGeneratorViewController.xib */; };
 		9DB7A12829D7949D002E6F4E /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 9DB7A12729D7949D002E6F4E /* AppDelegate.m */; };
 		9DB7A12A29D7949E002E6F4E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9DB7A12929D7949E002E6F4E /* Assets.xcassets */; };
 		9DB7A12D29D7949E002E6F4E /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9DB7A12B29D7949E002E6F4E /* MainMenu.xib */; };
@@ -34,12 +46,20 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		9D5C638629D8E5D600E40A60 /* SignalGenerator.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = SignalGenerator.cpp; sourceTree = "<group>"; };
+		9D5C638729D8E5D600E40A60 /* SignalGenerator.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = SignalGenerator.hpp; sourceTree = "<group>"; };
+		9D5C638B29D9FF5400E40A60 /* SignalGeneratorWrapper.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = SignalGeneratorWrapper.mm; sourceTree = "<group>"; };
+		9D5C638F29D9FF6E00E40A60 /* SignalGeneratorWrapper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SignalGeneratorWrapper.h; sourceTree = "<group>"; };
+		9D5C639029DA03E600E40A60 /* CommonTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CommonTypes.h; sourceTree = "<group>"; };
+		9D5C639129DA5DE200E40A60 /* SignalGeneratorViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SignalGeneratorViewController.h; sourceTree = "<group>"; };
+		9D5C639229DA5DE200E40A60 /* SignalGeneratorViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SignalGeneratorViewController.m; sourceTree = "<group>"; };
+		9D5C639329DA5DE200E40A60 /* SignalGeneratorViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SignalGeneratorViewController.xib; sourceTree = "<group>"; };
 		9DB7A12329D7949D002E6F4E /* MacSmoov.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MacSmoov.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9DB7A12629D7949D002E6F4E /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
-		9DB7A12729D7949D002E6F4E /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		9DB7A12729D7949D002E6F4E /* AppDelegate.m */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		9DB7A12929D7949E002E6F4E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		9DB7A12C29D7949E002E6F4E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
-		9DB7A12E29D7949E002E6F4E /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		9DB7A12E29D7949E002E6F4E /* main.m */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		9DB7A13029D7949E002E6F4E /* MacSmoov.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = MacSmoov.entitlements; sourceTree = "<group>"; };
 		9DB7A13529D7949E002E6F4E /* MacSmoovTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MacSmoovTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		9DB7A13929D7949E002E6F4E /* MacSmoovTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MacSmoovTests.m; sourceTree = "<group>"; };
@@ -102,6 +122,14 @@
 				9DB7A12B29D7949E002E6F4E /* MainMenu.xib */,
 				9DB7A12E29D7949E002E6F4E /* main.m */,
 				9DB7A13029D7949E002E6F4E /* MacSmoov.entitlements */,
+				9D5C638629D8E5D600E40A60 /* SignalGenerator.cpp */,
+				9D5C638729D8E5D600E40A60 /* SignalGenerator.hpp */,
+				9D5C638B29D9FF5400E40A60 /* SignalGeneratorWrapper.mm */,
+				9D5C638F29D9FF6E00E40A60 /* SignalGeneratorWrapper.h */,
+				9D5C639029DA03E600E40A60 /* CommonTypes.h */,
+				9D5C639129DA5DE200E40A60 /* SignalGeneratorViewController.h */,
+				9D5C639229DA5DE200E40A60 /* SignalGeneratorViewController.m */,
+				9D5C639329DA5DE200E40A60 /* SignalGeneratorViewController.xib */,
 			);
 			path = MacSmoov;
 			sourceTree = "<group>";
@@ -228,6 +256,7 @@
 			files = (
 				9DB7A12A29D7949E002E6F4E /* Assets.xcassets in Resources */,
 				9DB7A12D29D7949E002E6F4E /* MainMenu.xib in Resources */,
+				9D5C639729DA5DE200E40A60 /* SignalGeneratorViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -235,6 +264,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9D5C639829DA5DE200E40A60 /* SignalGeneratorViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -242,6 +272,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9D5C639929DA5DE200E40A60 /* SignalGeneratorViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -252,6 +283,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9D5C639429DA5DE200E40A60 /* SignalGeneratorViewController.m in Sources */,
+				9D5C638829D8E5D600E40A60 /* SignalGenerator.cpp in Sources */,
+				9D5C638C29D9FF5400E40A60 /* SignalGeneratorWrapper.mm in Sources */,
 				9DB7A12F29D7949E002E6F4E /* main.m in Sources */,
 				9DB7A12829D7949D002E6F4E /* AppDelegate.m in Sources */,
 			);
@@ -261,7 +295,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9D5C638D29D9FF5400E40A60 /* SignalGeneratorWrapper.mm in Sources */,
 				9DB7A13A29D7949E002E6F4E /* MacSmoovTests.m in Sources */,
+				9D5C639529DA5DE200E40A60 /* SignalGeneratorViewController.m in Sources */,
+				9D5C638929D8E5D600E40A60 /* SignalGenerator.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -269,6 +306,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9D5C639629DA5DE200E40A60 /* SignalGeneratorViewController.m in Sources */,
+				9D5C638A29D8E5D600E40A60 /* SignalGenerator.cpp in Sources */,
+				9D5C638E29D9FF5400E40A60 /* SignalGeneratorWrapper.mm in Sources */,
 				9DB7A14429D7949F002E6F4E /* MacSmoovUITests.m in Sources */,
 				9DB7A14629D7949F002E6F4E /* MacSmoovUITestsLaunchTests.m in Sources */,
 			);
@@ -429,6 +469,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
+				MACOSX_DEPLOYMENT_TARGET = 11.5;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.tonekids.osx.MacSmoov;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -453,6 +494,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
+				MACOSX_DEPLOYMENT_TARGET = 11.5;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.tonekids.osx.MacSmoov;
 				PRODUCT_NAME = "$(TARGET_NAME)";
