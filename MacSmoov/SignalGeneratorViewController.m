@@ -32,11 +32,6 @@
 
 -(void)showPanel {
     NSPanel* panel = (NSPanel*)[[self view] window];
-    [self showSignalGenerators:nil];
-    NSLog(@"%@", panel);
-}
-
--(IBAction) showSignalGenerators:(id)sender {
     [_sig_gen_panel setFloatingPanel:YES];
     [_sig_gen_panel orderFront:nil];
 }

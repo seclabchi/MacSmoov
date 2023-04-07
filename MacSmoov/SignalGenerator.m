@@ -65,11 +65,7 @@ void listenerCb(void *inUserData, AudioQueueRef inAQ, AudioQueuePropertyID inID)
 }
 
 void audioOutQcb(void *inUserData, AudioQueueRef inAQ, AudioQueueBufferRef inBuffer) {
-    NSLog(@"audioOutQcb %p", inAQ);
-    
     SignalGenerator* gen = (__bridge SignalGenerator*) inUserData;
-    
-    NSLog(@"Gen = %@", gen);
     
     float tmpBuf[BUFFER_SIZE];
     [gen->wrap getNextBuffer:tmpBuf ofSize:BUFFER_SIZE];

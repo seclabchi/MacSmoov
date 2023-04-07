@@ -10,6 +10,7 @@
 
 #include <stdio.h>
 #include <cstdint>
+#include <random>
 #include "CommonTypes.h"
 
 namespace fmsmoov {

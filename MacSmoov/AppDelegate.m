@@ -12,7 +12,6 @@
 @interface AppDelegate ()
 
 @property (strong) IBOutlet NSWindow *window;
-@property (strong) IBOutlet NSSlider *sliderMasterVolume;
 @end
 
 @implementation AppDelegate
@@ -100,7 +99,9 @@ SignalGeneratorViewController *siggenvc;
 }
 
 
-
+-(IBAction) adjustGainMainOut:(id)sender {
+    
+}
 
 
 
