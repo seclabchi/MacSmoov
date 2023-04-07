@@ -1,12 +1,12 @@
 //
-//  SignalGenerator.hpp
+//  SignalGeneratorEngine.hpp
 //  MacSmoov
 //
 //  Created by Paul Zaremba on 4/1/23.
 //
 
-#ifndef SignalGenerator_hpp
-#define SignalGenerator_hpp
+#ifndef SignalGeneratorEngine_hpp
+#define SignalGeneratorEngine_hpp
 
 #include <stdio.h>
 #include <cstdint>
@@ -14,22 +14,23 @@
 
 namespace fmsmoov {
 
-class SignalGenerator {
+class SignalGeneratorEngine {
 public:
-    SignalGenerator(uint32_t _f_samp, uint32_t _n_channels);
-    virtual ~SignalGenerator();
+    SignalGeneratorEngine(uint32_t _f_samp, uint32_t _n_channels);
+    virtual ~SignalGeneratorEngine();
     void configure(SIG_GEN_TYPE _type, uint32_t _frequency);
     void get_next_buffers(float* out_buf, uint32_t n_frames);
     void adjust_volume(float _volume);
 private:
-    SignalGenerator();
+    SignalGeneratorEngine();
     float f_samp;
     uint32_t n_channels;
     SIG_GEN_TYPE type;
     float frequency;
     float volume;
+    uint32_t cur_samp;
 };
 
 }
 
-#endif /* SignalGenerator_hpp */
+#endif /* SignalGeneratorEngine_hpp */

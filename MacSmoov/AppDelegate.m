@@ -7,7 +7,7 @@
 
 #import "AppDelegate.h"
 #import <AudioToolbox/AudioToolbox.h>
-#import "SignalGeneratorWrapper.h"
+#import "SignalGenerator.h"
 
 @interface AppDelegate ()
 
@@ -16,9 +16,6 @@
 @end
 
 @implementation AppDelegate
-
-
-
 
 SignalGeneratorViewController *siggenvc;
 

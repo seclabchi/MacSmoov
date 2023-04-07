@@ -6,7 +6,7 @@
 //
 
 #import <Cocoa/Cocoa.h>
-#import "SignalGeneratorWrapper.h"
+#import "SignalGenerator.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -15,6 +15,17 @@ NS_ASSUME_NONNULL_BEGIN
 -(IBAction) functionTypeGen2:(id)sender;
 -(IBAction) functionTypeGen3:(id)sender;
 -(IBAction) functionTypeGen4:(id)sender;
+
+-(IBAction) gainAdjustGen1:(id)sender;
+-(IBAction) gainAdjustGen2:(id)sender;
+-(IBAction) gainAdjustGen3:(id)sender;
+-(IBAction) gainAdjustGen4:(id)sender;
+
+-(IBAction) startStopGen1:(id)sender;
+-(IBAction) startStopGen2:(id)sender;
+-(IBAction) startStopGen3:(id)sender;
+-(IBAction) startStopGen4:(id)sender;
+
 -(void) showPanel;
 @end
 

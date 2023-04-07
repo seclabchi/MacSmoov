@@ -5,23 +5,30 @@
 //  Created by Paul Zaremba on 4/2/23.
 //
 
-#import <AudioToolbox/AudioToolbox.h>
 
 #import "SignalGeneratorViewController.h"
+#import "SignalGenerator.h"
 
 @interface SignalGeneratorViewController ()
 @property (strong) IBOutlet NSPanel *sig_gen_panel;
+@property (strong) IBOutlet NSButton* sig_gen_startstop_button_1;
+@property (strong) IBOutlet NSButton* sig_gen_startstop_button_2;
+@property (strong) IBOutlet NSButton* sig_gen_startstop_button_3;
+@property (strong) IBOutlet NSButton* sig_gen_startstop_button_4;
 @end
 
 
-@implementation SignalGeneratorViewController
+@implementation SignalGeneratorViewController {
+    SignalGenerator* sig_gen1;
+    SignalGenerator* sig_gen2;
+    SignalGenerator* sig_gen3;
+    SignalGenerator* sig_gen4;
 
-SignalGenerator* sig_gen;
-OSStatus theErr;
-AudioStreamBasicDescription asbd = {0};
-AudioQueueRef outAQ;
-
-AudioQueueBufferRef buffers[2];
+    bool sig_gen1_active;
+    bool sig_gen2_active;
+    bool sig_gen3_active;
+    bool sig_gen4_active;
+}
 
 -(void)showPanel {
     NSPanel* panel = (NSPanel*)[[self view] window];
@@ -38,148 +45,130 @@ AudioQueueBufferRef buffers[2];
     [super viewDidLoad];
     NSLog(@"Sig gen viewDidLoad");
     // Do view setup here.
-    [sig_gen initWithSampleRate:48000 numberOfChannels:2];
+    sig_gen1 = [[SignalGenerator alloc] initWithSampleRate:48000 numberOfChannels:2];
+    sig_gen2 = [[SignalGenerator alloc] initWithSampleRate:48000 numberOfChannels:2];
+    sig_gen3 = [[SignalGenerator alloc] initWithSampleRate:48000 numberOfChannels:2];
+    sig_gen4 = [[SignalGenerator alloc] initWithSampleRate:48000 numberOfChannels:2];
 }
 
 -(void)viewWillDisappear {
     
 }
 
--(IBAction) functionTypeGen1:(id)sender {
+-(SIG_GEN_TYPE) convert_type_button_to_type:(NSString*) identifier {
+    if([identifier isEqualTo:@"sine_400"] || [identifier isEqualTo:@"sine_1000"]) {
+        return SINE;
+    }
+    else if([identifier isEqualTo:@"noise_white"]) {
+        return NOISE_WHITE;
+    }
+    else if([identifier isEqualTo:@"noise_pink"]) {
+        return NOISE_PINK;
+    }
     
+    return UNKNOWN;
+}
+
+-(uint32_t) convert_type_button_to_frequency:(NSString*) identifier {
+    if([identifier isEqualTo:@"sine_400"]) {
+        return 400;
+    }
+    else if([identifier isEqualTo:@"sine_1000"]) {
+        return 1000;
+    }
+    
+    return 0;
+}
+
+-(IBAction) functionTypeGen1:(id)sender {
+    [sig_gen1 configureWithType:[self convert_type_button_to_type:[sender identifier]]
+                      frequency:[self convert_type_button_to_frequency:[sender identifier]]];
 }
 
 -(IBAction) functionTypeGen2:(id)sender {
-    
+    [sig_gen2 configureWithType:[self convert_type_button_to_type:[sender identifier]]
+                      frequency:[self convert_type_button_to_frequency:[sender identifier]]];
 }
 
 -(IBAction) functionTypeGen3:(id)sender {
-    
+    [sig_gen3 configureWithType:[self convert_type_button_to_type:[sender identifier]]
+                      frequency:[self convert_type_button_to_frequency:[sender identifier]]];
 }
 
 -(IBAction) functionTypeGen4:(id)sender {
+    [sig_gen4 configureWithType:[self convert_type_button_to_type:[sender identifier]]
+                      frequency:[self convert_type_button_to_frequency:[sender identifier]]];
+}
+
+-(IBAction) gainAdjustGen1:(id)sender {
+    [sig_gen1 adjustVolume:[sender floatValue]];
     
 }
 
-
-void listenerCb(void *inUserData, AudioQueueRef inAQ, AudioQueuePropertyID inID) {
-    NSLog(@"Listener CB called.");
+-(IBAction) gainAdjustGen2:(id)sender {
+    [sig_gen2 adjustVolume:[sender floatValue]];
 }
 
-void audioOutQcb(void *inUserData, AudioQueueRef inAQ, AudioQueueBufferRef inBuffer) {
-    //NSLog(@"Got AQ callback");
-    
-    float tmpBuf[BUFFER_SIZE];
-    [sig_gen getNextBuffer:tmpBuf ofSize:BUFFER_SIZE];
-    
-    memcpy(inBuffer->mAudioData, tmpBuf, BUFFER_SIZE*sizeof(float));
-    
-    AudioQueueEnqueueBuffer(inAQ, inBuffer, 0, NULL);
+-(IBAction) gainAdjustGen3:(id)sender {
+    [sig_gen3 adjustVolume:[sender floatValue]];
 }
 
--(IBAction) generateSine400Hz:(id)sender {
-    
-    sig_gen = [[SignalGenerator alloc] initWithSampleRate:48000 numberOfChannels:2];
-    [sig_gen configureWithType:SINE frequency:440];
-    
-    asbd.mFormatID = kAudioFormatLinearPCM;
-    asbd.mBitsPerChannel = 32;
-    asbd.mSampleRate = 48000;
-    asbd.mFramesPerPacket = 1;
-    asbd.mChannelsPerFrame = 2;
-    asbd.mBytesPerPacket = 8;
-    asbd.mBytesPerFrame = 8;
-    asbd.mFormatFlags = kLinearPCMFormatFlagIsFloat;
-    
-    theErr = AudioQueueNewOutput(&asbd, audioOutQcb, NULL, CFRunLoopGetMain(), kCFRunLoopCommonModes, 0, &outAQ);
-    
-    assert(theErr == noErr);
-    
-    AudioQueueAllocateBuffer(outAQ, BUFFER_SIZE*sizeof(float), &buffers[0]);
-    buffers[0]->mAudioDataByteSize = BUFFER_SIZE*sizeof(float);
-    
-    audioOutQcb(NULL, outAQ, buffers[0]);
-    
-    AudioQueueAllocateBuffer(outAQ, BUFFER_SIZE*sizeof(float), &buffers[1]);
-    buffers[1]->mAudioDataByteSize = BUFFER_SIZE*sizeof(float);
-    
-    audioOutQcb(NULL, outAQ, buffers[1]);
-    
-    theErr = AudioQueueStart(outAQ, NULL);
-    
-    assert(theErr == noErr);
-    
+-(IBAction) gainAdjustGen4:(id)sender {
+    [sig_gen4 adjustVolume:[sender floatValue]];
 }
 
--(IBAction) generateSine1kHz:(id)sender {
+-(IBAction) startStopGen1:(id)sender {
+    if(sig_gen1_active) {
+        [sig_gen1 stopSignal];
+        [_sig_gen_startstop_button_1 setTitle:@"Start"];
+    }
+    else {
+        [sig_gen1 startSignal];
+        [_sig_gen_startstop_button_1 setTitle:@"Stop"];
+    }
     
-    sig_gen = [[SignalGenerator alloc] initWithSampleRate:48000 numberOfChannels:2];
-    [sig_gen configureWithType:SINE frequency:1000];
-    
-    asbd.mFormatID = kAudioFormatLinearPCM;
-    asbd.mBitsPerChannel = 32;
-    asbd.mSampleRate = 48000;
-    asbd.mFramesPerPacket = 1;
-    asbd.mChannelsPerFrame = 2;
-    asbd.mBytesPerPacket = 8;
-    asbd.mBytesPerFrame = 8;
-    asbd.mFormatFlags = kLinearPCMFormatFlagIsFloat;
-    
-    theErr = AudioQueueNewOutput(&asbd, audioOutQcb, NULL, CFRunLoopGetMain(), kCFRunLoopCommonModes, 0, &outAQ);
-    
-    assert(theErr == noErr);
-    
-    AudioQueueAllocateBuffer(outAQ, BUFFER_SIZE*sizeof(float), &buffers[0]);
-    buffers[0]->mAudioDataByteSize = BUFFER_SIZE*sizeof(float);
-    
-    audioOutQcb(NULL, outAQ, buffers[0]);
-    
-    AudioQueueAllocateBuffer(outAQ, BUFFER_SIZE*sizeof(float), &buffers[1]);
-    buffers[1]->mAudioDataByteSize = BUFFER_SIZE*sizeof(float);
-    
-    audioOutQcb(NULL, outAQ, buffers[1]);
-    
-    theErr = AudioQueueStart(outAQ, NULL);
-    
-    assert(theErr == noErr);
-    
+    sig_gen1_active = !sig_gen1_active;
 }
 
--(IBAction) generatePinkNoise:(id)sender {
-    sig_gen = [[SignalGenerator alloc] initWithSampleRate:48000 numberOfChannels:2];
-    [sig_gen configureWithType:SINE frequency:1000];
+-(IBAction) startStopGen2:(id)sender {
+    if(sig_gen2_active) {
+        [sig_gen2 stopSignal];
+        [_sig_gen_startstop_button_2 setTitle:@"Start"];
+    }
+    else {
+        [sig_gen2 startSignal];
+        [_sig_gen_startstop_button_2 setTitle:@"Stop"];
+    }
     
-    asbd.mFormatID = kAudioFormatLinearPCM;
-    asbd.mBitsPerChannel = 32;
-    asbd.mSampleRate = 48000;
-    asbd.mFramesPerPacket = 1;
-    asbd.mChannelsPerFrame = 2;
-    asbd.mBytesPerPacket = 8;
-    asbd.mBytesPerFrame = 8;
-    asbd.mFormatFlags = kLinearPCMFormatFlagIsFloat;
-    
-    theErr = AudioQueueNewOutput(&asbd, audioOutQcb, NULL, CFRunLoopGetMain(), kCFRunLoopCommonModes, 0, &outAQ);
-    
-    assert(theErr == noErr);
-    
-    AudioQueueAllocateBuffer(outAQ, BUFFER_SIZE*sizeof(float), &buffers[0]);
-    buffers[0]->mAudioDataByteSize = BUFFER_SIZE*sizeof(float);
-    
-    audioOutQcb(NULL, outAQ, buffers[0]);
-    
-    AudioQueueAllocateBuffer(outAQ, BUFFER_SIZE*sizeof(float), &buffers[1]);
-    buffers[1]->mAudioDataByteSize = BUFFER_SIZE*sizeof(float);
-    
-    audioOutQcb(NULL, outAQ, buffers[1]);
-    
-    theErr = AudioQueueStart(outAQ, NULL);
-    
-    assert(theErr == noErr);
+    sig_gen2_active = !sig_gen2_active;
 }
 
--(IBAction) stopAudioGen:(id)sender {
-    theErr = AudioQueueStop(outAQ, TRUE);
+-(IBAction) startStopGen3:(id)sender {
+    if(sig_gen3_active) {
+        [sig_gen3 stopSignal];
+        [_sig_gen_startstop_button_3 setTitle:@"Start"];
+    }
+    else {
+        [sig_gen3 startSignal];
+        [_sig_gen_startstop_button_3 setTitle:@"Stop"];
+    }
     
-    assert(theErr == noErr);
+    sig_gen3_active = !sig_gen3_active;
 }
+
+-(IBAction) startStopGen4:(id)sender {
+    if(sig_gen4_active) {
+        [sig_gen4 stopSignal];
+        [_sig_gen_startstop_button_4 setTitle:@"Start"];
+    }
+    else {
+        [sig_gen4 startSignal];
+        [_sig_gen_startstop_button_4 setTitle:@"Stop"];
+    }
+    
+    sig_gen4_active = !sig_gen4_active;
+}
+
+
+
 @end

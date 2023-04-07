@@ -6,20 +6,20 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "SignalGeneratorWrapper.h"
-#import "SignalGenerator.hpp"
+#import "SignalGeneratorEngineWrapper.h"
+#import "SignalGeneratorEngine.hpp"
 
-@interface SignalGenerator ()
-@property (nonatomic, readwrite, assign) fmsmoov::SignalGenerator *cpp;
+@interface SignalGeneratorEngineWrapper ()
+@property (nonatomic, readwrite, assign) fmsmoov::SignalGeneratorEngine *cpp;
 @end
 
-@implementation SignalGenerator
+@implementation SignalGeneratorEngineWrapper
 @synthesize cpp = _cpp;
 
 -(id) initWithSampleRate:(uint32_t)sample_rate numberOfChannels:(uint32_t)num_chans {
     self = [super init];
     if(self) {
-        _cpp = new fmsmoov::SignalGenerator(sample_rate, num_chans);
+        _cpp = new fmsmoov::SignalGeneratorEngine(sample_rate, num_chans);
     }
     
     return self;
