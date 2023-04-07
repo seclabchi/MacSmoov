@@ -11,23 +11,26 @@
 
 @interface SignalGeneratorViewController ()
 @property (strong) IBOutlet NSPanel *sig_gen_panel;
-@property (strong) IBOutlet NSButton* sig_gen_startstop_button_1;
-@property (strong) IBOutlet NSButton* sig_gen_startstop_button_2;
-@property (strong) IBOutlet NSButton* sig_gen_startstop_button_3;
-@property (strong) IBOutlet NSButton* sig_gen_startstop_button_4;
+@property (strong) IBOutlet NSButton* sig_gen_startstop_button_400Hz;
+@property (strong) IBOutlet NSButton* sig_gen_startstop_button_1kHz;
+@property (strong) IBOutlet NSButton* sig_gen_startstop_button_custom;
+@property (strong) IBOutlet NSButton* sig_gen_startstop_button_noise;
 @end
 
 
 @implementation SignalGeneratorViewController {
-    SignalGenerator* sig_gen1;
-    SignalGenerator* sig_gen2;
-    SignalGenerator* sig_gen3;
-    SignalGenerator* sig_gen4;
+    SignalGenerator* sig_gen_400Hz;
+    SignalGenerator* sig_gen_1kHz;
+    SignalGenerator* sig_gen_custom;
+    SignalGenerator* sig_gen_noise;
 
-    bool sig_gen1_active;
-    bool sig_gen2_active;
-    bool sig_gen3_active;
-    bool sig_gen4_active;
+    bool sig_gen_400Hz_active;
+    bool sig_gen_1kHz_active;
+    bool sig_gen_custom_active;
+    bool sig_gen_noise_active;
+    
+    uint32_t custom_type_tag;
+    float custom_frequency;
 }
 
 -(void)showPanel {
@@ -40,130 +43,116 @@
     [super viewDidLoad];
     NSLog(@"Sig gen viewDidLoad");
     // Do view setup here.
-    sig_gen1 = [[SignalGenerator alloc] initWithSampleRate:48000 numberOfChannels:2];
-    sig_gen2 = [[SignalGenerator alloc] initWithSampleRate:48000 numberOfChannels:2];
-    sig_gen3 = [[SignalGenerator alloc] initWithSampleRate:48000 numberOfChannels:2];
-    sig_gen4 = [[SignalGenerator alloc] initWithSampleRate:48000 numberOfChannels:2];
+    sig_gen_400Hz = [[SignalGenerator alloc] initWithSampleRate:48000 numberOfChannels:2];
+    [sig_gen_400Hz configureWithType:SINE frequency:400];
+    sig_gen_1kHz = [[SignalGenerator alloc] initWithSampleRate:48000 numberOfChannels:2];
+    [sig_gen_1kHz configureWithType:SINE frequency:1000];
+    sig_gen_custom = [[SignalGenerator alloc] initWithSampleRate:48000 numberOfChannels:2];
+    [sig_gen_custom configureWithType:SINE frequency:0];
+    custom_type_tag = 4;
+    custom_frequency = 0.0f;
+    sig_gen_noise = [[SignalGenerator alloc] initWithSampleRate:48000 numberOfChannels:2];
+    [sig_gen_noise configureWithType:NOISE_WHITE frequency:0];
 }
 
 -(void)viewWillDisappear {
     
 }
 
--(SIG_GEN_TYPE) convert_type_button_to_type:(NSString*) identifier {
-    if([identifier isEqualTo:@"sine_400"] || [identifier isEqualTo:@"sine_1000"]) {
-        return SINE;
-    }
-    else if([identifier isEqualTo:@"noise_white"]) {
-        return NOISE_WHITE;
-    }
-    else if([identifier isEqualTo:@"noise_pink"]) {
-        return NOISE_PINK;
-    }
-    
-    return UNKNOWN;
+-(IBAction) setFunctionType400Hz:(id)sender {
+    [sig_gen_400Hz configureWithType:(SIG_GEN_TYPE)[sender tag]
+                      frequency:400];
 }
 
--(uint32_t) convert_type_button_to_frequency:(NSString*) identifier {
-    if([identifier isEqualTo:@"sine_400"]) {
-        return 400;
-    }
-    else if([identifier isEqualTo:@"sine_1000"]) {
-        return 1000;
-    }
-    
-    return 0;
+-(IBAction) setFunctionType1kHz:(id)sender {
+    [sig_gen_1kHz configureWithType:(SIG_GEN_TYPE)[sender tag]
+                      frequency:1000];
 }
 
--(IBAction) functionTypeGen1:(id)sender {
-    [sig_gen1 configureWithType:[self convert_type_button_to_type:[sender identifier]]
-                      frequency:[self convert_type_button_to_frequency:[sender identifier]]];
+-(IBAction) setFunctionTypeCustom:(id)sender {
+    custom_type_tag = (uint32_t)[sender tag];
+    [sig_gen_custom configureWithType:(SIG_GEN_TYPE)[sender tag]
+                             frequency:custom_frequency];
 }
 
--(IBAction) functionTypeGen2:(id)sender {
-    [sig_gen2 configureWithType:[self convert_type_button_to_type:[sender identifier]]
-                      frequency:[self convert_type_button_to_frequency:[sender identifier]]];
+-(IBAction) setFunctionFrequencyCustom:(id)sender {
+    custom_frequency = [[sender cell] floatValue];
+    [sig_gen_custom configureWithType:custom_type_tag
+                            frequency: custom_frequency];
 }
 
--(IBAction) functionTypeGen3:(id)sender {
-    [sig_gen3 configureWithType:[self convert_type_button_to_type:[sender identifier]]
-                      frequency:[self convert_type_button_to_frequency:[sender identifier]]];
+-(IBAction) setFunctionTypeNoise:(id)sender {
+    [sig_gen_noise configureWithType:(SIG_GEN_TYPE)[sender tag]
+                      frequency:0];
 }
 
--(IBAction) functionTypeGen4:(id)sender {
-    [sig_gen4 configureWithType:[self convert_type_button_to_type:[sender identifier]]
-                      frequency:[self convert_type_button_to_frequency:[sender identifier]]];
+
+-(IBAction) setGain400Hz:(id)sender {
+    [sig_gen_400Hz adjustVolume:[sender floatValue]];
 }
 
--(IBAction) gainAdjustGen1:(id)sender {
-    [sig_gen1 adjustVolume:[sender floatValue]];
-    
+-(IBAction) setGain1kHz:(id)sender {
+    [sig_gen_1kHz adjustVolume:[sender floatValue]];
 }
 
--(IBAction) gainAdjustGen2:(id)sender {
-    [sig_gen2 adjustVolume:[sender floatValue]];
+-(IBAction) setGainCustom:(id)sender {
+    [sig_gen_custom adjustVolume:[sender floatValue]];
 }
 
--(IBAction) gainAdjustGen3:(id)sender {
-    [sig_gen3 adjustVolume:[sender floatValue]];
+-(IBAction) setGainNoise:(id)sender {
+    [sig_gen_noise adjustVolume:[sender floatValue]];
 }
 
--(IBAction) gainAdjustGen4:(id)sender {
-    [sig_gen4 adjustVolume:[sender floatValue]];
-}
-
--(IBAction) startStopGen1:(id)sender {
-    if(sig_gen1_active) {
-        [sig_gen1 stopSignal];
-        [_sig_gen_startstop_button_1 setTitle:@"Start"];
+-(IBAction) startStop400Hz:(id)sender {
+    if(sig_gen_400Hz_active) {
+        [sig_gen_400Hz stopSignal];
+        [_sig_gen_startstop_button_400Hz setTitle:@"Start"];
     }
     else {
-        [sig_gen1 startSignal];
-        [_sig_gen_startstop_button_1 setTitle:@"Stop"];
+        [sig_gen_400Hz startSignal];
+        [_sig_gen_startstop_button_400Hz setTitle:@"Stop"];
     }
     
-    sig_gen1_active = !sig_gen1_active;
+    sig_gen_400Hz_active = !sig_gen_400Hz_active;
 }
 
--(IBAction) startStopGen2:(id)sender {
-    if(sig_gen2_active) {
-        [sig_gen2 stopSignal];
-        [_sig_gen_startstop_button_2 setTitle:@"Start"];
+-(IBAction) startStop1kHz:(id)sender {
+    if(sig_gen_1kHz_active) {
+        [sig_gen_1kHz stopSignal];
+        [_sig_gen_startstop_button_1kHz setTitle:@"Start"];
     }
     else {
-        [sig_gen2 startSignal];
-        [_sig_gen_startstop_button_2 setTitle:@"Stop"];
+        [sig_gen_1kHz startSignal];
+        [_sig_gen_startstop_button_1kHz setTitle:@"Stop"];
     }
     
-    sig_gen2_active = !sig_gen2_active;
+    sig_gen_1kHz_active = !sig_gen_1kHz_active;
 }
 
--(IBAction) startStopGen3:(id)sender {
-    if(sig_gen3_active) {
-        [sig_gen3 stopSignal];
-        [_sig_gen_startstop_button_3 setTitle:@"Start"];
+-(IBAction) startStopCustom:(id)sender {
+    if(sig_gen_custom_active) {
+        [sig_gen_custom stopSignal];
+        [_sig_gen_startstop_button_custom setTitle:@"Start"];
     }
     else {
-        [sig_gen3 startSignal];
-        [_sig_gen_startstop_button_3 setTitle:@"Stop"];
+        [sig_gen_custom startSignal];
+        [_sig_gen_startstop_button_custom setTitle:@"Stop"];
     }
     
-    sig_gen3_active = !sig_gen3_active;
+    sig_gen_custom_active = !sig_gen_custom_active;
 }
 
--(IBAction) startStopGen4:(id)sender {
-    if(sig_gen4_active) {
-        [sig_gen4 stopSignal];
-        [_sig_gen_startstop_button_4 setTitle:@"Start"];
+-(IBAction) startStopNoise:(id)sender {
+    if(sig_gen_noise_active) {
+        [sig_gen_noise stopSignal];
+        [_sig_gen_startstop_button_noise setTitle:@"Start"];
     }
     else {
-        [sig_gen4 startSignal];
-        [_sig_gen_startstop_button_4 setTitle:@"Stop"];
+        [sig_gen_noise startSignal];
+        [_sig_gen_startstop_button_noise setTitle:@"Stop"];
     }
     
-    sig_gen4_active = !sig_gen4_active;
+    sig_gen_noise_active = !sig_gen_noise_active;
 }
-
-
 
 @end

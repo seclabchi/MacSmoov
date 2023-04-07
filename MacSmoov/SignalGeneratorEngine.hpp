@@ -30,6 +30,11 @@ private:
     float frequency;
     float volume;
     uint32_t cur_samp;
+    float period_in_samples;
+    float sawtooth_jump_size;
+    float triangle_jump_size;
+    float cur_sample_value;
+    bool decrement;
 };
 
 }

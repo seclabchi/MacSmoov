@@ -8,10 +8,10 @@
         <customObject id="-2" userLabel="File's Owner" customClass="SignalGeneratorViewController">
             <connections>
                 <outlet property="sig_gen_panel" destination="QZo-eE-374" id="XXS-Gz-0YV"/>
-                <outlet property="sig_gen_startstop_button_1" destination="eXv-pI-ppp" id="Vv6-Y7-JGy"/>
-                <outlet property="sig_gen_startstop_button_2" destination="dIE-Nw-1Ld" id="q77-Kx-Smv"/>
-                <outlet property="sig_gen_startstop_button_3" destination="406-MD-8nR" id="qum-zW-GvY"/>
-                <outlet property="sig_gen_startstop_button_4" destination="9pT-py-QUO" id="jAC-Vh-crP"/>
+                <outlet property="sig_gen_startstop_button_1kHz" destination="HhO-hd-eY7" id="62S-42-wjS"/>
+                <outlet property="sig_gen_startstop_button_400Hz" destination="eXv-pI-ppp" id="P8u-bX-14y"/>
+                <outlet property="sig_gen_startstop_button_custom" destination="hwb-TP-63T" id="ozW-GO-DtU"/>
+                <outlet property="sig_gen_startstop_button_noise" destination="sGg-21-6dL" id="JUe-U7-QXI"/>
                 <outlet property="view" destination="HLz-VN-oXK" id="Nti-dr-dTt"/>
             </connections>
         </customObject>
@@ -20,14 +20,14 @@
         <window identifier="sig_gen_panel" title="Signal Generators" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" hidesOnDeactivate="YES" releasedWhenClosed="NO" visibleAtLaunch="NO" frameAutosaveName="" animationBehavior="default" id="QZo-eE-374" customClass="NSPanel">
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" utility="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
-            <rect key="contentRect" x="196" y="111" width="445" height="309"/>
+            <rect key="contentRect" x="196" y="111" width="445" height="512"/>
             <rect key="screenRect" x="0.0" y="0.0" width="1920" height="1055"/>
             <view key="contentView" wantsLayer="YES" id="HLz-VN-oXK">
-                <rect key="frame" x="0.0" y="0.0" width="445" height="309"/>
+                <rect key="frame" x="0.0" y="0.0" width="445" height="512"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="eXv-pI-ppp">
-                        <rect key="frame" x="110" y="265" width="68" height="32"/>
+                        <rect key="frame" x="100" y="468" width="68" height="32"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <buttonCell key="cell" type="push" title="Start" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="gE7-v9-Dri">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES" changeBackground="YES" changeGray="YES"/>
@@ -35,159 +35,20 @@
                         </buttonCell>
                         <color key="contentTintColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <connections>
-                            <action selector="startStopGen1:" target="-2" id="ic2-Kb-yK9"/>
+                            <action selector="startStop400Hz:" target="-2" id="XqQ-ph-aSO"/>
                         </connections>
                     </button>
                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Z27-GP-pFg">
-                        <rect key="frame" x="20" y="269" width="79" height="25"/>
+                        <rect key="frame" x="20" y="472" width="65" height="25"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <textFieldCell key="cell" lineBreakMode="clipping" borderStyle="border" title="Gen 1" id="l2b-Wj-O75">
+                        <textFieldCell key="cell" lineBreakMode="clipping" borderStyle="border" title="400 Hz" id="l2b-Wj-O75">
                             <font key="font" metaFont="system"/>
                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                     </textField>
-                    <button identifier="sine_400" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="JUX-7u-ncW">
-                        <rect key="frame" x="18" y="238" width="151" height="18"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <buttonCell key="cell" type="radio" title="Sine 400 Hz" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="zC0-T5-T8u">
-                            <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                            <font key="font" metaFont="system"/>
-                        </buttonCell>
-                        <connections>
-                            <action selector="functionTypeGen1:" target="-2" id="wpF-j5-0aH"/>
-                        </connections>
-                    </button>
-                    <button identifier="sine_1000" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="hdP-pR-FW7">
-                        <rect key="frame" x="18" y="216" width="151" height="18"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <buttonCell key="cell" type="radio" title="Sine 1 kHz" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="T15-QI-GLT">
-                            <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                            <font key="font" metaFont="system"/>
-                        </buttonCell>
-                        <connections>
-                            <action selector="functionTypeGen1:" target="-2" id="JpM-nj-qev"/>
-                        </connections>
-                    </button>
-                    <button identifier="noise_white" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="52q-eH-CBX">
-                        <rect key="frame" x="18" y="194" width="151" height="18"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <buttonCell key="cell" type="radio" title="White Noise" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="8yW-na-Fta">
-                            <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                            <font key="font" metaFont="system"/>
-                        </buttonCell>
-                        <connections>
-                            <action selector="functionTypeGen1:" target="-2" id="gAp-Is-j5v"/>
-                        </connections>
-                    </button>
-                    <button identifier="noise_pink" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="V4I-fU-GUU">
-                        <rect key="frame" x="18" y="172" width="151" height="18"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <buttonCell key="cell" type="radio" title="Pink Noise" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="DjA-n0-At2">
-                            <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                            <font key="font" metaFont="system"/>
-                        </buttonCell>
-                        <connections>
-                            <action selector="functionTypeGen1:" target="-2" id="jx0-2R-XDC"/>
-                        </connections>
-                    </button>
-                    <slider horizontalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="VHL-9q-fgG">
-                        <rect key="frame" x="175" y="189" width="24" height="108"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <shadow key="shadow">
-                            <color key="color" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        </shadow>
-                        <sliderCell key="cell" alignment="left" maxValue="1" doubleValue="0.5" tickMarkPosition="right" numberOfTickMarks="9" sliderType="linear" id="2AI-FD-r6S"/>
-                        <connections>
-                            <action selector="gainAdjustGen1:" target="-2" id="5rs-AN-2sD"/>
-                        </connections>
-                    </slider>
-                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="RJk-6y-O8Q">
-                        <rect key="frame" x="170" y="173" width="36" height="16"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <textFieldCell key="cell" lineBreakMode="clipping" alignment="center" title="Gain" id="VmH-Pk-y0S">
-                            <font key="font" metaFont="system"/>
-                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                        </textFieldCell>
-                    </textField>
-                    <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="dIE-Nw-1Ld">
-                        <rect key="frame" x="110" y="124" width="68" height="32"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <buttonCell key="cell" type="push" title="Start" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="ub6-4X-TNZ">
-                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES" changeBackground="YES" changeGray="YES"/>
-                            <font key="font" metaFont="systemBold"/>
-                        </buttonCell>
-                        <connections>
-                            <action selector="startStopGen2:" target="-2" id="R5s-Ur-3n9"/>
-                        </connections>
-                    </button>
-                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="crY-Rc-UuL">
-                        <rect key="frame" x="20" y="128" width="79" height="25"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <textFieldCell key="cell" lineBreakMode="clipping" borderStyle="border" title="Gen 2" id="KAA-h6-eg7">
-                            <font key="font" metaFont="system"/>
-                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                        </textFieldCell>
-                    </textField>
-                    <button identifier="sine_400" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="erU-An-BFy">
-                        <rect key="frame" x="18" y="97" width="151" height="18"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <buttonCell key="cell" type="radio" title="Sine 400 Hz" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="q59-KO-917">
-                            <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                            <font key="font" metaFont="system"/>
-                        </buttonCell>
-                        <connections>
-                            <action selector="functionTypeGen2:" target="-2" id="87u-je-tXX"/>
-                        </connections>
-                    </button>
-                    <button identifier="sine_1000" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Yq0-gR-jN2">
-                        <rect key="frame" x="18" y="75" width="151" height="18"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <buttonCell key="cell" type="radio" title="Sine 1 kHz" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="avl-1h-5Fz">
-                            <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                            <font key="font" metaFont="system"/>
-                        </buttonCell>
-                        <connections>
-                            <action selector="functionTypeGen2:" target="-2" id="bPO-7v-QLj"/>
-                        </connections>
-                    </button>
-                    <button identifier="noise_white" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="bQt-WO-OxW">
-                        <rect key="frame" x="18" y="53" width="151" height="18"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <buttonCell key="cell" type="radio" title="White Noise" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="MFm-eD-UeK">
-                            <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                            <font key="font" metaFont="system"/>
-                        </buttonCell>
-                        <connections>
-                            <action selector="functionTypeGen2:" target="-2" id="HX9-Ub-iYw"/>
-                        </connections>
-                    </button>
-                    <button identifier="noise_pink" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="huN-0S-axE">
-                        <rect key="frame" x="18" y="31" width="151" height="18"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <buttonCell key="cell" type="radio" title="Pink Noise" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="PL1-Sq-Fhb">
-                            <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                            <font key="font" metaFont="system"/>
-                        </buttonCell>
-                        <connections>
-                            <action selector="functionTypeGen2:" target="-2" id="xxS-aM-bdU"/>
-                        </connections>
-                    </button>
-                    <slider horizontalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="VCb-bG-5wR">
-                        <rect key="frame" x="175" y="48" width="24" height="108"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <shadow key="shadow">
-                            <color key="color" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        </shadow>
-                        <sliderCell key="cell" alignment="left" maxValue="1" doubleValue="0.5" tickMarkPosition="right" numberOfTickMarks="9" sliderType="linear" id="Z2P-7t-Ii8"/>
-                        <connections>
-                            <action selector="gainAdjustGen2:" target="-2" id="KzF-Pc-YT3"/>
-                        </connections>
-                    </slider>
                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="0AX-eG-yWW">
-                        <rect key="frame" x="170" y="32" width="36" height="16"/>
+                        <rect key="frame" x="182" y="477" width="36" height="16"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <textFieldCell key="cell" lineBreakMode="clipping" alignment="center" title="Gain" id="6tU-Do-caW">
                             <font key="font" metaFont="system"/>
@@ -195,171 +56,396 @@
                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                     </textField>
-                    <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="406-MD-8nR">
-                        <rect key="frame" x="331" y="265" width="68" height="32"/>
+                    <slider verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="nYq-LB-5Uf">
+                        <rect key="frame" x="217" y="469" width="203" height="28"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <buttonCell key="cell" type="push" title="Start" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Wfx-8M-tvq">
+                        <sliderCell key="cell" state="on" alignment="left" maxValue="1" doubleValue="0.5" tickMarkPosition="above" numberOfTickMarks="10" sliderType="linear" id="Ts5-g2-MBh"/>
+                        <connections>
+                            <action selector="setGain400Hz:" target="-2" id="ykc-gY-kRb"/>
+                        </connections>
+                    </slider>
+                    <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="FpD-j0-aUz">
+                        <rect key="frame" x="120" y="450" width="53" height="18"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <buttonCell key="cell" type="radio" title="Sine" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="IlT-0O-WAg">
+                            <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                            <font key="font" metaFont="system"/>
+                        </buttonCell>
+                        <connections>
+                            <action selector="setFunctionType400Hz:" target="-2" id="LQe-FW-NKm"/>
+                        </connections>
+                    </button>
+                    <button verticalHuggingPriority="750" fixedFrame="YES" tag="1" translatesAutoresizingMaskIntoConstraints="NO" id="D9R-FL-pOp">
+                        <rect key="frame" x="179" y="450" width="83" height="18"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <buttonCell key="cell" type="radio" title="Sawtooth" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="3Wz-hS-9Y7">
+                            <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                            <font key="font" metaFont="system"/>
+                        </buttonCell>
+                        <connections>
+                            <action selector="setFunctionType400Hz:" target="-2" id="XEu-sU-KMl"/>
+                        </connections>
+                    </button>
+                    <button verticalHuggingPriority="750" fixedFrame="YES" tag="2" translatesAutoresizingMaskIntoConstraints="NO" id="r6u-J2-dHj">
+                        <rect key="frame" x="268" y="450" width="75" height="18"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <buttonCell key="cell" type="radio" title="Triangle" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="iv8-CI-Sak">
+                            <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                            <font key="font" metaFont="system"/>
+                        </buttonCell>
+                        <connections>
+                            <action selector="setFunctionType400Hz:" target="-2" id="Goy-xx-9Ws"/>
+                        </connections>
+                    </button>
+                    <button verticalHuggingPriority="750" fixedFrame="YES" tag="3" translatesAutoresizingMaskIntoConstraints="NO" id="VwU-Du-QNG">
+                        <rect key="frame" x="349" y="450" width="69" height="18"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <buttonCell key="cell" type="radio" title="Square" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="Slj-lC-we6">
+                            <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                            <font key="font" metaFont="system"/>
+                        </buttonCell>
+                        <connections>
+                            <action selector="setFunctionType400Hz:" target="-2" id="5N0-co-O1g"/>
+                        </connections>
+                    </button>
+                    <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="HhO-hd-eY7">
+                        <rect key="frame" x="100" y="405" width="68" height="32"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <buttonCell key="cell" type="push" title="Start" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="O8b-dF-lhR">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES" changeBackground="YES" changeGray="YES"/>
                             <font key="font" metaFont="systemBold"/>
                         </buttonCell>
+                        <color key="contentTintColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <connections>
-                            <action selector="startStopGen3:" target="-2" id="0DA-xb-dDW"/>
+                            <action selector="startStop1kHz:" target="-2" id="eeX-YU-ffN"/>
                         </connections>
                     </button>
-                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="CBS-4i-WtX">
-                        <rect key="frame" x="241" y="269" width="79" height="25"/>
+                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="rVO-qz-WsV">
+                        <rect key="frame" x="20" y="409" width="65" height="25"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <textFieldCell key="cell" lineBreakMode="clipping" borderStyle="border" title="Gen 3" id="8wf-BO-aIx">
+                        <textFieldCell key="cell" lineBreakMode="clipping" borderStyle="border" title="1 kHz" id="Sia-8Z-9AR">
                             <font key="font" metaFont="system"/>
                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                     </textField>
-                    <button identifier="sine_400" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="YPt-Co-fvf">
-                        <rect key="frame" x="239" y="238" width="151" height="18"/>
+                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="MdO-7H-mQh">
+                        <rect key="frame" x="182" y="414" width="36" height="16"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <buttonCell key="cell" type="radio" title="Sine 400 Hz" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="QPb-qM-SHA">
-                            <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                        <textFieldCell key="cell" lineBreakMode="clipping" alignment="center" title="Gain" id="C99-Ed-F4l">
                             <font key="font" metaFont="system"/>
-                        </buttonCell>
-                        <connections>
-                            <action selector="functionTypeGen3:" target="-2" id="aBv-ml-AVD"/>
-                        </connections>
-                    </button>
-                    <button identifier="sine_1000" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="xtv-iw-ZvK">
-                        <rect key="frame" x="239" y="216" width="151" height="18"/>
+                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                    </textField>
+                    <slider verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="wfW-no-6s0">
+                        <rect key="frame" x="217" y="406" width="203" height="28"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <buttonCell key="cell" type="radio" title="Sine 1 kHz" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="NRU-dh-cSj">
-                            <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                            <font key="font" metaFont="system"/>
-                        </buttonCell>
+                        <sliderCell key="cell" state="on" alignment="left" maxValue="1" doubleValue="0.5" tickMarkPosition="above" numberOfTickMarks="10" sliderType="linear" id="zaN-hV-Dja"/>
                         <connections>
-                            <action selector="functionTypeGen3:" target="-2" id="0GT-eY-gwh"/>
-                        </connections>
-                    </button>
-                    <button identifier="noise_white" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="7jK-ge-kfA">
-                        <rect key="frame" x="239" y="194" width="151" height="18"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <buttonCell key="cell" type="radio" title="White Noise" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="mfW-i6-yca">
-                            <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                            <font key="font" metaFont="system"/>
-                        </buttonCell>
-                        <connections>
-                            <action selector="functionTypeGen3:" target="-2" id="5bM-Uu-2t8"/>
-                        </connections>
-                    </button>
-                    <button identifier="noise_pink" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="E1e-jA-zfL">
-                        <rect key="frame" x="239" y="172" width="151" height="18"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <buttonCell key="cell" type="radio" title="Pink Noise" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="4Tp-MM-TfM">
-                            <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                            <font key="font" metaFont="system"/>
-                        </buttonCell>
-                        <connections>
-                            <action selector="functionTypeGen3:" target="-2" id="HeU-dy-0aU"/>
-                        </connections>
-                    </button>
-                    <slider horizontalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="vMc-d0-pNg">
-                        <rect key="frame" x="396" y="189" width="24" height="108"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <shadow key="shadow">
-                            <color key="color" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        </shadow>
-                        <sliderCell key="cell" alignment="left" maxValue="1" doubleValue="0.5" tickMarkPosition="right" numberOfTickMarks="9" sliderType="linear" id="byx-pF-1kK"/>
-                        <connections>
-                            <action selector="gainAdjustGen3:" target="-2" id="nNE-Cu-pqx"/>
+                            <action selector="setGain1kHz:" target="-2" id="bZw-FL-e9O"/>
                         </connections>
                     </slider>
-                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="6D4-eL-7cD">
-                        <rect key="frame" x="391" y="173" width="36" height="16"/>
+                    <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="zot-wV-L9E">
+                        <rect key="frame" x="120" y="387" width="53" height="18"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <textFieldCell key="cell" lineBreakMode="clipping" alignment="center" title="Gain" id="fBV-JU-M8Q">
+                        <buttonCell key="cell" type="radio" title="Sine" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="Qk4-vb-fUc">
+                            <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                             <font key="font" metaFont="system"/>
-                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                        </textFieldCell>
-                    </textField>
-                    <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="9pT-py-QUO">
-                        <rect key="frame" x="331" y="123" width="68" height="32"/>
+                        </buttonCell>
+                        <connections>
+                            <action selector="setFunctionType1kHz:" target="-2" id="JoP-BC-hLp"/>
+                        </connections>
+                    </button>
+                    <button verticalHuggingPriority="750" fixedFrame="YES" tag="1" translatesAutoresizingMaskIntoConstraints="NO" id="F2J-ps-0Ji">
+                        <rect key="frame" x="179" y="387" width="83" height="18"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <buttonCell key="cell" type="push" title="Start" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="TPb-VS-vaC">
+                        <buttonCell key="cell" type="radio" title="Sawtooth" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="hy1-0T-63f">
+                            <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                            <font key="font" metaFont="system"/>
+                        </buttonCell>
+                        <connections>
+                            <action selector="setFunctionType1kHz:" target="-2" id="e4d-3L-lsi"/>
+                        </connections>
+                    </button>
+                    <button verticalHuggingPriority="750" fixedFrame="YES" tag="2" translatesAutoresizingMaskIntoConstraints="NO" id="jni-kZ-zTG">
+                        <rect key="frame" x="268" y="387" width="75" height="18"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <buttonCell key="cell" type="radio" title="Triangle" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="2ew-e8-vXq">
+                            <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                            <font key="font" metaFont="system"/>
+                        </buttonCell>
+                        <connections>
+                            <action selector="setFunctionType1kHz:" target="-2" id="pSG-Zy-GC9"/>
+                        </connections>
+                    </button>
+                    <button verticalHuggingPriority="750" fixedFrame="YES" tag="3" translatesAutoresizingMaskIntoConstraints="NO" id="FkP-0R-NfD">
+                        <rect key="frame" x="349" y="387" width="69" height="18"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <buttonCell key="cell" type="radio" title="Square" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="hB9-r9-n4o">
+                            <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                            <font key="font" metaFont="system"/>
+                        </buttonCell>
+                        <connections>
+                            <action selector="setFunctionType1kHz:" target="-2" id="SXT-FZ-hDC"/>
+                        </connections>
+                    </button>
+                    <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="hwb-TP-63T">
+                        <rect key="frame" x="100" y="341" width="68" height="32"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <buttonCell key="cell" type="push" title="Start" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Ugb-OA-Wr9">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES" changeBackground="YES" changeGray="YES"/>
                             <font key="font" metaFont="systemBold"/>
                         </buttonCell>
+                        <color key="contentTintColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <connections>
-                            <action selector="startStopGen4:" target="-2" id="R3D-Ub-Cpv"/>
+                            <action selector="startStopCustom:" target="-2" id="AR1-1B-2k8"/>
                         </connections>
                     </button>
-                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="XxQ-fS-rh8">
-                        <rect key="frame" x="241" y="127" width="79" height="25"/>
+                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="PZR-eK-EUs">
+                        <rect key="frame" x="20" y="345" width="66" height="25"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <textFieldCell key="cell" lineBreakMode="clipping" borderStyle="border" title="Gen 4" id="H20-rV-2vu">
+                        <textFieldCell key="cell" lineBreakMode="clipping" borderStyle="border" title="Custom" id="6du-W1-zC4">
                             <font key="font" metaFont="system"/>
                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                     </textField>
-                    <button identifier="sine_400" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="J58-2r-84n">
-                        <rect key="frame" x="239" y="96" width="151" height="18"/>
+                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Fv6-xR-pA2">
+                        <rect key="frame" x="182" y="350" width="36" height="16"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <buttonCell key="cell" type="radio" title="Sine 400 Hz" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="FEC-te-5fz">
-                            <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                            <font key="font" metaFont="system"/>
-                        </buttonCell>
-                        <connections>
-                            <action selector="functionTypeGen4:" target="-2" id="7lK-NH-rcK"/>
-                        </connections>
-                    </button>
-                    <button identifier="sine_1000" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Ptp-6p-wL9">
-                        <rect key="frame" x="239" y="74" width="151" height="18"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <buttonCell key="cell" type="radio" title="Sine 1 kHz" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="tuv-Nw-6EU">
-                            <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                            <font key="font" metaFont="system"/>
-                        </buttonCell>
-                        <connections>
-                            <action selector="functionTypeGen4:" target="-2" id="4eR-Yy-QM9"/>
-                        </connections>
-                    </button>
-                    <button identifier="noise_white" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="wQ2-od-01t">
-                        <rect key="frame" x="239" y="52" width="151" height="18"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <buttonCell key="cell" type="radio" title="White Noise" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="2OO-55-LCH">
-                            <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                            <font key="font" metaFont="system"/>
-                        </buttonCell>
-                        <connections>
-                            <action selector="functionTypeGen4:" target="-2" id="fjC-Y3-7ip"/>
-                        </connections>
-                    </button>
-                    <button identifier="noise_pink" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ppW-VX-2cg">
-                        <rect key="frame" x="239" y="30" width="151" height="18"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <buttonCell key="cell" type="radio" title="Pink Noise" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="AOV-R7-vei">
-                            <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                            <font key="font" metaFont="system"/>
-                        </buttonCell>
-                        <connections>
-                            <action selector="functionTypeGen4:" target="-2" id="7gQ-A3-0vo"/>
-                        </connections>
-                    </button>
-                    <slider horizontalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="rP7-Oe-LFH">
-                        <rect key="frame" x="396" y="47" width="24" height="108"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <shadow key="shadow">
-                            <color key="color" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        </shadow>
-                        <sliderCell key="cell" alignment="left" maxValue="1" doubleValue="0.5" tickMarkPosition="right" numberOfTickMarks="9" sliderType="linear" id="go9-EP-pzT"/>
-                        <connections>
-                            <action selector="gainAdjustGen4:" target="-2" id="o4x-JY-trv"/>
-                        </connections>
-                    </slider>
-                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="emr-t4-ebP">
-                        <rect key="frame" x="391" y="31" width="36" height="16"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <textFieldCell key="cell" lineBreakMode="clipping" alignment="center" title="Gain" id="0XL-Ty-2Hi">
+                        <textFieldCell key="cell" lineBreakMode="clipping" alignment="center" title="Gain" id="Wgl-ff-XB8">
                             <font key="font" metaFont="system"/>
                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                    </textField>
+                    <slider verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="WGY-ag-4m2">
+                        <rect key="frame" x="217" y="342" width="203" height="28"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <sliderCell key="cell" state="on" alignment="left" maxValue="1" doubleValue="0.5" tickMarkPosition="above" numberOfTickMarks="10" sliderType="linear" id="N9I-Dq-Oxx"/>
+                        <connections>
+                            <action selector="setGainCustom:" target="-2" id="uF3-1H-1p9"/>
+                        </connections>
+                    </slider>
+                    <slider verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="bnk-fD-Mhm">
+                        <rect key="frame" x="19" y="290" width="401" height="28"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <sliderCell key="cell" state="on" alignment="left" maxValue="1" doubleValue="0.5" tickMarkPosition="above" numberOfTickMarks="10" sliderType="linear" id="kV0-Qb-AyE"/>
+                    </slider>
+                    <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Uf2-7h-20a">
+                        <rect key="frame" x="120" y="323" width="53" height="18"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <buttonCell key="cell" type="radio" title="Sine" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="SM3-lr-SL9">
+                            <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                            <font key="font" metaFont="system"/>
+                        </buttonCell>
+                        <connections>
+                            <action selector="setFunctionTypeCustom:" target="-2" id="fm8-z4-ifu"/>
+                        </connections>
+                    </button>
+                    <button verticalHuggingPriority="750" fixedFrame="YES" tag="1" translatesAutoresizingMaskIntoConstraints="NO" id="zbb-iv-BhS">
+                        <rect key="frame" x="179" y="323" width="83" height="18"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <buttonCell key="cell" type="radio" title="Sawtooth" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="XMn-8q-Ne3">
+                            <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                            <font key="font" metaFont="system"/>
+                        </buttonCell>
+                        <connections>
+                            <action selector="setFunctionTypeCustom:" target="-2" id="rb5-Km-n2j"/>
+                        </connections>
+                    </button>
+                    <button verticalHuggingPriority="750" fixedFrame="YES" tag="2" translatesAutoresizingMaskIntoConstraints="NO" id="pk4-s2-mmn">
+                        <rect key="frame" x="268" y="323" width="75" height="18"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <buttonCell key="cell" type="radio" title="Triangle" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="Mbd-BU-JSI">
+                            <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                            <font key="font" metaFont="system"/>
+                        </buttonCell>
+                        <connections>
+                            <action selector="setFunctionTypeCustom:" target="-2" id="AUF-DV-bOd"/>
+                        </connections>
+                    </button>
+                    <button verticalHuggingPriority="750" fixedFrame="YES" tag="3" translatesAutoresizingMaskIntoConstraints="NO" id="log-2s-1o1">
+                        <rect key="frame" x="349" y="323" width="69" height="18"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <buttonCell key="cell" type="radio" title="Square" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="NRp-Y1-frT">
+                            <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                            <font key="font" metaFont="system"/>
+                        </buttonCell>
+                        <connections>
+                            <action selector="setFunctionTypeCustom:" target="-2" id="axR-iL-6Gb"/>
+                        </connections>
+                    </button>
+                    <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="805-ot-Z45">
+                        <rect key="frame" x="18" y="319" width="76" height="21"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" drawsBackground="YES" id="qFD-yT-uqc">
+                            <font key="font" metaFont="system"/>
+                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                        <connections>
+                            <action selector="setFunctionFrequencyCustom:" target="-2" id="bCi-1G-MY9"/>
+                        </connections>
+                    </textField>
+                    <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="aYM-0m-B6w">
+                        <rect key="frame" x="100" y="252" width="68" height="32"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <buttonCell key="cell" type="push" title="Start" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Nw6-iM-ViU">
+                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES" changeBackground="YES" changeGray="YES"/>
+                            <font key="font" metaFont="systemBold"/>
+                        </buttonCell>
+                        <color key="contentTintColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    </button>
+                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ECu-Ph-K5i">
+                        <rect key="frame" x="20" y="256" width="66" height="25"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <textFieldCell key="cell" lineBreakMode="clipping" borderStyle="border" title="Sweep" id="BwC-Ac-OSk">
+                            <font key="font" metaFont="system"/>
+                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                    </textField>
+                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="gvT-uH-kce">
+                        <rect key="frame" x="182" y="261" width="36" height="16"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <textFieldCell key="cell" lineBreakMode="clipping" alignment="center" title="Gain" id="I9C-pe-YTg">
+                            <font key="font" metaFont="system"/>
+                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                    </textField>
+                    <slider verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="dwP-Di-SjN">
+                        <rect key="frame" x="217" y="253" width="203" height="28"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <sliderCell key="cell" state="on" alignment="left" maxValue="1" doubleValue="0.5" tickMarkPosition="above" numberOfTickMarks="10" sliderType="linear" id="VgF-bh-wST"/>
+                    </slider>
+                    <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="0fe-qR-2Qb">
+                        <rect key="frame" x="120" y="234" width="53" height="18"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <buttonCell key="cell" type="radio" title="Sine" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="B3q-oN-JLm">
+                            <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                            <font key="font" metaFont="system"/>
+                        </buttonCell>
+                    </button>
+                    <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Nyw-gd-9Tb">
+                        <rect key="frame" x="179" y="234" width="83" height="18"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <buttonCell key="cell" type="radio" title="Sawtooth" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="IeA-5h-21R">
+                            <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                            <font key="font" metaFont="system"/>
+                        </buttonCell>
+                    </button>
+                    <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="08Z-gg-Tre">
+                        <rect key="frame" x="268" y="234" width="75" height="18"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <buttonCell key="cell" type="radio" title="Triangle" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="GYE-hK-Sv3">
+                            <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                            <font key="font" metaFont="system"/>
+                        </buttonCell>
+                    </button>
+                    <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="E9E-b3-f6s">
+                        <rect key="frame" x="349" y="234" width="69" height="18"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <buttonCell key="cell" type="radio" title="Square" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="ROx-cZ-w4Q">
+                            <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                            <font key="font" metaFont="system"/>
+                        </buttonCell>
+                    </button>
+                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="KqT-MM-8Sq">
+                        <rect key="frame" x="128" y="206" width="72" height="16"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <textFieldCell key="cell" lineBreakMode="clipping" alignment="right" title="Start:" id="nJk-Bg-ARw">
+                            <font key="font" metaFont="system"/>
+                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                    </textField>
+                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="pKX-Bu-VEb">
+                        <rect key="frame" x="273" y="207" width="72" height="16"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <textFieldCell key="cell" lineBreakMode="clipping" alignment="right" title="Stop:" id="gP3-6M-HaV">
+                            <font key="font" metaFont="system"/>
+                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                    </textField>
+                    <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="sGg-21-6dL">
+                        <rect key="frame" x="100" y="156" width="68" height="32"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <buttonCell key="cell" type="push" title="Start" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="LSw-TL-Khg">
+                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES" changeBackground="YES" changeGray="YES"/>
+                            <font key="font" metaFont="systemBold"/>
+                        </buttonCell>
+                        <color key="contentTintColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <connections>
+                            <action selector="startStopNoise:" target="-2" id="phQ-ZE-tqn"/>
+                        </connections>
+                    </button>
+                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="WcC-aS-HRk">
+                        <rect key="frame" x="20" y="160" width="65" height="25"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <textFieldCell key="cell" lineBreakMode="clipping" borderStyle="border" title="Noise" id="rEX-JS-4VQ">
+                            <font key="font" metaFont="system"/>
+                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                    </textField>
+                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="L21-Qu-zQU">
+                        <rect key="frame" x="182" y="165" width="36" height="16"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <textFieldCell key="cell" lineBreakMode="clipping" alignment="center" title="Gain" id="j8a-iA-Pqf">
+                            <font key="font" metaFont="system"/>
+                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                    </textField>
+                    <slider verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="rxq-zA-qQO">
+                        <rect key="frame" x="217" y="157" width="203" height="28"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <sliderCell key="cell" state="on" alignment="left" maxValue="1" doubleValue="0.5" tickMarkPosition="above" numberOfTickMarks="10" sliderType="linear" id="qIv-wN-0W8"/>
+                        <connections>
+                            <action selector="setGainNoise:" target="-2" id="znT-bJ-qJI"/>
+                        </connections>
+                    </slider>
+                    <button verticalHuggingPriority="750" fixedFrame="YES" tag="4" translatesAutoresizingMaskIntoConstraints="NO" id="38p-CI-uOo">
+                        <rect key="frame" x="120" y="138" width="66" height="18"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <buttonCell key="cell" type="radio" title="White" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="IQu-Vf-VQG">
+                            <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                            <font key="font" metaFont="system"/>
+                        </buttonCell>
+                        <connections>
+                            <action selector="setFunctionTypeNoise:" target="-2" id="z4n-ru-iIw"/>
+                        </connections>
+                    </button>
+                    <button verticalHuggingPriority="750" fixedFrame="YES" tag="5" translatesAutoresizingMaskIntoConstraints="NO" id="lc3-61-qhM">
+                        <rect key="frame" x="195" y="138" width="52" height="18"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <buttonCell key="cell" type="radio" title="Pink" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="6xn-Yg-c4q">
+                            <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                            <font key="font" metaFont="system"/>
+                        </buttonCell>
+                        <connections>
+                            <action selector="setFunctionTypeNoise:" target="-2" id="HPj-L5-Qul"/>
+                        </connections>
+                    </button>
+                    <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Knw-jJ-qSW">
+                        <rect key="frame" x="206" y="204" width="80" height="21"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" drawsBackground="YES" id="g6A-QJ-YEO">
+                            <font key="font" metaFont="system"/>
+                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                    </textField>
+                    <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="X4A-Io-dUz">
+                        <rect key="frame" x="351" y="204" width="80" height="21"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" drawsBackground="YES" id="dhn-1c-3oU">
+                            <font key="font" metaFont="system"/>
+                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                     </textField>
@@ -368,7 +454,7 @@
             <connections>
                 <outlet property="delegate" destination="-2" id="hLR-Kv-o0u"/>
             </connections>
-            <point key="canvasLocation" x="138" y="-118"/>
+            <point key="canvasLocation" x="137.5" y="-17"/>
         </window>
     </objects>
 </document>

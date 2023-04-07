@@ -20,6 +20,8 @@ static std::normal_distribution<float> nd(0.0,1.0);
 SignalGeneratorEngine::SignalGeneratorEngine(uint32_t _f_samp, uint32_t _n_channels) : f_samp(_f_samp), n_channels(_n_channels) {
     volume = 1.0;
     cur_samp = 0;
+    type = SINE;
+    frequency = 400;
 }
 
 SignalGeneratorEngine::~SignalGeneratorEngine() {
@@ -29,6 +31,14 @@ SignalGeneratorEngine::~SignalGeneratorEngine() {
 void SignalGeneratorEngine::configure(SIG_GEN_TYPE _type, uint32_t _frequency) {
     type = _type;
     frequency = _frequency;
+    
+    //period of the triangle wave in samples 1/f * Fs
+    period_in_samples = (1.0/(float)frequency) * (float)f_samp;
+    
+    sawtooth_jump_size = 1.0/period_in_samples;
+    triangle_jump_size = 2.0/period_in_samples;
+    cur_sample_value = 0.0;
+    decrement = false;
 }
 
 void SignalGeneratorEngine::get_next_buffers(float* out_buf, uint32_t n_frames) {
@@ -47,6 +57,39 @@ void SignalGeneratorEngine::get_next_buffers(float* out_buf, uint32_t n_frames) 
                 cur_samp++;
             }
         }
+        break;
+    case SAWTOOTH:
+        for(uint32_t i = 0; i < n_frames; i++) {
+            out_buf[i] = volume * cur_sample_value;
+            out_buf[i+1] = volume * cur_sample_value;
+            cur_sample_value += sawtooth_jump_size;
+            if(cur_sample_value >= 0.999999) {
+                cur_sample_value = -1.0;
+            }
+        }
+        break;
+    case TRIANGLE:
+        for(uint32_t i = 0; i < n_frames; i++) {
+            out_buf[i] = volume * cur_sample_value;
+            out_buf[i+1] = volume * cur_sample_value;
+            
+            if(cur_sample_value >= 0.999999) {
+                decrement = true;
+            }
+            if(cur_sample_value <= -0.999999) {
+                decrement = false;
+            }
+            
+            if(decrement) {
+                cur_sample_value -= triangle_jump_size;
+            }
+            else {
+                cur_sample_value += triangle_jump_size;
+            }
+            
+        }
+        break;
+    case SQUARE:
         break;
     case NOISE_WHITE:
         {

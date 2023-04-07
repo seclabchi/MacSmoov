@@ -10,8 +10,11 @@
 
 typedef enum {
     SINE = 0,
-    NOISE_WHITE = 1,
-    NOISE_PINK = 2,
+    SAWTOOTH = 1,
+    TRIANGLE = 2,
+    SQUARE = 3,
+    NOISE_WHITE = 4,
+    NOISE_PINK = 5,
     UNKNOWN = 255
 } SIG_GEN_TYPE;
 
