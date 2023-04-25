@@ -10,6 +10,12 @@
 		9D281A9229E05F57009CF125 /* SignalGenerator.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D281A9129E05F57009CF125 /* SignalGenerator.m */; };
 		9D281A9329E05F57009CF125 /* SignalGenerator.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D281A9129E05F57009CF125 /* SignalGenerator.m */; };
 		9D281A9429E05F57009CF125 /* SignalGenerator.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D281A9129E05F57009CF125 /* SignalGenerator.m */; };
+		9D281A9929E1C5B5009CF125 /* AudioDeviceSelector.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D281A9729E1C5B5009CF125 /* AudioDeviceSelector.m */; };
+		9D281A9A29E1C5B5009CF125 /* AudioDeviceSelector.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D281A9729E1C5B5009CF125 /* AudioDeviceSelector.m */; };
+		9D281A9B29E1C5B5009CF125 /* AudioDeviceSelector.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D281A9729E1C5B5009CF125 /* AudioDeviceSelector.m */; };
+		9D281A9C29E1C5B5009CF125 /* AudioDeviceSelector.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9D281A9829E1C5B5009CF125 /* AudioDeviceSelector.xib */; };
+		9D281A9D29E1C5B5009CF125 /* AudioDeviceSelector.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9D281A9829E1C5B5009CF125 /* AudioDeviceSelector.xib */; };
+		9D281A9E29E1C5B5009CF125 /* AudioDeviceSelector.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9D281A9829E1C5B5009CF125 /* AudioDeviceSelector.xib */; };
 		9D5C638829D8E5D600E40A60 /* SignalGeneratorEngine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9D5C638629D8E5D600E40A60 /* SignalGeneratorEngine.cpp */; };
 		9D5C638929D8E5D600E40A60 /* SignalGeneratorEngine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9D5C638629D8E5D600E40A60 /* SignalGeneratorEngine.cpp */; };
 		9D5C638A29D8E5D600E40A60 /* SignalGeneratorEngine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9D5C638629D8E5D600E40A60 /* SignalGeneratorEngine.cpp */; };
@@ -22,6 +28,10 @@
 		9D5C639729DA5DE200E40A60 /* SignalGeneratorViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9D5C639329DA5DE200E40A60 /* SignalGeneratorViewController.xib */; };
 		9D5C639829DA5DE200E40A60 /* SignalGeneratorViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9D5C639329DA5DE200E40A60 /* SignalGeneratorViewController.xib */; };
 		9D5C639929DA5DE200E40A60 /* SignalGeneratorViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9D5C639329DA5DE200E40A60 /* SignalGeneratorViewController.xib */; };
+		9D9806D529EB849200B98415 /* ProcessorCore.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9D9806D329EB849200B98415 /* ProcessorCore.cpp */; };
+		9D9806D629EB849200B98415 /* ProcessorCore.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9D9806D329EB849200B98415 /* ProcessorCore.cpp */; };
+		9D9806D829EC686C00B98415 /* ProcessorSysInterface.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D9806D729EC686C00B98415 /* ProcessorSysInterface.m */; };
+		9D9806D929EC686C00B98415 /* ProcessorSysInterface.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D9806D729EC686C00B98415 /* ProcessorSysInterface.m */; };
 		9DB7A12829D7949D002E6F4E /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 9DB7A12729D7949D002E6F4E /* AppDelegate.m */; };
 		9DB7A12A29D7949E002E6F4E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9DB7A12929D7949E002E6F4E /* Assets.xcassets */; };
 		9DB7A12D29D7949E002E6F4E /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9DB7A12B29D7949E002E6F4E /* MainMenu.xib */; };
@@ -51,6 +61,9 @@
 /* Begin PBXFileReference section */
 		9D281A9129E05F57009CF125 /* SignalGenerator.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SignalGenerator.m; sourceTree = "<group>"; };
 		9D281A9529E05F67009CF125 /* SignalGenerator.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SignalGenerator.h; sourceTree = "<group>"; };
+		9D281A9629E1C5B5009CF125 /* AudioDeviceSelector.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AudioDeviceSelector.h; sourceTree = "<group>"; };
+		9D281A9729E1C5B5009CF125 /* AudioDeviceSelector.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AudioDeviceSelector.m; sourceTree = "<group>"; };
+		9D281A9829E1C5B5009CF125 /* AudioDeviceSelector.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AudioDeviceSelector.xib; sourceTree = "<group>"; };
 		9D5C638629D8E5D600E40A60 /* SignalGeneratorEngine.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = SignalGeneratorEngine.cpp; sourceTree = "<group>"; };
 		9D5C638729D8E5D600E40A60 /* SignalGeneratorEngine.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = SignalGeneratorEngine.hpp; sourceTree = "<group>"; };
 		9D5C638B29D9FF5400E40A60 /* SignalGeneratorEngineWrapper.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = SignalGeneratorEngineWrapper.mm; sourceTree = "<group>"; };
@@ -59,6 +72,11 @@
 		9D5C639129DA5DE200E40A60 /* SignalGeneratorViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SignalGeneratorViewController.h; sourceTree = "<group>"; };
 		9D5C639229DA5DE200E40A60 /* SignalGeneratorViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SignalGeneratorViewController.m; sourceTree = "<group>"; };
 		9D5C639329DA5DE200E40A60 /* SignalGeneratorViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SignalGeneratorViewController.xib; sourceTree = "<group>"; };
+		9D71CFB229F83E6100436F79 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		9D9806D329EB849200B98415 /* ProcessorCore.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ProcessorCore.cpp; sourceTree = "<group>"; };
+		9D9806D429EB849200B98415 /* ProcessorCore.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = ProcessorCore.hpp; sourceTree = "<group>"; };
+		9D9806D729EC686C00B98415 /* ProcessorSysInterface.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ProcessorSysInterface.m; sourceTree = "<group>"; };
+		9D9806DA29EC688300B98415 /* ProcessorSysInterface.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ProcessorSysInterface.h; sourceTree = "<group>"; };
 		9DB7A12329D7949D002E6F4E /* MacSmoov.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MacSmoov.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9DB7A12629D7949D002E6F4E /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		9DB7A12729D7949D002E6F4E /* AppDelegate.m */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -121,6 +139,7 @@
 		9DB7A12529D7949D002E6F4E /* MacSmoov */ = {
 			isa = PBXGroup;
 			children = (
+				9D71CFB229F83E6100436F79 /* Info.plist */,
 				9DB7A12629D7949D002E6F4E /* AppDelegate.h */,
 				9DB7A12729D7949D002E6F4E /* AppDelegate.m */,
 				9DB7A12929D7949E002E6F4E /* Assets.xcassets */,
@@ -137,6 +156,13 @@
 				9D5C639329DA5DE200E40A60 /* SignalGeneratorViewController.xib */,
 				9D281A9129E05F57009CF125 /* SignalGenerator.m */,
 				9D281A9529E05F67009CF125 /* SignalGenerator.h */,
+				9D281A9629E1C5B5009CF125 /* AudioDeviceSelector.h */,
+				9D281A9729E1C5B5009CF125 /* AudioDeviceSelector.m */,
+				9D281A9829E1C5B5009CF125 /* AudioDeviceSelector.xib */,
+				9D9806D329EB849200B98415 /* ProcessorCore.cpp */,
+				9D9806D429EB849200B98415 /* ProcessorCore.hpp */,
+				9D9806D729EC686C00B98415 /* ProcessorSysInterface.m */,
+				9D9806DA29EC688300B98415 /* ProcessorSysInterface.h */,
 			);
 			path = MacSmoov;
 			sourceTree = "<group>";
@@ -264,6 +290,7 @@
 				9DB7A12A29D7949E002E6F4E /* Assets.xcassets in Resources */,
 				9DB7A12D29D7949E002E6F4E /* MainMenu.xib in Resources */,
 				9D5C639729DA5DE200E40A60 /* SignalGeneratorViewController.xib in Resources */,
+				9D281A9C29E1C5B5009CF125 /* AudioDeviceSelector.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -272,6 +299,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				9D5C639829DA5DE200E40A60 /* SignalGeneratorViewController.xib in Resources */,
+				9D281A9D29E1C5B5009CF125 /* AudioDeviceSelector.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -280,6 +308,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				9D5C639929DA5DE200E40A60 /* SignalGeneratorViewController.xib in Resources */,
+				9D281A9E29E1C5B5009CF125 /* AudioDeviceSelector.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -293,9 +322,12 @@
 				9D5C639429DA5DE200E40A60 /* SignalGeneratorViewController.m in Sources */,
 				9D5C638829D8E5D600E40A60 /* SignalGeneratorEngine.cpp in Sources */,
 				9D5C638C29D9FF5400E40A60 /* SignalGeneratorEngineWrapper.mm in Sources */,
+				9D9806D529EB849200B98415 /* ProcessorCore.cpp in Sources */,
 				9DB7A12F29D7949E002E6F4E /* main.m in Sources */,
 				9DB7A12829D7949D002E6F4E /* AppDelegate.m in Sources */,
 				9D281A9229E05F57009CF125 /* SignalGenerator.m in Sources */,
+				9D281A9929E1C5B5009CF125 /* AudioDeviceSelector.m in Sources */,
+				9D9806D829EC686C00B98415 /* ProcessorSysInterface.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -304,6 +336,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				9D5C638D29D9FF5400E40A60 /* SignalGeneratorEngineWrapper.mm in Sources */,
+				9D281A9A29E1C5B5009CF125 /* AudioDeviceSelector.m in Sources */,
+				9D9806D929EC686C00B98415 /* ProcessorSysInterface.m in Sources */,
+				9D9806D629EB849200B98415 /* ProcessorCore.cpp in Sources */,
 				9DB7A13A29D7949E002E6F4E /* MacSmoovTests.m in Sources */,
 				9D281A9329E05F57009CF125 /* SignalGenerator.m in Sources */,
 				9D5C639529DA5DE200E40A60 /* SignalGeneratorViewController.m in Sources */,
@@ -321,6 +356,7 @@
 				9DB7A14429D7949F002E6F4E /* MacSmoovUITests.m in Sources */,
 				9DB7A14629D7949F002E6F4E /* MacSmoovUITestsLaunchTests.m in Sources */,
 				9D281A9429E05F57009CF125 /* SignalGenerator.m in Sources */,
+				9D281A9B29E1C5B5009CF125 /* AudioDeviceSelector.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -472,6 +508,7 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = MacSmoov/Info.plist;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				INFOPLIST_KEY_NSMainNibFile = MainMenu;
 				INFOPLIST_KEY_NSPrincipalClass = NSApplication;
@@ -497,6 +534,7 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = MacSmoov/Info.plist;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				INFOPLIST_KEY_NSMainNibFile = MainMenu;
 				INFOPLIST_KEY_NSPrincipalClass = NSApplication;

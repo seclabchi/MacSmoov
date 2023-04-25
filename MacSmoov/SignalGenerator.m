@@ -15,6 +15,17 @@
     AudioStreamBasicDescription asbd;
     AudioQueueRef outAQ;
     AudioQueueBufferRef buffers[4];
+    NSString* current_output_device;
+}
+
+-(void) setOutputDevice:(NSString*)output_device_uid active:(BOOL) isOn {
+    [self stopSignal];
+    CFStringRef cods_cfstr = (__bridge CFStringRef)output_device_uid;
+    theErr = AudioQueueSetProperty(outAQ, kAudioQueueProperty_CurrentDevice, &cods_cfstr, sizeof(&cods_cfstr));
+    assert(theErr == noErr);
+    if(isOn) {
+        [self startSignal];
+    }
 }
 
 -(id) initWithSampleRate:(uint32_t)sample_rate numberOfChannels:(uint32_t)num_chans {
@@ -37,6 +48,29 @@
         //theErr = AudioQueueNewOutput(&asbd, audioOutQcb, (__bridge void*)self, CFRunLoopGetMain(), kCFRunLoopCommonModes, 0, &outAQ);
         theErr = AudioQueueNewOutput(&asbd, audioOutQcb, (__bridge void*)self, NULL, NULL, 0, &outAQ);
         
+        assert(theErr == noErr);
+        
+        UInt32 prop_data_size = 0;
+        NSString* current_device_string;
+        CFStringRef current_device_cfstringref = nil;
+        theErr = AudioQueueGetPropertySize(outAQ, kAudioQueueProperty_CurrentDevice, &prop_data_size);
+        assert(theErr == noErr);
+        theErr = AudioQueueGetProperty(outAQ, kAudioQueueProperty_CurrentDevice, (void*)&current_device_cfstringref, &prop_data_size);
+        current_device_string = (__bridge NSString*)current_device_cfstringref;
+        assert(theErr == noErr);
+        
+        //CFStringRef set_output_device_string = CFSTR("Plantronics Blackwire 3210 Series");
+        //CFStringRef set_output_device_string = CFSTR("AppleUSBAudioEngine:Plantronics:Plantronics Blackwire 3210 Series:FFE5F399D3F84D558CDC32EA0790A041:2");
+        
+        //NSString* current_output_device_string = @"AppleUSBAudioEngine:Plantronics:Plantronics Blackwire 3210 Series:FFE5F399D3F84D558CDC32EA0790A041:2"; //[audio_dev_selector get_output_device_uid];
+        NSString* current_output_device_string = @"AQDefaultOutput";
+        
+        CFStringRef cods_cfstr = (__bridge CFStringRef)current_output_device_string;
+        
+        theErr = AudioQueueSetProperty(outAQ, kAudioQueueProperty_CurrentDevice, &cods_cfstr, sizeof(&cods_cfstr));
+        assert(theErr == noErr);
+        theErr = AudioQueueGetProperty(outAQ, kAudioQueueProperty_CurrentDevice, (void*)&current_device_cfstringref, &prop_data_size);
+        current_device_string = (__bridge NSString*)current_device_cfstringref;
         assert(theErr == noErr);
         
         AudioQueueAllocateBuffer(outAQ, BUFFER_SIZE*sizeof(float), &buffers[0]);

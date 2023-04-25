@@ -155,4 +155,11 @@
     sig_gen_noise_active = !sig_gen_noise_active;
 }
 
+-(void) outputDeviceChanged:(NSString*)output_device_uid {
+    [sig_gen_400Hz setOutputDevice:output_device_uid active:sig_gen_400Hz_active];
+    [sig_gen_1kHz setOutputDevice:output_device_uid active:sig_gen_1kHz_active];
+    [sig_gen_custom setOutputDevice:output_device_uid active:sig_gen_custom_active];
+    [sig_gen_noise setOutputDevice:output_device_uid active:sig_gen_noise_active];
+}
+
 @end

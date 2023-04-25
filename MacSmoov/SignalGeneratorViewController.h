@@ -26,6 +26,8 @@ NS_ASSUME_NONNULL_BEGIN
 -(IBAction) startStopCustom:(id)sender;
 -(IBAction) startStopNoise:(id)sender;
 
+-(void) outputDeviceChanged:(NSString*)output_device_uid;
+
 -(void) showPanel;
 @end
 

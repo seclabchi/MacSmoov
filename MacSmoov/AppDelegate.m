@@ -8,6 +8,7 @@
 #import "AppDelegate.h"
 #import <AudioToolbox/AudioToolbox.h>
 #import "SignalGenerator.h"
+#import "ProcessorSysInterface.h"
 
 @interface AppDelegate ()
 
@@ -17,11 +18,19 @@
 @implementation AppDelegate
 
 SignalGeneratorViewController *siggenvc;
+AudioDeviceSelector *audio_device_selector;
+ProcessorSysInterface* process_sys_iface;
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
     // Insert code here to initialize your application
     //TODO:  initialize signal generators here, and the eventual audio passthrough/processing chain
     siggenvc = [[SignalGeneratorViewController alloc] init];
+    audio_device_selector = [[AudioDeviceSelector alloc] init];
+    [audio_device_selector set_watcher_for_output_device_change:self andSelector:@selector(output_device_changed:)];
+    [audio_device_selector set_watcher_for_input_device_change:self andSelector:@selector(input_device_changed:)];
+    process_sys_iface = [[ProcessorSysInterface alloc] init];
+    //[process_sys_iface outputDeviceChanged:@"AppleUSBAudioEngine:Plantronics:Plantronics Blackwire 3210 Series:FFE5F399D3F84D558CDC32EA0790A041:2"];
+    [process_sys_iface start];
 }
 
 
@@ -64,8 +73,24 @@ SignalGeneratorViewController *siggenvc;
     
 }
 
+-(void) output_device_changed:(NSString*)output_device {
+    NSLog(@"Got notification from AudioDeviceSelector about new output device: %@", output_device);
+    [siggenvc outputDeviceChanged:output_device];
+    [process_sys_iface outputDeviceChanged:output_device];
+}
+
+-(void) input_device_changed:(NSString*)input_device {
+    NSLog(@"Got notification from AudioDeviceSelector about new input device: %@", input_device);
+    [process_sys_iface inputDeviceChanged:input_device];
+}
+
 - (IBAction) showSignalGenerators:(id)sender {
     [siggenvc showPanel];
+}
+
+-(IBAction) showAudioDeviceSelector:(id)sender {
+    [audio_device_selector showPanel];
+    [audio_device_selector scanDevices];
 }
 
 -(void) openAudioFile:(NSURL*)fileUrl {
