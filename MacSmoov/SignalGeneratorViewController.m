@@ -31,6 +31,8 @@
     
     uint32_t custom_type_tag;
     float custom_frequency;
+    
+    NSString* output_device;
 }
 
 -(void)showPanel {
@@ -53,6 +55,12 @@
     custom_frequency = 0.0f;
     sig_gen_noise = [[SignalGenerator alloc] initWithSampleRate:48000 numberOfChannels:2];
     [sig_gen_noise configureWithType:NOISE_WHITE frequency:0];
+    
+    /* HOKEY: Need to add this in here because the output device may have been changed before this view loaded. */
+    [sig_gen_400Hz setOutputDevice:output_device active:sig_gen_400Hz_active];
+    [sig_gen_1kHz setOutputDevice:output_device active:sig_gen_1kHz_active];
+    [sig_gen_custom setOutputDevice:output_device active:sig_gen_custom_active];
+    [sig_gen_noise setOutputDevice:output_device active:sig_gen_noise_active];
 }
 
 -(void)viewWillDisappear {
@@ -156,10 +164,11 @@
 }
 
 -(void) outputDeviceChanged:(NSString*)output_device_uid {
-    [sig_gen_400Hz setOutputDevice:output_device_uid active:sig_gen_400Hz_active];
-    [sig_gen_1kHz setOutputDevice:output_device_uid active:sig_gen_1kHz_active];
-    [sig_gen_custom setOutputDevice:output_device_uid active:sig_gen_custom_active];
-    [sig_gen_noise setOutputDevice:output_device_uid active:sig_gen_noise_active];
+    output_device = [NSString stringWithString:output_device_uid];
+    [sig_gen_400Hz setOutputDevice:output_device active:sig_gen_400Hz_active];
+    [sig_gen_1kHz setOutputDevice:output_device active:sig_gen_1kHz_active];
+    [sig_gen_custom setOutputDevice:output_device active:sig_gen_custom_active];
+    [sig_gen_noise setOutputDevice:output_device active:sig_gen_noise_active];
 }
 
 @end

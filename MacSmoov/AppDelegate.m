@@ -75,13 +75,23 @@ ProcessorSysInterface* process_sys_iface;
 
 -(void) output_device_changed:(NSString*)output_device {
     NSLog(@"Got notification from AudioDeviceSelector about new output device: %@", output_device);
-    [siggenvc outputDeviceChanged:output_device];
-    [process_sys_iface outputDeviceChanged:output_device];
+    if(nil != output_device) {
+        [siggenvc outputDeviceChanged:output_device];
+        [process_sys_iface outputDeviceChanged:output_device];
+    }
+    else {
+        NSLog(@"WARNING: Got null output_device notification.");
+    }
 }
 
 -(void) input_device_changed:(NSString*)input_device {
     NSLog(@"Got notification from AudioDeviceSelector about new input device: %@", input_device);
-    [process_sys_iface inputDeviceChanged:input_device];
+    if(nil != input_device) {
+        [process_sys_iface inputDeviceChanged:input_device];
+    }
+    else {
+        NSLog(@"WARNING: Got null input_device notification.");
+    }
 }
 
 - (IBAction) showSignalGenerators:(id)sender {
