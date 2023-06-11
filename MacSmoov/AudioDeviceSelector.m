@@ -30,8 +30,10 @@
     // Do view setup here.
     audio_output_device_dict = [[NSMutableDictionary alloc] init];
     audio_input_device_dict = [[NSMutableDictionary alloc] init];
-    cur_output_device_uid = @"AQDefaultOutput";
-    cur_input_device_uid = @"AQDefaultInput";
+    NSUserDefaultsController *prefs_controller = [NSUserDefaultsController sharedUserDefaultsController];
+    NSUserDefaults *prefs = prefs_controller.defaults;
+    cur_output_device_uid = [prefs objectForKey:@"OUTPUT_DEVICE"];
+    cur_input_device_uid = [prefs objectForKey:@"INPUT_DEVICE"];
     NSLog(@"AudioDeviceSelector viewDidLoad");
 }
 
@@ -49,12 +51,12 @@
     NSComboBox* combo = [notification object];
     if([combo tag] == 0) {
         NSLog(@"Input device changed to %@", [combo objectValueOfSelectedItem]);
-        cur_input_device_uid = [audio_input_device_dict valueForKey:[combo objectValueOfSelectedItem]];
+        cur_input_device_uid = [audio_input_device_dict allKeysForObject:[combo objectValueOfSelectedItem]][0];
         [input_device_watcher_object performSelector:input_device_watcher_selector withObject:cur_input_device_uid];
     }
     else {
         NSLog(@"Output device changed to %@", [combo objectValueOfSelectedItem]);
-        cur_output_device_uid = [audio_output_device_dict valueForKey:[combo objectValueOfSelectedItem]];
+        cur_output_device_uid = [audio_output_device_dict allKeysForObject:[combo objectValueOfSelectedItem]][0];
         [output_device_watcher_object performSelector:output_device_watcher_selector withObject:cur_output_device_uid];
     }
 }
@@ -174,10 +176,9 @@ bool DeviceHasBuffersInScope(AudioObjectID deviceID, AudioObjectPropertyScope sc
             
             NSLog(@"OUTPUT DEVICE NAME: %@", (__bridge NSString*) device_name_cfstr);
             
-            [audio_output_device_dict setValue:(__bridge NSString*)device_uid_cfstr forKey:(__bridge NSString*)device_name_cfstr];
+            [audio_output_device_dict setValue:(__bridge NSString*)device_name_cfstr forKey:(__bridge NSString*)device_uid_cfstr];
             
             [self.outputDeviceComboBox addItemWithObjectValue:(__bridge NSString*)device_name_cfstr];
-            
         }
         if(isInput) {
             
@@ -217,7 +218,7 @@ bool DeviceHasBuffersInScope(AudioObjectID deviceID, AudioObjectPropertyScope sc
             
             NSLog(@"INPUT DEVICE NAME: %@", (__bridge NSString*) device_name_cfstr);
             
-            [audio_input_device_dict setValue:(__bridge NSString*)device_uid_cfstr forKey:(__bridge NSString*)device_name_cfstr];
+            [audio_input_device_dict setValue:(__bridge NSString*)device_name_cfstr forKey:(__bridge NSString*)device_uid_cfstr];
             
             [self.inputDeviceComboBox addItemWithObjectValue:(__bridge NSString*)device_name_cfstr];
         }
@@ -227,5 +228,8 @@ bool DeviceHasBuffersInScope(AudioObjectID deviceID, AudioObjectPropertyScope sc
     }
     
     NSLog(@"Finished scanning audio devices.");
+    
+    [self.outputDeviceComboBox selectItemWithObjectValue:[audio_output_device_dict objectForKey:cur_output_device_uid]];
+    [self.inputDeviceComboBox selectItemWithObjectValue:[audio_input_device_dict objectForKey:cur_input_device_uid]];
 }
 @end

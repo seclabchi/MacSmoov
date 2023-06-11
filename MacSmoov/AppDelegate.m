@@ -20,11 +20,17 @@
 SignalGeneratorViewController *siggenvc;
 AudioDeviceSelector *audio_device_selector;
 ProcessorSysInterface* process_sys_iface;
+NSUserDefaults *prefs;
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
     // Insert code here to initialize your application
+    
+    NSUserDefaultsController *prefs_controller = [NSUserDefaultsController sharedUserDefaultsController];
+    prefs = prefs_controller.defaults;
+    
     //TODO:  initialize signal generators here, and the eventual audio passthrough/processing chain
     siggenvc = [[SignalGeneratorViewController alloc] init];
+    //[self output_device_changed:@"AQDefaultOutput"];
     audio_device_selector = [[AudioDeviceSelector alloc] init];
     [audio_device_selector set_watcher_for_output_device_change:self andSelector:@selector(output_device_changed:)];
     [audio_device_selector set_watcher_for_input_device_change:self andSelector:@selector(input_device_changed:)];
@@ -76,6 +82,7 @@ ProcessorSysInterface* process_sys_iface;
 -(void) output_device_changed:(NSString*)output_device {
     NSLog(@"Got notification from AudioDeviceSelector about new output device: %@", output_device);
     if(nil != output_device) {
+        [prefs setObject:output_device forKey:@"OUTPUT_DEVICE"];
         [siggenvc outputDeviceChanged:output_device];
         [process_sys_iface outputDeviceChanged:output_device];
     }
@@ -87,6 +94,7 @@ ProcessorSysInterface* process_sys_iface;
 -(void) input_device_changed:(NSString*)input_device {
     NSLog(@"Got notification from AudioDeviceSelector about new input device: %@", input_device);
     if(nil != input_device) {
+        [prefs setObject:input_device forKey:@"INPUT_DEVICE"];
         [process_sys_iface inputDeviceChanged:input_device];
     }
     else {

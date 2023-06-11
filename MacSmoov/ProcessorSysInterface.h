@@ -8,9 +8,12 @@
 #ifndef ProcessorSysInterface_h
 #define ProcessorSysInterface_h
 
+#import "ProcessorCoreWrapper.h"
+
 @interface ProcessorSysInterface : NSObject {
     NSString* input_device;
     NSString* output_device;
+    ProcessorCoreWrapper* core;
 }
 
 -(void) inputDeviceChanged:(NSString*) _input_device;

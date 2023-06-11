@@ -32,6 +32,9 @@
 		9D9806D629EB849200B98415 /* ProcessorCore.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9D9806D329EB849200B98415 /* ProcessorCore.cpp */; };
 		9D9806D829EC686C00B98415 /* ProcessorSysInterface.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D9806D729EC686C00B98415 /* ProcessorSysInterface.m */; };
 		9D9806D929EC686C00B98415 /* ProcessorSysInterface.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D9806D729EC686C00B98415 /* ProcessorSysInterface.m */; };
+		9D98C7C929FC579E00586A86 /* ProcessorCoreWrapper.mm in Sources */ = {isa = PBXBuildFile; fileRef = 9D98C7C829FC579E00586A86 /* ProcessorCoreWrapper.mm */; };
+		9D98C7CA29FC579E00586A86 /* ProcessorCoreWrapper.mm in Sources */ = {isa = PBXBuildFile; fileRef = 9D98C7C829FC579E00586A86 /* ProcessorCoreWrapper.mm */; };
+		9D98C7CB29FC579E00586A86 /* ProcessorCoreWrapper.mm in Sources */ = {isa = PBXBuildFile; fileRef = 9D98C7C829FC579E00586A86 /* ProcessorCoreWrapper.mm */; };
 		9DB7A12829D7949D002E6F4E /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 9DB7A12729D7949D002E6F4E /* AppDelegate.m */; };
 		9DB7A12A29D7949E002E6F4E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9DB7A12929D7949E002E6F4E /* Assets.xcassets */; };
 		9DB7A12D29D7949E002E6F4E /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9DB7A12B29D7949E002E6F4E /* MainMenu.xib */; };
@@ -77,6 +80,8 @@
 		9D9806D429EB849200B98415 /* ProcessorCore.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = ProcessorCore.hpp; sourceTree = "<group>"; };
 		9D9806D729EC686C00B98415 /* ProcessorSysInterface.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ProcessorSysInterface.m; sourceTree = "<group>"; };
 		9D9806DA29EC688300B98415 /* ProcessorSysInterface.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ProcessorSysInterface.h; sourceTree = "<group>"; };
+		9D98C7C829FC579E00586A86 /* ProcessorCoreWrapper.mm */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; path = ProcessorCoreWrapper.mm; sourceTree = "<group>"; };
+		9D98C7CC29FC57AB00586A86 /* ProcessorCoreWrapper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ProcessorCoreWrapper.h; sourceTree = "<group>"; };
 		9DB7A12329D7949D002E6F4E /* MacSmoov.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MacSmoov.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9DB7A12629D7949D002E6F4E /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		9DB7A12729D7949D002E6F4E /* AppDelegate.m */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -163,6 +168,8 @@
 				9D9806D429EB849200B98415 /* ProcessorCore.hpp */,
 				9D9806D729EC686C00B98415 /* ProcessorSysInterface.m */,
 				9D9806DA29EC688300B98415 /* ProcessorSysInterface.h */,
+				9D98C7C829FC579E00586A86 /* ProcessorCoreWrapper.mm */,
+				9D98C7CC29FC57AB00586A86 /* ProcessorCoreWrapper.h */,
 			);
 			path = MacSmoov;
 			sourceTree = "<group>";
@@ -320,6 +327,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				9D5C639429DA5DE200E40A60 /* SignalGeneratorViewController.m in Sources */,
+				9D98C7C929FC579E00586A86 /* ProcessorCoreWrapper.mm in Sources */,
 				9D5C638829D8E5D600E40A60 /* SignalGeneratorEngine.cpp in Sources */,
 				9D5C638C29D9FF5400E40A60 /* SignalGeneratorEngineWrapper.mm in Sources */,
 				9D9806D529EB849200B98415 /* ProcessorCore.cpp in Sources */,
@@ -340,6 +348,7 @@
 				9D9806D929EC686C00B98415 /* ProcessorSysInterface.m in Sources */,
 				9D9806D629EB849200B98415 /* ProcessorCore.cpp in Sources */,
 				9DB7A13A29D7949E002E6F4E /* MacSmoovTests.m in Sources */,
+				9D98C7CA29FC579E00586A86 /* ProcessorCoreWrapper.mm in Sources */,
 				9D281A9329E05F57009CF125 /* SignalGenerator.m in Sources */,
 				9D5C639529DA5DE200E40A60 /* SignalGeneratorViewController.m in Sources */,
 				9D5C638929D8E5D600E40A60 /* SignalGeneratorEngine.cpp in Sources */,
@@ -353,6 +362,7 @@
 				9D5C639629DA5DE200E40A60 /* SignalGeneratorViewController.m in Sources */,
 				9D5C638A29D8E5D600E40A60 /* SignalGeneratorEngine.cpp in Sources */,
 				9D5C638E29D9FF5400E40A60 /* SignalGeneratorEngineWrapper.mm in Sources */,
+				9D98C7CB29FC579E00586A86 /* ProcessorCoreWrapper.mm in Sources */,
 				9DB7A14429D7949F002E6F4E /* MacSmoovUITests.m in Sources */,
 				9DB7A14629D7949F002E6F4E /* MacSmoovUITestsLaunchTests.m in Sources */,
 				9D281A9429E05F57009CF125 /* SignalGenerator.m in Sources */,
