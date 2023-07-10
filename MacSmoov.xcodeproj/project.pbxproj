@@ -28,6 +28,12 @@
 		9D5C639729DA5DE200E40A60 /* SignalGeneratorViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9D5C639329DA5DE200E40A60 /* SignalGeneratorViewController.xib */; };
 		9D5C639829DA5DE200E40A60 /* SignalGeneratorViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9D5C639329DA5DE200E40A60 /* SignalGeneratorViewController.xib */; };
 		9D5C639929DA5DE200E40A60 /* SignalGeneratorViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9D5C639329DA5DE200E40A60 /* SignalGeneratorViewController.xib */; };
+		9D81E9B32A5B2CC6007D46EF /* ProcessorModule.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9D81E9B12A5B2CC6007D46EF /* ProcessorModule.cpp */; };
+		9D81E9B42A5B2CC6007D46EF /* ProcessorModule.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9D81E9B12A5B2CC6007D46EF /* ProcessorModule.cpp */; };
+		9D81E9B52A5B2CC6007D46EF /* ProcessorModule.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9D81E9B12A5B2CC6007D46EF /* ProcessorModule.cpp */; };
+		9D81E9B82A5B2D70007D46EF /* ProcModLevelMeter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9D81E9B62A5B2D70007D46EF /* ProcModLevelMeter.cpp */; };
+		9D81E9B92A5B2D70007D46EF /* ProcModLevelMeter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9D81E9B62A5B2D70007D46EF /* ProcModLevelMeter.cpp */; };
+		9D81E9BA2A5B2D70007D46EF /* ProcModLevelMeter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9D81E9B62A5B2D70007D46EF /* ProcModLevelMeter.cpp */; };
 		9D9806D529EB849200B98415 /* ProcessorCore.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9D9806D329EB849200B98415 /* ProcessorCore.cpp */; };
 		9D9806D629EB849200B98415 /* ProcessorCore.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9D9806D329EB849200B98415 /* ProcessorCore.cpp */; };
 		9D9806D829EC686C00B98415 /* ProcessorSysInterface.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D9806D729EC686C00B98415 /* ProcessorSysInterface.m */; };
@@ -76,6 +82,10 @@
 		9D5C639229DA5DE200E40A60 /* SignalGeneratorViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SignalGeneratorViewController.m; sourceTree = "<group>"; };
 		9D5C639329DA5DE200E40A60 /* SignalGeneratorViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SignalGeneratorViewController.xib; sourceTree = "<group>"; };
 		9D71CFB229F83E6100436F79 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		9D81E9B12A5B2CC6007D46EF /* ProcessorModule.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ProcessorModule.cpp; sourceTree = "<group>"; };
+		9D81E9B22A5B2CC6007D46EF /* ProcessorModule.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = ProcessorModule.hpp; sourceTree = "<group>"; };
+		9D81E9B62A5B2D70007D46EF /* ProcModLevelMeter.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ProcModLevelMeter.cpp; sourceTree = "<group>"; };
+		9D81E9B72A5B2D70007D46EF /* ProcModLevelMeter.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = ProcModLevelMeter.hpp; sourceTree = "<group>"; };
 		9D9806D329EB849200B98415 /* ProcessorCore.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ProcessorCore.cpp; sourceTree = "<group>"; };
 		9D9806D429EB849200B98415 /* ProcessorCore.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = ProcessorCore.hpp; sourceTree = "<group>"; };
 		9D9806D729EC686C00B98415 /* ProcessorSysInterface.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ProcessorSysInterface.m; sourceTree = "<group>"; };
@@ -170,6 +180,10 @@
 				9D9806DA29EC688300B98415 /* ProcessorSysInterface.h */,
 				9D98C7C829FC579E00586A86 /* ProcessorCoreWrapper.mm */,
 				9D98C7CC29FC57AB00586A86 /* ProcessorCoreWrapper.h */,
+				9D81E9B12A5B2CC6007D46EF /* ProcessorModule.cpp */,
+				9D81E9B22A5B2CC6007D46EF /* ProcessorModule.hpp */,
+				9D81E9B62A5B2D70007D46EF /* ProcModLevelMeter.cpp */,
+				9D81E9B72A5B2D70007D46EF /* ProcModLevelMeter.hpp */,
 			);
 			path = MacSmoov;
 			sourceTree = "<group>";
@@ -332,10 +346,12 @@
 				9D5C638C29D9FF5400E40A60 /* SignalGeneratorEngineWrapper.mm in Sources */,
 				9D9806D529EB849200B98415 /* ProcessorCore.cpp in Sources */,
 				9DB7A12F29D7949E002E6F4E /* main.m in Sources */,
+				9D81E9B32A5B2CC6007D46EF /* ProcessorModule.cpp in Sources */,
 				9DB7A12829D7949D002E6F4E /* AppDelegate.m in Sources */,
 				9D281A9229E05F57009CF125 /* SignalGenerator.m in Sources */,
 				9D281A9929E1C5B5009CF125 /* AudioDeviceSelector.m in Sources */,
 				9D9806D829EC686C00B98415 /* ProcessorSysInterface.m in Sources */,
+				9D81E9B82A5B2D70007D46EF /* ProcModLevelMeter.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -347,7 +363,9 @@
 				9D281A9A29E1C5B5009CF125 /* AudioDeviceSelector.m in Sources */,
 				9D9806D929EC686C00B98415 /* ProcessorSysInterface.m in Sources */,
 				9D9806D629EB849200B98415 /* ProcessorCore.cpp in Sources */,
+				9D81E9B42A5B2CC6007D46EF /* ProcessorModule.cpp in Sources */,
 				9DB7A13A29D7949E002E6F4E /* MacSmoovTests.m in Sources */,
+				9D81E9B92A5B2D70007D46EF /* ProcModLevelMeter.cpp in Sources */,
 				9D98C7CA29FC579E00586A86 /* ProcessorCoreWrapper.mm in Sources */,
 				9D281A9329E05F57009CF125 /* SignalGenerator.m in Sources */,
 				9D5C639529DA5DE200E40A60 /* SignalGeneratorViewController.m in Sources */,
@@ -360,7 +378,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				9D5C639629DA5DE200E40A60 /* SignalGeneratorViewController.m in Sources */,
+				9D81E9BA2A5B2D70007D46EF /* ProcModLevelMeter.cpp in Sources */,
 				9D5C638A29D8E5D600E40A60 /* SignalGeneratorEngine.cpp in Sources */,
+				9D81E9B52A5B2CC6007D46EF /* ProcessorModule.cpp in Sources */,
 				9D5C638E29D9FF5400E40A60 /* SignalGeneratorEngineWrapper.mm in Sources */,
 				9D98C7CB29FC579E00586A86 /* ProcessorCoreWrapper.mm in Sources */,
 				9DB7A14429D7949F002E6F4E /* MacSmoovUITests.m in Sources */,

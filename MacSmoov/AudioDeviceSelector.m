@@ -23,11 +23,13 @@
     SEL output_device_watcher_selector;
     id input_device_watcher_object;
     SEL input_device_watcher_selector;
+    bool can_select;
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do view setup here.
+    self->can_select = FALSE;
     audio_output_device_dict = [[NSMutableDictionary alloc] init];
     audio_input_device_dict = [[NSMutableDictionary alloc] init];
     NSUserDefaultsController *prefs_controller = [NSUserDefaultsController sharedUserDefaultsController];
@@ -48,16 +50,20 @@
 }
 
 - (void)comboBoxSelectionDidChange:(NSNotification *)notification {
+    
+    if(TRUE == self->can_select) {
+    
     NSComboBox* combo = [notification object];
-    if([combo tag] == 0) {
-        NSLog(@"Input device changed to %@", [combo objectValueOfSelectedItem]);
-        cur_input_device_uid = [audio_input_device_dict allKeysForObject:[combo objectValueOfSelectedItem]][0];
-        [input_device_watcher_object performSelector:input_device_watcher_selector withObject:cur_input_device_uid];
-    }
-    else {
-        NSLog(@"Output device changed to %@", [combo objectValueOfSelectedItem]);
-        cur_output_device_uid = [audio_output_device_dict allKeysForObject:[combo objectValueOfSelectedItem]][0];
-        [output_device_watcher_object performSelector:output_device_watcher_selector withObject:cur_output_device_uid];
+        if([combo tag] == 0) {
+            NSLog(@"Input device changed to %@", [combo objectValueOfSelectedItem]);
+            cur_input_device_uid = [audio_input_device_dict allKeysForObject:[combo objectValueOfSelectedItem]][0];
+            [input_device_watcher_object performSelector:input_device_watcher_selector withObject:cur_input_device_uid];
+        }
+        else {
+            NSLog(@"Output device changed to %@", [combo objectValueOfSelectedItem]);
+            cur_output_device_uid = [audio_output_device_dict allKeysForObject:[combo objectValueOfSelectedItem]][0];
+            [output_device_watcher_object performSelector:output_device_watcher_selector withObject:cur_output_device_uid];
+        }
     }
 }
 
@@ -112,6 +118,9 @@ bool DeviceHasBuffersInScope(AudioObjectID deviceID, AudioObjectPropertyScope sc
 }
 
 -(void) scanDevices {
+    
+    self->can_select = FALSE;
+    
     NSLog(@"Scanning audio devices...");
     
     [self.inputDeviceComboBox removeAllItems];
@@ -231,5 +240,7 @@ bool DeviceHasBuffersInScope(AudioObjectID deviceID, AudioObjectPropertyScope sc
     
     [self.outputDeviceComboBox selectItemWithObjectValue:[audio_output_device_dict objectForKey:cur_output_device_uid]];
     [self.inputDeviceComboBox selectItemWithObjectValue:[audio_input_device_dict objectForKey:cur_input_device_uid]];
+    
+    self->can_select = TRUE;
 }
 @end

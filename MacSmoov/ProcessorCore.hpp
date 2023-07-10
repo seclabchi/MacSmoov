@@ -11,6 +11,8 @@
 #include <stdio.h>
 #include <cstdint>
 
+#include "ProcModLevelMeter.hpp"
+
 namespace fmsmoov {
 
 class ProcessorCore {
@@ -21,6 +23,9 @@ private:
     ProcessorCore();
     float f_samp;
     uint32_t n_channels;
+    
+    ProcModLevelMeter* proc_mod_level_main_in;
+    
 };
 
 }

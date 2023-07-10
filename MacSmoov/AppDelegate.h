@@ -9,7 +9,10 @@
 #import "SignalGeneratorViewController.h"
 #import "AudioDeviceSelector.h"
 
-@interface AppDelegate : NSObject <NSApplicationDelegate> 
+@interface AppDelegate : NSObject <NSApplicationDelegate>
+
+@property (strong) IBOutlet NSLevelIndicator* level_main_in_l;
+@property (strong) IBOutlet NSLevelIndicator* level_main_in_r;
 
 -(void) output_device_changed:(NSString*)output_device;
 -(void) input_device_changed:(NSString*)input_device;

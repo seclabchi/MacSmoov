@@ -15,6 +15,8 @@
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
         <customObject id="Voe-Tx-rLC" customClass="AppDelegate">
             <connections>
+                <outlet property="level_main_in_l" destination="z3I-dK-nQZ" id="J0K-ub-Sgq"/>
+                <outlet property="level_main_in_r" destination="IgK-Q7-VzX" id="ANG-dP-IgY"/>
                 <outlet property="sliderMasterVolume" destination="yiT-KE-WWL" id="A3g-Sw-Vl8"/>
                 <outlet property="window" destination="QvC-M9-y7g" id="gIp-Ho-8D9"/>
             </connections>
@@ -484,6 +486,16 @@
                             <action selector="showAudioDeviceSelector:" target="Voe-Tx-rLC" id="2f7-Rq-lWQ"/>
                         </connections>
                     </button>
+                    <levelIndicator verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="z3I-dK-nQZ" userLabel="level_main_in_l">
+                        <rect key="frame" x="20" y="412" width="130" height="18"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <levelIndicatorCell key="cell" alignment="left" doubleValue="2" maxValue="2" warningValue="2" criticalValue="2" levelIndicatorStyle="continuousCapacity" id="PTV-W2-Qbr"/>
+                    </levelIndicator>
+                    <levelIndicator verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="IgK-Q7-VzX" userLabel="level_main_in_r">
+                        <rect key="frame" x="20" y="395" width="130" height="18"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <levelIndicatorCell key="cell" alignment="left" doubleValue="2" maxValue="2" warningValue="2" criticalValue="2" levelIndicatorStyle="continuousCapacity" id="nRn-GK-m4I"/>
+                    </levelIndicator>
                 </subviews>
             </view>
             <connections>
