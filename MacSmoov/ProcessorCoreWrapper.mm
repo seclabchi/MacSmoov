@@ -16,10 +16,10 @@
 @implementation ProcessorCoreWrapper
 @synthesize cpp = _cpp;
 
--(id) initWithSampleRate:(uint32_t)sample_rate numberOfChannels:(uint32_t)num_chans {
+-(id) initWithSampleRate:(uint32_t)sample_rate numberOfChannels:(uint32_t)num_chans bufSize:(uint32_t)buf_size {
     self = [super init];
     if(self) {
-        _cpp = new fmsmoov::ProcessorCore(sample_rate, num_chans);
+        _cpp = new fmsmoov::ProcessorCore(sample_rate, num_chans, buf_size);
     }
     
     return self;

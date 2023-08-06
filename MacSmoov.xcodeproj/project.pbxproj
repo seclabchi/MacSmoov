@@ -41,6 +41,12 @@
 		9D98C7C929FC579E00586A86 /* ProcessorCoreWrapper.mm in Sources */ = {isa = PBXBuildFile; fileRef = 9D98C7C829FC579E00586A86 /* ProcessorCoreWrapper.mm */; };
 		9D98C7CA29FC579E00586A86 /* ProcessorCoreWrapper.mm in Sources */ = {isa = PBXBuildFile; fileRef = 9D98C7C829FC579E00586A86 /* ProcessorCoreWrapper.mm */; };
 		9D98C7CB29FC579E00586A86 /* ProcessorCoreWrapper.mm in Sources */ = {isa = PBXBuildFile; fileRef = 9D98C7C829FC579E00586A86 /* ProcessorCoreWrapper.mm */; };
+		9DA7C1292A5E4D4700A01D92 /* LPFSinglePole.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9DA7C1272A5E4D4700A01D92 /* LPFSinglePole.cpp */; };
+		9DA7C12A2A5E4D4700A01D92 /* LPFSinglePole.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9DA7C1272A5E4D4700A01D92 /* LPFSinglePole.cpp */; };
+		9DA7C12B2A5E4D4700A01D92 /* LPFSinglePole.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9DA7C1272A5E4D4700A01D92 /* LPFSinglePole.cpp */; };
+		9DB012882A71C376009BFCD8 /* CircularBuffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9DB012862A71C376009BFCD8 /* CircularBuffer.cpp */; };
+		9DB012892A71C376009BFCD8 /* CircularBuffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9DB012862A71C376009BFCD8 /* CircularBuffer.cpp */; };
+		9DB0128A2A71C376009BFCD8 /* CircularBuffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9DB012862A71C376009BFCD8 /* CircularBuffer.cpp */; };
 		9DB7A12829D7949D002E6F4E /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 9DB7A12729D7949D002E6F4E /* AppDelegate.m */; };
 		9DB7A12A29D7949E002E6F4E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9DB7A12929D7949E002E6F4E /* Assets.xcassets */; };
 		9DB7A12D29D7949E002E6F4E /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9DB7A12B29D7949E002E6F4E /* MainMenu.xib */; };
@@ -92,6 +98,10 @@
 		9D9806DA29EC688300B98415 /* ProcessorSysInterface.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ProcessorSysInterface.h; sourceTree = "<group>"; };
 		9D98C7C829FC579E00586A86 /* ProcessorCoreWrapper.mm */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; path = ProcessorCoreWrapper.mm; sourceTree = "<group>"; };
 		9D98C7CC29FC57AB00586A86 /* ProcessorCoreWrapper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ProcessorCoreWrapper.h; sourceTree = "<group>"; };
+		9DA7C1272A5E4D4700A01D92 /* LPFSinglePole.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = LPFSinglePole.cpp; sourceTree = "<group>"; };
+		9DA7C1282A5E4D4700A01D92 /* LPFSinglePole.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = LPFSinglePole.hpp; sourceTree = "<group>"; };
+		9DB012862A71C376009BFCD8 /* CircularBuffer.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = CircularBuffer.cpp; sourceTree = "<group>"; };
+		9DB012872A71C376009BFCD8 /* CircularBuffer.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = CircularBuffer.hpp; sourceTree = "<group>"; };
 		9DB7A12329D7949D002E6F4E /* MacSmoov.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MacSmoov.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9DB7A12629D7949D002E6F4E /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		9DB7A12729D7949D002E6F4E /* AppDelegate.m */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -184,6 +194,10 @@
 				9D81E9B22A5B2CC6007D46EF /* ProcessorModule.hpp */,
 				9D81E9B62A5B2D70007D46EF /* ProcModLevelMeter.cpp */,
 				9D81E9B72A5B2D70007D46EF /* ProcModLevelMeter.hpp */,
+				9DA7C1272A5E4D4700A01D92 /* LPFSinglePole.cpp */,
+				9DA7C1282A5E4D4700A01D92 /* LPFSinglePole.hpp */,
+				9DB012862A71C376009BFCD8 /* CircularBuffer.cpp */,
+				9DB012872A71C376009BFCD8 /* CircularBuffer.hpp */,
 			);
 			path = MacSmoov;
 			sourceTree = "<group>";
@@ -340,9 +354,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9DB012882A71C376009BFCD8 /* CircularBuffer.cpp in Sources */,
 				9D5C639429DA5DE200E40A60 /* SignalGeneratorViewController.m in Sources */,
 				9D98C7C929FC579E00586A86 /* ProcessorCoreWrapper.mm in Sources */,
 				9D5C638829D8E5D600E40A60 /* SignalGeneratorEngine.cpp in Sources */,
+				9DA7C1292A5E4D4700A01D92 /* LPFSinglePole.cpp in Sources */,
 				9D5C638C29D9FF5400E40A60 /* SignalGeneratorEngineWrapper.mm in Sources */,
 				9D9806D529EB849200B98415 /* ProcessorCore.cpp in Sources */,
 				9DB7A12F29D7949E002E6F4E /* main.m in Sources */,
@@ -363,12 +379,14 @@
 				9D281A9A29E1C5B5009CF125 /* AudioDeviceSelector.m in Sources */,
 				9D9806D929EC686C00B98415 /* ProcessorSysInterface.m in Sources */,
 				9D9806D629EB849200B98415 /* ProcessorCore.cpp in Sources */,
+				9DB012892A71C376009BFCD8 /* CircularBuffer.cpp in Sources */,
 				9D81E9B42A5B2CC6007D46EF /* ProcessorModule.cpp in Sources */,
 				9DB7A13A29D7949E002E6F4E /* MacSmoovTests.m in Sources */,
 				9D81E9B92A5B2D70007D46EF /* ProcModLevelMeter.cpp in Sources */,
 				9D98C7CA29FC579E00586A86 /* ProcessorCoreWrapper.mm in Sources */,
 				9D281A9329E05F57009CF125 /* SignalGenerator.m in Sources */,
 				9D5C639529DA5DE200E40A60 /* SignalGeneratorViewController.m in Sources */,
+				9DA7C12A2A5E4D4700A01D92 /* LPFSinglePole.cpp in Sources */,
 				9D5C638929D8E5D600E40A60 /* SignalGeneratorEngine.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -377,7 +395,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9DA7C12B2A5E4D4700A01D92 /* LPFSinglePole.cpp in Sources */,
 				9D5C639629DA5DE200E40A60 /* SignalGeneratorViewController.m in Sources */,
+				9DB0128A2A71C376009BFCD8 /* CircularBuffer.cpp in Sources */,
 				9D81E9BA2A5B2D70007D46EF /* ProcModLevelMeter.cpp in Sources */,
 				9D5C638A29D8E5D600E40A60 /* SignalGeneratorEngine.cpp in Sources */,
 				9D81E9B52A5B2CC6007D46EF /* ProcessorModule.cpp in Sources */,
