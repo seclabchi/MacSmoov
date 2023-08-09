@@ -65,7 +65,8 @@ void audioprocInQcb(void *inUserData, AudioQueueRef inAQ, AudioQueueBufferRef in
             AudioQueueBufferRef outbuf = (AudioQueueBufferRef) psi->head_of_free_output_buffers;
             psi->head_of_free_output_buffers = outbuf->mUserData;
             outbuf->mAudioDataByteSize = inBuffer->mAudioDataByteSize;
-            memcpy(outbuf->mAudioData, inBuffer->mAudioData, inBuffer->mAudioDataByteSize);
+            //memcpy(outbuf->mAudioData, inBuffer->mAudioData, inBuffer->mAudioDataByteSize);
+            [psi->core processWithInput:inBuffer->mAudioData output:outbuf->mAudioData ofSize:inBuffer->mAudioDataByteSize];
         }
         AudioQueueEnqueueBuffer(inAQ, inBuffer, 0, nil);
     }

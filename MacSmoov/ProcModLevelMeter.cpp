@@ -48,7 +48,7 @@ void ProcModLevelMeter::process(float* in, float* out, uint32_t n_samps) {
     peak_l = 20 * log10(peak_l);
     peak_r = 20 * log10(peak_r);
     
-    printf("Main Input RMS/Peak (L/R): %f, %f, %f, %f\n", rms_l, rms_r, peak_l, peak_r);
+    //printf("Main Input RMS/Peak (L/R): %f, %f, %f, %f\n", rms_l, rms_r, peak_l, peak_r);
     
     memcpy(out, in, n_samps * sizeof(float));
     

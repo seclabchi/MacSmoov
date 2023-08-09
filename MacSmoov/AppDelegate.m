@@ -9,6 +9,7 @@
 #import <AudioToolbox/AudioToolbox.h>
 #import "SignalGenerator.h"
 #import "ProcessorSysInterface.h"
+#import "OSXAudioInterface.h"
 
 @interface AppDelegate ()
 
@@ -19,11 +20,44 @@
 
 SignalGeneratorViewController *siggenvc;
 AudioDeviceSelector *audio_device_selector;
-ProcessorSysInterface* process_sys_iface;
+//ProcessorSysInterface* process_sys_iface;
 NSUserDefaults *prefs;
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
     // Insert code here to initialize your application
+    OSStatus err = 0;
+    
+    OSXAudioInterface* sysaudio = [[OSXAudioInterface alloc] init];
+    
+    [sysaudio discoverDevices];
+    [sysaudio initialize_audio_units];
+    NSMutableDictionary* outdevs = sysaudio.output_devices;
+    NSMutableDictionary* indevs = sysaudio.input_devices;
+    
+    AudioDevice* sel_indev = [indevs objectForKey:[NSNumber numberWithUnsignedInteger:238]];
+    AudioDevice* sel_outdev = [outdevs objectForKey:[NSNumber numberWithUnsignedInteger:245]];
+    
+    err = [sysaudio set_input_device:sel_indev];
+    
+    if(err) {
+        NSLog(@"Error %d setting input device.", err);
+    }
+    
+    err = [sysaudio set_output_device:sel_outdev];
+    
+    if(err) {
+        NSLog(@"Error %d setting output device.", err);
+    }
+    
+    AudioDevice* ad = NULL;
+    
+    ad = sysaudio.current_input_device;
+    
+    NSLog(@"Current input device: %@ (%@)", ad.device_name, ad.device_uid);
+    
+    ad = sysaudio.current_output_device;
+    
+    NSLog(@"Current output device: %@ (%@)", ad.device_name, ad.device_uid);
     
     NSUserDefaultsController *prefs_controller = [NSUserDefaultsController sharedUserDefaultsController];
     prefs = prefs_controller.defaults;
@@ -34,9 +68,9 @@ NSUserDefaults *prefs;
     audio_device_selector = [[AudioDeviceSelector alloc] init];
     [audio_device_selector set_watcher_for_output_device_change:self andSelector:@selector(output_device_changed:)];
     [audio_device_selector set_watcher_for_input_device_change:self andSelector:@selector(input_device_changed:)];
-    process_sys_iface = [[ProcessorSysInterface alloc] init];
+    //process_sys_iface = [[ProcessorSysInterface alloc] init];
     //[process_sys_iface outputDeviceChanged:@"AppleUSBAudioEngine:Plantronics:Plantronics Blackwire 3210 Series:FFE5F399D3F84D558CDC32EA0790A041:2"];
-    [process_sys_iface start];
+    //[process_sys_iface start];
 }
 
 
@@ -84,7 +118,7 @@ NSUserDefaults *prefs;
     if(nil != output_device) {
         [prefs setObject:output_device forKey:@"OUTPUT_DEVICE"];
         [siggenvc outputDeviceChanged:output_device];
-        [process_sys_iface outputDeviceChanged:output_device];
+        //[process_sys_iface outputDeviceChanged:output_device];
     }
     else {
         NSLog(@"WARNING: Got null output_device notification.");
@@ -95,7 +129,7 @@ NSUserDefaults *prefs;
     NSLog(@"Got notification from AudioDeviceSelector about new input device: %@", input_device);
     if(nil != input_device) {
         [prefs setObject:input_device forKey:@"INPUT_DEVICE"];
-        [process_sys_iface inputDeviceChanged:input_device];
+        //[process_sys_iface inputDeviceChanged:input_device];
     }
     else {
         NSLog(@"WARNING: Got null input_device notification.");

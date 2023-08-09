@@ -8,6 +8,7 @@
 #import <Cocoa/Cocoa.h>
 #import "SignalGeneratorViewController.h"
 #import "AudioDeviceSelector.h"
+#import "LevelMeter.h"
 
 @interface AppDelegate : NSObject <NSApplicationDelegate>
 

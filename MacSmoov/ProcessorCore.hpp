@@ -12,6 +12,7 @@
 #include <cstdint>
 
 #include "ProcModLevelMeter.hpp"
+#include "LogLinConverter.hpp"
 
 namespace fmsmoov {
 
@@ -26,6 +27,8 @@ private:
     uint32_t buf_size;
     
     ProcModLevelMeter* proc_mod_level_main_in;
+    LogLinConverter* m_loglin;
+    LogLinConverter* m_linlog;
     
 };
 

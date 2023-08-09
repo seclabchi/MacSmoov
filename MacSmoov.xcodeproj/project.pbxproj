@@ -54,6 +54,14 @@
 		9DB7A13A29D7949E002E6F4E /* MacSmoovTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 9DB7A13929D7949E002E6F4E /* MacSmoovTests.m */; };
 		9DB7A14429D7949F002E6F4E /* MacSmoovUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 9DB7A14329D7949F002E6F4E /* MacSmoovUITests.m */; };
 		9DB7A14629D7949F002E6F4E /* MacSmoovUITestsLaunchTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 9DB7A14529D7949F002E6F4E /* MacSmoovUITestsLaunchTests.m */; };
+		9DD141072A81C5D60059864D /* LogLinConverter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9DD141052A81C5D60059864D /* LogLinConverter.cpp */; };
+		9DD141082A81C5D60059864D /* LogLinConverter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9DD141052A81C5D60059864D /* LogLinConverter.cpp */; };
+		9DD1410A2A81E1870059864D /* OSXAudioInterface.m in Sources */ = {isa = PBXBuildFile; fileRef = 9DD141092A81E1870059864D /* OSXAudioInterface.m */; };
+		9DD1410B2A81E1870059864D /* OSXAudioInterface.m in Sources */ = {isa = PBXBuildFile; fileRef = 9DD141092A81E1870059864D /* OSXAudioInterface.m */; };
+		9DD1410E2A82AD420059864D /* AudioDevice.m in Sources */ = {isa = PBXBuildFile; fileRef = 9DD1410D2A82AD420059864D /* AudioDevice.m */; };
+		9DD1410F2A82AD420059864D /* AudioDevice.m in Sources */ = {isa = PBXBuildFile; fileRef = 9DD1410D2A82AD420059864D /* AudioDevice.m */; };
+		9DF3B70D2A80088400867EA1 /* LevelMeter.m in Sources */ = {isa = PBXBuildFile; fileRef = 9DF3B70C2A80088400867EA1 /* LevelMeter.m */; };
+		9DF3B70E2A80088400867EA1 /* LevelMeter.m in Sources */ = {isa = PBXBuildFile; fileRef = 9DF3B70C2A80088400867EA1 /* LevelMeter.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -114,6 +122,14 @@
 		9DB7A13F29D7949F002E6F4E /* MacSmoovUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MacSmoovUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		9DB7A14329D7949F002E6F4E /* MacSmoovUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MacSmoovUITests.m; sourceTree = "<group>"; };
 		9DB7A14529D7949F002E6F4E /* MacSmoovUITestsLaunchTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MacSmoovUITestsLaunchTests.m; sourceTree = "<group>"; };
+		9DD141052A81C5D60059864D /* LogLinConverter.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = LogLinConverter.cpp; sourceTree = "<group>"; };
+		9DD141062A81C5D60059864D /* LogLinConverter.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = LogLinConverter.hpp; sourceTree = "<group>"; };
+		9DD141092A81E1870059864D /* OSXAudioInterface.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OSXAudioInterface.m; sourceTree = "<group>"; };
+		9DD1410C2A81E3EB0059864D /* OSXAudioInterface.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OSXAudioInterface.h; sourceTree = "<group>"; };
+		9DD1410D2A82AD420059864D /* AudioDevice.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AudioDevice.m; sourceTree = "<group>"; };
+		9DD141102A82AD5B0059864D /* AudioDevice.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AudioDevice.h; sourceTree = "<group>"; };
+		9DF3B70B2A80088400867EA1 /* LevelMeter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LevelMeter.h; sourceTree = "<group>"; };
+		9DF3B70C2A80088400867EA1 /* LevelMeter.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LevelMeter.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -198,6 +214,14 @@
 				9DA7C1282A5E4D4700A01D92 /* LPFSinglePole.hpp */,
 				9DB012862A71C376009BFCD8 /* CircularBuffer.cpp */,
 				9DB012872A71C376009BFCD8 /* CircularBuffer.hpp */,
+				9DF3B70B2A80088400867EA1 /* LevelMeter.h */,
+				9DF3B70C2A80088400867EA1 /* LevelMeter.m */,
+				9DD141052A81C5D60059864D /* LogLinConverter.cpp */,
+				9DD141062A81C5D60059864D /* LogLinConverter.hpp */,
+				9DD141092A81E1870059864D /* OSXAudioInterface.m */,
+				9DD1410C2A81E3EB0059864D /* OSXAudioInterface.h */,
+				9DD1410D2A82AD420059864D /* AudioDevice.m */,
+				9DD141102A82AD5B0059864D /* AudioDevice.h */,
 			);
 			path = MacSmoov;
 			sourceTree = "<group>";
@@ -365,8 +389,12 @@
 				9D81E9B32A5B2CC6007D46EF /* ProcessorModule.cpp in Sources */,
 				9DB7A12829D7949D002E6F4E /* AppDelegate.m in Sources */,
 				9D281A9229E05F57009CF125 /* SignalGenerator.m in Sources */,
+				9DF3B70D2A80088400867EA1 /* LevelMeter.m in Sources */,
+				9DD141072A81C5D60059864D /* LogLinConverter.cpp in Sources */,
 				9D281A9929E1C5B5009CF125 /* AudioDeviceSelector.m in Sources */,
+				9DD1410A2A81E1870059864D /* OSXAudioInterface.m in Sources */,
 				9D9806D829EC686C00B98415 /* ProcessorSysInterface.m in Sources */,
+				9DD1410E2A82AD420059864D /* AudioDevice.m in Sources */,
 				9D81E9B82A5B2D70007D46EF /* ProcModLevelMeter.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -386,7 +414,11 @@
 				9D98C7CA29FC579E00586A86 /* ProcessorCoreWrapper.mm in Sources */,
 				9D281A9329E05F57009CF125 /* SignalGenerator.m in Sources */,
 				9D5C639529DA5DE200E40A60 /* SignalGeneratorViewController.m in Sources */,
+				9DD1410B2A81E1870059864D /* OSXAudioInterface.m in Sources */,
+				9DD141082A81C5D60059864D /* LogLinConverter.cpp in Sources */,
+				9DD1410F2A82AD420059864D /* AudioDevice.m in Sources */,
 				9DA7C12A2A5E4D4700A01D92 /* LPFSinglePole.cpp in Sources */,
+				9DF3B70E2A80088400867EA1 /* LevelMeter.m in Sources */,
 				9D5C638929D8E5D600E40A60 /* SignalGeneratorEngine.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -566,7 +598,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 11.5;
+				MACOSX_DEPLOYMENT_TARGET = 10.15;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.tonekids.osx.MacSmoov;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -592,7 +624,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 11.5;
+				MACOSX_DEPLOYMENT_TARGET = 10.15;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.tonekids.osx.MacSmoov;
 				PRODUCT_NAME = "$(TARGET_NAME)";
