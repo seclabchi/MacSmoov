@@ -17,8 +17,8 @@
 @property (strong) IBOutlet NSLevelIndicator* level_main_in_r;
 @property (nonatomic, strong) OSXAudioInterface * sysaudio;
 
--(void) output_device_changed:(NSString*)output_device;
--(void) input_device_changed:(NSString*)input_device;
+-(void) output_device_changed:(NSNumber*)output_device;
+-(void) input_device_changed:(NSNumber*)input_device;
 -(IBAction) showSignalGenerators:(id)sender;
 -(IBAction) showAudioDeviceSelector:(id)sender;
 -(IBAction) adjustGainMainOut:(id)sender;

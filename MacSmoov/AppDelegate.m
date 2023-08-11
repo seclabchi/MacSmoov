@@ -22,8 +22,11 @@ SignalGeneratorViewController *siggenvc;
 AudioDeviceSelector *audio_device_selector;
 //ProcessorSysInterface* process_sys_iface;
 NSUserDefaults *prefs;
-NSString* output_device;
-NSString* input_device;
+NSNumber* stored_output_device;
+NSNumber* stored_input_device;
+
+NSMutableDictionary* audio_devices_output;
+NSMutableDictionary* audio_devices_input;
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
     // Insert code here to initialize your application
@@ -33,54 +36,31 @@ NSString* input_device;
     NSUserDefaultsController *prefs_controller = [NSUserDefaultsController sharedUserDefaultsController];
     prefs = prefs_controller.defaults;
     
-    output_device = [prefs stringForKey:@"OUTPUT_DEVICE"];
-    
-    if(nil == output_device) {
-        output_device = @"";
-    }
-    
-    input_device = [prefs stringForKey:@"INPUT_DEVICE"];
-    
-    if(nil == input_device) {
-        input_device = @"";
-    }
-    
+       
     self.sysaudio = [[OSXAudioInterface alloc] initWithCurrentInputDevice:nil OutputDevice:nil];
     [self.sysaudio discoverDevices];
     
-    NSMutableDictionary* outdevs = self.sysaudio.output_devices;
-    NSMutableDictionary* indevs = self.sysaudio.input_devices;
+    audio_devices_output = self.sysaudio.output_devices;
+    audio_devices_input = self.sysaudio.input_devices;
     
-    AudioDevice* sel_indev = [indevs objectForKey:[NSNumber numberWithUnsignedInteger:55]];
-    AudioDevice* sel_outdev = [outdevs objectForKey:[NSNumber numberWithUnsignedInteger:245]];
-    
-    err = [self.sysaudio set_input_device:sel_indev];
-    
-    if(err) {
-        NSLog(@"Error %d setting input device.", err);
+    stored_output_device = [prefs objectForKey:@"OUTPUT_DEVICE"];
+    if(nil != stored_output_device) {
+        AudioDevice* sel_outdev = [audio_devices_output objectForKey:stored_output_device];
+        [self.sysaudio set_output_device:sel_outdev];
     }
     
-    err = [self.sysaudio set_output_device:sel_outdev];
-    
-    if(err) {
-        NSLog(@"Error %d setting output device.", err);
+    stored_input_device = [prefs objectForKey:@"INPUT_DEVICE"];
+    if(nil != stored_input_device) {
+        AudioDevice* sel_indev = [audio_devices_input objectForKey:stored_input_device];
+        [self.sysaudio set_input_device:sel_indev];
     }
-    
-    AudioDevice* ad = NULL;
-    
-    ad = self.sysaudio.current_output_device;
-    NSLog(@"Current output device: %@ (%@)", ad.device_name, ad.device_uid);
-    
-    ad = self.sysaudio.current_input_device;
-    NSLog(@"Current input device: %@ (%@)", ad.device_name, ad.device_uid);
     
     [self.sysaudio go];
-    
     
     //TODO:  initialize signal generators here, and the eventual audio passthrough/processing chain
     siggenvc = [[SignalGeneratorViewController alloc] init];
     //[self output_device_changed:@"AQDefaultOutput"];
-    audio_device_selector = [[AudioDeviceSelector alloc] init];
+    audio_device_selector = [[AudioDeviceSelector alloc] initWithInputDevices:(NSMutableDictionary*)audio_devices_input outputDevices:(NSMutableDictionary*)audio_devices_output];
     [audio_device_selector set_watcher_for_output_device_change:self andSelector:@selector(output_device_changed:)];
     [audio_device_selector set_watcher_for_input_device_change:self andSelector:@selector(input_device_changed:)];
     //process_sys_iface = [[ProcessorSysInterface alloc] init];
@@ -128,11 +108,13 @@ NSString* input_device;
     
 }
 
--(void) output_device_changed:(NSString*)output_device {
+-(void) output_device_changed:(NSNumber*)output_device {
     NSLog(@"Got notification from AudioDeviceSelector about new output device: %@", output_device);
     if(nil != output_device) {
         [prefs setObject:output_device forKey:@"OUTPUT_DEVICE"];
-        [siggenvc outputDeviceChanged:output_device];
+        AudioDevice* sel_outdev = [audio_devices_output objectForKey:output_device];
+        [self.sysaudio set_output_device:sel_outdev];
+        //[siggenvc outputDeviceChanged:output_device];
         //[process_sys_iface outputDeviceChanged:output_device];
     }
     else {
@@ -140,10 +122,12 @@ NSString* input_device;
     }
 }
 
--(void) input_device_changed:(NSString*)input_device {
+-(void) input_device_changed:(NSNumber*)input_device {
     NSLog(@"Got notification from AudioDeviceSelector about new input device: %@", input_device);
     if(nil != input_device) {
         [prefs setObject:input_device forKey:@"INPUT_DEVICE"];
+        AudioDevice* sel_indev = [audio_devices_input objectForKey:input_device];
+        [self.sysaudio set_input_device:sel_indev];
         //[process_sys_iface inputDeviceChanged:input_device];
     }
     else {

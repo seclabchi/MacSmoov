@@ -10,19 +10,24 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface AudioDeviceSelector : NSViewController <NSComboBoxDelegate> {
+@interface AudioDeviceSelector : NSViewController <NSComboBoxDelegate, NSComboBoxDataSource> {
     id delegate;
 }
 
 @property(strong) IBOutlet NSComboBox* input_device_combo;
 @property(strong) IBOutlet NSComboBox* output_device_combo;
 
--(void) set_watcher_for_output_device_change:(id)object andSelector:(SEL)selector;
--(void) set_watcher_for_input_device_change:(id)object andSelector:(SEL)selector;
--(void)showPanel;
--(void) scanDevices;
--(NSString*) getInputDeviceUID;
--(NSString*) getOutputDeviceUID;
+- (id)initWithInputDevices:(NSMutableDictionary*)indevs outputDevices:(NSMutableDictionary*)outdevs;
+- (void) set_watcher_for_output_device_change:(id)object andSelector:(SEL)selector;
+- (void) set_watcher_for_input_device_change:(id)object andSelector:(SEL)selector;
+- (void)showPanel;
+- (void) scanDevices;
+- (NSString*) getInputDeviceUID;
+- (NSString*) getOutputDeviceUID;
+
+- (id)comboBox:(NSComboBox *)comboBox objectValueForItemAtIndex:(NSInteger)index;
+- (NSInteger) numberOfItemsInComboBox:(NSComboBox*)comboBox;
+
 @end
 
 NS_ASSUME_NONNULL_END

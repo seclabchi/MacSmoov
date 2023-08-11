@@ -41,6 +41,7 @@ AudioDeviceID current_output_device_id;
 AudioBuffer rend_buf00, rend_buf01;
 
 Boolean is_running;
+Boolean is_reconfiguring;
 
 NSFileHandle* capture_file_handle;
 
@@ -75,6 +76,7 @@ void checkStatus(int status) {
         }
         
         is_running = NO;
+        is_reconfiguring = NO;
     }
     
     return self;
@@ -91,14 +93,10 @@ static OSStatus recordingCallback(void *inRefCon,
     AudioStreamBasicDescription stream_format_prop;
     UInt32 stream_format_prop_size = sizeof(stream_format_prop);
     Boolean propWriteable = NO;
-    
 
-    
     // TODO: Use inRefCon to access our interface object to do stuff
     // Then, use inNumberFrames to figure out how much data is available, and make
     // that much space available in buffers in an AudioBufferList.
-    
-    
     
     err = 0;
  
@@ -131,7 +129,7 @@ static OSStatus recordingCallback(void *inRefCon,
     buf_list->mBuffers[1].mDataByteSize = buf_size_in_bytes;
     buf_list->mBuffers[1].mData = calloc(1, buf_size_in_bytes);
     
-    NSLog(@"recordingCallback - inTimeStamp %llu, inNumberFrames %d, buf_list %p", inTimeStamp->mHostTime, inNumberFrames, buf_list);
+    //NSLog(@"recordingCallback - inTimeStamp %llu, inNumberFrames %d, buf_list %p", inTimeStamp->mHostTime, inNumberFrames, buf_list);
     
     err = AudioUnitRender(osxai->audioUnitInput,
                              ioActionFlags,
@@ -185,7 +183,7 @@ static OSStatus playbackCallback(void *inRefCon,
     // Fill them up as much as you can. Remember to set the size value in each buffer to match how
     // much data is in the buffer.
     
-    NSLog(@"playbackCallback - inTimeStamp %llu, inNumberFrames %d, ioData %p", inTimeStamp->mHostTime, inNumberFrames, ioData);
+    //NSLog(@"playbackCallback - inTimeStamp %llu, inNumberFrames %d, ioData %p", inTimeStamp->mHostTime, inNumberFrames, ioData);
     
     OSXAudioInterface *osxai = (__bridge OSXAudioInterface*)inRefCon;
     
@@ -304,7 +302,11 @@ static OSStatus playbackCallback(void *inRefCon,
     
     if (err == noErr) {
         if(_current_input_device != nil) {
+            NSLog(@"Using selected input device %@", _current_input_device.device_name);
             deviceID = _current_input_device.device_id;
+        }
+        else {
+            NSLog(@"No input device set.  Using system default.");
         }
         err = AudioUnitSetProperty(audioUnitInput, kAudioOutputUnitProperty_CurrentDevice, kAudioUnitScope_Global, OUTPUT_BUS, &deviceID, size);
     }
@@ -339,7 +341,11 @@ static OSStatus playbackCallback(void *inRefCon,
     
     if (err == noErr) {
         if(_current_output_device != nil) {
+            NSLog(@"Using selected output device %@", _current_output_device.device_name);
             deviceID = _current_output_device.device_id;
+        }
+        else {
+            NSLog(@"No output device set.  Using system default.");
         }
         err = AudioUnitSetProperty(audioUnitOutput, kAudioOutputUnitProperty_CurrentDevice, kAudioUnitScope_Global, INPUT_BUS, &deviceID, size);
     }
@@ -424,10 +430,14 @@ static OSStatus playbackCallback(void *inRefCon,
     err = AudioUnitInitialize(audioUnitInput);
     checkStatus(err);
     
+    NSLog(@"Starting AUHAL interface...");
+    
     err = AudioOutputUnitStart(audioUnitInput);
     checkStatus(err);
     err = AudioOutputUnitStart(audioUnitOutput);
     checkStatus(err);
+    
+    NSLog(@"Running.");
     
     is_running = YES;
     
@@ -439,6 +449,8 @@ static OSStatus playbackCallback(void *inRefCon,
     if(NO == is_running) {
         return noErr;
     }
+    
+    NSLog(@"Stopping AUHAL interface...");
     
     OSStatus err = 0;
     
@@ -452,6 +464,8 @@ static OSStatus playbackCallback(void *inRefCon,
     err = AudioUnitUninitialize(audioUnitInput);
     checkStatus(err);
     
+    NSLog(@"All stop.");
+    
     is_running = NO;
     
     return err;
@@ -460,7 +474,7 @@ static OSStatus playbackCallback(void *inRefCon,
 - (OSStatus) set_input_device:(AudioDevice*)input_dev {
     
     [self stop];
-    
+        
     UInt32 size = sizeof(AudioDeviceID);
     AudioDeviceID deviceID = input_dev.device_id;
     OSStatus err = 0;
@@ -476,6 +490,7 @@ static OSStatus playbackCallback(void *inRefCon,
         _current_input_device = input_dev;
     //}
     
+    [self go];
     
     return err;
 }
@@ -515,6 +530,8 @@ static OSStatus playbackCallback(void *inRefCon,
     //if(!err) {
         _current_output_device = output_dev;
     //}
+    
+    [self go];
     
     return err;
 }

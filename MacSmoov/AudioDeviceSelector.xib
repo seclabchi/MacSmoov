@@ -47,30 +47,28 @@
                     <comboBox verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="MvN-Fu-nKG">
                         <rect key="frame" x="161" y="66" width="447" height="25"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <comboBoxCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" drawsBackground="YES" completes="NO" numberOfVisibleItems="5" id="R5B-Xk-hHF">
+                        <comboBoxCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" drawsBackground="YES" completes="NO" usesDataSource="YES" numberOfVisibleItems="5" id="R5B-Xk-hHF">
                             <font key="font" metaFont="system"/>
                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                            <objectValues>
-                                <string>Item 1</string>
-                                <string>Item 2</string>
-                                <string>Item 3</string>
-                            </objectValues>
                         </comboBoxCell>
+                        <connections>
+                            <outlet property="dataSource" destination="-2" id="haC-Eq-IOg"/>
+                            <outlet property="delegate" destination="-2" id="G0n-PH-ZeE"/>
+                        </connections>
                     </comboBox>
                     <comboBox verticalHuggingPriority="750" fixedFrame="YES" tag="1" translatesAutoresizingMaskIntoConstraints="NO" id="ssc-3y-7df">
                         <rect key="frame" x="161" y="31" width="447" height="25"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <comboBoxCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" drawsBackground="YES" completes="NO" numberOfVisibleItems="5" id="bII-qk-hkD">
+                        <comboBoxCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" drawsBackground="YES" completes="NO" usesDataSource="YES" numberOfVisibleItems="5" id="bII-qk-hkD">
                             <font key="font" metaFont="system"/>
                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                            <objectValues>
-                                <string>Item 1</string>
-                                <string>Item 2</string>
-                                <string>Item 3</string>
-                            </objectValues>
                         </comboBoxCell>
+                        <connections>
+                            <outlet property="dataSource" destination="-2" id="ZyD-AU-oX7"/>
+                            <outlet property="delegate" destination="-2" id="Tsm-wK-NcL"/>
+                        </connections>
                     </comboBox>
                 </subviews>
             </view>
