@@ -22,20 +22,36 @@ SignalGeneratorViewController *siggenvc;
 AudioDeviceSelector *audio_device_selector;
 //ProcessorSysInterface* process_sys_iface;
 NSUserDefaults *prefs;
+NSString* output_device;
+NSString* input_device;
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
     // Insert code here to initialize your application
     OSStatus err = 0;
+
     
-    self.sysaudio = [OSXAudioInterface new];
+    NSUserDefaultsController *prefs_controller = [NSUserDefaultsController sharedUserDefaultsController];
+    prefs = prefs_controller.defaults;
     
+    output_device = [prefs stringForKey:@"OUTPUT_DEVICE"];
+    
+    if(nil == output_device) {
+        output_device = @"";
+    }
+    
+    input_device = [prefs stringForKey:@"INPUT_DEVICE"];
+    
+    if(nil == input_device) {
+        input_device = @"";
+    }
+    
+    self.sysaudio = [[OSXAudioInterface alloc] initWithCurrentInputDevice:nil OutputDevice:nil];
     [self.sysaudio discoverDevices];
-    /*
-    [self.sysaudio initialize_audio_units];
+    
     NSMutableDictionary* outdevs = self.sysaudio.output_devices;
     NSMutableDictionary* indevs = self.sysaudio.input_devices;
     
-    AudioDevice* sel_indev = [indevs objectForKey:[NSNumber numberWithUnsignedInteger:238]];
+    AudioDevice* sel_indev = [indevs objectForKey:[NSNumber numberWithUnsignedInteger:55]];
     AudioDevice* sel_outdev = [outdevs objectForKey:[NSNumber numberWithUnsignedInteger:245]];
     
     err = [self.sysaudio set_input_device:sel_indev];
@@ -50,27 +66,16 @@ NSUserDefaults *prefs;
         NSLog(@"Error %d setting output device.", err);
     }
     
-     */
-    
-    
-    /*
-    ad = self.sysaudio.current_output_device;
-    
-    NSLog(@"Current output device: %@ (%@)", ad.device_name, ad.device_uid);
-    
-    [self.sysaudio set_audio_format];
-    [self.sysaudio setup_callbacks];
-    [self.sysaudio start];
-    */
-    [self.sysaudio go];
     AudioDevice* ad = NULL;
     
-    ad = self.sysaudio.current_input_device;
+    ad = self.sysaudio.current_output_device;
+    NSLog(@"Current output device: %@ (%@)", ad.device_name, ad.device_uid);
     
+    ad = self.sysaudio.current_input_device;
     NSLog(@"Current input device: %@ (%@)", ad.device_name, ad.device_uid);
     
-    NSUserDefaultsController *prefs_controller = [NSUserDefaultsController sharedUserDefaultsController];
-    prefs = prefs_controller.defaults;
+    [self.sysaudio go];
+    
     
     //TODO:  initialize signal generators here, and the eventual audio passthrough/processing chain
     siggenvc = [[SignalGeneratorViewController alloc] init];
