@@ -24,9 +24,15 @@
 
 - (id) init;
 - (OSStatus) initialize_audio_units;
+- (OSStatus) set_audio_format;
+- (OSStatus) setup_callbacks;
 - (OSStatus) discoverDevices;
 - (OSStatus) set_input_device:(AudioDevice*)input_dev;
 - (OSStatus) set_output_device:(AudioDevice*)output_dev;
+- (OSStatus) start;
+- (OSStatus) go;
+
+- (void) writeAudioDataToFile:(AudioBufferList*)ioData;
 
 @end
 

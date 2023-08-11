@@ -9,11 +9,13 @@
 #import "SignalGeneratorViewController.h"
 #import "AudioDeviceSelector.h"
 #import "LevelMeter.h"
+#import "OSXAudioInterface.h"
 
 @interface AppDelegate : NSObject <NSApplicationDelegate>
 
 @property (strong) IBOutlet NSLevelIndicator* level_main_in_l;
 @property (strong) IBOutlet NSLevelIndicator* level_main_in_r;
+@property (nonatomic, strong) OSXAudioInterface * sysaudio;
 
 -(void) output_device_changed:(NSString*)output_device;
 -(void) input_device_changed:(NSString*)input_device;

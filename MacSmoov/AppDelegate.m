@@ -27,37 +27,47 @@ NSUserDefaults *prefs;
     // Insert code here to initialize your application
     OSStatus err = 0;
     
-    OSXAudioInterface* sysaudio = [[OSXAudioInterface alloc] init];
+    self.sysaudio = [OSXAudioInterface new];
     
-    [sysaudio discoverDevices];
-    [sysaudio initialize_audio_units];
-    NSMutableDictionary* outdevs = sysaudio.output_devices;
-    NSMutableDictionary* indevs = sysaudio.input_devices;
+    [self.sysaudio discoverDevices];
+    /*
+    [self.sysaudio initialize_audio_units];
+    NSMutableDictionary* outdevs = self.sysaudio.output_devices;
+    NSMutableDictionary* indevs = self.sysaudio.input_devices;
     
     AudioDevice* sel_indev = [indevs objectForKey:[NSNumber numberWithUnsignedInteger:238]];
     AudioDevice* sel_outdev = [outdevs objectForKey:[NSNumber numberWithUnsignedInteger:245]];
     
-    err = [sysaudio set_input_device:sel_indev];
+    err = [self.sysaudio set_input_device:sel_indev];
     
     if(err) {
         NSLog(@"Error %d setting input device.", err);
     }
     
-    err = [sysaudio set_output_device:sel_outdev];
+    err = [self.sysaudio set_output_device:sel_outdev];
     
     if(err) {
         NSLog(@"Error %d setting output device.", err);
     }
     
-    AudioDevice* ad = NULL;
+     */
     
-    ad = sysaudio.current_input_device;
     
-    NSLog(@"Current input device: %@ (%@)", ad.device_name, ad.device_uid);
-    
-    ad = sysaudio.current_output_device;
+    /*
+    ad = self.sysaudio.current_output_device;
     
     NSLog(@"Current output device: %@ (%@)", ad.device_name, ad.device_uid);
+    
+    [self.sysaudio set_audio_format];
+    [self.sysaudio setup_callbacks];
+    [self.sysaudio start];
+    */
+    [self.sysaudio go];
+    AudioDevice* ad = NULL;
+    
+    ad = self.sysaudio.current_input_device;
+    
+    NSLog(@"Current input device: %@ (%@)", ad.device_name, ad.device_uid);
     
     NSUserDefaultsController *prefs_controller = [NSUserDefaultsController sharedUserDefaultsController];
     prefs = prefs_controller.defaults;
