@@ -22,8 +22,6 @@ NS_ASSUME_NONNULL_BEGIN
 - (void) set_watcher_for_input_device_change:(id)object andSelector:(SEL)selector;
 - (void)showPanel;
 - (void) scanDevices;
-- (NSString*) getInputDeviceUID;
-- (NSString*) getOutputDeviceUID;
 
 - (id)comboBox:(NSComboBox *)comboBox objectValueForItemAtIndex:(NSInteger)index;
 - (NSInteger) numberOfItemsInComboBox:(NSComboBox*)comboBox;

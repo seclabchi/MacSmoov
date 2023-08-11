@@ -20,7 +20,7 @@
 
 SignalGeneratorViewController *siggenvc;
 AudioDeviceSelector *audio_device_selector;
-//ProcessorSysInterface* process_sys_iface;
+ProcessorSysInterface* process_sys_iface;
 NSUserDefaults *prefs;
 NSNumber* stored_output_device;
 NSNumber* stored_input_device;
@@ -55,7 +55,10 @@ NSMutableDictionary* audio_devices_input;
         [self.sysaudio set_input_device:sel_indev];
     }
     
-    [self.sysaudio go];
+    process_sys_iface = [[ProcessorSysInterface alloc] initWithSampleRate:self.sysaudio.sample_rate numberOfChannels:self.sysaudio.num_channels bufferSize:self.sysaudio.buffer_size];
+    
+    [self.sysaudio set_render_delegate:process_sys_iface];
+    [self.sysaudio start];
     
     //TODO:  initialize signal generators here, and the eventual audio passthrough/processing chain
     siggenvc = [[SignalGeneratorViewController alloc] init];
@@ -63,7 +66,7 @@ NSMutableDictionary* audio_devices_input;
     audio_device_selector = [[AudioDeviceSelector alloc] initWithInputDevices:(NSMutableDictionary*)audio_devices_input outputDevices:(NSMutableDictionary*)audio_devices_output];
     [audio_device_selector set_watcher_for_output_device_change:self andSelector:@selector(output_device_changed:)];
     [audio_device_selector set_watcher_for_input_device_change:self andSelector:@selector(input_device_changed:)];
-    //process_sys_iface = [[ProcessorSysInterface alloc] init];
+    
     //[process_sys_iface outputDeviceChanged:@"AppleUSBAudioEngine:Plantronics:Plantronics Blackwire 3210 Series:FFE5F399D3F84D558CDC32EA0790A041:2"];
     //[process_sys_iface start];
 }
@@ -175,8 +178,10 @@ NSMutableDictionary* audio_devices_input;
 }
 
 
--(IBAction) adjustGainMainOut:(id)sender {
-    
+-(IBAction) adjustGainMainIn:(id)sender {
+    NSSlider* gmo = sender;
+    NSLog(@"GainMainIn value changed: %4.2f dB", gmo.cell.floatValue);
+    [_level_main_in set_levels_left:gmo.cell.floatValue right:gmo.cell.floatValue-5.0];
 }
 
 

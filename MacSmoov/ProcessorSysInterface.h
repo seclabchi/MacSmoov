@@ -8,18 +8,18 @@
 #ifndef ProcessorSysInterface_h
 #define ProcessorSysInterface_h
 
+#import <cocoa/cocoa.h>
+#import <Foundation/Foundation.h>
+#import <AudioToolbox/AudioToolbox.h>
+#import <CommonCrypto/CommonDigest.h>
 #import "ProcessorCoreWrapper.h"
 
 @interface ProcessorSysInterface : NSObject {
-    NSString* input_device;
-    NSString* output_device;
     ProcessorCoreWrapper* core;
 }
 
--(void) inputDeviceChanged:(NSString*) _input_device;
--(void) outputDeviceChanged:(NSString*) _output_device;
--(void) start;
--(void) stop;
+-(id) initWithSampleRate:(NSUInteger)sample_rate numberOfChannels:(UInt8)channels bufferSize:(NSUInteger)bufSize;
+-(void) processWithInput:(AudioBufferList*)buf_list;
 
 @end
 

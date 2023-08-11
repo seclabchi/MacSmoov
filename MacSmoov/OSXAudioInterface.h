@@ -21,18 +21,17 @@
 
 @property (readonly, nonatomic, strong) NSMutableDictionary* input_devices;
 @property (readonly, nonatomic, strong) NSMutableDictionary* output_devices;
+@property (readonly, nonatomic, getter = get_sample_rate) NSUInteger sample_rate;
+@property (readonly, nonatomic, getter = get_num_channels) NSUInteger num_channels;
+@property (readonly, nonatomic, getter = get_buffer_size) NSUInteger buffer_size;
 
 - (id) initWithCurrentInputDevice:(AudioDevice*)in_dev OutputDevice:(AudioDevice*)out_dev;
-- (OSStatus) initialize_audio_units;
-- (OSStatus) set_audio_format;
-- (OSStatus) setup_callbacks;
+- (void) set_render_delegate:(id)delegate;
 - (OSStatus) discoverDevices;
 - (OSStatus) set_input_device:(AudioDevice*)input_dev;
 - (OSStatus) set_output_device:(AudioDevice*)output_dev;
 - (OSStatus) start;
 - (OSStatus) stop;
-- (OSStatus) go;
-
 
 - (void) writeAudioDataToFile:(AudioBufferList*)ioData;
 

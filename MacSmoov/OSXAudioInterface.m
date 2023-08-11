@@ -8,6 +8,7 @@
 #import <Foundation/Foundation.h>
 #import <AudioToolbox/AudioToolbox.h>
 #import "OSXAudioInterface.h"
+#import "ProcessorSysInterface.h"
 #import "AudioDevice.h"
 
 #define OUTPUT_BUS 0
@@ -24,6 +25,9 @@ bool deviceHasBuffersInScope(AudioObjectID deviceID, AudioObjectPropertyScope sc
 @property (nonatomic, strong) NSMutableDictionary* output_devices;
 @property (nonatomic, strong) AudioDevice* current_input_device;
 @property (nonatomic, strong) AudioDevice* current_output_device;
+@property (nonatomic) NSUInteger sample_rate;
+@property (nonatomic) NSUInteger num_channels;
+@property (nonatomic) NSUInteger buffer_size;
 
 @end
 
@@ -31,6 +35,23 @@ bool deviceHasBuffersInScope(AudioObjectID deviceID, AudioObjectPropertyScope sc
 
 @synthesize input_devices;
 @synthesize output_devices;
+@synthesize sample_rate;
+@synthesize num_channels;
+@synthesize buffer_size;
+
+static OSStatus recordingCallback(void *inRefCon,
+                                  AudioUnitRenderActionFlags *ioActionFlags,
+                                  const AudioTimeStamp *inTimeStamp,
+                                  UInt32 inBusNumber,
+                                  UInt32 inNumberFrames,
+                                  AudioBufferList *ioData);
+
+static OSStatus playbackCallback(void *inRefCon,
+                                  AudioUnitRenderActionFlags *ioActionFlags,
+                                  const AudioTimeStamp *inTimeStamp,
+                                  UInt32 inBusNumber,
+                                  UInt32 inNumberFrames,
+                                  AudioBufferList *ioData);
 
 AudioComponent audioUnitInput;
 AudioComponent audioUnitOutput;
@@ -38,18 +59,27 @@ AudioComponent audioUnitOutput;
 AudioDeviceID current_input_device_id;
 AudioDeviceID current_output_device_id;
 
-AudioBuffer rend_buf00, rend_buf01;
-
 Boolean is_running;
 Boolean is_reconfiguring;
 
+ProcessorSysInterface* render_delegate;
+
 NSFileHandle* capture_file_handle;
+
+/* Input buffers */
+UInt32 lastNumberFrames;
+UInt32 buf_size_in_bytes;
+AudioBufferList* buf_list;
+
+/* Output buffers */
+AudioBuffer* rend_buf00;
+AudioBuffer* rend_buf01;
 
 void checkStatus(int status) {
     if (status) {
         NSError *error = [NSError errorWithDomain:NSCocoaErrorDomain code:status userInfo:nil];
         NSLog(@"Error %d encountered: %@", status, error.localizedDescription);
-        assert(status == noErr);
+        //assert(status == noErr);
     }
 }
 
@@ -76,125 +106,30 @@ void checkStatus(int status) {
         }
         
         is_running = NO;
-        is_reconfiguring = NO;
+        
+        lastNumberFrames = 512;
+        buf_size_in_bytes = lastNumberFrames * sizeof(Float32);
+        size_t buf_list_size = offsetof(AudioBufferList, mBuffers[0]) + (sizeof(AudioBuffer) * 2);
+        buf_list = (AudioBufferList*)calloc(1, buf_list_size);
+        buf_list->mNumberBuffers = 2;
+        
+        buf_list->mBuffers[0].mNumberChannels = 1;
+        buf_list->mBuffers[0].mDataByteSize = buf_size_in_bytes;
+        buf_list->mBuffers[0].mData = calloc(1, buf_size_in_bytes);
+        
+        buf_list->mBuffers[1].mNumberChannels = 1;
+        buf_list->mBuffers[1].mDataByteSize = buf_size_in_bytes;
+        buf_list->mBuffers[1].mData = calloc(1, buf_size_in_bytes);
     }
     
     return self;
 }
 
-static OSStatus recordingCallback(void *inRefCon,
-                                  AudioUnitRenderActionFlags *ioActionFlags,
-                                  const AudioTimeStamp *inTimeStamp,
-                                  UInt32 inBusNumber,
-                                  UInt32 inNumberFrames,
-                                  AudioBufferList *ioData) {
- 
-    OSStatus err = 0;
-    AudioStreamBasicDescription stream_format_prop;
-    UInt32 stream_format_prop_size = sizeof(stream_format_prop);
-    Boolean propWriteable = NO;
-
-    // TODO: Use inRefCon to access our interface object to do stuff
-    // Then, use inNumberFrames to figure out how much data is available, and make
-    // that much space available in buffers in an AudioBufferList.
-    
-    err = 0;
- 
-    OSXAudioInterface* osxai = (__bridge OSXAudioInterface*) inRefCon;
-    
-    err = AudioUnitGetPropertyInfo(osxai->audioUnitInput, kAudioUnitProperty_StreamFormat, kAudioUnitScope_Output, INPUT_BUS,
-                                   &stream_format_prop_size, &propWriteable);
-    
-    checkStatus(err);
-    
-    err = AudioUnitGetProperty(osxai->audioUnitInput, kAudioUnitProperty_StreamFormat, kAudioUnitScope_Output, INPUT_BUS,
-                               &stream_format_prop, &stream_format_prop_size);
-    
-    checkStatus(err);
-    
-    
-    // Then:
-    // Obtain recorded samples
- 
-    UInt32 buf_size_in_bytes = inNumberFrames * sizeof(Float32);
-    size_t buf_list_size = offsetof(AudioBufferList, mBuffers[0]) + (sizeof(AudioBuffer) * 2);
-    AudioBufferList* buf_list = (AudioBufferList*)calloc(1, buf_list_size);
-    buf_list->mNumberBuffers = 2;
-    
-    buf_list->mBuffers[0].mNumberChannels = 1;
-    buf_list->mBuffers[0].mDataByteSize = buf_size_in_bytes;
-    buf_list->mBuffers[0].mData = calloc(1, buf_size_in_bytes);
-    
-    buf_list->mBuffers[1].mNumberChannels = 1;
-    buf_list->mBuffers[1].mDataByteSize = buf_size_in_bytes;
-    buf_list->mBuffers[1].mData = calloc(1, buf_size_in_bytes);
-    
-    //NSLog(@"recordingCallback - inTimeStamp %llu, inNumberFrames %d, buf_list %p", inTimeStamp->mHostTime, inNumberFrames, buf_list);
-    
-    err = AudioUnitRender(osxai->audioUnitInput,
-                             ioActionFlags,
-                             inTimeStamp,
-                             inBusNumber,
-                             inNumberFrames,
-                             buf_list);
-    checkStatus(err);
- 
-    // Now, we have the samples we just read sitting in buffers in bufferList
-    
-    memcpy(rend_buf00.mData, buf_list->mBuffers[0].mData, rend_buf00.mDataByteSize);
-    memcpy(rend_buf01.mData, buf_list->mBuffers[1].mData, rend_buf01.mDataByteSize);
-    
-    /*
-    Float32* outdata = (Float32*)calloc(1, 2 * inNumberFrames * sizeof(Float32));
-    Float32* buf00 = (Float32*)(buf_list->mBuffers[0].mData);
-    Float32* buf01 = (Float32*)(buf_list->mBuffers[1].mData);
-    UInt32 j = 0;
-    
-    for(UInt32 i = 0; i < inNumberFrames; i++) {
-        outdata[j] = buf00[i];
-        outdata[j+1] = buf01[i];
-        j+=2;
-    }
-    
-    NSData* data = [NSData dataWithBytes:outdata length:2*inNumberFrames*sizeof(Float32)];
-    [capture_file_handle seekToEndOfFile];
-    [capture_file_handle writeData:data];
-    
-    free(outdata);
-    */
-    free(buf_list->mBuffers[0].mData);
-    free(buf_list->mBuffers[1].mData);
-    free(buf_list);
-    
-    return noErr;
+- (void)set_render_delegate:(id)delegate {
+    render_delegate = delegate;
 }
 
-/**
- This callback is called when the audioUnit needs new data to play through the
- speakers. If you don't have any, just don't write anything in the buffers
- */
-static OSStatus playbackCallback(void *inRefCon,
-                                 AudioUnitRenderActionFlags *ioActionFlags,
-                                 const AudioTimeStamp *inTimeStamp,
-                                 UInt32 inBusNumber,
-                                 UInt32 inNumberFrames,
-                                 AudioBufferList *ioData) {
-    // Notes: ioData contains buffers (may be more than one!)
-    // Fill them up as much as you can. Remember to set the size value in each buffer to match how
-    // much data is in the buffer.
-    
-    //NSLog(@"playbackCallback - inTimeStamp %llu, inNumberFrames %d, ioData %p", inTimeStamp->mHostTime, inNumberFrames, ioData);
-    
-    OSXAudioInterface *osxai = (__bridge OSXAudioInterface*)inRefCon;
-    
-    rend_buf00 = ioData->mBuffers[0];
-    rend_buf01 = ioData->mBuffers[1];
-    
-    
-    return noErr;
-}
-
-- (OSStatus) go {
+- (OSStatus) start {
     
     if(YES == is_running) {
         return noErr;
@@ -472,86 +407,44 @@ static OSStatus playbackCallback(void *inRefCon,
 }
 
 - (OSStatus) set_input_device:(AudioDevice*)input_dev {
-    
-    [self stop];
-        
-    UInt32 size = sizeof(AudioDeviceID);
-    AudioDeviceID deviceID = input_dev.device_id;
     OSStatus err = 0;
-    
-    NSLog(@"Changing input device to %@ (%@)", input_dev.device_name, input_dev.device_uid);
-    
-    //size = sizeof(deviceID);
-    //err = AudioUnitSetProperty(audioUnitInput, kAudioOutputUnitProperty_CurrentDevice, kAudioUnitScope_Global, 0, &deviceID, size);
 
-    //checkStatus(err);
+    [self stop];
+
+    NSLog(@"Changing input device to %@ (%@)", input_dev.device_name, input_dev.device_uid);
+    _current_input_device = input_dev;
     
-    //if(!err) {
-        _current_input_device = input_dev;
-    //}
-    
-    [self go];
+    [self start];
     
     return err;
 }
 
 - (AudioDevice*) get_current_input_device {
-    UInt32 size = sizeof(AudioDeviceID);
-    AudioDeviceID deviceID = 0;
-    OSStatus err;
     AudioDevice* ad = nil;
     
-    size = sizeof(deviceID);
-    //err = AudioUnitGetProperty(audioUnitInput, kAudioOutputUnitProperty_CurrentDevice, kAudioUnitScope_Global, 0, &deviceID, &size);
-
-    //checkStatus(err);
-    
-    //if(!err) {
     ad = _current_input_device;
-    //}
     
     return ad;
 }
 
 - (OSStatus) set_output_device:(AudioDevice*)output_dev {
+    OSStatus err = 0;
     
     [self stop];
     
     NSLog(@"Changing output device to %@ (%@)", output_dev.device_name, output_dev.device_uid);
-    OSStatus err = 0;
-    UInt32 size;
-    AudioDeviceID deviceID = output_dev.device_id;
+    _current_output_device = output_dev;
     
-    //size = sizeof(deviceID);
-    //err = AudioUnitSetProperty(audioUnitOutput, kAudioOutputUnitProperty_CurrentDevice, kAudioUnitScope_Global, 0, &deviceID, size);
-    
-    //checkStatus(err);
-    
-    //if(!err) {
-        _current_output_device = output_dev;
-    //}
-    
-    [self go];
+    [self start];
     
     return err;
 }
 
 - (AudioDevice*) get_current_output_device {
-    UInt32 size = sizeof(AudioDeviceID);
-    AudioDeviceID deviceID = 0;
-    OSStatus err = 0;
+    
     AudioDevice* ad = nil;
     
-    //size = sizeof(deviceID);
-    //err = AudioUnitGetProperty(audioUnitOutput, kAudioOutputUnitProperty_CurrentDevice, kAudioObjectPropertyScopeOutput, 0, &deviceID, &size);
-
-    //checkStatus(err);
-    
-    //if(!err) {
-        
-        ad = _current_output_device;
-    //}
-    //ad = [self curr]
+    ad = _current_output_device;
     
     return ad;
 }
@@ -650,6 +543,125 @@ static OSStatus playbackCallback(void *inRefCon,
     return err;
 }
 
+static OSStatus recordingCallback(void *inRefCon,
+                                  AudioUnitRenderActionFlags *ioActionFlags,
+                                  const AudioTimeStamp *inTimeStamp,
+                                  UInt32 inBusNumber,
+                                  UInt32 inNumberFrames,
+                                  AudioBufferList *ioData) {
+ 
+    OSStatus err = 0;
+     
+    OSXAudioInterface* osxai = (__bridge OSXAudioInterface*) inRefCon;
+ 
+    /* Were going to try to avoid mallocing and freeing the audio buffers each time through this call.
+       so we'll keep the buffers at class scope, and only realloc the buffers if for some reason the
+       number of input frames changes.  We'll start with the assumption that we'll be getting 512 frames
+       of data (these things are inited about in the class init function.
+     
+       Also, assuming that the samples are non-interleaved Float32 values, two channels.
+     */
+    if(inNumberFrames != lastNumberFrames) {
+        NSLog(@"Capture frame count changed from %d to %d, reallocating...", lastNumberFrames, inNumberFrames);
+        void* temp;
+        buf_size_in_bytes = inNumberFrames * sizeof(Float32);
+        
+        buf_list->mBuffers[0].mDataByteSize = buf_size_in_bytes;
+        temp = realloc(buf_list->mBuffers[0].mData, buf_size_in_bytes);
+        
+        if(temp) {
+            buf_list->mBuffers[0].mData = temp;
+        }
+        
+        buf_list->mBuffers[1].mDataByteSize = buf_size_in_bytes;
+        temp = realloc(buf_list->mBuffers[1].mData, buf_size_in_bytes);
+        
+        if(temp) {
+            buf_list->mBuffers[1].mData = temp;
+        }
+        
+        lastNumberFrames = inNumberFrames;
+    }
+    
+    
+    //NSLog(@"recordingCallback - inTimeStamp %llu, inNumberFrames %d, buf_list %p", inTimeStamp->mHostTime, inNumberFrames, buf_list);
+    
+    err = AudioUnitRender(osxai->audioUnitInput,
+                             ioActionFlags,
+                             inTimeStamp,
+                             inBusNumber,
+                             inNumberFrames,
+                             buf_list);
+    checkStatus(err);
+ 
+    // Send the freshly rendered buffers to the DSP core
+    [render_delegate processWithInput:buf_list];
+    
+    /*
+    Float32* outdata = (Float32*)calloc(1, 2 * inNumberFrames * sizeof(Float32));
+    Float32* buf00 = (Float32*)(buf_list->mBuffers[0].mData);
+    Float32* buf01 = (Float32*)(buf_list->mBuffers[1].mData);
+    UInt32 j = 0;
+    
+    for(UInt32 i = 0; i < inNumberFrames; i++) {
+        outdata[j] = buf00[i];
+        outdata[j+1] = buf01[i];
+        j+=2;
+    }
+    
+    NSData* data = [NSData dataWithBytes:outdata length:2*inNumberFrames*sizeof(Float32)];
+    [capture_file_handle seekToEndOfFile];
+    [capture_file_handle writeData:data];
+    
+    free(outdata);
+    */
+    //free(buf_list->mBuffers[0].mData);
+    //free(buf_list->mBuffers[1].mData);
+    //free(buf_list);
+    
+    return noErr;
+}
+
+/**
+ This callback is called when the audioUnit needs new data to play through the
+ speakers. If you don't have any, just don't write anything in the buffers
+ */
+static OSStatus playbackCallback(void *inRefCon,
+                                 AudioUnitRenderActionFlags *ioActionFlags,
+                                 const AudioTimeStamp *inTimeStamp,
+                                 UInt32 inBusNumber,
+                                 UInt32 inNumberFrames,
+                                 AudioBufferList *ioData) {
+    // Notes: ioData contains buffers (may be more than one!)
+    // Fill them up as much as you can. Remember to set the size value in each buffer to match how
+    // much data is in the buffer.
+    
+    //NSLog(@"playbackCallback - inTimeStamp %llu, inNumberFrames %d, ioData %p", inTimeStamp->mHostTime, inNumberFrames, ioData);
+    
+    OSXAudioInterface *osxai = (__bridge OSXAudioInterface*)inRefCon;
+    
+    //rend_buf00 = &(ioData->mBuffers[0]);
+    //rend_buf01 = &(ioData->mBuffers[1]);
+    memcpy(ioData->mBuffers[0].mData, buf_list->mBuffers[0].mData, buf_list->mBuffers[0].mDataByteSize);
+    memcpy(ioData->mBuffers[1].mData, buf_list->mBuffers[1].mData, buf_list->mBuffers[1].mDataByteSize);
+    
+    return noErr;
+}
+
+-(NSUInteger) get_sample_rate {
+    return SAMPLE_RATE;
+}
+
+-(NSUInteger) get_num_channels {
+    return NUM_CHANNELS;
+}
+
+-(NSUInteger) get_buffer_size {
+    return buf_size_in_bytes;
+}
+
+
+
 bool deviceHasBuffersInScope(AudioObjectID deviceID, AudioObjectPropertyScope scope) {
     if(deviceID == 0) {
         return NO;
@@ -684,113 +696,4 @@ bool deviceHasBuffersInScope(AudioObjectID deviceID, AudioObjectPropertyScope sc
     return supportsScope;
 }
 
--(NSString *)deviceName:(AudioDeviceID)devID
-{
-    // Check name
-    AudioObjectPropertyAddress address;
-    
-    address.mSelector = kAudioObjectPropertyName;
-    address.mScope = kAudioObjectPropertyScopeGlobal;
-    address.mElement = kAudioObjectPropertyElementMaster;
-
-    CFStringRef name;
-    UInt32 stringsize = sizeof(CFStringRef);
-    
-    AudioObjectGetPropertyData(devID, &address, 0, nil, &stringsize, &name);
-    
-    return (__bridge NSString *)(name);
-}
-
--(UInt32)bufferSize:(AudioDeviceID)devID
-{
-    // Check buffer size
-    AudioObjectPropertyAddress address;
-    
-    address.mSelector = kAudioDevicePropertyBufferFrameSize;
-    address.mScope = kAudioObjectPropertyScopeGlobal;
-    address.mElement = kAudioObjectPropertyElementMaster;
-    
-    UInt32 buf = 0;
-    UInt32 bufSize = sizeof(UInt32);
-    
-    AudioObjectGetPropertyData(devID, &address, 0, nil, &bufSize, &buf);
-    
-    return buf;
-}
-/*- (OSStatus) deprecated {
-    
-    AudioObjectPropertyAddress addr;
-    UInt32 size = sizeof(AudioDeviceID);
-    AudioDeviceID deviceID = 0;
-    
-    AudioComponentDescription desc;
-    AudioComponent comp;
-    
-    desc.componentType = kAudioUnitType_Output;
-    desc.componentSubType = kAudioUnitSubType_HALOutput;//kAudioUnitSubType_VoiceProcessingIO;
-    
-    desc.componentManufacturer = kAudioUnitManufacturer_Apple;
-    desc.componentFlags = 0;
-    desc.componentFlagsMask = 0;
-    
-    comp = AudioComponentFindNext(NULL, &desc);
-    if (comp == NULL)
-    {
-        return -1;
-    }
-    
-    OSStatus err = AudioComponentInstanceNew(comp, &audioUnit);
-    checkStatus(err);
-    
-    UInt32 enableIO;
-        
-    //When using AudioUnitSetProperty the 4th parameter in the method
-    //refer to an AudioUnitElement. When using an AudioOutputUnit
-    //the input element will be '1' and the output element will be '0'.
-    
- 
-    enableIO = 1;
-    err = AudioUnitSetProperty(audioUnit,
-                         kAudioOutputUnitProperty_EnableIO,
-                         kAudioUnitScope_Input,
-                         kInputBus, // input element
-                         &enableIO,
-                         sizeof(enableIO));
-    
-    checkStatus(err);
-    
-    enableIO = 0;
-    err = AudioUnitSetProperty(audioUnit,
-                         kAudioOutputUnitProperty_EnableIO,
-                         kAudioUnitScope_Output,
-                         kOutputBus,   //output element
-                         &enableIO,
-                         sizeof(enableIO));
-    checkStatus(err);
-    
-    //addr.mSelector = kAudioHardwarePropertyDefaultInputDevice;
-    //addr.mScope = kAudioObjectPropertyScopeGlobal;
-    //addr.mElement = kAudioObjectPropertyElementMaster;
-
-    //err = AudioObjectGetPropertyData(kAudioObjectSystemObject, &addr, 0, NULL, &size, &deviceID);
-    
-    AudioObjectID device = 0;
-    
-    addr.mSelector = kAudioHardwarePropertyTranslateUIDToDevice;
-    addr.mScope = kAudioObjectPropertyScopeGlobal;
-    addr.mElement = kAudioObjectPropertyElementMaster;
-
-    err = AudioObjectGetPropertyData(kAudioObjectSystemObject, &addr, 0, NULL, &size, &device);
-    
-    checkStatus(err);
-
-    if (err == noErr) {
-        err = AudioUnitSetProperty(audioUnit, kAudioOutputUnitProperty_CurrentDevice, kAudioUnitScope_Global, 0, &deviceID, size);
-    }
-
-    checkStatus(err);
-
-    return err;
-}
-*/
 @end
