@@ -23,7 +23,7 @@
 -(IBAction) showAudioDeviceSelector:(id)sender;
 -(IBAction) adjustGainMainIn:(id)sender;
 
-
+- (void) queryMeterLevels:(id)param;
 -(void) openAudioFile:(NSURL*)fileUrl;
 
 @end

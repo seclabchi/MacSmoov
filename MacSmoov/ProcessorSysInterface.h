@@ -20,6 +20,8 @@
 
 -(id) initWithSampleRate:(NSUInteger)sample_rate numberOfChannels:(UInt8)channels bufferSize:(NSUInteger)bufSize;
 -(void) processWithInput:(AudioBufferList*)buf_list;
+-(void) getMainInLevelsLrms:(float*)lrms Rrms:(float*)rrms Lpeak:(float*)lpeak Rpeak:(float*)rpeak;
+-(void) setMainInGainDBL:(float)mainInL R:(float)mainInR;
 
 @end
 

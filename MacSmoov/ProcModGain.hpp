@@ -1,30 +1,31 @@
 //
-//  ProcModLevelMeter.hpp
+//  ProcModGain.hpp
 //  MacSmoov
 //
-//  Created by Paul Zaremba on 7/9/23.
+//  Created by Paul Zaremba on 8/11/23.
 //
 
-#ifndef ProcModLevelMeter_hpp
-#define ProcModLevelMeter_hpp
+#ifndef ProcModGain_hpp
+#define ProcModGain_hpp
 
 #include <stdio.h>
 #include "ProcessorModule.hpp"
-#include "LPFSinglePole.hpp"
 
 namespace fmsmoov {
 
-class ProcModLevelMeter : public ProcessorModule {
+class ProcModGain : public ProcessorModule {
 public:
-    ProcModLevelMeter(uint32_t _f_samp, uint8_t _n_channels, uint32_t _buf_size);
-    virtual ~ProcModLevelMeter();
+    ProcModGain(uint32_t _f_samp, uint8_t _n_channels, uint32_t _buf_size);
+    virtual ~ProcModGain();
     /* n samps is total interleaved stereo samples
      TODO: Figure this shit out to make it universal. */
     virtual void process(float* in, float* out, uint32_t n_samps);
-    void get_levels_db(float* rmsL, float* rmsR, float* peakL, float* peakR);
+    void set_gain_db(float _gainL, float _gainR);
 private:
-    LPFSinglePole* lpf10ms;
-    float* prefiltered;
+    float m_setgain_db_L;
+    float m_setgain_db_R;
+    float m_setgain_lin_L;
+    float m_setgain_lin_R;
     float rms_l;
     float rms_r;
     float peak_l;

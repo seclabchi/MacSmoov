@@ -28,10 +28,35 @@ NSNumber* stored_input_device;
 NSMutableDictionary* audio_devices_output;
 NSMutableDictionary* audio_devices_input;
 
+Boolean shutting_down;
+
+- (void) queryMeterLevels:(id)param {
+    
+    NSLog(@"Started meter driver thread.");
+    
+    float mainInLrms, mainInRrms, mainInLpeak, mainInRpeak;
+    
+    while(false == shutting_down) {
+        [process_sys_iface getMainInLevelsLrms:&mainInLrms Rrms:&mainInRrms Lpeak:&mainInLpeak Rpeak:&mainInRpeak];
+        
+        dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void){
+            //Background Thread
+            dispatch_async(dispatch_get_main_queue(), ^(void){
+                [_level_main_in set_levels_Lrms:mainInLrms Rrms:mainInRrms Lpeak:mainInLpeak Rpeak:mainInRpeak];
+            });
+        });
+        
+        usleep(70000);
+    }
+    
+    NSLog(@"Exiting meter driver thread.");
+}
+
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
     // Insert code here to initialize your application
     OSStatus err = 0;
 
+    shutting_down = NO;
     
     NSUserDefaultsController *prefs_controller = [NSUserDefaultsController sharedUserDefaultsController];
     prefs = prefs_controller.defaults;
@@ -67,6 +92,8 @@ NSMutableDictionary* audio_devices_input;
     [audio_device_selector set_watcher_for_output_device_change:self andSelector:@selector(output_device_changed:)];
     [audio_device_selector set_watcher_for_input_device_change:self andSelector:@selector(input_device_changed:)];
     
+    [NSThread detachNewThreadSelector:@selector(queryMeterLevels:) toTarget:self withObject:nil];
+
     //[process_sys_iface outputDeviceChanged:@"AppleUSBAudioEngine:Plantronics:Plantronics Blackwire 3210 Series:FFE5F399D3F84D558CDC32EA0790A041:2"];
     //[process_sys_iface start];
 }
@@ -74,6 +101,7 @@ NSMutableDictionary* audio_devices_input;
 
 - (void)applicationWillTerminate:(NSNotification *)aNotification {
     // Insert code here to tear down your application
+    
 }
 
 
@@ -83,7 +111,7 @@ NSMutableDictionary* audio_devices_input;
 
 - (void)windowWillClose:(NSNotification*) notification {
     NSLog(@"windowWillClose notification object %@", notification.object);
-    
+    shutting_down = YES;
     [NSApp terminate:self];
 }
 
@@ -179,9 +207,9 @@ NSMutableDictionary* audio_devices_input;
 
 
 -(IBAction) adjustGainMainIn:(id)sender {
-    NSSlider* gmo = sender;
-    NSLog(@"GainMainIn value changed: %4.2f dB", gmo.cell.floatValue);
-    [_level_main_in set_levels_left:gmo.cell.floatValue right:gmo.cell.floatValue-5.0];
+    NSSlider* gmi = sender;
+    //NSLog(@"GainMainIn value changed: %4.2f dB", gmo.cell.floatValue);
+    [process_sys_iface setMainInGainDBL:gmi.cell.floatValue R:gmi.cell.floatValue];
 }
 
 

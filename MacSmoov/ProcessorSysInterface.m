@@ -17,6 +17,7 @@
 float* input_buffer;
 float* output_buffer;
 uint32_t interleaved_buf_len_in_bytes;
+uint32_t interleaved_buf_len_in_floats;
 
 /* The preliminary work I'm doing with the AUHAL is giving me non-interleaved stereo samples, so we're just gonna
    run with that for the time being.
@@ -27,6 +28,7 @@ uint32_t interleaved_buf_len_in_bytes;
         NSUserDefaultsController *prefs_controller = [NSUserDefaultsController sharedUserDefaultsController];
         prefs = prefs_controller.defaults;
         interleaved_buf_len_in_bytes = bufSize * channels;
+        interleaved_buf_len_in_floats = interleaved_buf_len_in_bytes / sizeof(float);
         core = [[ProcessorCoreWrapper alloc] initWithSampleRate:sample_rate numberOfChannels:channels bufSize:interleaved_buf_len_in_bytes];
         
         input_buffer = (float*)malloc(interleaved_buf_len_in_bytes);
@@ -55,7 +57,7 @@ uint32_t interleaved_buf_len_in_bytes;
     
     //we should now have an interleaved buffer of input samples.
     //memcpy(output_buffer, input_buffer, count * 2 * sizeof(float));
-    [core processWithInput:input_buffer output:output_buffer ofSize:interleaved_buf_len_in_bytes];
+    [core processWithInput:input_buffer output:output_buffer ofSize:interleaved_buf_len_in_floats];
     
     //now need to de-interleave the samples to feed back to the AUHAL
     j = 0;
@@ -67,6 +69,14 @@ uint32_t interleaved_buf_len_in_bytes;
     }
     
     
+}
+
+-(void) getMainInLevelsLrms:(float*)lrms Rrms:(float*)rrms Lpeak:(float*)lpeak Rpeak:(float*)rpeak {
+    [core getMainInLevelsLrms:lrms Rrms:rrms Lpeak:lpeak Rpeak:rpeak];
+}
+
+-(void) setMainInGainDBL:(float)mainInL R:(float)mainInR {
+    [core setMainInGainDBL:mainInL R:mainInR];
 }
 
 @end

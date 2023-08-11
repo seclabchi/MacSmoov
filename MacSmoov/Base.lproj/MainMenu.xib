@@ -433,31 +433,31 @@
             </items>
             <point key="canvasLocation" x="259" y="-481"/>
         </menu>
-        <window title="MacSmoov" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" animationBehavior="default" id="QvC-M9-y7g">
+        <window title="MacSmoov" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" appearanceType="darkAqua" animationBehavior="default" id="QvC-M9-y7g">
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
-            <rect key="contentRect" x="335" y="390" width="753" height="450"/>
+            <rect key="contentRect" x="335" y="390" width="940" height="543"/>
             <rect key="screenRect" x="0.0" y="0.0" width="1920" height="1055"/>
             <view key="contentView" wantsLayer="YES" id="EiT-Mj-1SZ">
-                <rect key="frame" x="0.0" y="0.0" width="753" height="450"/>
+                <rect key="frame" x="0.0" y="0.0" width="940" height="543"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <slider horizontalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="yiT-KE-WWL">
-                        <rect key="frame" x="23" y="72" width="24" height="167"/>
+                        <rect key="frame" x="30" y="129" width="24" height="167"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <shadow key="shadow" blurRadius="2">
                             <color key="color" name="labelColor" catalog="System" colorSpace="catalog"/>
                         </shadow>
-                        <sliderCell key="cell" continuous="YES" state="on" alignment="left" minValue="-96" doubleValue="-48.483805877483448" tickMarkPosition="right" numberOfTickMarks="10" sliderType="linear" id="Kku-xN-i9R"/>
+                        <sliderCell key="cell" continuous="YES" state="on" alignment="left" minValue="-20" maxValue="20" tickMarkPosition="right" numberOfTickMarks="10" sliderType="linear" id="Kku-xN-i9R"/>
                         <connections>
                             <action selector="adjustGainMainIn:" target="Voe-Tx-rLC" id="SuW-Qo-1yr"/>
                         </connections>
                     </slider>
                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="uKs-Ls-c1u">
-                        <rect key="frame" x="-2" y="50" width="74" height="20"/>
+                        <rect key="frame" x="18" y="101" width="49" height="26"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <textFieldCell key="cell" alignment="center" title="Gain In Main" id="Pkj-ue-wNp">
-                            <font key="font" metaFont="system" size="9"/>
+                        <textFieldCell key="cell" alignment="center" title="Input Gain" id="Pkj-ue-wNp">
+                            <font key="font" metaFont="system" size="10"/>
                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
@@ -485,15 +485,24 @@
                         </connections>
                     </button>
                     <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="mc0-9Q-64D" customClass="LevelMeter">
-                        <rect key="frame" x="25" y="245" width="21" height="185"/>
+                        <rect key="frame" x="25" y="302" width="34" height="192"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     </customView>
+                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="n5W-86-HcX">
+                        <rect key="frame" x="17" y="502" width="50" height="35"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <textFieldCell key="cell" alignment="center" title="PROC IN" id="otR-fZ-V3j">
+                            <font key="font" metaFont="system"/>
+                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                    </textField>
                 </subviews>
             </view>
             <connections>
                 <outlet property="delegate" destination="Voe-Tx-rLC" id="TbV-AQ-Ffd"/>
             </connections>
-            <point key="canvasLocation" x="175.5" y="-101"/>
+            <point key="canvasLocation" x="269" y="-54.5"/>
         </window>
         <userDefaultsController representsSharedInstance="YES" id="wr1-wQ-GCJ"/>
     </objects>

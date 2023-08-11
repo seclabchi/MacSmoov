@@ -29,4 +29,12 @@
     _cpp->process(in_buf, out_buf, n_frames);
 }
 
+-(void) getMainInLevelsLrms:(float*)lrms Rrms:(float*)rrms Lpeak:(float*)lpeak Rpeak:(float*)rpeak {
+    _cpp->get_main_in_levels(lrms, rrms, lpeak, rpeak);
+}
+
+-(void) setMainInGainDBL:(float)mainInL R:(float)mainInR {
+    _cpp->set_main_in_gain_db(mainInL, mainInR);
+}
+
 @end

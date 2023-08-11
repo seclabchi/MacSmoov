@@ -16,6 +16,10 @@ ProcModLevelMeter::ProcModLevelMeter(uint32_t _f_samp, uint8_t _n_channels, uint
     //10 ms time constant
     lpf10ms = new LPFSinglePole(get_f_samp(), 0.010);
     prefiltered = new float[get_buf_size()];
+    out_rms_l = 0.0;
+    out_rms_r = 0.0;
+    out_peak_l = 0.0;
+    out_peak_r = 0.0;
 }
 
 ProcModLevelMeter::~ProcModLevelMeter() {
@@ -43,15 +47,30 @@ void ProcModLevelMeter::process(float* in, float* out, uint32_t n_samps) {
         }
     }
     
-    rms_l = 20 * log10(sqrt(rms_l / (float)(n_samps/2)));
-    rms_r = 20 * log10(sqrt(rms_r / (float)(n_samps/2)));
-    peak_l = 20 * log10(peak_l);
-    peak_r = 20 * log10(peak_r);
+    out_rms_l = 20 * log10(sqrt(rms_l / (float)(n_samps/2)));
+    out_rms_r = 20 * log10(sqrt(rms_r / (float)(n_samps/2)));
+    out_peak_l = 20 * log10(peak_l);
+    out_peak_r = 20 * log10(peak_r);
     
     //printf("Main Input RMS/Peak (L/R): %f, %f, %f, %f\n", rms_l, rms_r, peak_l, peak_r);
     
     memcpy(out, in, n_samps * sizeof(float));
     
+}
+
+void ProcModLevelMeter::get_levels_db(float* rmsL, float* rmsR, float* peakL, float* peakR) {
+    if(rmsL) {
+        *rmsL = out_rms_l;
+    }
+    if(rmsR) {
+        *rmsR = out_rms_r;
+    }
+    if(peakL) {
+        *peakL = out_peak_l;
+    }
+    if(peakR) {
+        *peakR = out_peak_r;
+    }
 }
 
 }
