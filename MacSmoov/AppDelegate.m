@@ -210,6 +210,7 @@ Boolean shutting_down;
     NSSlider* gmi = sender;
     //NSLog(@"GainMainIn value changed: %4.2f dB", gmo.cell.floatValue);
     [process_sys_iface setMainInGainDBL:gmi.cell.floatValue R:gmi.cell.floatValue];
+    [prefs setObject:[NSString stringWithFormat:@"%f", gmi.cell.floatValue] forKey:@"GAIN_IN_MAIN"];
 }
 
 

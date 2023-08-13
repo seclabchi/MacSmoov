@@ -352,10 +352,14 @@
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <menu key="submenu" title="Audio" id="GEO-Iw-cKr">
                         <items>
-                            <menuItem title="Signal Generators" id="Gi5-1S-RQB">
-                                <modifierMask key="keyEquivalentModifierMask"/>
+                            <menuItem title="Signal Generators" enabled="NO" keyEquivalent="g" id="Gi5-1S-RQB">
                                 <connections>
                                     <action selector="showSignalGenerators:" target="Voe-Tx-rLC" id="6cI-7O-TYG"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="Audio Devices" keyEquivalent="d" id="dAH-GR-SGw">
+                                <connections>
+                                    <action selector="showAudioDeviceSelector:" target="Voe-Tx-rLC" id="QvE-SF-eh8"/>
                                 </connections>
                             </menuItem>
                         </items>
@@ -448,7 +452,7 @@
                         <shadow key="shadow" blurRadius="2">
                             <color key="color" name="labelColor" catalog="System" colorSpace="catalog"/>
                         </shadow>
-                        <sliderCell key="cell" continuous="YES" state="on" alignment="left" minValue="-20" maxValue="20" tickMarkPosition="right" numberOfTickMarks="10" sliderType="linear" id="Kku-xN-i9R"/>
+                        <sliderCell key="cell" continuous="YES" state="on" alignment="left" minValue="-40" maxValue="40" tickMarkPosition="right" numberOfTickMarks="10" sliderType="linear" id="Kku-xN-i9R"/>
                         <connections>
                             <action selector="adjustGainMainIn:" target="Voe-Tx-rLC" id="SuW-Qo-1yr"/>
                         </connections>

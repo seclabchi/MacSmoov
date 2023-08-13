@@ -15,10 +15,10 @@ Float32 min_lev = -96.0;
 - (id)initWithFrame:(NSRect)frame {
     self = [super initWithFrame:frame];
     if (self) {
-        level_l_rms = -100.0;
-        level_r_rms = -100.0;
-        level_l_peak = -100.0;
-        level_r_peak = -100.0;
+        level_l_rms = min_lev;
+        level_r_rms = min_lev;
+        level_l_peak = min_lev;
+        level_r_peak = min_lev;
     }
     return self;
 }

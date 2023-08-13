@@ -13,9 +13,12 @@
 
 #include "ProcModLevelMeter.hpp"
 #include "ProcModGain.hpp"
+#include "ProcMod2BandAGC.hpp"
 #include "LogLinConverter.hpp"
 
 namespace fmsmoov {
+
+using namespace std;
 
 class ProcessorCore {
 public:
@@ -32,8 +35,9 @@ private:
     float* m_tmpbufA;
     float* m_tmpbufB;
     
-    ProcModLevelMeter* proc_mod_level_main_in;
     ProcModGain* proc_mod_gain_main_in;
+    ProcModLevelMeter* proc_mod_level_main_in;
+    ProcMod2BandAGC* proc_mod_2band_agc;
     LogLinConverter* m_loglin;
     LogLinConverter* m_linlog;
     

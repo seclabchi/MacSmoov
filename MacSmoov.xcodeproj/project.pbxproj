@@ -66,6 +66,16 @@
 		9DFECDEE2A86D80D00BFB1A2 /* ProcModGain.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9DFECDEC2A86D80D00BFB1A2 /* ProcModGain.cpp */; };
 		9DFECDF12A86F02C00BFB1A2 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 9DFECDF02A86F02C00BFB1A2 /* Credits.rtf */; };
 		9DFECDF22A86F02C00BFB1A2 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 9DFECDF02A86F02C00BFB1A2 /* Credits.rtf */; };
+		9DFECDF72A87EAAF00BFB1A2 /* ProcMod2BandAGC.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9DFECDF52A87EAAF00BFB1A2 /* ProcMod2BandAGC.cpp */; };
+		9DFECDF82A87EAAF00BFB1A2 /* ProcMod2BandAGC.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9DFECDF52A87EAAF00BFB1A2 /* ProcMod2BandAGC.cpp */; };
+		9DFECE002A87EAF800BFB1A2 /* biquad.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9DFECDFB2A87EAF800BFB1A2 /* biquad.cpp */; };
+		9DFECE012A87EAF800BFB1A2 /* biquad.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9DFECDFB2A87EAF800BFB1A2 /* biquad.cpp */; };
+		9DFECE022A87EAF800BFB1A2 /* sos.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9DFECDFC2A87EAF800BFB1A2 /* sos.cpp */; };
+		9DFECE032A87EAF800BFB1A2 /* sos.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9DFECDFC2A87EAF800BFB1A2 /* sos.cpp */; };
+		9DFECE042A87EAF800BFB1A2 /* filter_lr4.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9DFECDFD2A87EAF800BFB1A2 /* filter_lr4.cpp */; };
+		9DFECE052A87EAF800BFB1A2 /* filter_lr4.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9DFECDFD2A87EAF800BFB1A2 /* filter_lr4.cpp */; };
+		9DFECE082A87ECCD00BFB1A2 /* AudioBuf.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9DFECE062A87ECCD00BFB1A2 /* AudioBuf.cpp */; };
+		9DFECE092A87ECCD00BFB1A2 /* AudioBuf.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9DFECE062A87ECCD00BFB1A2 /* AudioBuf.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -137,6 +147,16 @@
 		9DFECDEC2A86D80D00BFB1A2 /* ProcModGain.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ProcModGain.cpp; sourceTree = "<group>"; };
 		9DFECDEF2A86D82A00BFB1A2 /* ProcModGain.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = ProcModGain.hpp; sourceTree = "<group>"; };
 		9DFECDF02A86F02C00BFB1A2 /* Credits.rtf */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; path = Credits.rtf; sourceTree = "<group>"; };
+		9DFECDF52A87EAAF00BFB1A2 /* ProcMod2BandAGC.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ProcMod2BandAGC.cpp; sourceTree = "<group>"; };
+		9DFECDF62A87EAAF00BFB1A2 /* ProcMod2BandAGC.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = ProcMod2BandAGC.hpp; sourceTree = "<group>"; };
+		9DFECDFA2A87EAF800BFB1A2 /* filter_lr4.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = filter_lr4.h; sourceTree = "<group>"; };
+		9DFECDFB2A87EAF800BFB1A2 /* biquad.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = biquad.cpp; sourceTree = "<group>"; };
+		9DFECDFC2A87EAF800BFB1A2 /* sos.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = sos.cpp; sourceTree = "<group>"; };
+		9DFECDFD2A87EAF800BFB1A2 /* filter_lr4.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = filter_lr4.cpp; sourceTree = "<group>"; };
+		9DFECDFE2A87EAF800BFB1A2 /* sos.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sos.h; sourceTree = "<group>"; };
+		9DFECDFF2A87EAF800BFB1A2 /* biquad.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = biquad.h; sourceTree = "<group>"; };
+		9DFECE062A87ECCD00BFB1A2 /* AudioBuf.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = AudioBuf.cpp; sourceTree = "<group>"; };
+		9DFECE072A87ECCD00BFB1A2 /* AudioBuf.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = AudioBuf.hpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -187,9 +207,8 @@
 		9DB7A12529D7949D002E6F4E /* MacSmoov */ = {
 			isa = PBXGroup;
 			children = (
+				9DFECDF42A87EA4C00BFB1A2 /* core */,
 				9DFECDF02A86F02C00BFB1A2 /* Credits.rtf */,
-				9DFECDEF2A86D82A00BFB1A2 /* ProcModGain.hpp */,
-				9DFECDEC2A86D80D00BFB1A2 /* ProcModGain.cpp */,
 				9D71CFB229F83E6100436F79 /* Info.plist */,
 				9DB7A12629D7949D002E6F4E /* AppDelegate.h */,
 				9DB7A12729D7949D002E6F4E /* AppDelegate.m */,
@@ -210,24 +229,12 @@
 				9D281A9629E1C5B5009CF125 /* AudioDeviceSelector.h */,
 				9D281A9729E1C5B5009CF125 /* AudioDeviceSelector.m */,
 				9D281A9829E1C5B5009CF125 /* AudioDeviceSelector.xib */,
-				9D9806D329EB849200B98415 /* ProcessorCore.cpp */,
-				9D9806D429EB849200B98415 /* ProcessorCore.hpp */,
 				9D9806D729EC686C00B98415 /* ProcessorSysInterface.m */,
 				9D9806DA29EC688300B98415 /* ProcessorSysInterface.h */,
 				9D98C7C829FC579E00586A86 /* ProcessorCoreWrapper.mm */,
 				9D98C7CC29FC57AB00586A86 /* ProcessorCoreWrapper.h */,
-				9D81E9B12A5B2CC6007D46EF /* ProcessorModule.cpp */,
-				9D81E9B22A5B2CC6007D46EF /* ProcessorModule.hpp */,
-				9D81E9B62A5B2D70007D46EF /* ProcModLevelMeter.cpp */,
-				9D81E9B72A5B2D70007D46EF /* ProcModLevelMeter.hpp */,
-				9DA7C1272A5E4D4700A01D92 /* LPFSinglePole.cpp */,
-				9DA7C1282A5E4D4700A01D92 /* LPFSinglePole.hpp */,
-				9DB012862A71C376009BFCD8 /* CircularBuffer.cpp */,
-				9DB012872A71C376009BFCD8 /* CircularBuffer.hpp */,
 				9DF3B70B2A80088400867EA1 /* LevelMeter.h */,
 				9DF3B70C2A80088400867EA1 /* LevelMeter.m */,
-				9DD141052A81C5D60059864D /* LogLinConverter.cpp */,
-				9DD141062A81C5D60059864D /* LogLinConverter.hpp */,
 				9DD141092A81E1870059864D /* OSXAudioInterface.m */,
 				9DD1410C2A81E3EB0059864D /* OSXAudioInterface.h */,
 				9DD1410D2A82AD420059864D /* AudioDevice.m */,
@@ -251,6 +258,45 @@
 				9DB7A14529D7949F002E6F4E /* MacSmoovUITestsLaunchTests.m */,
 			);
 			path = MacSmoovUITests;
+			sourceTree = "<group>";
+		};
+		9DFECDF42A87EA4C00BFB1A2 /* core */ = {
+			isa = PBXGroup;
+			children = (
+				9DFECDF92A87EAC500BFB1A2 /* core_utils */,
+				9D9806D329EB849200B98415 /* ProcessorCore.cpp */,
+				9D9806D429EB849200B98415 /* ProcessorCore.hpp */,
+				9D81E9B12A5B2CC6007D46EF /* ProcessorModule.cpp */,
+				9D81E9B22A5B2CC6007D46EF /* ProcessorModule.hpp */,
+				9DFECDEF2A86D82A00BFB1A2 /* ProcModGain.hpp */,
+				9DFECDEC2A86D80D00BFB1A2 /* ProcModGain.cpp */,
+				9D81E9B62A5B2D70007D46EF /* ProcModLevelMeter.cpp */,
+				9D81E9B72A5B2D70007D46EF /* ProcModLevelMeter.hpp */,
+				9DA7C1272A5E4D4700A01D92 /* LPFSinglePole.cpp */,
+				9DA7C1282A5E4D4700A01D92 /* LPFSinglePole.hpp */,
+				9DB012862A71C376009BFCD8 /* CircularBuffer.cpp */,
+				9DB012872A71C376009BFCD8 /* CircularBuffer.hpp */,
+				9DD141052A81C5D60059864D /* LogLinConverter.cpp */,
+				9DD141062A81C5D60059864D /* LogLinConverter.hpp */,
+				9DFECDF52A87EAAF00BFB1A2 /* ProcMod2BandAGC.cpp */,
+				9DFECDF62A87EAAF00BFB1A2 /* ProcMod2BandAGC.hpp */,
+			);
+			path = core;
+			sourceTree = "<group>";
+		};
+		9DFECDF92A87EAC500BFB1A2 /* core_utils */ = {
+			isa = PBXGroup;
+			children = (
+				9DFECDFB2A87EAF800BFB1A2 /* biquad.cpp */,
+				9DFECDFF2A87EAF800BFB1A2 /* biquad.h */,
+				9DFECDFD2A87EAF800BFB1A2 /* filter_lr4.cpp */,
+				9DFECDFA2A87EAF800BFB1A2 /* filter_lr4.h */,
+				9DFECDFC2A87EAF800BFB1A2 /* sos.cpp */,
+				9DFECDFE2A87EAF800BFB1A2 /* sos.h */,
+				9DFECE062A87ECCD00BFB1A2 /* AudioBuf.cpp */,
+				9DFECE072A87ECCD00BFB1A2 /* AudioBuf.hpp */,
+			);
+			path = core_utils;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -411,6 +457,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9DFECDF72A87EAAF00BFB1A2 /* ProcMod2BandAGC.cpp in Sources */,
 				9DFECDED2A86D80D00BFB1A2 /* ProcModGain.cpp in Sources */,
 				9DB012882A71C376009BFCD8 /* CircularBuffer.cpp in Sources */,
 				9D5C639429DA5DE200E40A60 /* SignalGeneratorViewController.m in Sources */,
@@ -418,9 +465,11 @@
 				9D5C638829D8E5D600E40A60 /* SignalGeneratorEngine.cpp in Sources */,
 				9DA7C1292A5E4D4700A01D92 /* LPFSinglePole.cpp in Sources */,
 				9D5C638C29D9FF5400E40A60 /* SignalGeneratorEngineWrapper.mm in Sources */,
+				9DFECE002A87EAF800BFB1A2 /* biquad.cpp in Sources */,
 				9D9806D529EB849200B98415 /* ProcessorCore.cpp in Sources */,
 				9DB7A12F29D7949E002E6F4E /* main.m in Sources */,
 				9D81E9B32A5B2CC6007D46EF /* ProcessorModule.cpp in Sources */,
+				9DFECE082A87ECCD00BFB1A2 /* AudioBuf.cpp in Sources */,
 				9DB7A12829D7949D002E6F4E /* AppDelegate.m in Sources */,
 				9D281A9229E05F57009CF125 /* SignalGenerator.m in Sources */,
 				9DF3B70D2A80088400867EA1 /* LevelMeter.m in Sources */,
@@ -428,6 +477,8 @@
 				9D281A9929E1C5B5009CF125 /* AudioDeviceSelector.m in Sources */,
 				9DD1410A2A81E1870059864D /* OSXAudioInterface.m in Sources */,
 				9D9806D829EC686C00B98415 /* ProcessorSysInterface.m in Sources */,
+				9DFECE042A87EAF800BFB1A2 /* filter_lr4.cpp in Sources */,
+				9DFECE022A87EAF800BFB1A2 /* sos.cpp in Sources */,
 				9DD1410E2A82AD420059864D /* AudioDevice.m in Sources */,
 				9D81E9B82A5B2D70007D46EF /* ProcModLevelMeter.cpp in Sources */,
 			);
@@ -440,19 +491,24 @@
 				9D5C638D29D9FF5400E40A60 /* SignalGeneratorEngineWrapper.mm in Sources */,
 				9D281A9A29E1C5B5009CF125 /* AudioDeviceSelector.m in Sources */,
 				9D9806D929EC686C00B98415 /* ProcessorSysInterface.m in Sources */,
+				9DFECE092A87ECCD00BFB1A2 /* AudioBuf.cpp in Sources */,
 				9D9806D629EB849200B98415 /* ProcessorCore.cpp in Sources */,
+				9DFECE052A87EAF800BFB1A2 /* filter_lr4.cpp in Sources */,
 				9DB012892A71C376009BFCD8 /* CircularBuffer.cpp in Sources */,
 				9D81E9B42A5B2CC6007D46EF /* ProcessorModule.cpp in Sources */,
+				9DFECDF82A87EAAF00BFB1A2 /* ProcMod2BandAGC.cpp in Sources */,
 				9DB7A13A29D7949E002E6F4E /* MacSmoovTests.m in Sources */,
 				9D81E9B92A5B2D70007D46EF /* ProcModLevelMeter.cpp in Sources */,
 				9D98C7CA29FC579E00586A86 /* ProcessorCoreWrapper.mm in Sources */,
 				9D281A9329E05F57009CF125 /* SignalGenerator.m in Sources */,
 				9D5C639529DA5DE200E40A60 /* SignalGeneratorViewController.m in Sources */,
 				9DD1410B2A81E1870059864D /* OSXAudioInterface.m in Sources */,
+				9DFECE012A87EAF800BFB1A2 /* biquad.cpp in Sources */,
 				9DD141082A81C5D60059864D /* LogLinConverter.cpp in Sources */,
 				9DD1410F2A82AD420059864D /* AudioDevice.m in Sources */,
 				9DA7C12A2A5E4D4700A01D92 /* LPFSinglePole.cpp in Sources */,
 				9DFECDEE2A86D80D00BFB1A2 /* ProcModGain.cpp in Sources */,
+				9DFECE032A87EAF800BFB1A2 /* sos.cpp in Sources */,
 				9DF3B70E2A80088400867EA1 /* LevelMeter.m in Sources */,
 				9D5C638929D8E5D600E40A60 /* SignalGeneratorEngine.cpp in Sources */,
 			);
@@ -624,7 +680,7 @@
 				CODE_SIGN_ENTITLEMENTS = MacSmoov/MacSmoov.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 210;
+				CURRENT_PROJECT_VERSION = 435;
 				DEVELOPMENT_ASSET_PATHS = "";
 				ENABLE_HARDENED_RUNTIME = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -638,7 +694,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.15;
-				MARKETING_VERSION = 0.1;
+				MARKETING_VERSION = 0.2;
 				PRODUCT_BUNDLE_IDENTIFIER = com.tonekids.osx.MacSmoov;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -654,7 +710,7 @@
 				CODE_SIGN_ENTITLEMENTS = MacSmoov/MacSmoov.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 210;
+				CURRENT_PROJECT_VERSION = 435;
 				DEVELOPMENT_ASSET_PATHS = "";
 				ENABLE_HARDENED_RUNTIME = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -668,7 +724,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.15;
-				MARKETING_VERSION = 0.1;
+				MARKETING_VERSION = 0.2;
 				PRODUCT_BUNDLE_IDENTIFIER = com.tonekids.osx.MacSmoov;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -680,7 +736,7 @@
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 210;
+				CURRENT_PROJECT_VERSION = 435;
 				GENERATE_INFOPLIST_FILE = YES;
 				MACOSX_DEPLOYMENT_TARGET = 11.6;
 				MARKETING_VERSION = 1.0;
@@ -696,7 +752,7 @@
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 210;
+				CURRENT_PROJECT_VERSION = 435;
 				GENERATE_INFOPLIST_FILE = YES;
 				MACOSX_DEPLOYMENT_TARGET = 11.6;
 				MARKETING_VERSION = 1.0;
@@ -711,7 +767,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 210;
+				CURRENT_PROJECT_VERSION = 435;
 				GENERATE_INFOPLIST_FILE = YES;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.tonekids.osx.MacSmoovUITests;
@@ -725,7 +781,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 210;
+				CURRENT_PROJECT_VERSION = 435;
 				GENERATE_INFOPLIST_FILE = YES;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.tonekids.osx.MacSmoovUITests;

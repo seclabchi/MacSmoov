@@ -15,13 +15,15 @@ namespace fmsmoov {
 
 class ProcModGain : public ProcessorModule {
 public:
-    ProcModGain(uint32_t _f_samp, uint8_t _n_channels, uint32_t _buf_size);
+    ProcModGain(const string& _name, uint32_t _f_samp, uint8_t _n_channels, uint32_t _n_samps);
     virtual ~ProcModGain();
     /* n samps is total interleaved stereo samples
      TODO: Figure this shit out to make it universal. */
-    virtual void process(float* in, float* out, uint32_t n_samps);
+    virtual void process();
     void set_gain_db(float _gainL, float _gainR);
 private:
+    AudioBuf* inbuf_main;
+    AudioBuf* outbuf_main;
     float m_setgain_db_L;
     float m_setgain_db_R;
     float m_setgain_lin_L;

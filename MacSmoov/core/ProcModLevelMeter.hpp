@@ -16,11 +16,11 @@ namespace fmsmoov {
 
 class ProcModLevelMeter : public ProcessorModule {
 public:
-    ProcModLevelMeter(uint32_t _f_samp, uint8_t _n_channels, uint32_t _buf_size);
+    ProcModLevelMeter(const string& _name, uint32_t _f_samp, uint8_t _n_channels, uint32_t _n_samps);
     virtual ~ProcModLevelMeter();
     /* n samps is total interleaved stereo samples
      TODO: Figure this shit out to make it universal. */
-    virtual void process(float* in, float* out, uint32_t n_samps);
+    virtual void process();
     void get_levels_db(float* rmsL, float* rmsR, float* peakL, float* peakR);
 private:
     LPFSinglePole* lpf10ms;
@@ -31,6 +31,9 @@ private:
     float peak_r;
     float tmp_samp_mag;
     float out_rms_l, out_rms_r, out_peak_l, out_peak_r;
+    AudioBuf* buf_main_in;
+    AudioBuf* buf_lin_out;
+    AudioBuf* buf_db_out;
 };
 
 }
