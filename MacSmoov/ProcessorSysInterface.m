@@ -17,19 +17,19 @@
 float* input_buffer;
 float* output_buffer;
 uint32_t interleaved_buf_len_in_bytes;
-uint32_t interleaved_buf_len_in_floats;
+uint32_t interleaved_buf_len_in_samples;
 
 /* The preliminary work I'm doing with the AUHAL is giving me non-interleaved stereo samples, so we're just gonna
    run with that for the time being.
  */
--(id) initWithSampleRate:(NSUInteger)sample_rate numberOfChannels:(UInt8)channels bufferSize:(NSUInteger)bufSize {
+-(id) initWithSampleRate:(NSUInteger)sample_rate numberOfChannels:(UInt8)channels bufferSize:(NSUInteger)bytesPerChannel {
     self = [super init];
     if(self) {
         NSUserDefaultsController *prefs_controller = [NSUserDefaultsController sharedUserDefaultsController];
         prefs = prefs_controller.defaults;
-        interleaved_buf_len_in_bytes = bufSize * channels;
-        interleaved_buf_len_in_floats = interleaved_buf_len_in_bytes / sizeof(float);
-        core = [[ProcessorCoreWrapper alloc] initWithSampleRate:sample_rate numberOfChannels:channels bufSize:interleaved_buf_len_in_bytes];
+        interleaved_buf_len_in_bytes = bytesPerChannel * channels;
+        interleaved_buf_len_in_samples = interleaved_buf_len_in_bytes / sizeof(float);
+        //core = [[ProcessorCoreWrapper alloc] initWithSampleRate:sample_rate numberOfChannels:channels numSamples:interleaved_buf_len_in_samples];
         
         input_buffer = (float*)malloc(interleaved_buf_len_in_bytes);
         output_buffer = (float*)malloc(interleaved_buf_len_in_bytes);
@@ -48,6 +48,7 @@ uint32_t interleaved_buf_len_in_floats;
     float* inbuf00 = (float*)(buf_list->mBuffers[0].mData);
     float* inbuf01 = (float*)(buf_list->mBuffers[1].mData);
     uint32_t count = (buf_list->mBuffers[0].mDataByteSize)/sizeof(float);
+    uint32_t interleaved_count = count * 2;
     
     for(uint32_t i = 0; i < count; i++) {
         input_buffer[j] = inbuf00[i];
@@ -57,7 +58,7 @@ uint32_t interleaved_buf_len_in_floats;
     
     //we should now have an interleaved buffer of input samples.
     //memcpy(output_buffer, input_buffer, count * 2 * sizeof(float));
-    [core processWithInput:input_buffer output:output_buffer ofSize:interleaved_buf_len_in_floats];
+    //[core processWithInput:input_buffer output:output_buffer ofSize:interleaved_count];
     
     //now need to de-interleave the samples to feed back to the AUHAL
     j = 0;

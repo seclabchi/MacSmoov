@@ -10,31 +10,47 @@
 #import "ProcessorCore.hpp"
 
 @interface ProcessorCoreWrapper ()
-@property (nonatomic, readwrite, assign) fmsmoov::ProcessorCore *cpp;
+//@property (nonatomic, readwrite, assign)
 @end
 
 @implementation ProcessorCoreWrapper
-@synthesize cpp = _cpp;
+//@synthesize cpp = _cpp;
 
--(id) initWithSampleRate:(uint32_t)sample_rate numberOfChannels:(uint32_t)num_chans bufSize:(uint32_t)buf_size {
+fmsmoov::ProcessorCore *cpp;
+PROCESSOR_CORE_HOOK proc_core_hook;
+
+//This is a non-interleaved buffer, so the total number of samples is twice what the buf size is
+-(id) initWithSampleRate:(uint32_t)sample_rate numberOfChannels:(uint32_t)num_chans bufferSize:(uint32_t)buf_size {
     self = [super init];
     if(self) {
-        _cpp = new fmsmoov::ProcessorCore(sample_rate, num_chans, buf_size);
+        uint32_t n_samp = buf_size / sizeof(float);
+        cpp = new fmsmoov::ProcessorCore(sample_rate, num_chans, n_samp);
+        proc_core_hook = &processor_core_hook;
     }
     
     return self;
 }
 
--(void) processWithInput:(float*)in_buf output:(float*)out_buf ofSize:(uint32_t) n_frames {
-    _cpp->process(in_buf, out_buf, n_frames);
+-(PROCESSOR_CORE_HOOK) get_proc_core_hook {
+    return proc_core_hook;
+}
+
+void processor_core_hook(AudioBufferList* ab_list) {
+    cpp->process((float*)ab_list->mBuffers[0].mData, (float*)ab_list->mBuffers[1].mData,
+                 (float*)ab_list->mBuffers[0].mData, (float*)ab_list->mBuffers[1].mData,
+                 ab_list->mBuffers[0].mDataByteSize/sizeof(float));
 }
 
 -(void) getMainInLevelsLrms:(float*)lrms Rrms:(float*)rrms Lpeak:(float*)lpeak Rpeak:(float*)rpeak {
-    _cpp->get_main_in_levels(lrms, rrms, lpeak, rpeak);
+    cpp->get_main_in_levels(lrms, rrms, lpeak, rpeak);
 }
 
 -(void) setMainInGainDBL:(float)mainInL R:(float)mainInR {
-    _cpp->set_main_in_gain_db(mainInL, mainInR);
+    cpp->set_main_in_gain_db(mainInL, mainInR);
+}
+
+-(void) get2bandAGCGainReductionlo:(float*)gainReduct2blo hi:(float*)gainReduct2bhi gatelo:(bool*)gate_open_agc2_lo gatehi:(bool*)gate_open_agc2_hi {
+    cpp->get2bandAGCGainReduction(gainReduct2blo, gainReduct2bhi, gate_open_agc2_lo, gate_open_agc2_hi);
 }
 
 @end

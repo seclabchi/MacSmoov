@@ -14,19 +14,19 @@
 
 namespace fmsmoov {
 
-typedef enum {
+enum class LogLinConversionType {
     LIN_TO_LOG,
     LOG_TO_LIN
-} SAMP_CONV_TYPE;
+};
 
 class LogLinConverter {
 public:
-    LogLinConverter(SAMP_CONV_TYPE type);
+    LogLinConverter(LogLinConversionType type);
     virtual ~LogLinConverter();
     virtual void process(float* in, float* out, uint32_t n_samps);
-    void set_conv_type(SAMP_CONV_TYPE type);
+    void set_conv_type(LogLinConversionType type);
 private:
-    SAMP_CONV_TYPE m_type;
+    LogLinConversionType m_type;
 };
 
 }

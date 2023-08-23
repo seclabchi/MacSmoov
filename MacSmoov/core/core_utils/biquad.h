@@ -18,8 +18,11 @@ private:
 	SOS* sos;
 	float g, b0, b1, b2, a0, a1, a2;
 	float w, w1, w2;
-    float y;
+    float x1, x2;
+    float y, y1, y2;
 	uint32_t i;
+    
+    float intermediate;
 };
 
 #endif //#ifndef __BIQUAD_H__

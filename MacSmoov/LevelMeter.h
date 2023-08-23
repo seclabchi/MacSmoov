@@ -16,6 +16,7 @@ NS_ASSUME_NONNULL_BEGIN
     Float32 level_r_peak;
 }
 
+- (void)awakeFromNib;
 - (void)set_levels_Lrms:(Float32)lrms Rrms:(Float32)rrms Lpeak:(Float32)lpeak Rpeak:(Float32)rpeak;
 
 @end

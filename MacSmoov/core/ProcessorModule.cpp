@@ -18,6 +18,7 @@ ProcessorModule::ProcessorModule(const string& _name, uint32_t _f_samp, uint32_t
     n_samps(_n_samps) {
         memset(inbufs, 0, MAX_INPUT_BUFFERS * sizeof(AudioBuf*));
         memset(outbufs, 0, MAX_OUTPUT_BUFFERS * sizeof(AudioBuf*));
+        bypass = false;
 }
 
 ProcessorModule::~ProcessorModule() {
@@ -32,6 +33,14 @@ ProcessorModule::~ProcessorModule() {
             delete outbufs[i];
         }
     }
+}
+
+void ProcessorModule::set_bypass(bool _bypass) {
+    bypass = _bypass;
+}
+
+bool ProcessorModule::get_bypass() {
+    return bypass;
 }
 
 uint32_t ProcessorModule::get_f_samp() {
@@ -64,7 +73,7 @@ AudioBuf* ProcessorModule::get_out_buf(uint32_t buf_index) {
     return (outbufs[buf_index]);
 }
 
-void ProcessorModule::set_in_buf(uint32_t buf_index, AudioBuf* abref) {
+void ProcessorModule::set_in_buf(uint32_t buf_index, AudioBuf* abref, const string& new_name) {
     if(NULL == abref) {
         throw std::invalid_argument("Can't set in_buf with NULL reference.");
     }
@@ -73,11 +82,17 @@ void ProcessorModule::set_in_buf(uint32_t buf_index, AudioBuf* abref) {
             cout << "Creating in_buf at position " << buf_index << " in " << __FILE__ << ":" << __LINE__ << " for module " << name << endl;
             inbufs[buf_index] = new AudioBuf(*abref);
             inbufs[buf_index]->set_type(AudioBufType::REFERENCE);
+            if(new_name.compare("")) {
+                inbufs[buf_index]->set_name(new_name);
+            }
         }
         else {
             cout << "Overwriting in_buf at position " << buf_index << " in " << __FILE__ << ":" << __LINE__ << " for module " << name << endl;
             inbufs[buf_index] = abref;
             inbufs[buf_index]->set_type(AudioBufType::REFERENCE);
+            if(new_name.compare("")) {
+                inbufs[buf_index]->set_name(new_name);
+            }
         }
     }
 }
@@ -92,6 +107,9 @@ void ProcessorModule::set_out_buf(uint32_t buf_index, AudioBuf* abref) {
             outbufs[buf_index] = new AudioBuf(*abref);
         }
         else {
+            if(AudioBufType::REAL == outbufs[buf_index]->get_type()) {
+                delete[] outbufs[buf_index]->getbuf();
+            }
             cout << "Overwriting out_buf at position " << buf_index << " in " << __FILE__ << ":" << __LINE__ << " for module " << name << endl;
             outbufs[buf_index] = abref;
         }

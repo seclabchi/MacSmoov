@@ -8,7 +8,7 @@
 #import "AppDelegate.h"
 #import <AudioToolbox/AudioToolbox.h>
 #import "SignalGenerator.h"
-#import "ProcessorSysInterface.h"
+#import "ProcessorCoreWrapper.h"
 #import "OSXAudioInterface.h"
 
 @interface AppDelegate ()
@@ -20,7 +20,8 @@
 
 SignalGeneratorViewController *siggenvc;
 AudioDeviceSelector *audio_device_selector;
-ProcessorSysInterface* process_sys_iface;
+//ProcessorSysInterface* process_sys_iface;
+ProcessorCoreWrapper* proc_core_wrapper;
 NSUserDefaults *prefs;
 NSNumber* stored_output_device;
 NSNumber* stored_input_device;
@@ -35,14 +36,30 @@ Boolean shutting_down;
     NSLog(@"Started meter driver thread.");
     
     float mainInLrms, mainInRrms, mainInLpeak, mainInRpeak;
+    float gainReduct2blo, gainReduct2bhi;
+    bool gate_open_agc2_lo, gate_open_agc2_hi;
     
     while(false == shutting_down) {
-        [process_sys_iface getMainInLevelsLrms:&mainInLrms Rrms:&mainInRrms Lpeak:&mainInLpeak Rpeak:&mainInRpeak];
+        [proc_core_wrapper getMainInLevelsLrms:&mainInLrms Rrms:&mainInRrms Lpeak:&mainInLpeak Rpeak:&mainInRpeak];
+        [proc_core_wrapper get2bandAGCGainReductionlo:&gainReduct2blo hi:&gainReduct2bhi gatelo:&gate_open_agc2_lo gatehi:&gate_open_agc2_hi];
         
         dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void){
             //Background Thread
             dispatch_async(dispatch_get_main_queue(), ^(void){
-                [_level_main_in set_levels_Lrms:mainInLrms Rrms:mainInRrms Lpeak:mainInLpeak Rpeak:mainInRpeak];
+                [self->_level_main_in set_levels_Lrms:mainInLrms Rrms:mainInRrms Lpeak:mainInLpeak Rpeak:mainInRpeak];
+                [self->_comp_2band_agc set_comp_lo:gainReduct2blo hi:gainReduct2bhi];
+                if(!gate_open_agc2_lo) {
+                    [self->_agc_lo_gate_closed setFillColor:[NSColor redColor]];
+                }
+                else {
+                    [self->_agc_lo_gate_closed setFillColor:[NSColor blackColor]];
+                }
+                if(!gate_open_agc2_hi) {
+                    [self->_agc_hi_gate_closed setFillColor:[NSColor redColor]];
+                }
+                else {
+                    [self->_agc_hi_gate_closed setFillColor:[NSColor blackColor]];
+                }
             });
         });
         
@@ -60,7 +77,6 @@ Boolean shutting_down;
     
     NSUserDefaultsController *prefs_controller = [NSUserDefaultsController sharedUserDefaultsController];
     prefs = prefs_controller.defaults;
-    
        
     self.sysaudio = [[OSXAudioInterface alloc] initWithCurrentInputDevice:nil OutputDevice:nil];
     [self.sysaudio discoverDevices];
@@ -80,9 +96,10 @@ Boolean shutting_down;
         [self.sysaudio set_input_device:sel_indev];
     }
     
-    process_sys_iface = [[ProcessorSysInterface alloc] initWithSampleRate:self.sysaudio.sample_rate numberOfChannels:self.sysaudio.num_channels bufferSize:self.sysaudio.buffer_size];
+    //process_sys_iface = [[ProcessorSysInterface alloc] initWithSampleRate:self.sysaudio.sample_rate numberOfChannels:self.sysaudio.num_channels bufferSize:self.sysaudio.buffer_size];
+    proc_core_wrapper = [[ProcessorCoreWrapper alloc] initWithSampleRate:self.sysaudio.sample_rate numberOfChannels:self.sysaudio.num_channels bufferSize:self.sysaudio.buffer_size];
     
-    [self.sysaudio set_render_delegate:process_sys_iface];
+    [self.sysaudio set_processor_hook:[proc_core_wrapper get_proc_core_hook]];
     [self.sysaudio start];
     
     //TODO:  initialize signal generators here, and the eventual audio passthrough/processing chain
@@ -144,7 +161,9 @@ Boolean shutting_down;
     if(nil != output_device) {
         [prefs setObject:output_device forKey:@"OUTPUT_DEVICE"];
         AudioDevice* sel_outdev = [audio_devices_output objectForKey:output_device];
+        [self.sysaudio stop];
         [self.sysaudio set_output_device:sel_outdev];
+        [self.sysaudio start];
         //[siggenvc outputDeviceChanged:output_device];
         //[process_sys_iface outputDeviceChanged:output_device];
     }
@@ -158,7 +177,9 @@ Boolean shutting_down;
     if(nil != input_device) {
         [prefs setObject:input_device forKey:@"INPUT_DEVICE"];
         AudioDevice* sel_indev = [audio_devices_input objectForKey:input_device];
+        [self.sysaudio stop];
         [self.sysaudio set_input_device:sel_indev];
+        [self.sysaudio start];
         //[process_sys_iface inputDeviceChanged:input_device];
     }
     else {
@@ -209,7 +230,7 @@ Boolean shutting_down;
 -(IBAction) adjustGainMainIn:(id)sender {
     NSSlider* gmi = sender;
     //NSLog(@"GainMainIn value changed: %4.2f dB", gmo.cell.floatValue);
-    [process_sys_iface setMainInGainDBL:gmi.cell.floatValue R:gmi.cell.floatValue];
+    [proc_core_wrapper setMainInGainDBL:gmi.cell.floatValue R:gmi.cell.floatValue];
     [prefs setObject:[NSString stringWithFormat:@"%f", gmi.cell.floatValue] forKey:@"GAIN_IN_MAIN"];
 }
 

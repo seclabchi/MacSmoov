@@ -22,8 +22,6 @@ public:
     virtual void process();
     void set_gain_db(float _gainL, float _gainR);
 private:
-    AudioBuf* inbuf_main;
-    AudioBuf* outbuf_main;
     float m_setgain_db_L;
     float m_setgain_db_R;
     float m_setgain_lin_L;

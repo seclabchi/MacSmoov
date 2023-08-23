@@ -9,11 +9,15 @@
 #import "SignalGeneratorViewController.h"
 #import "AudioDeviceSelector.h"
 #import "LevelMeter.h"
+#import "CompressionMeter.h"
 #import "OSXAudioInterface.h"
 
 @interface AppDelegate : NSObject <NSApplicationDelegate>
 
 @property (strong) IBOutlet LevelMeter* level_main_in;
+@property (strong) IBOutlet CompressionMeter* comp_2band_agc;
+@property (strong) IBOutlet NSBox* agc_lo_gate_closed;
+@property (strong) IBOutlet NSBox* agc_hi_gate_closed;
 
 @property (nonatomic, strong) OSXAudioInterface * sysaudio;
 

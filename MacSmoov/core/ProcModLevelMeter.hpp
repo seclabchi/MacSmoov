@@ -31,9 +31,6 @@ private:
     float peak_r;
     float tmp_samp_mag;
     float out_rms_l, out_rms_r, out_peak_l, out_peak_r;
-    AudioBuf* buf_main_in;
-    AudioBuf* buf_lin_out;
-    AudioBuf* buf_db_out;
 };
 
 }

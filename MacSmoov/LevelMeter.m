@@ -7,10 +7,22 @@
 
 #import "LevelMeter.h"
 
+@interface LevelMeter() {
+    Float32 max_lev;
+    Float32 min_lev;
+}
+@end
+
 @implementation LevelMeter
 
-Float32 max_lev = 0.0;
-Float32 min_lev = -96.0;
+- (void) awakeFromNib {
+    level_l_rms = min_lev;
+    level_r_rms = min_lev;
+    level_l_peak = min_lev;
+    level_r_peak = min_lev;
+    self->max_lev = 0.0;
+    self->min_lev = -70.0;
+}
 
 - (id)initWithFrame:(NSRect)frame {
     self = [super initWithFrame:frame];
@@ -19,6 +31,8 @@ Float32 min_lev = -96.0;
         level_r_rms = min_lev;
         level_l_peak = min_lev;
         level_r_peak = min_lev;
+        self->max_lev = 0.0;
+        self->min_lev = -80.0;
     }
     return self;
 }
@@ -30,7 +44,7 @@ Float32 min_lev = -96.0;
     
     // Drawing code here.
     // erase the background by drawing white
-    [[NSColor darkGrayColor] set];
+    [[NSColor lightGrayColor] set];
     [NSBezierPath fillRect:dirtyRect];
     NSRect rect_l_rms;
     rect_l_rms.origin.x = 0.0;

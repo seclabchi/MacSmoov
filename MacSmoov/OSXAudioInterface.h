@@ -9,11 +9,13 @@
 #define OSXAudioInterface_h
 
 #import "AudioDevice.h"
+#import "ProcessorCoreWrapper.h"
 
 @interface OSXAudioInterface : NSObject {
     NSMutableDictionary* audio_input_device_dict;
     NSMutableDictionary* audio_output_device_dict;
     AudioComponentInstance audioUnitInput, audioUnitOutput;
+    
 }
 
 @property (nonatomic, readonly, getter = get_current_input_device) AudioDevice* current_input_device;
@@ -26,7 +28,7 @@
 @property (readonly, nonatomic, getter = get_buffer_size) NSUInteger buffer_size;
 
 - (id) initWithCurrentInputDevice:(AudioDevice*)in_dev OutputDevice:(AudioDevice*)out_dev;
-- (void) set_render_delegate:(id)delegate;
+- (void) set_processor_hook:(PROCESSOR_CORE_HOOK)hook;
 - (OSStatus) discoverDevices;
 - (OSStatus) set_input_device:(AudioDevice*)input_dev;
 - (OSStatus) set_output_device:(AudioDevice*)output_dev;

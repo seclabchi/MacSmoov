@@ -13,13 +13,15 @@
 
 #define OUTPUT_BUS 0
 #define INPUT_BUS 1
-#define SAMPLE_RATE 44100
+#define SAMPLE_RATE 48000
 #define NUM_CHANNELS 2  // 1 is mono: 2 is stereo
 #define MAX_AUDIO_DEVICES 256
 
 bool deviceHasBuffersInScope(AudioObjectID deviceID, AudioObjectPropertyScope scope);
 
-@interface OSXAudioInterface ()
+@interface OSXAudioInterface () {
+    
+}
 
 @property (nonatomic, strong) NSMutableDictionary* input_devices;
 @property (nonatomic, strong) NSMutableDictionary* output_devices;
@@ -62,7 +64,7 @@ AudioDeviceID current_output_device_id;
 Boolean is_running;
 Boolean is_reconfiguring;
 
-ProcessorSysInterface* render_delegate;
+PROCESSOR_CORE_HOOK cb_proc_core_hook;
 
 NSFileHandle* capture_file_handle;
 
@@ -71,9 +73,6 @@ UInt32 lastNumberFrames;
 UInt32 buf_size_in_bytes;
 AudioBufferList* buf_list;
 
-/* Output buffers */
-AudioBuffer* rend_buf00;
-AudioBuffer* rend_buf01;
 
 void checkStatus(int status) {
     if (status) {
@@ -125,8 +124,8 @@ void checkStatus(int status) {
     return self;
 }
 
-- (void)set_render_delegate:(id)delegate {
-    render_delegate = delegate;
+- (void) set_processor_hook:(PROCESSOR_CORE_HOOK)hook {
+    cb_proc_core_hook = hook;
 }
 
 - (OSStatus) start {
@@ -248,6 +247,39 @@ void checkStatus(int status) {
     
     checkStatus(err);
     
+    
+    //get available sample rates on the audio device.
+    UInt32 samprates_prop_size = 0;
+    addr.mSelector = kAudioDevicePropertyAvailableNominalSampleRates;
+    addr.mScope = kAudioObjectPropertyScopeGlobal;
+    addr.mElement = kAudioObjectPropertyElementMaster;
+    
+    err = AudioObjectGetPropertyDataSize(deviceID, &addr, 0, NULL, &samprates_prop_size);
+    checkStatus(err);
+    
+    AudioValueRange* available_samprates_prop = (AudioValueRange*)malloc(samprates_prop_size);
+    
+    err = AudioObjectGetPropertyData(deviceID, &addr, 0, NULL, &samprates_prop_size, (void*)available_samprates_prop);
+    checkStatus(err);
+    
+    UInt32 num_sampvals = samprates_prop_size/sizeof(AudioValueRange);
+    
+    for(UInt32 i = 0; i < num_sampvals; i++) {
+        NSLog(@"Device supported sample rate: %d", (UInt32)(available_samprates_prop[i].mMaximum));
+    }
+    
+    //set sample rate on the audio device.
+    //TODO: Make user-settable so it's not a fixed value at compile time
+    
+    Float64 samp_prop = (Float64)SAMPLE_RATE;
+    UInt32 samp_prop_size = sizeof(samp_prop);
+    addr.mSelector = kAudioDevicePropertyNominalSampleRate;
+    addr.mScope = kAudioObjectPropertyScopeGlobal;
+    addr.mElement = kAudioObjectPropertyElementMaster;
+    err = AudioObjectSetPropertyData(deviceID, &addr, 0, NULL, samp_prop_size, &samp_prop);
+    
+    checkStatus(err);
+    
     //Get some information about the input device
     
     AudioStreamBasicDescription stream_format_prop;
@@ -322,6 +354,15 @@ void checkStatus(int status) {
                               size);
     checkStatus(err);
     
+    // Apply format to input device
+    err = AudioUnitSetProperty(audioUnitInput,
+                              kAudioUnitProperty_StreamFormat,
+                              kAudioUnitScope_Output,
+                              INPUT_BUS,
+                              &audioFormat,
+                              size);
+    checkStatus(err);
+    
     // Apply format to output device
     err = AudioUnitSetProperty(audioUnitOutput,
                               kAudioUnitProperty_StreamFormat,
@@ -329,6 +370,26 @@ void checkStatus(int status) {
                               INPUT_BUS,
                               &audioFormat,
                               size);
+    checkStatus(err);
+    
+    // Apply format to output device
+    err = AudioUnitSetProperty(audioUnitOutput,
+                              kAudioUnitProperty_StreamFormat,
+                              kAudioUnitScope_Input,
+                              OUTPUT_BUS,
+                              &audioFormat,
+                              size);
+    checkStatus(err);
+    
+    //adjust the buffer size
+    err = AudioUnitGetPropertyInfo(audioUnitOutput, kAudioUnitProperty_StreamFormat, kAudioUnitScope_Output, OUTPUT_BUS,
+                                   &stream_format_prop_size, &propWriteable);
+    
+    checkStatus(err);
+    
+    err = AudioUnitGetProperty(audioUnitOutput, kAudioUnitProperty_StreamFormat, kAudioUnitScope_Output, OUTPUT_BUS,
+                               &stream_format_prop, &stream_format_prop_size);
+    
     checkStatus(err);
     
     
@@ -414,7 +475,7 @@ void checkStatus(int status) {
     NSLog(@"Changing input device to %@ (%@)", input_dev.device_name, input_dev.device_uid);
     _current_input_device = input_dev;
     
-    [self start];
+    //[self start];
     
     return err;
 }
@@ -435,7 +496,7 @@ void checkStatus(int status) {
     NSLog(@"Changing output device to %@ (%@)", output_dev.device_name, output_dev.device_uid);
     _current_output_device = output_dev;
     
-    [self start];
+    //[self start];
     
     return err;
 }
@@ -554,6 +615,8 @@ static OSStatus recordingCallback(void *inRefCon,
      
     OSXAudioInterface* osxai = (__bridge OSXAudioInterface*) inRefCon;
  
+    //NSLog(@"recordingCallback: inNumberFrames %d", inNumberFrames);
+    
     /* Were going to try to avoid mallocing and freeing the audio buffers each time through this call.
        so we'll keep the buffers at class scope, and only realloc the buffers if for some reason the
        number of input frames changes.  We'll start with the assumption that we'll be getting 512 frames
@@ -584,8 +647,8 @@ static OSStatus recordingCallback(void *inRefCon,
     }
     
     
-    //NSLog(@"recordingCallback - inTimeStamp %llu, inNumberFrames %d, buf_list %p", inTimeStamp->mHostTime, inNumberFrames, buf_list);
-    
+    //NSLog(@"recordingCallback - inTimeStamp %llu, inNumberFrames %d, current_buf_list %d", inTimeStamp->mHostTime, inNumberFrames, current_buf_list);
+
     err = AudioUnitRender(osxai->audioUnitInput,
                              ioActionFlags,
                              inTimeStamp,
@@ -593,10 +656,12 @@ static OSStatus recordingCallback(void *inRefCon,
                              inNumberFrames,
                              buf_list);
     checkStatus(err);
- 
-    // Send the freshly rendered buffers to the DSP core
-    [render_delegate processWithInput:buf_list];
     
+    // Send the freshly rendered buffers to the DSP core.
+    if(cb_proc_core_hook) {
+        cb_proc_core_hook(buf_list);
+    }
+        
     /*
     Float32* outdata = (Float32*)calloc(1, 2 * inNumberFrames * sizeof(Float32));
     Float32* buf00 = (Float32*)(buf_list->mBuffers[0].mData);
@@ -636,12 +701,10 @@ static OSStatus playbackCallback(void *inRefCon,
     // Fill them up as much as you can. Remember to set the size value in each buffer to match how
     // much data is in the buffer.
     
-    //NSLog(@"playbackCallback - inTimeStamp %llu, inNumberFrames %d, ioData %p", inTimeStamp->mHostTime, inNumberFrames, ioData);
+    //NSLog(@"playbackCallback - inTimeStamp %llu, inNumberFrames %d, ioData %p, current_buf_list %d", inTimeStamp->mHostTime, inNumberFrames, ioData, current_playback_buf_list);
     
-    OSXAudioInterface *osxai = (__bridge OSXAudioInterface*)inRefCon;
+    //OSXAudioInterface *osxai = (__bridge OSXAudioInterface*)inRefCon;
     
-    //rend_buf00 = &(ioData->mBuffers[0]);
-    //rend_buf01 = &(ioData->mBuffers[1]);
     memcpy(ioData->mBuffers[0].mData, buf_list->mBuffers[0].mData, buf_list->mBuffers[0].mDataByteSize);
     memcpy(ioData->mBuffers[1].mData, buf_list->mBuffers[1].mData, buf_list->mBuffers[1].mDataByteSize);
     

@@ -12,24 +12,29 @@ namespace fmsmoov {
 
 ProcModGain::ProcModGain(const string& _name, uint32_t _f_samp, uint8_t _n_channels, uint32_t _n_samps) : ProcessorModule(_name, _f_samp, _n_channels, _n_samps) {
     this->set_gain_db(0.0, 0.0);
-    inbuf_main = new AudioBuf(AudioBufType::REFERENCE, string("IN"), _n_samps, NULL);
-    this->set_in_buf(0, inbuf_main);
-    outbuf_main = new AudioBuf(AudioBufType::REAL, string("OUT"), _n_samps, NULL);
-    this->set_out_buf(0, outbuf_main);
+    set_in_buf(0, new AudioBuf(AudioBufType::REFERENCE, string("IN_L"), _n_samps, NULL));
+    set_in_buf(1, new AudioBuf(AudioBufType::REFERENCE, string("IN_R"), _n_samps, NULL));
+    set_out_buf(0, new AudioBuf(AudioBufType::REAL, string("OUT_L"), _n_samps, NULL));
+    set_out_buf(1, new AudioBuf(AudioBufType::REAL, string("OUT_R"), _n_samps, NULL));
 }
 
 ProcModGain::~ProcModGain() {
-    delete inbuf_main;
-    delete outbuf_main;
+    delete this->get_in_buf(0);
+    delete this->get_out_buf(0);
+    delete this->get_in_buf(1);
+    delete this->get_out_buf(1);
 }
 
 void ProcModGain::process() {
-    float* in = this->get_in_buf(0)->getbuf();
-    float* out = this->get_out_buf(0)->getbuf();
+    float* inL = this->get_in_buf(0)->getbuf();
+    float* inR = this->get_in_buf(1)->getbuf();
+    float* outL = this->get_out_buf(0)->getbuf();
+    float* outR = this->get_out_buf(1)->getbuf();
+    uint32_t n_samps = this->get_n_samps();
     
-    for(uint32_t i = 0; i < this->get_n_samps(); i+=2) {
-        out[i] = in[i] * m_setgain_lin_L;
-        out[i+1] = in[i+1] * m_setgain_lin_R;
+    for(uint32_t i = 0; i < n_samps; i++) {
+        outL[i] = inL[i] * m_setgain_lin_L;
+        outR[i] = inR[i] * m_setgain_lin_R;
     }
 }
 
