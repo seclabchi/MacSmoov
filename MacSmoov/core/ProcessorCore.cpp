@@ -44,8 +44,8 @@ ProcessorCore::ProcessorCore(uint32_t _f_samp, uint32_t _n_channels, uint32_t _n
     } AGC_PARAMS;
     */
      
-    AGC_PARAMS agc_params_lo = {-40.0, 20.0, 20.0, 12.0, -50.0, 5.0, 0.125};
-    AGC_PARAMS agc_params_hi = {-40.0, 20.0, 20.0, 20.0, -40.0, 5.0, 0.0};
+    AGC_PARAMS agc_params_lo = {-40.0, 25.0, 25.0, 13.0, -60.0, 5.0, 0.125};
+    AGC_PARAMS agc_params_hi = {-40.0, 25.0, 25.0, 22.0, -60.0, 5.0, 0.0};
     
     proc_mod_2band_agc->setup(agc_params_lo, agc_params_hi);
     
