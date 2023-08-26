@@ -15,14 +15,17 @@ enum class CompressorType {
 };
 
 typedef struct  {
-    float T;
-    float R;
-    float G;
-    float tAtt;
-    float tRel;
-    float gain_coupling_factor;
-    float Tgate;
-    float gate_hold_time;
+    float drive;
+    float release;
+    float gate_thresh;
+    bool use_coupling;
+    float coupling;
+    float window_size;
+    float window_release;
+    float ratio;
+    float idle_gain;
+    float attack;
+    float post_gain;
 } COMPRESSOR_PARAMS;
 
 class Compressor
@@ -43,7 +46,7 @@ private:
     float M;
     LogLinConverter* samp_converter_todb;
     float* indbL, *indbR;
-    float alphaA, alphaR;
+    float alphaA, alphaR_norm, alphaR_window;
     float gsPrev;
     float indb, sc, gc, gs;
     float gain_reduction;
