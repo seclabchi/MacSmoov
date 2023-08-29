@@ -8,6 +8,7 @@
 #import "AppDelegate.h"
 #import <AudioToolbox/AudioToolbox.h>
 #import "SignalGenerator.h"
+#import "MultibandControlsView.h"
 #import "ProcessorCoreWrapper.h"
 #import "OSXAudioInterface.h"
 
@@ -20,7 +21,7 @@
 
 SignalGeneratorViewController *siggenvc;
 AudioDeviceSelector *audio_device_selector;
-//ProcessorSysInterface* process_sys_iface;
+MultibandControlsView* multiband_controls_view;
 ProcessorCoreWrapper* proc_core_wrapper;
 NSUserDefaults *prefs;
 NSNumber* stored_output_device;
@@ -117,6 +118,8 @@ Boolean shutting_down;
     [audio_device_selector set_watcher_for_output_device_change:self andSelector:@selector(output_device_changed:)];
     [audio_device_selector set_watcher_for_input_device_change:self andSelector:@selector(input_device_changed:)];
     
+    multiband_controls_view = [[MultibandControlsView alloc] init];
+    
     [NSThread detachNewThreadSelector:@selector(queryMeterLevels:) toTarget:self withObject:nil];
 
     //[process_sys_iface outputDeviceChanged:@"AppleUSBAudioEngine:Plantronics:Plantronics Blackwire 3210 Series:FFE5F399D3F84D558CDC32EA0790A041:2"];
@@ -202,6 +205,10 @@ Boolean shutting_down;
 -(IBAction) showAudioDeviceSelector:(id)sender {
     [audio_device_selector showPanel];
     [audio_device_selector scanDevices];
+}
+
+-(IBAction) multibandAdjustMenuSelected:(id)sender {
+    [multiband_controls_view showPanel];
 }
 
 -(void) openAudioFile:(NSURL*)fileUrl {

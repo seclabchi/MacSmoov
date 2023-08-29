@@ -16,6 +16,16 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do view setup here.
+    NSLog(@"MultibandControlsView viewDidLoad");
 }
+
+-(IBAction) band_select:(NSButton*)sender {
+    NSLog(@"Band %lu selected.", (long)[sender tag]);
+}
+
+-(void)showPanel {
+    NSPanel* panel = (NSPanel*)[[self view] window];
+}
+
 
 @end
