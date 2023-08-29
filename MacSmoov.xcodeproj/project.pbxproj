@@ -19,6 +19,12 @@
 		9D3A20672A9562A800C7C620 /* CompressionMeter.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D3A20662A9562A800C7C620 /* CompressionMeter.m */; };
 		9D3A20682A9562A800C7C620 /* CompressionMeter.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D3A20662A9562A800C7C620 /* CompressionMeter.m */; };
 		9D3A20692A9562A800C7C620 /* CompressionMeter.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D3A20662A9562A800C7C620 /* CompressionMeter.m */; };
+		9D4517C72A9D89AD003BC1EB /* MultibandControlsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D4517C52A9D89AD003BC1EB /* MultibandControlsView.m */; };
+		9D4517C82A9D89AD003BC1EB /* MultibandControlsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D4517C52A9D89AD003BC1EB /* MultibandControlsView.m */; };
+		9D4517C92A9D89AD003BC1EB /* MultibandControlsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D4517C52A9D89AD003BC1EB /* MultibandControlsView.m */; };
+		9D4517CA2A9D89AD003BC1EB /* MultibandControlsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9D4517C62A9D89AD003BC1EB /* MultibandControlsView.xib */; };
+		9D4517CB2A9D89AD003BC1EB /* MultibandControlsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9D4517C62A9D89AD003BC1EB /* MultibandControlsView.xib */; };
+		9D4517CC2A9D89AD003BC1EB /* MultibandControlsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9D4517C62A9D89AD003BC1EB /* MultibandControlsView.xib */; };
 		9D5C638829D8E5D600E40A60 /* SignalGeneratorEngine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9D5C638629D8E5D600E40A60 /* SignalGeneratorEngine.cpp */; };
 		9D5C638929D8E5D600E40A60 /* SignalGeneratorEngine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9D5C638629D8E5D600E40A60 /* SignalGeneratorEngine.cpp */; };
 		9D5C638A29D8E5D600E40A60 /* SignalGeneratorEngine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9D5C638629D8E5D600E40A60 /* SignalGeneratorEngine.cpp */; };
@@ -116,6 +122,10 @@
 		9D281A9829E1C5B5009CF125 /* AudioDeviceSelector.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AudioDeviceSelector.xib; sourceTree = "<group>"; };
 		9D3A20652A9562A800C7C620 /* CompressionMeter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CompressionMeter.h; sourceTree = "<group>"; };
 		9D3A20662A9562A800C7C620 /* CompressionMeter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CompressionMeter.m; sourceTree = "<group>"; };
+		9D4517C32A9D8799003BC1EB /* core_common.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = core_common.h; sourceTree = "<group>"; };
+		9D4517C42A9D89AD003BC1EB /* MultibandControlsView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MultibandControlsView.h; sourceTree = "<group>"; };
+		9D4517C52A9D89AD003BC1EB /* MultibandControlsView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MultibandControlsView.m; sourceTree = "<group>"; };
+		9D4517C62A9D89AD003BC1EB /* MultibandControlsView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MultibandControlsView.xib; sourceTree = "<group>"; };
 		9D5C638629D8E5D600E40A60 /* SignalGeneratorEngine.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = SignalGeneratorEngine.cpp; sourceTree = "<group>"; };
 		9D5C638729D8E5D600E40A60 /* SignalGeneratorEngine.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = SignalGeneratorEngine.hpp; sourceTree = "<group>"; };
 		9D5C638B29D9FF5400E40A60 /* SignalGeneratorEngineWrapper.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = SignalGeneratorEngineWrapper.mm; sourceTree = "<group>"; };
@@ -274,6 +284,9 @@
 				9DD1410C2A81E3EB0059864D /* OSXAudioInterface.h */,
 				9DD1410D2A82AD420059864D /* AudioDevice.m */,
 				9DD141102A82AD5B0059864D /* AudioDevice.h */,
+				9D4517C42A9D89AD003BC1EB /* MultibandControlsView.h */,
+				9D4517C52A9D89AD003BC1EB /* MultibandControlsView.m */,
+				9D4517C62A9D89AD003BC1EB /* MultibandControlsView.xib */,
 			);
 			path = MacSmoov;
 			sourceTree = "<group>";
@@ -321,6 +334,7 @@
 				9DD1BF2A2A9A811400D7C0B2 /* ProcMod5bandCompressor.hpp */,
 				9D8EC53E2A8B1901006C1E09 /* ProcModStereoEnhance.cpp */,
 				9D8EC53D2A8B1901006C1E09 /* ProcModStereoEnhance.hpp */,
+				9D4517C32A9D8799003BC1EB /* core_common.h */,
 			);
 			path = core;
 			sourceTree = "<group>";
@@ -455,6 +469,7 @@
 				9DB7A12A29D7949E002E6F4E /* Assets.xcassets in Resources */,
 				9DB7A12D29D7949E002E6F4E /* MainMenu.xib in Resources */,
 				9D5C639729DA5DE200E40A60 /* SignalGeneratorViewController.xib in Resources */,
+				9D4517CA2A9D89AD003BC1EB /* MultibandControlsView.xib in Resources */,
 				9D281A9C29E1C5B5009CF125 /* AudioDeviceSelector.xib in Resources */,
 				9DFECDF12A86F02C00BFB1A2 /* Credits.rtf in Resources */,
 			);
@@ -465,6 +480,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				9D5C639829DA5DE200E40A60 /* SignalGeneratorViewController.xib in Resources */,
+				9D4517CB2A9D89AD003BC1EB /* MultibandControlsView.xib in Resources */,
 				9DFECDF22A86F02C00BFB1A2 /* Credits.rtf in Resources */,
 				9D281A9D29E1C5B5009CF125 /* AudioDeviceSelector.xib in Resources */,
 			);
@@ -474,6 +490,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9D4517CC2A9D89AD003BC1EB /* MultibandControlsView.xib in Resources */,
 				9D5C639929DA5DE200E40A60 /* SignalGeneratorViewController.xib in Resources */,
 				9D281A9E29E1C5B5009CF125 /* AudioDeviceSelector.xib in Resources */,
 			);
@@ -509,6 +526,7 @@
 				9DFECDF72A87EAAF00BFB1A2 /* ProcMod2BandAGC.cpp in Sources */,
 				9DFECDED2A86D80D00BFB1A2 /* ProcModGain.cpp in Sources */,
 				9D8EC5432A8B2385006C1E09 /* compressor.cpp in Sources */,
+				9D4517C72A9D89AD003BC1EB /* MultibandControlsView.m in Sources */,
 				9D8EC5492A8C5A86006C1E09 /* vca_proportional.cpp in Sources */,
 				9DB012882A71C376009BFCD8 /* CircularBuffer.cpp in Sources */,
 				9D5C639429DA5DE200E40A60 /* SignalGeneratorViewController.m in Sources */,
@@ -567,6 +585,7 @@
 				9DD141082A81C5D60059864D /* LogLinConverter.cpp in Sources */,
 				9DD1410F2A82AD420059864D /* AudioDevice.m in Sources */,
 				9DA7C12A2A5E4D4700A01D92 /* LPFSinglePole.cpp in Sources */,
+				9D4517C82A9D89AD003BC1EB /* MultibandControlsView.m in Sources */,
 				9DEF3B432A9D0FD0004E78F3 /* crossover_5_band.cpp in Sources */,
 				9DFECDEE2A86D80D00BFB1A2 /* ProcModGain.cpp in Sources */,
 				9DFECE032A87EAF800BFB1A2 /* sos.cpp in Sources */,
@@ -582,6 +601,7 @@
 				9DA7C12B2A5E4D4700A01D92 /* LPFSinglePole.cpp in Sources */,
 				9D5C639629DA5DE200E40A60 /* SignalGeneratorViewController.m in Sources */,
 				9DB0128A2A71C376009BFCD8 /* CircularBuffer.cpp in Sources */,
+				9D4517C92A9D89AD003BC1EB /* MultibandControlsView.m in Sources */,
 				9D81E9BA2A5B2D70007D46EF /* ProcModLevelMeter.cpp in Sources */,
 				9D5C638A29D8E5D600E40A60 /* SignalGeneratorEngine.cpp in Sources */,
 				9D81E9B52A5B2CC6007D46EF /* ProcessorModule.cpp in Sources */,
@@ -742,7 +762,7 @@
 				CODE_SIGN_ENTITLEMENTS = MacSmoov/MacSmoov.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 951;
+				CURRENT_PROJECT_VERSION = 1030;
 				DEVELOPMENT_ASSET_PATHS = "";
 				ENABLE_HARDENED_RUNTIME = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -772,7 +792,7 @@
 				CODE_SIGN_ENTITLEMENTS = MacSmoov/MacSmoov.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 951;
+				CURRENT_PROJECT_VERSION = 1030;
 				DEVELOPMENT_ASSET_PATHS = "";
 				ENABLE_HARDENED_RUNTIME = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -798,7 +818,7 @@
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 951;
+				CURRENT_PROJECT_VERSION = 1030;
 				GENERATE_INFOPLIST_FILE = YES;
 				MACOSX_DEPLOYMENT_TARGET = 11.6;
 				MARKETING_VERSION = 1.0;
@@ -814,7 +834,7 @@
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 951;
+				CURRENT_PROJECT_VERSION = 1030;
 				GENERATE_INFOPLIST_FILE = YES;
 				MACOSX_DEPLOYMENT_TARGET = 11.6;
 				MARKETING_VERSION = 1.0;
@@ -829,7 +849,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 951;
+				CURRENT_PROJECT_VERSION = 1030;
 				GENERATE_INFOPLIST_FILE = YES;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.tonekids.osx.MacSmoovUITests;
@@ -843,7 +863,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 951;
+				CURRENT_PROJECT_VERSION = 1030;
 				GENERATE_INFOPLIST_FILE = YES;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.tonekids.osx.MacSmoovUITests;

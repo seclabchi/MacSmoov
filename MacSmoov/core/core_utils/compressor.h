@@ -4,6 +4,7 @@
 #include <unistd.h>
 #include <stdint.h>
 
+#include "core_common.h"
 #include "LogLinConverter.hpp"
 
 namespace fmsmoov {
@@ -14,19 +15,6 @@ enum class CompressorType {
     AGC
 };
 
-typedef struct  {
-    float drive;
-    float release;
-    float gate_thresh;
-    bool use_coupling;
-    float coupling;
-    float window_size;
-    float window_release;
-    float ratio;
-    float idle_gain;
-    float attack;
-    float post_gain;
-} COMPRESSOR_PARAMS;
 
 class Compressor
 {

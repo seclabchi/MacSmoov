@@ -18,24 +18,24 @@
 
 - (void) awakeFromNib {
     self->min_lev = 0.0;
-    self->max_lev = -30.0;
-    comp_b1 = -5.0;
-    comp_b2 = -10.0;
-    comp_b3 = -15.0;
-    comp_b4 = -20.0;
-    comp_b5 = -25.0;
+    self->max_lev = -20.0;
+    comp_b1 = -3.0;
+    comp_b2 = -6.0;
+    comp_b3 = -9.0;
+    comp_b4 = -12.0;
+    comp_b5 = -15.0;
 }
 
 - (id)initWithFrame:(NSRect)frame {
     self = [super initWithFrame:frame];
     if (self) {
         self->min_lev = 0.0;
-        self->max_lev = -30.0;
-        comp_b1 = -5.0;
-        comp_b2 = -10.0;
-        comp_b3 = -15.0;
-        comp_b4 = -20.0;
-        comp_b5 = -25.0;
+        self->max_lev = -20.0;
+        comp_b1 = -3.0;
+        comp_b2 = -6.0;
+        comp_b3 = -9.0;
+        comp_b4 = -12.0;
+        comp_b5 = -15.0;
     }
     return self;
 }

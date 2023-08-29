@@ -242,6 +242,18 @@ Boolean shutting_down;
     [prefs setObject:[NSString stringWithFormat:@"%f", gmi.cell.floatValue] forKey:@"GAIN_IN_MAIN"];
 }
 
+-(IBAction) bandEnableChanged:(NSButton*)sender {
+    NSInteger band_num = [sender tag];
+    NSControlStateValue states[5];
 
+    states[0] = _enable_b1.state;
+    states[1] = _enable_b2.state;
+    states[2] = _enable_b3.state;
+    states[3] = _enable_b4.state;
+    states[4] = _enable_b5.state;
+    
+    [proc_core_wrapper setBandEnablement:states];
+    
+}
 
 @end

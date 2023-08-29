@@ -19,6 +19,11 @@
                 <outlet property="agc_lo_gate_closed" destination="cPC-Og-KrE" id="WWl-wb-lXd"/>
                 <outlet property="comp_2band_agc" destination="zwt-md-HTN" id="Hjd-YR-6eA"/>
                 <outlet property="comp_5band" destination="OZU-2m-L3C" id="IOy-YF-0fZ"/>
+                <outlet property="enable_b1" destination="alT-59-kfh" id="3CU-l8-4OH"/>
+                <outlet property="enable_b2" destination="CUC-Ua-voY" id="sLp-KG-TYH"/>
+                <outlet property="enable_b3" destination="mDw-i7-Ig4" id="LON-Ha-GPe"/>
+                <outlet property="enable_b4" destination="xfp-Dz-wjn" id="2uZ-H2-vwY"/>
+                <outlet property="enable_b5" destination="tHs-oU-qin" id="peW-wY-rLE"/>
                 <outlet property="level_main_in" destination="mc0-9Q-64D" id="XWR-zu-Bad"/>
                 <outlet property="window" destination="QvC-M9-y7g" id="gIp-Ho-8D9"/>
             </connections>
@@ -369,33 +374,13 @@
                         </items>
                     </menu>
                 </menuItem>
-                <menuItem title="View" id="H8h-7b-M4v">
+                <menuItem title="Factory" id="3de-E7-E02">
                     <modifierMask key="keyEquivalentModifierMask"/>
-                    <menu key="submenu" title="View" id="HyV-fh-RgO">
+                    <menu key="submenu" title="Factory" id="gkE-9y-gP9">
                         <items>
-                            <menuItem title="Show Toolbar" keyEquivalent="t" id="snW-S8-Cw5">
-                                <modifierMask key="keyEquivalentModifierMask" option="YES" command="YES"/>
+                            <menuItem title="Multiband Tuning" keyEquivalent="m" id="dnR-Ps-Ejj">
                                 <connections>
-                                    <action selector="toggleToolbarShown:" target="-1" id="BXY-wc-z0C"/>
-                                </connections>
-                            </menuItem>
-                            <menuItem title="Customize Toolbar…" id="1UK-8n-QPP">
-                                <modifierMask key="keyEquivalentModifierMask"/>
-                                <connections>
-                                    <action selector="runToolbarCustomizationPalette:" target="-1" id="pQI-g3-MTW"/>
-                                </connections>
-                            </menuItem>
-                            <menuItem isSeparatorItem="YES" id="hB3-LF-h0Y"/>
-                            <menuItem title="Show Sidebar" keyEquivalent="s" id="kIP-vf-haE">
-                                <modifierMask key="keyEquivalentModifierMask" control="YES" command="YES"/>
-                                <connections>
-                                    <action selector="toggleSidebar:" target="-1" id="iwa-gc-5KM"/>
-                                </connections>
-                            </menuItem>
-                            <menuItem title="Enter Full Screen" keyEquivalent="f" id="4J7-dP-txa">
-                                <modifierMask key="keyEquivalentModifierMask" control="YES" command="YES"/>
-                                <connections>
-                                    <action selector="toggleFullScreen:" target="-1" id="dU3-MA-1Rq"/>
+                                    <action selector="multibandAdjustMenuSelected:" target="Voe-Tx-rLC" id="9h6-2h-flz"/>
                                 </connections>
                             </menuItem>
                         </items>
@@ -408,12 +393,6 @@
                             <menuItem title="Minimize" keyEquivalent="m" id="OY7-WF-poV">
                                 <connections>
                                     <action selector="performMiniaturize:" target="-1" id="VwT-WD-YPe"/>
-                                </connections>
-                            </menuItem>
-                            <menuItem title="Zoom" id="R4o-n2-Eq4">
-                                <modifierMask key="keyEquivalentModifierMask"/>
-                                <connections>
-                                    <action selector="performZoom:" target="-1" id="DIl-cC-cCs"/>
                                 </connections>
                             </menuItem>
                             <menuItem isSeparatorItem="YES" id="eu3-7i-yIM"/>
@@ -585,16 +564,90 @@
                         </view>
                     </box>
                     <box fixedFrame="YES" title="MULTIBAND COMPRESSOR" translatesAutoresizingMaskIntoConstraints="NO" id="NdS-Kb-jXI">
-                        <rect key="frame" x="262" y="282" width="416" height="253"/>
+                        <rect key="frame" x="262" y="70" width="651" height="465"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <view key="contentView" id="WKC-LI-udk">
-                            <rect key="frame" x="3" y="3" width="410" height="235"/>
+                            <rect key="frame" x="3" y="3" width="645" height="447"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <subviews>
                                 <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="OZU-2m-L3C" userLabel="5band_Compressor" customClass="CompressionMeter5band">
-                                    <rect key="frame" x="13" y="30" width="140" height="192"/>
+                                    <rect key="frame" x="13" y="242" width="140" height="192"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 </customView>
+                                <box fixedFrame="YES" title="Settings" translatesAutoresizingMaskIntoConstraints="NO" id="dad-de-4IW">
+                                    <rect key="frame" x="170" y="289" width="449" height="145"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                    <view key="contentView" id="Dxr-HY-ZeV">
+                                        <rect key="frame" x="3" y="3" width="443" height="127"/>
+                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                        <subviews>
+                                            <button verticalHuggingPriority="750" fixedFrame="YES" tag="1" translatesAutoresizingMaskIntoConstraints="NO" id="alT-59-kfh">
+                                                <rect key="frame" x="9" y="99" width="41" height="18"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                                <buttonCell key="cell" type="check" title="B1" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="9By-N2-nNP">
+                                                    <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                                    <font key="font" metaFont="system"/>
+                                                </buttonCell>
+                                                <connections>
+                                                    <action selector="bandEnableChanged:" target="Voe-Tx-rLC" id="irH-LT-KKM"/>
+                                                </connections>
+                                            </button>
+                                            <button verticalHuggingPriority="750" fixedFrame="YES" tag="2" translatesAutoresizingMaskIntoConstraints="NO" id="CUC-Ua-voY">
+                                                <rect key="frame" x="9" y="77" width="43" height="18"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                                <buttonCell key="cell" type="check" title="B2" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="wlq-N3-RaV">
+                                                    <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                                    <font key="font" metaFont="system"/>
+                                                </buttonCell>
+                                                <connections>
+                                                    <action selector="bandEnableChanged:" target="Voe-Tx-rLC" id="Qpk-XV-oa7"/>
+                                                </connections>
+                                            </button>
+                                            <button verticalHuggingPriority="750" fixedFrame="YES" tag="3" translatesAutoresizingMaskIntoConstraints="NO" id="mDw-i7-Ig4">
+                                                <rect key="frame" x="9" y="55" width="43" height="18"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                                <buttonCell key="cell" type="check" title="B3" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="NKV-JY-y26">
+                                                    <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                                    <font key="font" metaFont="system"/>
+                                                </buttonCell>
+                                                <connections>
+                                                    <action selector="bandEnableChanged:" target="Voe-Tx-rLC" id="EFj-b3-DkS"/>
+                                                </connections>
+                                            </button>
+                                            <button verticalHuggingPriority="750" fixedFrame="YES" tag="4" translatesAutoresizingMaskIntoConstraints="NO" id="xfp-Dz-wjn">
+                                                <rect key="frame" x="9" y="33" width="43" height="18"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                                <buttonCell key="cell" type="check" title="B4" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="qyr-gy-rSC">
+                                                    <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                                    <font key="font" metaFont="system"/>
+                                                </buttonCell>
+                                                <connections>
+                                                    <action selector="bandEnableChanged:" target="Voe-Tx-rLC" id="ABN-TA-ltD"/>
+                                                </connections>
+                                            </button>
+                                            <button verticalHuggingPriority="750" fixedFrame="YES" tag="5" translatesAutoresizingMaskIntoConstraints="NO" id="tHs-oU-qin">
+                                                <rect key="frame" x="9" y="11" width="43" height="18"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                                <buttonCell key="cell" type="check" title="B5" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="meG-ES-Pcb">
+                                                    <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                                    <font key="font" metaFont="system"/>
+                                                </buttonCell>
+                                                <connections>
+                                                    <action selector="bandEnableChanged:" target="Voe-Tx-rLC" id="0Bh-qO-KYo"/>
+                                                </connections>
+                                            </button>
+                                        </subviews>
+                                    </view>
+                                </box>
+                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="y4d-x3-cJo">
+                                    <rect key="frame" x="29" y="212" width="108" height="26"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                    <textFieldCell key="cell" alignment="left" title="200   520   1.8k    6k" id="FGY-hc-HDp">
+                                        <font key="font" metaFont="system" size="10"/>
+                                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                    </textFieldCell>
+                                </textField>
                             </subviews>
                         </view>
                     </box>

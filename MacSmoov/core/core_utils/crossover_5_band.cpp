@@ -258,18 +258,24 @@ void Crossover_5_band::process(float* inL, float* inR, float** outb1, float** ou
     */
      
 	/* Low-pass */
-	if(true == be3)
-	{
+	if(true == be3) {
 		f2loL->process(s0hiL, band3outL);
 		f2loR->process(s0hiR, band3outR);
 	}
+    else {
+        memset(band3outL, 0, samps*sizeof(float));
+        memset(band3outR, 0, samps*sizeof(float));
+    }
 
 	/* High-pass */
-	if(true == be4)
-	{
+	if(true == be4)	{
 		f2hiL->process(s0hiL, band4outL);
 		f2hiR->process(s0hiR, band4outR);
 	}
+    else {
+        memset(band4outL, 0, samps*sizeof(float));
+        memset(band4outR, 0, samps*sizeof(float));
+    }
 
 	/* S1, f1 (520 Hz)
      * S1LO: f1LP
@@ -281,26 +287,38 @@ void Crossover_5_band::process(float* inL, float* inR, float** outb1, float** ou
 	f1loR->process(s0loR, s1loR);
 
 	/* High-pass */
+    
+    f1hiL->process(s0loL, s1hiL);
+    f1hiR->process(s0loL, s1hiR);
     if(true == be2) {
-        f1hiL->process(s0loL, s1hiL);
-        f1hiR->process(s0loL, s1hiR);
         s1f3apL->process(s1hiL, band2outL);
         s1f3apR->process(s1hiR, band2outR);
+    }
+    else {
+        memset(band2outL, 0, samps*sizeof(float));
+        memset(band2outR, 0, samps*sizeof(float));
     }
 
     /* S3, f3 (200 Hz)
      * S3LO: f3LP   --- BAND 0 OUTPUT
      * S1HI: f3HP   ---BAND 1 OUTPUT
      */
-	if(true == be0)
-	{
+	if(true == be0)	{
 		f3loL->process(s1loL, band0outL);
 		f3loR->process(s1loR, band0outR);
 	}
-	if(true == be1)
-	{
+    else {
+        memset(band0outL, 0, samps*sizeof(float));
+        memset(band0outR, 0, samps*sizeof(float));
+    }
+    
+	if(true == be1)	{
 		f3hiL->process(s1loL, band1outL);
 		f3hiR->process(s1loR, band1outR);
 	}
+    else {
+        memset(band1outL, 0, samps*sizeof(float));
+        memset(band1outR, 0, samps*sizeof(float));
+    }
 }
 

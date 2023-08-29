@@ -31,6 +31,8 @@ public:
     void set_main_in_gain_db(float loggain_l, float loggain_r);
     void get2bandAGCGainReduction(float* gainReduct2blo, float* gainReduct2bhi, bool* gateOpenLo, bool* gateOpenHi);
     void get5bandCompressorGainReduction(float** _bands_gr);
+    void set_bands_enabled(bool _bands_enabled[]);
+    void change_multiband_settings(MULTIBAND_PARAMS _params);
 private:
     ProcessorCore();
     float f_samp;

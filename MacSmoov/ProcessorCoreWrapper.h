@@ -8,8 +8,10 @@
 #ifndef ProcessorCoreWrapper_h
 #define ProcessorCoreWrapper_h
 
+#import <Cocoa/Cocoa.h>
 #import <Foundation/Foundation.h>
 #import <AudioToolbox/AudioToolbox.h>
+#include "core/core_common.h"
 
 typedef void(*PROCESSOR_CORE_HOOK)(AudioBufferList* ab_list, AudioBufferList* ab_list_coreout);
 
@@ -21,6 +23,8 @@ typedef void(*PROCESSOR_CORE_HOOK)(AudioBufferList* ab_list, AudioBufferList* ab
 -(void) setMainInGainDBL:(float)mainInL R:(float)mainInR;
 -(void) get2bandAGCGainReductionlo:(float*)gainReduct2blo hi:(float*)gainReduct2bhi gatelo:(bool*)gate_open_agc2_lo gatehi:(bool*)gate_open_agc2_hi;
 -(void) get5bandCompressorGainReduction:(float**) _bands_gr;
+-(void) setBandEnablement:(NSControlStateValue[]) _bands_enabled;
+-(void) change_multiband_settings:(MULTIBAND_PARAMS)_params;
 
 @end
 

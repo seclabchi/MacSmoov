@@ -75,73 +75,73 @@ ProcessorCore::ProcessorCore(uint32_t _f_samp, uint32_t _n_channels, uint32_t _n
     proc_mod_5b_crossover->band_enable(true, true, true, true, true);
     
     COMPRESSOR_PARAMS comp_params_b1 = {
-        .drive = -36.0,
-        .release = .1,
+        .drive = -40.0,
+        .release = .4,
         .gate_thresh = -60.0,
         .use_coupling = false,
         .coupling = 0.0,
         .window_size = 3.0,
         .window_release = 2.0,
-        .ratio = 1,
+        .ratio = 1.6,
         .idle_gain = 0.0,
-        .attack = 0.050,
-        .post_gain = 0.0
+        .attack = 0.075,
+        .post_gain = 9.0
     };
     
     COMPRESSOR_PARAMS comp_params_b2 = {
-        .drive = -36.0,
-        .release = .1,
+        .drive = -40.0,
+        .release = .2,
         .gate_thresh = -60.0,
         .use_coupling = false,
         .coupling = 0.0,
         .window_size = 3.0,
         .window_release = 2.0,
-        .ratio = 1,
+        .ratio = 2,
         .idle_gain = 0.0,
-        .attack = 0.040,
-        .post_gain = 0.0
+        .attack = 0.050,
+        .post_gain = 6.0
     };
     
     COMPRESSOR_PARAMS comp_params_b3 = {
         .drive = -40.0,
-        .release = .1,
+        .release = .075,
         .gate_thresh = -60.0,
         .use_coupling = false,
         .coupling = 0.0,
         .window_size = 3.0,
         .window_release = 2.0,
-        .ratio = 1,
+        .ratio = 2.3,
         .idle_gain = 0.0,
-        .attack = 0.032,
-        .post_gain = 0.0
+        .attack = 0.025,
+        .post_gain = 3.0
     };
     
     COMPRESSOR_PARAMS comp_params_b4 = {
         .drive = -40.0,
-        .release = .1,
+        .release = .075,
         .gate_thresh = -60.0,
         .use_coupling = false,
         .coupling = 0.0,
         .window_size = 3.0,
         .window_release = 2.0,
-        .ratio = 1,
+        .ratio = 2.6,
         .idle_gain = 0.0,
-        .attack = 0.016,
-        .post_gain = 0.0
+        .attack = 0.024,
+        .post_gain = 3.0
     };
     
     COMPRESSOR_PARAMS comp_params_b5 = {
-        .drive = -40.0,
-        .release = .1,
+        .drive = -43.0,
+        .release = .024,
         .gate_thresh = -60.0,
         .use_coupling = false,
         .coupling = 0.0,
         .window_size = 3.0,
         .window_release = 2.0,
-        .ratio = 1,
+        .ratio = 3,
         .idle_gain = 0.0,
-        .attack = 0.008,
-        .post_gain = 0.0
+        .attack = 0.08,
+        .post_gain = 9.0
     };
     
     MULTIBAND_PARAMS mb_params = {
@@ -206,4 +206,12 @@ void ProcessorCore::get2bandAGCGainReduction(float* gainReduct2blo, float* gainR
 
 void ProcessorCore::get5bandCompressorGainReduction(float** _bands_gr) {
     proc_mod_5b_compressor->read(_bands_gr);
+}
+
+void ProcessorCore::set_bands_enabled(bool _bands_enabled[]) {
+    proc_mod_5b_crossover->band_enable(_bands_enabled[0], _bands_enabled[1], _bands_enabled[2], _bands_enabled[3], _bands_enabled[4]);
+}
+
+void ProcessorCore::change_multiband_settings(MULTIBAND_PARAMS _params) {
+    proc_mod_5b_compressor->setup(_params);
 }

@@ -57,4 +57,13 @@ void processor_core_hook(AudioBufferList* ab_list, AudioBufferList* ab_list_core
     cpp->get5bandCompressorGainReduction(_bands_gr);
 }
 
+-(void) setBandEnablement:(NSControlStateValue[]) _bands_enabled {
+    bool bands_enabled[5] = {(bool)_bands_enabled[0], (bool)_bands_enabled[1], (bool)_bands_enabled[2], (bool)_bands_enabled[3], (bool)_bands_enabled[4]};
+    cpp->set_bands_enabled(bands_enabled);
+}
+
+-(void) change_multiband_settings:(MULTIBAND_PARAMS)_params {
+    cpp->change_multiband_settings(_params);
+}
+
 @end

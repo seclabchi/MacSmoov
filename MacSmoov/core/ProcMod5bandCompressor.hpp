@@ -17,9 +17,6 @@
 
 namespace fmsmoov {
 
-typedef struct  {
-    COMPRESSOR_PARAMS band_params[5];
-} MULTIBAND_PARAMS;
 
 
 class ProcMod5bandCompressor : public ProcessorModule {
@@ -55,6 +52,8 @@ private:
     COMPRESSOR_PARAMS comp_parms_b3;
     COMPRESSOR_PARAMS comp_parms_b4;
     COMPRESSOR_PARAMS comp_parms_b5;
+    
+    bool first_setup_complete;
     
     LogLinConverter* linlogL;
     LogLinConverter* linlogR;
