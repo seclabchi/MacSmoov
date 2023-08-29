@@ -41,7 +41,7 @@ g = 0.9931
  
 */
 
-ProcMod2BandAGC::ProcMod2BandAGC(const string& _name, uint32_t _f_samp, uint8_t _n_channels, uint32_t _n_samps, AGC_PARAMS _parms) : ProcessorModule (_name, _f_samp, _n_channels, _n_samps), parms(_parms) {
+ProcMod2BandAGC::ProcMod2BandAGC(const string& _name, uint32_t _f_samp, uint8_t _n_channels, uint32_t _n_samps) : ProcessorModule (_name, _f_samp, _n_channels, _n_samps) {
     SOS soslo(2.3929e-05, 1.0000, 2.0000, 1.0000, 1.0000, -1.9861, 0.9862);
     SOS soshi(0.9931, 1.0000, -2.0000, 1.0000, 1.0000, -1.9861, 0.9862);
     filt_lo_L = new FilterLR4(&soslo, _n_samps);
@@ -49,23 +49,23 @@ ProcMod2BandAGC::ProcMod2BandAGC(const string& _name, uint32_t _f_samp, uint8_t 
     filt_hi_L = new FilterLR4(&soshi, _n_samps);
     filt_hi_R = new FilterLR4(&soshi, _n_samps);
     
-    buf_lo_filtL = new float[_n_samps];
-    buf_lo_filtR = new float[_n_samps];
-    buf_hi_filtL = new float[_n_samps];
-    buf_hi_filtR = new float[_n_samps];
+    buf_lo_filtL = new float[_n_samps]();
+    buf_lo_filtR = new float[_n_samps]();
+    buf_hi_filtL = new float[_n_samps]();
+    buf_hi_filtR = new float[_n_samps]();
     
-    agc_out_loL = new float[_n_samps];
-    agc_out_hiL = new float[_n_samps];
-    agc_out_loR = new float[_n_samps];
-    agc_out_hiR = new float[_n_samps];
+    agc_out_loL = new float[_n_samps]();
+    agc_out_hiL = new float[_n_samps]();
+    agc_out_loR = new float[_n_samps]();
+    agc_out_hiR = new float[_n_samps]();
     
     comp_lo = NULL;
     comp_hi = NULL;
     
     comp_hi_gain_reduction_buf = new float[_n_samps];
     
-    master_outL = new float[_n_samps];
-    master_outR = new float[_n_samps];
+    master_outL = new float[_n_samps]();
+    master_outR = new float[_n_samps]();
     
     this->set_out_buf(0, new AudioBuf(AudioBufType::REAL, "OUT_L", _n_samps));
     this->set_out_buf(1, new AudioBuf(AudioBufType::REAL, "OUT_R", _n_samps));
@@ -73,50 +73,7 @@ ProcMod2BandAGC::ProcMod2BandAGC(const string& _name, uint32_t _f_samp, uint8_t 
     linlogL = new LogLinConverter(LogLinConversionType::LIN_TO_LOG);
     linlogR = new LogLinConverter(LogLinConversionType::LIN_TO_LOG);
     
-    /*
-     typedef struct  {
-         float drive;
-         float release;
-         float gate_thresh;
-         bool use_coupling;
-         float coupling;
-         float window_size;
-         float window_release;
-         float ratio;
-         float idle_gain;
-         float attack;
-     } COMPRESSOR_PARAMS;
-     */
-    comp_parms_lo = {
-        .drive = parms.drive,
-        .release = parms.release_bass,
-        .gate_thresh = parms.gate_thresh,
-        .use_coupling = true,
-        .coupling = parms.bass_coupling,
-        .window_size = parms.window_size,
-        .window_release = parms.window_release,
-        .ratio = parms.ratio,
-        .idle_gain = parms.idle_gain,
-        .attack = parms.attack_bass,
-        .post_gain = parms.post_gain
-    };
-        
-    comp_parms_hi = {
-        .drive = parms.drive,
-        .release = parms.release_master,
-        .gate_thresh = parms.gate_thresh,
-        .use_coupling = false,
-        .coupling = 0.0,
-        .window_size = parms.window_size,
-        .window_release = parms.window_release,
-        .ratio = parms.ratio,
-        .idle_gain = parms.idle_gain,
-        .attack = parms.attack_master,
-        .post_gain = parms.post_gain
-    };
-    
-    comp_lo = new Compressor(CompressorType::AGC, this->get_f_samp(), this->get_n_samps(), comp_parms_lo);
-    comp_hi = new Compressor(CompressorType::AGC, this->get_f_samp(), this->get_n_samps(), comp_parms_hi);
+
 }
 
 ProcMod2BandAGC::~ProcMod2BandAGC() {
@@ -166,6 +123,57 @@ void ProcMod2BandAGC::process() {
 
 void ProcMod2BandAGC::setup(const AGC_PARAMS _parms) {
     parms = _parms;
+    /*
+     typedef struct  {
+         float drive;
+         float release;
+         float gate_thresh;
+         bool use_coupling;
+         float coupling;
+         float window_size;
+         float window_release;
+         float ratio;
+         float idle_gain;
+         float attack;
+     } COMPRESSOR_PARAMS;
+     */
+    comp_parms_lo = {
+        .drive = parms.drive,
+        .release = parms.release_bass,
+        .gate_thresh = parms.gate_thresh,
+        .use_coupling = true,
+        .coupling = parms.bass_coupling,
+        .window_size = parms.window_size,
+        .window_release = parms.window_release,
+        .ratio = parms.ratio,
+        .idle_gain = parms.idle_gain,
+        .attack = parms.attack_bass,
+        .post_gain = parms.post_gain
+    };
+        
+    comp_parms_hi = {
+        .drive = parms.drive,
+        .release = parms.release_master,
+        .gate_thresh = parms.gate_thresh,
+        .use_coupling = false,
+        .coupling = 0.0,
+        .window_size = parms.window_size,
+        .window_release = parms.window_release,
+        .ratio = parms.ratio,
+        .idle_gain = parms.idle_gain,
+        .attack = parms.attack_master,
+        .post_gain = parms.post_gain
+    };
+    
+    if(NULL != comp_lo) {
+        delete comp_lo;
+    }
+    if(NULL != comp_hi) {
+        delete comp_hi;
+    }
+    
+    comp_lo = new Compressor(CompressorType::AGC, this->get_f_samp(), this->get_n_samps(), comp_parms_lo);
+    comp_hi = new Compressor(CompressorType::AGC, this->get_f_samp(), this->get_n_samps(), comp_parms_hi);
     comp_lo->setup(comp_parms_lo);
     comp_hi->setup(comp_parms_hi);
 

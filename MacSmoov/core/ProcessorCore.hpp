@@ -13,8 +13,10 @@
 
 #include "ProcModLevelMeter.hpp"
 #include "ProcModGain.hpp"
-#include "ProcMod2BandAGC.hpp"
 #include "ProcModStereoEnhance.hpp"
+#include "ProcMod2BandAGC.hpp"
+#include "ProcMod5bandCrossover.hpp"
+#include "ProcMod5bandCompressor.hpp"
 #include "LogLinConverter.hpp"
 
 namespace fmsmoov {
@@ -28,6 +30,7 @@ public:
     void get_main_in_levels(float* lrms, float* rrms, float* lpeak, float* rpeak);
     void set_main_in_gain_db(float loggain_l, float loggain_r);
     void get2bandAGCGainReduction(float* gainReduct2blo, float* gainReduct2bhi, bool* gateOpenLo, bool* gateOpenHi);
+    void get5bandCompressorGainReduction(float** _bands_gr);
 private:
     ProcessorCore();
     float f_samp;
@@ -36,8 +39,11 @@ private:
     
     ProcModGain* proc_mod_gain_main_in;
     ProcModLevelMeter* proc_mod_level_main_in;
-    ProcMod2BandAGC* proc_mod_2band_agc;
     ProcModStereoEnhance* proc_mod_stereo_enhance;
+    ProcMod2BandAGC* proc_mod_2band_agc;
+    ProcMod5bandCrossover* proc_mod_5b_crossover;
+    ProcMod5bandCompressor* proc_mod_5b_compressor;
+    
     LogLinConverter* m_loglin;
     LogLinConverter* m_linlog;
     

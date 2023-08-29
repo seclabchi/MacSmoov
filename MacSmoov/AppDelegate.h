@@ -10,6 +10,7 @@
 #import "AudioDeviceSelector.h"
 #import "LevelMeter.h"
 #import "CompressionMeter.h"
+#import "CompressionMeter5band.h"
 #import "OSXAudioInterface.h"
 
 @interface AppDelegate : NSObject <NSApplicationDelegate>
@@ -18,6 +19,7 @@
 @property (strong) IBOutlet CompressionMeter* comp_2band_agc;
 @property (strong) IBOutlet NSBox* agc_lo_gate_closed;
 @property (strong) IBOutlet NSBox* agc_hi_gate_closed;
+@property (strong) IBOutlet CompressionMeter5band* comp_5band;
 
 @property (nonatomic, strong) OSXAudioInterface * sysaudio;
 

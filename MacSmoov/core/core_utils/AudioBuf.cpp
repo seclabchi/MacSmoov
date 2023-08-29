@@ -30,7 +30,7 @@ AudioBuf::AudioBuf(AudioBufType _type, const string& _name, uint32_t _n_samps, A
             throw std::invalid_argument("Can't pass a buffer reference to a REAL audiobuf.");
         }
         else {
-            buf = new float[n_samps];
+            buf = new float[n_samps]();
         }
     }
     else {

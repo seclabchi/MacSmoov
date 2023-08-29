@@ -18,6 +18,7 @@
                 <outlet property="agc_hi_gate_closed" destination="08h-Af-GEY" id="6ny-o2-Cyp"/>
                 <outlet property="agc_lo_gate_closed" destination="cPC-Og-KrE" id="WWl-wb-lXd"/>
                 <outlet property="comp_2band_agc" destination="zwt-md-HTN" id="Hjd-YR-6eA"/>
+                <outlet property="comp_5band" destination="OZU-2m-L3C" id="IOy-YF-0fZ"/>
                 <outlet property="level_main_in" destination="mc0-9Q-64D" id="XWR-zu-Bad"/>
                 <outlet property="window" destination="QvC-M9-y7g" id="gIp-Ho-8D9"/>
             </connections>
@@ -508,16 +509,16 @@
                         <rect key="frame" x="64" y="502" width="58" height="35"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <textFieldCell key="cell" alignment="center" title="STEREO ENH" id="R22-rg-WUR">
-                            <font key="font" metaFont="system" size="12"/>
+                            <font key="font" metaFont="cellTitle"/>
                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                     </textField>
                     <box fixedFrame="YES" title="2-BAND AGC" translatesAutoresizingMaskIntoConstraints="NO" id="yGK-H9-UCo">
-                        <rect key="frame" x="119" y="282" width="153" height="255"/>
+                        <rect key="frame" x="119" y="282" width="134" height="255"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <view key="contentView" id="698-JW-FAB">
-                            <rect key="frame" x="3" y="3" width="147" height="237"/>
+                            <rect key="frame" x="3" y="3" width="128" height="237"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <subviews>
                                 <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="zwt-md-HTN" userLabel="2band_AGC_Compression" customClass="CompressionMeter">
@@ -528,7 +529,7 @@
                                     <rect key="frame" x="10" y="9" width="22" height="15"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                     <textFieldCell key="cell" alignment="center" title="L" id="QAo-Ih-sEW">
-                                        <font key="font" metaFont="system" size="12"/>
+                                        <font key="font" metaFont="cellTitle"/>
                                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                     </textFieldCell>
@@ -537,23 +538,23 @@
                                     <rect key="frame" x="26" y="9" width="22" height="15"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                     <textFieldCell key="cell" alignment="center" title="H" id="btv-VE-E8J">
-                                        <font key="font" metaFont="system" size="12"/>
+                                        <font key="font" metaFont="cellTitle"/>
                                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                     </textFieldCell>
                                 </textField>
                                 <box fixedFrame="YES" boxType="custom" borderType="line" borderWidth="2" title="Box2bandGateLo" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="cPC-Og-KrE">
-                                    <rect key="frame" x="50" y="197" width="90" height="27"/>
+                                    <rect key="frame" x="50" y="197" width="69" height="27"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                     <view key="contentView" id="qmL-bk-xip">
-                                        <rect key="frame" x="2" y="2" width="86" height="23"/>
+                                        <rect key="frame" x="2" y="2" width="65" height="23"/>
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                         <subviews>
                                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Oj1-de-dAc">
-                                                <rect key="frame" x="-2" y="5" width="94" height="15"/>
+                                                <rect key="frame" x="-2" y="5" width="69" height="15"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                 <textFieldCell key="cell" alignment="center" title="GATE LO" id="AUx-6g-j1d">
-                                                    <font key="font" metaFont="system" size="12"/>
+                                                    <font key="font" metaFont="cellTitle"/>
                                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                 </textFieldCell>
@@ -562,17 +563,17 @@
                                     </view>
                                 </box>
                                 <box fixedFrame="YES" boxType="custom" borderType="line" borderWidth="2" title="Box2bandGateHi" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="08h-Af-GEY">
-                                    <rect key="frame" x="50" y="166" width="90" height="26"/>
+                                    <rect key="frame" x="50" y="166" width="69" height="26"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                     <view key="contentView" id="XXs-0u-Sfc">
-                                        <rect key="frame" x="2" y="2" width="86" height="22"/>
+                                        <rect key="frame" x="2" y="2" width="65" height="22"/>
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                         <subviews>
                                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="7Dj-5U-cMG">
-                                                <rect key="frame" x="-2" y="4" width="94" height="15"/>
+                                                <rect key="frame" x="-3" y="4" width="70" height="15"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                 <textFieldCell key="cell" alignment="center" title="GATE HI" id="nrh-bV-u6M">
-                                                    <font key="font" metaFont="system" size="12"/>
+                                                    <font key="font" metaFont="cellTitle"/>
                                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                 </textFieldCell>
@@ -580,6 +581,20 @@
                                         </subviews>
                                     </view>
                                 </box>
+                            </subviews>
+                        </view>
+                    </box>
+                    <box fixedFrame="YES" title="MULTIBAND COMPRESSOR" translatesAutoresizingMaskIntoConstraints="NO" id="NdS-Kb-jXI">
+                        <rect key="frame" x="262" y="282" width="416" height="253"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <view key="contentView" id="WKC-LI-udk">
+                            <rect key="frame" x="3" y="3" width="410" height="235"/>
+                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                            <subviews>
+                                <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="OZU-2m-L3C" userLabel="5band_Compressor" customClass="CompressionMeter5band">
+                                    <rect key="frame" x="13" y="30" width="140" height="192"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                </customView>
                             </subviews>
                         </view>
                     </box>

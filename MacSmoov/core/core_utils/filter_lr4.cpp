@@ -10,7 +10,7 @@ FilterLR4::FilterLR4(SOS* _sos, uint32_t _n_samp) : m_nsamp(_n_samp), sos(_sos)
   bq1 = new Biquad(sos);
 //  cout << "Creating new biquad with params " << s2->g << " " << s2->b0 << " " << s2->b1 << " " << s2->b2 << " " << s2->a1 << " " << s2->a2 << endl;
   bq2 = new Biquad(sos);
-  tmpbuf = new float[m_nsamp];
+  tmpbuf = new float[m_nsamp]();
 }
 
 FilterLR4::~FilterLR4()
@@ -32,8 +32,8 @@ AllpassFilterLR4::AllpassFilterLR4(SOS* _soslo, SOS* _soshi, uint32_t _n_samp) :
 {
 	filterL = new FilterLR4(_soslo, m_nsamp);
 	filterH = new FilterLR4(_soshi, m_nsamp);
-	tmpbufL = new float[m_nsamp];
-	tmpbufH = new float[m_nsamp];
+	tmpbufL = new float[m_nsamp]();
+	tmpbufH = new float[m_nsamp]();
 }
 
 AllpassFilterLR4::~AllpassFilterLR4()

@@ -38,10 +38,17 @@ Boolean shutting_down;
     float mainInLrms, mainInRrms, mainInLpeak, mainInRpeak;
     float gainReduct2blo, gainReduct2bhi;
     bool gate_open_agc2_lo, gate_open_agc2_hi;
+    float** bands_gr = (float**)malloc(5 * sizeof(float*));
+    bands_gr[0] = malloc(sizeof(float));
+    bands_gr[1] = malloc(sizeof(float));
+    bands_gr[2] = malloc(sizeof(float));
+    bands_gr[3] = malloc(sizeof(float));
+    bands_gr[4] = malloc(sizeof(float));
     
     while(false == shutting_down) {
         [proc_core_wrapper getMainInLevelsLrms:&mainInLrms Rrms:&mainInRrms Lpeak:&mainInLpeak Rpeak:&mainInRpeak];
         [proc_core_wrapper get2bandAGCGainReductionlo:&gainReduct2blo hi:&gainReduct2bhi gatelo:&gate_open_agc2_lo gatehi:&gate_open_agc2_hi];
+        [proc_core_wrapper get5bandCompressorGainReduction:bands_gr];
         
         dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void){
             //Background Thread
@@ -60,6 +67,7 @@ Boolean shutting_down;
                 else {
                     [self->_agc_hi_gate_closed setFillColor:[NSColor blackColor]];
                 }
+                [self->_comp_5band set_comps:bands_gr];
             });
         });
         

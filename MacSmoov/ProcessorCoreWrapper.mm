@@ -35,9 +35,9 @@ PROCESSOR_CORE_HOOK proc_core_hook;
     return proc_core_hook;
 }
 
-void processor_core_hook(AudioBufferList* ab_list) {
+void processor_core_hook(AudioBufferList* ab_list, AudioBufferList* ab_list_coreout) {
     cpp->process((float*)ab_list->mBuffers[0].mData, (float*)ab_list->mBuffers[1].mData,
-                 (float*)ab_list->mBuffers[0].mData, (float*)ab_list->mBuffers[1].mData,
+                 (float*)ab_list_coreout->mBuffers[0].mData, (float*)ab_list_coreout->mBuffers[1].mData,
                  ab_list->mBuffers[0].mDataByteSize/sizeof(float));
 }
 
@@ -51,6 +51,10 @@ void processor_core_hook(AudioBufferList* ab_list) {
 
 -(void) get2bandAGCGainReductionlo:(float*)gainReduct2blo hi:(float*)gainReduct2bhi gatelo:(bool*)gate_open_agc2_lo gatehi:(bool*)gate_open_agc2_hi {
     cpp->get2bandAGCGainReduction(gainReduct2blo, gainReduct2bhi, gate_open_agc2_lo, gate_open_agc2_hi);
+}
+
+-(void) get5bandCompressorGainReduction:(float**) _bands_gr {
+    cpp->get5bandCompressorGainReduction(_bands_gr);
 }
 
 @end

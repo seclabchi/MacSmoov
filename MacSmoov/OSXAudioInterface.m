@@ -72,6 +72,7 @@ NSFileHandle* capture_file_handle;
 UInt32 lastNumberFrames;
 UInt32 buf_size_in_bytes;
 AudioBufferList* buf_list;
+AudioBufferList* buf_list_coreout;
 
 
 void checkStatus(int status) {
@@ -119,6 +120,17 @@ void checkStatus(int status) {
         buf_list->mBuffers[1].mNumberChannels = 1;
         buf_list->mBuffers[1].mDataByteSize = buf_size_in_bytes;
         buf_list->mBuffers[1].mData = calloc(1, buf_size_in_bytes);
+        
+        buf_list_coreout = (AudioBufferList*)calloc(1, buf_list_size);
+        buf_list_coreout->mNumberBuffers = 2;
+        
+        buf_list_coreout->mBuffers[0].mNumberChannels = 1;
+        buf_list_coreout->mBuffers[0].mDataByteSize = buf_size_in_bytes;
+        buf_list_coreout->mBuffers[0].mData = calloc(1, buf_size_in_bytes);
+        
+        buf_list_coreout->mBuffers[1].mNumberChannels = 1;
+        buf_list_coreout->mBuffers[1].mDataByteSize = buf_size_in_bytes;
+        buf_list_coreout->mBuffers[1].mData = calloc(1, buf_size_in_bytes);
     }
     
     return self;
@@ -636,11 +648,25 @@ static OSStatus recordingCallback(void *inRefCon,
             buf_list->mBuffers[0].mData = temp;
         }
         
+        buf_list_coreout->mBuffers[0].mDataByteSize = buf_size_in_bytes;
+        temp = realloc(buf_list_coreout->mBuffers[0].mData, buf_size_in_bytes);
+        
+        if(temp) {
+            buf_list_coreout->mBuffers[0].mData = temp;
+        }
+        
         buf_list->mBuffers[1].mDataByteSize = buf_size_in_bytes;
         temp = realloc(buf_list->mBuffers[1].mData, buf_size_in_bytes);
         
         if(temp) {
             buf_list->mBuffers[1].mData = temp;
+        }
+        
+        buf_list_coreout->mBuffers[1].mDataByteSize = buf_size_in_bytes;
+        temp = realloc(buf_list_coreout->mBuffers[1].mData, buf_size_in_bytes);
+        
+        if(temp) {
+            buf_list_coreout->mBuffers[1].mData = temp;
         }
         
         lastNumberFrames = inNumberFrames;
@@ -659,7 +685,7 @@ static OSStatus recordingCallback(void *inRefCon,
     
     // Send the freshly rendered buffers to the DSP core.
     if(cb_proc_core_hook) {
-        cb_proc_core_hook(buf_list);
+        cb_proc_core_hook(buf_list, buf_list_coreout);
     }
         
     /*
@@ -705,8 +731,8 @@ static OSStatus playbackCallback(void *inRefCon,
     
     //OSXAudioInterface *osxai = (__bridge OSXAudioInterface*)inRefCon;
     
-    memcpy(ioData->mBuffers[0].mData, buf_list->mBuffers[0].mData, buf_list->mBuffers[0].mDataByteSize);
-    memcpy(ioData->mBuffers[1].mData, buf_list->mBuffers[1].mData, buf_list->mBuffers[1].mDataByteSize);
+    memcpy(ioData->mBuffers[0].mData, buf_list_coreout->mBuffers[0].mData, buf_list_coreout->mBuffers[0].mDataByteSize);
+    memcpy(ioData->mBuffers[1].mData, buf_list_coreout->mBuffers[1].mData, buf_list_coreout->mBuffers[1].mDataByteSize);
     
     return noErr;
 }

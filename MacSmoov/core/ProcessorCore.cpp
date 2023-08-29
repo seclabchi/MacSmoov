@@ -50,25 +50,123 @@ ProcessorCore::ProcessorCore(uint32_t _f_samp, uint32_t _n_channels, uint32_t _n
     AGC_PARAMS agc_params = {
         .enabled = true,
         .drive = -40.0,
-        .release_master = 12.0,
-        .release_bass = 12.0,
-        .gate_thresh = -50.0,
+        .release_master = 8.0,
+        .release_bass = 8.0,
+        .gate_thresh = -65.0,
         .bass_coupling = 0.7,
         .window_size = -3.0,
         .window_release = 30,
-        .ratio = 2.0,
+        .ratio = 4.0,
         .bass_thresh = 0.0,
         .idle_gain = 0.0,
-        .attack_master = 1.5,
-        .attack_bass = 3.0,
-        .post_gain = 10.0
+        .attack_master = 0.50,
+        .attack_bass = 1.0,
+        .post_gain = 20.0
     };
     
-    proc_mod_2band_agc = new ProcMod2BandAGC("2BAND_AGC_IN", f_samp, n_channels, n_samp, agc_params);
+    proc_mod_2band_agc = new ProcMod2BandAGC("2BAND_AGC_IN", f_samp, n_channels, n_samp);
     proc_mod_2band_agc->set_in_buf(0, proc_mod_level_main_in->get_out_buf(0));
     proc_mod_2band_agc->set_in_buf(1, proc_mod_level_main_in->get_out_buf(1));
+    proc_mod_2band_agc->setup(agc_params);
     
+    proc_mod_5b_crossover = new ProcMod5bandCrossover("5BAND_CROSSOVER", f_samp, n_channels, n_samp);
+    proc_mod_5b_crossover->set_in_buf(0, proc_mod_2band_agc->get_out_buf(0), "IN_L");
+    proc_mod_5b_crossover->set_in_buf(1, proc_mod_2band_agc->get_out_buf(1), "IN_R");
+    proc_mod_5b_crossover->band_enable(true, true, true, true, true);
     
+    COMPRESSOR_PARAMS comp_params_b1 = {
+        .drive = -36.0,
+        .release = .1,
+        .gate_thresh = -60.0,
+        .use_coupling = false,
+        .coupling = 0.0,
+        .window_size = 3.0,
+        .window_release = 2.0,
+        .ratio = 1,
+        .idle_gain = 0.0,
+        .attack = 0.050,
+        .post_gain = 0.0
+    };
+    
+    COMPRESSOR_PARAMS comp_params_b2 = {
+        .drive = -36.0,
+        .release = .1,
+        .gate_thresh = -60.0,
+        .use_coupling = false,
+        .coupling = 0.0,
+        .window_size = 3.0,
+        .window_release = 2.0,
+        .ratio = 1,
+        .idle_gain = 0.0,
+        .attack = 0.040,
+        .post_gain = 0.0
+    };
+    
+    COMPRESSOR_PARAMS comp_params_b3 = {
+        .drive = -40.0,
+        .release = .1,
+        .gate_thresh = -60.0,
+        .use_coupling = false,
+        .coupling = 0.0,
+        .window_size = 3.0,
+        .window_release = 2.0,
+        .ratio = 1,
+        .idle_gain = 0.0,
+        .attack = 0.032,
+        .post_gain = 0.0
+    };
+    
+    COMPRESSOR_PARAMS comp_params_b4 = {
+        .drive = -40.0,
+        .release = .1,
+        .gate_thresh = -60.0,
+        .use_coupling = false,
+        .coupling = 0.0,
+        .window_size = 3.0,
+        .window_release = 2.0,
+        .ratio = 1,
+        .idle_gain = 0.0,
+        .attack = 0.016,
+        .post_gain = 0.0
+    };
+    
+    COMPRESSOR_PARAMS comp_params_b5 = {
+        .drive = -40.0,
+        .release = .1,
+        .gate_thresh = -60.0,
+        .use_coupling = false,
+        .coupling = 0.0,
+        .window_size = 3.0,
+        .window_release = 2.0,
+        .ratio = 1,
+        .idle_gain = 0.0,
+        .attack = 0.008,
+        .post_gain = 0.0
+    };
+    
+    MULTIBAND_PARAMS mb_params = {
+        .band_params[0] = comp_params_b1,
+        .band_params[1] = comp_params_b2,
+        .band_params[2] = comp_params_b3,
+        .band_params[3] = comp_params_b4,
+        .band_params[4] = comp_params_b5
+    };
+    
+    proc_mod_5b_compressor = new ProcMod5bandCompressor("5BAND_COMPRESSOR", f_samp, n_channels, n_samp);
+    proc_mod_5b_compressor->set_in_buf(0, proc_mod_5b_crossover->get_out_buf(0), "IN_L");
+    proc_mod_5b_compressor->set_in_buf(1, proc_mod_5b_crossover->get_out_buf(1), "IN_R");
+    proc_mod_5b_compressor->set_in_buf(2, proc_mod_5b_crossover->get_out_buf(2), "IN_B1_L");
+    proc_mod_5b_compressor->set_in_buf(3, proc_mod_5b_crossover->get_out_buf(3), "IN_B1_R");
+    proc_mod_5b_compressor->set_in_buf(4, proc_mod_5b_crossover->get_out_buf(4), "IN_B2_L");
+    proc_mod_5b_compressor->set_in_buf(5, proc_mod_5b_crossover->get_out_buf(5), "IN_B2_R");
+    proc_mod_5b_compressor->set_in_buf(6, proc_mod_5b_crossover->get_out_buf(6), "IN_B3_L");
+    proc_mod_5b_compressor->set_in_buf(7, proc_mod_5b_crossover->get_out_buf(7), "IN_B3_R");
+    proc_mod_5b_compressor->set_in_buf(8, proc_mod_5b_crossover->get_out_buf(8), "IN_B4_L");
+    proc_mod_5b_compressor->set_in_buf(9, proc_mod_5b_crossover->get_out_buf(9), "IN_B5_R");
+    proc_mod_5b_compressor->set_in_buf(10, proc_mod_5b_crossover->get_out_buf(10), "IN_B5_L");
+    proc_mod_5b_compressor->set_in_buf(11, proc_mod_5b_crossover->get_out_buf(11), "IN_B5_R");
+    proc_mod_5b_compressor->setup(mb_params);
+    proc_mod_5b_compressor->set_bypass(false);
     
     m_loglin = new LogLinConverter(LogLinConversionType::LOG_TO_LIN);
     m_linlog = new LogLinConverter(LogLinConversionType::LIN_TO_LOG);
@@ -82,13 +180,15 @@ void ProcessorCore::process(float* in_L, float* in_R, float* out_L, float* out_R
     proc_mod_gain_main_in->update_in_buf_ref(0, in_L);
     proc_mod_gain_main_in->update_in_buf_ref(1, in_R);
     
-    proc_mod_2band_agc->update_out_buf_ref(0, out_L);
-    proc_mod_2band_agc->update_out_buf_ref(1, out_R);
+    proc_mod_5b_compressor->update_out_buf_ref(0, out_L);
+    proc_mod_5b_compressor->update_out_buf_ref(1, out_R);
     
     proc_mod_gain_main_in->process();
     proc_mod_level_main_in->process();
     //proc_mod_stereo_enhance->process();
     proc_mod_2band_agc->process();
+    proc_mod_5b_crossover->process();
+    proc_mod_5b_compressor->process();
 }
 
 void ProcessorCore::get_main_in_levels(float* lrms, float* rrms, float* lpeak, float* rpeak) {
@@ -102,4 +202,8 @@ void ProcessorCore::set_main_in_gain_db(float loggain_l, float loggain_r) {
 void ProcessorCore::get2bandAGCGainReduction(float* gainReduct2blo, float* gainReduct2bhi, bool* gateOpenLo, bool* gateOpenHi) {
     proc_mod_2band_agc->read(gainReduct2blo, gainReduct2bhi, gateOpenLo, gateOpenHi);
     //cout << "GainredL=" << *gainReduct2blo << " H=" << *gainReduct2bhi << " GATES " << gate_open_lo << "|" << gate_open_hi << endl;
+}
+
+void ProcessorCore::get5bandCompressorGainReduction(float** _bands_gr) {
+    proc_mod_5b_compressor->read(_bands_gr);
 }
