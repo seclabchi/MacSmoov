@@ -50,7 +50,7 @@ ProcessorCore::ProcessorCore(uint32_t _f_samp, uint32_t _n_channels, uint32_t _n
     AGC_PARAMS agc_params = {
         .enabled = true,
         .drive = -40.0,
-        .release_master = 8.0,
+        .release_master = 4.0,
         .release_bass = 8.0,
         .gate_thresh = -65.0,
         .bass_coupling = 0.7,
@@ -59,8 +59,8 @@ ProcessorCore::ProcessorCore(uint32_t _f_samp, uint32_t _n_channels, uint32_t _n
         .ratio = 4.0,
         .bass_thresh = 0.0,
         .idle_gain = 0.0,
-        .attack_master = 0.50,
-        .attack_bass = 1.0,
+        .attack_master = 2.0,
+        .attack_bass = 4.0,
         .post_gain = 20.0
     };
     
@@ -68,6 +68,7 @@ ProcessorCore::ProcessorCore(uint32_t _f_samp, uint32_t _n_channels, uint32_t _n
     proc_mod_2band_agc->set_in_buf(0, proc_mod_level_main_in->get_out_buf(0));
     proc_mod_2band_agc->set_in_buf(1, proc_mod_level_main_in->get_out_buf(1));
     proc_mod_2band_agc->setup(agc_params);
+    proc_mod_2band_agc->set_bypass(false);
     
     proc_mod_5b_crossover = new ProcMod5bandCrossover("5BAND_CROSSOVER", f_samp, n_channels, n_samp);
     proc_mod_5b_crossover->set_in_buf(0, proc_mod_2band_agc->get_out_buf(0), "IN_L");
@@ -76,80 +77,159 @@ ProcessorCore::ProcessorCore(uint32_t _f_samp, uint32_t _n_channels, uint32_t _n
     
     COMPRESSOR_PARAMS comp_params_b1 = {
         .drive = -40.0,
-        .release = .4,
-        .gate_thresh = -60.0,
+        .release = .250,
+        .gate_thresh = -50.0,
         .use_coupling = false,
         .coupling = 0.0,
-        .window_size = 3.0,
+        .window_size = 0.0,
         .window_release = 2.0,
-        .ratio = 1.6,
+        .ratio = 2.5,
         .idle_gain = 0.0,
-        .attack = 0.075,
-        .post_gain = 9.0
+        .attack = 0.125,
+        .post_gain = 0.0
     };
     
     COMPRESSOR_PARAMS comp_params_b2 = {
         .drive = -40.0,
-        .release = .2,
-        .gate_thresh = -60.0,
+        .release = 0.240,
+        .gate_thresh = -50.0,
         .use_coupling = false,
         .coupling = 0.0,
-        .window_size = 3.0,
+        .window_size = 0.0,
         .window_release = 2.0,
-        .ratio = 2,
+        .ratio = 1.7,
         .idle_gain = 0.0,
-        .attack = 0.050,
-        .post_gain = 6.0
+        .attack = 0.080,
+        .post_gain = 0.0
     };
     
     COMPRESSOR_PARAMS comp_params_b3 = {
         .drive = -40.0,
-        .release = .075,
-        .gate_thresh = -60.0,
+        .release = .048,
+        .gate_thresh = -50.0,
         .use_coupling = false,
         .coupling = 0.0,
-        .window_size = 3.0,
+        .window_size = 0.0,
         .window_release = 2.0,
-        .ratio = 2.3,
+        .ratio = 2,
         .idle_gain = 0.0,
-        .attack = 0.025,
-        .post_gain = 3.0
+        .attack = 0.016,
+        .post_gain = 0.0
     };
     
     COMPRESSOR_PARAMS comp_params_b4 = {
         .drive = -40.0,
-        .release = .075,
-        .gate_thresh = -60.0,
-        .use_coupling = false,
-        .coupling = 0.0,
-        .window_size = 3.0,
+        .release = 0.032,
+        .gate_thresh = -50.0,
+        .use_coupling = true,
+        .coupling = 0.20,
+        .window_size = 0.0,
         .window_release = 2.0,
-        .ratio = 2.6,
+        .ratio = 2.2,
         .idle_gain = 0.0,
-        .attack = 0.024,
-        .post_gain = 3.0
+        .attack = 0.008,
+        .post_gain = 0.0
     };
     
     COMPRESSOR_PARAMS comp_params_b5 = {
-        .drive = -43.0,
-        .release = .024,
-        .gate_thresh = -60.0,
-        .use_coupling = false,
-        .coupling = 0.0,
-        .window_size = 3.0,
+        .drive = -40.0,
+        .release = .016,
+        .gate_thresh = -50.0,
+        .use_coupling = true,
+        .coupling = 0.20,
+        .window_size = 0.0,
         .window_release = 2.0,
-        .ratio = 3,
+        .ratio = 2.4,
         .idle_gain = 0.0,
-        .attack = 0.08,
-        .post_gain = 9.0
+        .attack = 0.004,
+        .post_gain = 0.0
     };
     
+    /*===================================*/
+    /* LIMITERS                          */
+    /*===================================*/
+    COMPRESSOR_PARAMS lim_params_b1 = {
+        .drive = -49.0,
+        .release = 0.125,
+        .gate_thresh = -100.0,
+        .use_coupling = false,
+        .coupling = 0.0,
+        .window_size = 0.0,
+        .window_release = 0.0,
+        .ratio = 9,
+        .idle_gain = 0.0,
+        .attack = 0.100,
+        .post_gain = 14.0
+    };
+    
+    COMPRESSOR_PARAMS lim_params_b2 = {
+        .drive = -49.0,
+        .release = 0.080,
+        .gate_thresh = -100.0,
+        .use_coupling = false,
+        .coupling = 0.0,
+        .window_size = 0.0,
+        .window_release = 0.0,
+        .ratio = 9,
+        .idle_gain = 0.0,
+        .attack = 0.080,
+        .post_gain = 8.0
+    };
+    
+    COMPRESSOR_PARAMS lim_params_b3 = {
+        .drive = -49.0,
+        .release = 0.016,
+        .gate_thresh = -100.0,
+        .use_coupling = false,
+        .coupling = 0.0,
+        .window_size = 0.0,
+        .window_release = 0.0,
+        .ratio = 9,
+        .idle_gain = 0.0,
+        .attack = 0.016,
+        .post_gain = 8.0
+    };
+    
+    COMPRESSOR_PARAMS lim_params_b4 = {
+        .drive = -49.0,
+        .release = 0.008,
+        .gate_thresh = -100.0,
+        .use_coupling = false,
+        .coupling = 0.0,
+        .window_size = 0.0,
+        .window_release = 0.0,
+        .ratio = 9,
+        .idle_gain = 0.0,
+        .attack = 0.008,
+        .post_gain = 8.0
+    };
+    
+    COMPRESSOR_PARAMS lim_params_b5 = {
+        .drive = -49.0,
+        .release = 0.004,
+        .gate_thresh = -100.0,
+        .use_coupling = false,
+        .coupling = 0.0,
+        .window_size = 0.0,
+        .window_release = 0.0,
+        .ratio = 9,
+        .idle_gain = 0.0,
+        .attack = 0.004,
+        .post_gain = 12.0
+    };
+    
+    
     MULTIBAND_PARAMS mb_params = {
-        .band_params[0] = comp_params_b1,
-        .band_params[1] = comp_params_b2,
-        .band_params[2] = comp_params_b3,
-        .band_params[3] = comp_params_b4,
-        .band_params[4] = comp_params_b5
+        .comp_params[0] = comp_params_b1,
+        .lim_params[0] = lim_params_b1,
+        .comp_params[1] = comp_params_b2,
+        .lim_params[1] = lim_params_b2,
+        .comp_params[2] = comp_params_b3,
+        .lim_params[2] = lim_params_b3,
+        .comp_params[3] = comp_params_b4,
+        .lim_params[3] = lim_params_b4,
+        .comp_params[4] = comp_params_b5,
+        .lim_params[4] = lim_params_b5
     };
     
     proc_mod_5b_compressor = new ProcMod5bandCompressor("5BAND_COMPRESSOR", f_samp, n_channels, n_samp);
@@ -204,8 +284,8 @@ void ProcessorCore::get2bandAGCGainReduction(float* gainReduct2blo, float* gainR
     //cout << "GainredL=" << *gainReduct2blo << " H=" << *gainReduct2bhi << " GATES " << gate_open_lo << "|" << gate_open_hi << endl;
 }
 
-void ProcessorCore::get5bandCompressorGainReduction(float** _bands_gr) {
-    proc_mod_5b_compressor->read(_bands_gr);
+void ProcessorCore::get5bandCompressorGainReduction(float** _bands_gr, float** _bands_lim, bool** _bands_gate_open) {
+    proc_mod_5b_compressor->read(_bands_gr, _bands_lim, _bands_gate_open);
 }
 
 void ProcessorCore::set_bands_enabled(bool _bands_enabled[]) {

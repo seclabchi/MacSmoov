@@ -27,10 +27,11 @@ public:
      TODO: Figure this shit out to make it universal. */
     virtual void process();
     void setup(const MULTIBAND_PARAMS _parms);
-    void read(float** _bands_gr);
+    void read(float** _bands_gr, float** _bands_lim, bool** _bands_gate_open);
 private:
     float* master_outL, *master_outR;
     float* procb1L, *procb1R, *procb2L, *procb2R, *procb3L, *procb3R, *procb4L, *procb4R, *procb5L, *procb5R;
+    float* limb1L, *limb1R, *limb2L, *limb2R, *limb3L, *limb3R, *limb4L, *limb4R, *limb5L, *limb5R;
     
     float* inb1L, *inb1R, *inb2L, *inb2R, *inb3L, *inb3R, *inb4L, *inb4R, *inb5L, *inb5R;
     
@@ -40,11 +41,23 @@ private:
     Compressor* comp_b4;
     Compressor* comp_b5;
     
+    Compressor* lim_b1;
+    Compressor* lim_b2;
+    Compressor* lim_b3;
+    Compressor* lim_b4;
+    Compressor* lim_b5;
+    
     float* comp_b1_gain_reduction_buf;
     float* comp_b2_gain_reduction_buf;
     float* comp_b3_gain_reduction_buf;
     float* comp_b4_gain_reduction_buf;
     float* comp_b5_gain_reduction_buf;
+    
+    float* lim_b1_gain_reduction_buf;
+    float* lim_b2_gain_reduction_buf;
+    float* lim_b3_gain_reduction_buf;
+    float* lim_b4_gain_reduction_buf;
+    float* lim_b5_gain_reduction_buf;
     
     MULTIBAND_PARAMS params;
     COMPRESSOR_PARAMS comp_parms_b1;
@@ -52,6 +65,11 @@ private:
     COMPRESSOR_PARAMS comp_parms_b3;
     COMPRESSOR_PARAMS comp_parms_b4;
     COMPRESSOR_PARAMS comp_parms_b5;
+    COMPRESSOR_PARAMS lim_parms_b1;
+    COMPRESSOR_PARAMS lim_parms_b2;
+    COMPRESSOR_PARAMS lim_parms_b3;
+    COMPRESSOR_PARAMS lim_parms_b4;
+    COMPRESSOR_PARAMS lim_parms_b5;
     
     bool first_setup_complete;
     

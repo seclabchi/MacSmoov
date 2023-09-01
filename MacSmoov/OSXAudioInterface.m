@@ -8,7 +8,6 @@
 #import <Foundation/Foundation.h>
 #import <AudioToolbox/AudioToolbox.h>
 #import "OSXAudioInterface.h"
-#import "ProcessorSysInterface.h"
 #import "AudioDevice.h"
 
 #define OUTPUT_BUS 0
@@ -54,6 +53,8 @@ static OSStatus playbackCallback(void *inRefCon,
                                   UInt32 inBusNumber,
                                   UInt32 inNumberFrames,
                                   AudioBufferList *ioData);
+
+uint32_t skip_count = 0;
 
 AudioComponent audioUnitInput;
 AudioComponent audioUnitOutput;
@@ -433,16 +434,23 @@ void checkStatus(int status) {
     checkStatus(err);
     
     //STEP 7: Initialize and start the AudioUnits
-    err = AudioUnitInitialize(audioUnitOutput);
-    checkStatus(err);
+    
     err = AudioUnitInitialize(audioUnitInput);
+    checkStatus(err);
+    err = AudioUnitInitialize(audioUnitOutput);
     checkStatus(err);
     
     NSLog(@"Starting AUHAL interface...");
     
-    err = AudioOutputUnitStart(audioUnitInput);
+    err = AudioUnitReset(audioUnitInput, kAudioUnitScope_Global, 0);
     checkStatus(err);
+    
+    err = AudioUnitReset(audioUnitOutput, kAudioUnitScope_Global, 0);
+    checkStatus(err);
+    
     err = AudioOutputUnitStart(audioUnitOutput);
+    checkStatus(err);
+    err = AudioOutputUnitStart(audioUnitInput);
     checkStatus(err);
     
     NSLog(@"Running.");
@@ -730,6 +738,16 @@ static OSStatus playbackCallback(void *inRefCon,
     //NSLog(@"playbackCallback - inTimeStamp %llu, inNumberFrames %d, ioData %p, current_buf_list %d", inTimeStamp->mHostTime, inNumberFrames, ioData, current_playback_buf_list);
     
     //OSXAudioInterface *osxai = (__bridge OSXAudioInterface*)inRefCon;
+    
+    //Having trouble with bursts of noise on startup, so an experiment: let's throw away the first 100 or so buffers to see if we
+    //can get past the noise problem...
+    
+    if(skip_count < 100) {
+        memset(ioData->mBuffers[0].mData, 0, buf_list_coreout->mBuffers[0].mDataByteSize);
+        memset(ioData->mBuffers[1].mData, 0, buf_list_coreout->mBuffers[1].mDataByteSize);
+        skip_count++;
+        return noErr;
+    }
     
     memcpy(ioData->mBuffers[0].mData, buf_list_coreout->mBuffers[0].mData, buf_list_coreout->mBuffers[0].mDataByteSize);
     memcpy(ioData->mBuffers[1].mData, buf_list_coreout->mBuffers[1].mData, buf_list_coreout->mBuffers[1].mDataByteSize);

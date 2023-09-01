@@ -26,6 +26,12 @@
 @property (strong) IBOutlet NSButton* enable_b3;
 @property (strong) IBOutlet NSButton* enable_b4;
 @property (strong) IBOutlet NSButton* enable_b5;
+@property (strong) IBOutlet NSBox* gate_b1;
+@property (strong) IBOutlet NSBox* gate_b2;
+@property (strong) IBOutlet NSBox* gate_b3;
+@property (strong) IBOutlet NSBox* gate_b4;
+@property (strong) IBOutlet NSBox* gate_b5;
+@property (strong) IBOutlet CompressionMeter5band* lim_5band;
 
 
 

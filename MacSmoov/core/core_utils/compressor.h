@@ -11,15 +11,14 @@ namespace fmsmoov {
 
 enum class CompressorType {
     STEREO,
-    MONO,
-    AGC
+    MONO
 };
 
 
 class Compressor
 {
 public:
-    Compressor(CompressorType _type, uint32_t samprate, uint32_t _n_samps, const COMPRESSOR_PARAMS& _params);
+    Compressor(CompressorType _type, uint32_t samprate, uint32_t _n_samps);
     Compressor(const Compressor& rhs);
 	virtual ~Compressor();
 	void process(float* inL, float* inR, float* outL, float* outR, uint32_t n_samps, float* gainReductionOutput = NULL, float* gainCouplingInput = NULL);
@@ -37,7 +36,7 @@ private:
     float alphaA, alphaR_norm, alphaR_window;
     float gsPrev;
     float indb, sc, gc, gs;
-    float gain_reduction;
+    float avg_gain_reduction, gain_reduction;
     bool gate_open;
 };
 

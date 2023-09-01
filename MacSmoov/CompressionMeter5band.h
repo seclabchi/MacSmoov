@@ -17,6 +17,8 @@ NS_ASSUME_NONNULL_BEGIN
     Float32 comp_b5;
 }
 
+- (void)set_meter_color:(NSColor*)color;
+- (void)set_meter_range:(float)_max_range;
 - (void)set_comps:(float**)comps;
 
 @end

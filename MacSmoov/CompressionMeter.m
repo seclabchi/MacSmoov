@@ -18,7 +18,7 @@
 
 - (void) awakeFromNib {
     self->min_lev = 0.0;
-    self->max_lev = -30.0;
+    self->max_lev = -25.0;
     comp_lo = -5.0;
     comp_hi = -15.0;
 }

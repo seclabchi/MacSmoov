@@ -40,7 +40,8 @@ typedef struct  {
 } COMPRESSOR_PARAMS;
 
 typedef struct  {
-    COMPRESSOR_PARAMS band_params[5];
+    COMPRESSOR_PARAMS comp_params[5];
+    COMPRESSOR_PARAMS lim_params[5];
 } MULTIBAND_PARAMS;
 
 

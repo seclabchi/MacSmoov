@@ -52,13 +52,17 @@ ProcMod5bandCompressor::ProcMod5bandCompressor(const string& _name, uint32_t _f_
     linlogL = new LogLinConverter(LogLinConversionType::LIN_TO_LOG);
     linlogR = new LogLinConverter(LogLinConversionType::LIN_TO_LOG);
     
-    COMPRESSOR_PARAMS dummy;
+    comp_b1 = new Compressor(CompressorType::STEREO, f_samp, n_samps);
+    comp_b2 = new Compressor(CompressorType::STEREO, f_samp, n_samps);
+    comp_b3 = new Compressor(CompressorType::STEREO, f_samp, n_samps);
+    comp_b4 = new Compressor(CompressorType::STEREO, f_samp, n_samps);
+    comp_b5 = new Compressor(CompressorType::STEREO, f_samp, n_samps);
     
-    comp_b1 = new Compressor(CompressorType::STEREO, f_samp, n_samps, dummy);
-    comp_b2 = new Compressor(CompressorType::STEREO, f_samp, n_samps, dummy);
-    comp_b3 = new Compressor(CompressorType::STEREO, f_samp, n_samps, dummy);
-    comp_b4 = new Compressor(CompressorType::STEREO, f_samp, n_samps, dummy);
-    comp_b5 = new Compressor(CompressorType::STEREO, f_samp, n_samps, dummy);
+    comp_b1_gain_reduction_buf = new float[n_samps]();
+    comp_b2_gain_reduction_buf = new float[n_samps]();
+    comp_b3_gain_reduction_buf = new float[n_samps]();
+    comp_b4_gain_reduction_buf = new float[n_samps]();
+    comp_b5_gain_reduction_buf = new float[n_samps]();
     
     procb1L = new float[n_samps]();
     procb1R = new float[n_samps]();
@@ -70,6 +74,29 @@ ProcMod5bandCompressor::ProcMod5bandCompressor(const string& _name, uint32_t _f_
     procb4R = new float[n_samps]();
     procb5L = new float[n_samps]();
     procb5R = new float[n_samps]();
+    
+    lim_b1 = new Compressor(CompressorType::STEREO, f_samp, n_samps);
+    lim_b2 = new Compressor(CompressorType::STEREO, f_samp, n_samps);
+    lim_b3 = new Compressor(CompressorType::STEREO, f_samp, n_samps);
+    lim_b4 = new Compressor(CompressorType::STEREO, f_samp, n_samps);
+    lim_b5 = new Compressor(CompressorType::STEREO, f_samp, n_samps);
+    
+    limb1L = new float[n_samps]();
+    limb1R = new float[n_samps]();
+    limb2L = new float[n_samps]();
+    limb2R = new float[n_samps]();
+    limb3L = new float[n_samps]();
+    limb3R = new float[n_samps]();
+    limb4L = new float[n_samps]();
+    limb4R = new float[n_samps]();
+    limb5L = new float[n_samps]();
+    limb5R = new float[n_samps]();
+    
+    lim_b1_gain_reduction_buf = new float[n_samps]();
+    lim_b2_gain_reduction_buf = new float[n_samps]();
+    lim_b3_gain_reduction_buf = new float[n_samps]();
+    lim_b4_gain_reduction_buf = new float[n_samps]();
+    lim_b5_gain_reduction_buf = new float[n_samps]();
     
     first_setup_complete = false;
     
@@ -83,6 +110,12 @@ ProcMod5bandCompressor::~ProcMod5bandCompressor() {
     delete[] comp_b4_gain_reduction_buf;
     delete[] comp_b5_gain_reduction_buf;
     
+    delete[] lim_b1_gain_reduction_buf;
+    delete[] lim_b2_gain_reduction_buf;
+    delete[] lim_b3_gain_reduction_buf;
+    delete[] lim_b4_gain_reduction_buf;
+    delete[] lim_b5_gain_reduction_buf;
+    
     delete[] procb1L;
     delete[] procb1R;
     delete[] procb2L;
@@ -93,6 +126,18 @@ ProcMod5bandCompressor::~ProcMod5bandCompressor() {
     delete[] procb4R;
     delete[] procb5L;
     delete[] procb5R;
+    
+    delete[] limb1L;
+    delete[] limb1R;
+    delete[] limb2L;
+    delete[] limb2R;
+    delete[] limb3L;
+    delete[] limb3R;
+    delete[] limb4L;
+    delete[] limb4R;
+    delete[] limb5L;
+    delete[] limb5R;
+    
 }
 
 void ProcMod5bandCompressor::process() {
@@ -106,25 +151,39 @@ void ProcMod5bandCompressor::process() {
         return;
     }
     
-    comp_b1->process(inb1L, inb1R, procb1L, procb1R, n_samps, NULL, comp_b1_gain_reduction_buf);
-    comp_b2->process(inb2L, inb2R, procb2L, procb2R, n_samps, NULL, comp_b2_gain_reduction_buf);
-    comp_b3->process(inb3L, inb3R, procb3L, procb3R, n_samps, NULL, comp_b3_gain_reduction_buf);
-    comp_b4->process(inb4L, inb4R, procb4L, procb4R, n_samps, NULL, comp_b4_gain_reduction_buf);
-    comp_b5->process(inb5L, inb5R, procb5L, procb5R, n_samps, NULL, comp_b5_gain_reduction_buf);
+    comp_b1->process(inb1L, inb1R, procb1L, procb1R, n_samps, comp_b1_gain_reduction_buf, NULL);
+    comp_b2->process(inb2L, inb2R, procb2L, procb2R, n_samps, comp_b2_gain_reduction_buf, NULL);
+    comp_b3->process(inb3L, inb3R, procb3L, procb3R, n_samps, comp_b3_gain_reduction_buf, NULL);
+    comp_b4->process(inb4L, inb4R, procb4L, procb4R, n_samps, comp_b4_gain_reduction_buf, comp_b3_gain_reduction_buf);
+    comp_b5->process(inb5L, inb5R, procb5L, procb5R, n_samps, comp_b5_gain_reduction_buf, comp_b3_gain_reduction_buf);
+    
+    lim_b1->process(procb1L, procb1R, limb1L, limb1R, n_samps, lim_b1_gain_reduction_buf, NULL);
+    lim_b2->process(procb2L, procb2R, limb2L, limb2R, n_samps, lim_b2_gain_reduction_buf, NULL);
+    lim_b3->process(procb3L, procb3R, limb3L, limb3R, n_samps, lim_b3_gain_reduction_buf, NULL);
+    lim_b4->process(procb4L, procb4R, limb4L, limb4R, n_samps, lim_b4_gain_reduction_buf, NULL);
+    lim_b5->process(procb5L, procb5R, limb5L, limb5R, n_samps, lim_b5_gain_reduction_buf, NULL);
+    
+    
     
     for(uint32_t i = 0; i < n_samps; i++) {
-        master_outL[i] = procb1L[i] + procb2L[i] + procb3L[i] + procb4L[i] + procb5L[i];
-        master_outR[i] = procb1R[i] + procb2R[i] + procb3R[i] + procb4R[i] + procb5R[i];
+        master_outL[i] = limb1L[i] + limb2L[i] + limb3L[i] + limb4L[i] + limb5L[i];
+        master_outR[i] = limb1R[i] + limb2R[i] + limb3R[i] + limb4R[i] + limb5R[i];
     }
 }
 
 void ProcMod5bandCompressor::setup(const MULTIBAND_PARAMS _params) {
     params = _params;
-    comp_b1->setup(params.band_params[0]);
-    comp_b2->setup(params.band_params[1]);
-    comp_b3->setup(params.band_params[2]);
-    comp_b4->setup(params.band_params[3]);
-    comp_b5->setup(params.band_params[4]);
+    comp_b1->setup(params.comp_params[0]);
+    comp_b2->setup(params.comp_params[1]);
+    comp_b3->setup(params.comp_params[2]);
+    comp_b4->setup(params.comp_params[3]);
+    comp_b5->setup(params.comp_params[4]);
+    lim_b1->setup(params.lim_params[0]);
+    lim_b2->setup(params.lim_params[1]);
+    lim_b3->setup(params.lim_params[2]);
+    lim_b4->setup(params.lim_params[3]);
+    lim_b5->setup(params.lim_params[4]);
+    
     
     if(!first_setup_complete) {
         inb1L = this->get_in_buf(2)->getbuf();
@@ -141,12 +200,17 @@ void ProcMod5bandCompressor::setup(const MULTIBAND_PARAMS _params) {
     }
 }
 
-void ProcMod5bandCompressor::read(float** _bands_gr) {
-    comp_b1->read(_bands_gr[0], NULL);
-    comp_b2->read(_bands_gr[1], NULL);
-    comp_b3->read(_bands_gr[2], NULL);
-    comp_b4->read(_bands_gr[3], NULL);
-    comp_b5->read(_bands_gr[4], NULL);
+void ProcMod5bandCompressor::read(float** _bands_gr, float** _bands_lim, bool** _bands_gate_open) {
+    comp_b1->read(_bands_gr[0], _bands_gate_open[0]);
+    comp_b2->read(_bands_gr[1], _bands_gate_open[1]);
+    comp_b3->read(_bands_gr[2], _bands_gate_open[2]);
+    comp_b4->read(_bands_gr[3], _bands_gate_open[3]);
+    comp_b5->read(_bands_gr[4], _bands_gate_open[4]);
+    lim_b1->read(_bands_lim[0], NULL);
+    lim_b2->read(_bands_lim[1], NULL);
+    lim_b3->read(_bands_lim[2], NULL);
+    lim_b4->read(_bands_lim[3], NULL);
+    lim_b5->read(_bands_lim[4], NULL);
 }
 
 }

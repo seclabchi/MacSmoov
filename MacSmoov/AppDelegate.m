@@ -12,7 +12,11 @@
 #import "ProcessorCoreWrapper.h"
 #import "OSXAudioInterface.h"
 
-@interface AppDelegate ()
+@interface AppDelegate () {
+    
+}
+
+-(void) setup_ui_from_defaults;
 
 @property (strong) IBOutlet NSWindow *window;
 @end
@@ -46,10 +50,24 @@ Boolean shutting_down;
     bands_gr[3] = malloc(sizeof(float));
     bands_gr[4] = malloc(sizeof(float));
     
+    float** bands_lim = (float**)malloc(5 * sizeof(float*));
+    bands_lim[0] = malloc(sizeof(float));
+    bands_lim[1] = malloc(sizeof(float));
+    bands_lim[2] = malloc(sizeof(float));
+    bands_lim[3] = malloc(sizeof(float));
+    bands_lim[4] = malloc(sizeof(float));
+    
+    bool** bands_gate_open = (bool**)malloc(5 * sizeof(bool*));
+    bands_gate_open[0] = malloc(sizeof(bool));
+    bands_gate_open[1] = malloc(sizeof(bool));
+    bands_gate_open[2] = malloc(sizeof(bool));
+    bands_gate_open[3] = malloc(sizeof(bool));
+    bands_gate_open[4] = malloc(sizeof(bool));
+    
     while(false == shutting_down) {
         [proc_core_wrapper getMainInLevelsLrms:&mainInLrms Rrms:&mainInRrms Lpeak:&mainInLpeak Rpeak:&mainInRpeak];
         [proc_core_wrapper get2bandAGCGainReductionlo:&gainReduct2blo hi:&gainReduct2bhi gatelo:&gate_open_agc2_lo gatehi:&gate_open_agc2_hi];
-        [proc_core_wrapper get5bandCompressorGainReduction:bands_gr];
+        [proc_core_wrapper get5bandCompressorGainReduction:bands_gr limiters:bands_lim gates:bands_gate_open];
         
         dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void){
             //Background Thread
@@ -69,6 +87,38 @@ Boolean shutting_down;
                     [self->_agc_hi_gate_closed setFillColor:[NSColor blackColor]];
                 }
                 [self->_comp_5band set_comps:bands_gr];
+                [self->_lim_5band set_comps:bands_lim];
+                
+                if(!*(bands_gate_open[0])) {
+                    [self->_gate_b1 setFillColor:[NSColor redColor]];
+                }
+                else {
+                    [self->_gate_b1 setFillColor:[NSColor blackColor]];
+                }
+                if(!*(bands_gate_open[1])) {
+                    [self->_gate_b2 setFillColor:[NSColor redColor]];
+                }
+                else {
+                    [self->_gate_b2 setFillColor:[NSColor blackColor]];
+                }
+                if(!*(bands_gate_open[2])) {
+                    [self->_gate_b3 setFillColor:[NSColor redColor]];
+                }
+                else {
+                    [self->_gate_b3 setFillColor:[NSColor blackColor]];
+                }
+                if(!*(bands_gate_open[3])) {
+                    [self->_gate_b4 setFillColor:[NSColor redColor]];
+                }
+                else {
+                    [self->_gate_b4 setFillColor:[NSColor blackColor]];
+                }
+                if(!*(bands_gate_open[4])) {
+                    [self->_gate_b5 setFillColor:[NSColor redColor]];
+                }
+                else {
+                    [self->_gate_b5 setFillColor:[NSColor blackColor]];
+                }
             });
         });
         
@@ -84,9 +134,25 @@ Boolean shutting_down;
 
     shutting_down = NO;
     
+    [_comp_5band set_meter_color:[NSColor magentaColor]];
+    [_comp_5band set_meter_range:-25.0];
+    [_lim_5band set_meter_color:[NSColor yellowColor]];
+    [_lim_5band set_meter_range:-12.0];
+    
+    
     NSUserDefaultsController *prefs_controller = [NSUserDefaultsController sharedUserDefaultsController];
     prefs = prefs_controller.defaults;
-       
+    
+    [self setup_ui_from_defaults];
+    
+    //TODO:  initialize signal generators here, and the eventual audio passthrough/processing chain
+    siggenvc = [[SignalGeneratorViewController alloc] init];
+    //[self output_device_changed:@"AQDefaultOutput"];
+    
+    
+    multiband_controls_view = [[MultibandControlsView alloc] init];
+    [multiband_controls_view setPrefs:prefs];
+    
     self.sysaudio = [[OSXAudioInterface alloc] initWithCurrentInputDevice:nil OutputDevice:nil];
     [self.sysaudio discoverDevices];
     
@@ -105,20 +171,18 @@ Boolean shutting_down;
         [self.sysaudio set_input_device:sel_indev];
     }
     
-    //process_sys_iface = [[ProcessorSysInterface alloc] initWithSampleRate:self.sysaudio.sample_rate numberOfChannels:self.sysaudio.num_channels bufferSize:self.sysaudio.buffer_size];
-    proc_core_wrapper = [[ProcessorCoreWrapper alloc] initWithSampleRate:self.sysaudio.sample_rate numberOfChannels:self.sysaudio.num_channels bufferSize:self.sysaudio.buffer_size];
-    
-    [self.sysaudio set_processor_hook:[proc_core_wrapper get_proc_core_hook]];
-    [self.sysaudio start];
-    
-    //TODO:  initialize signal generators here, and the eventual audio passthrough/processing chain
-    siggenvc = [[SignalGeneratorViewController alloc] init];
-    //[self output_device_changed:@"AQDefaultOutput"];
     audio_device_selector = [[AudioDeviceSelector alloc] initWithInputDevices:(NSMutableDictionary*)audio_devices_input outputDevices:(NSMutableDictionary*)audio_devices_output];
     [audio_device_selector set_watcher_for_output_device_change:self andSelector:@selector(output_device_changed:)];
     [audio_device_selector set_watcher_for_input_device_change:self andSelector:@selector(input_device_changed:)];
     
-    multiband_controls_view = [[MultibandControlsView alloc] init];
+    //process_sys_iface = [[ProcessorSysInterface alloc] initWithSampleRate:self.sysaudio.sample_rate numberOfChannels:self.sysaudio.num_channels bufferSize:self.sysaudio.buffer_size];
+    proc_core_wrapper = [[ProcessorCoreWrapper alloc] initWithSampleRate:self.sysaudio.sample_rate numberOfChannels:self.sysaudio.num_channels bufferSize:self.sysaudio.buffer_size defaults:prefs];
+    
+    [proc_core_wrapper read_prefs];
+    [multiband_controls_view setPrefs:prefs];
+    
+    [self.sysaudio set_processor_hook:[proc_core_wrapper get_proc_core_hook]];
+    [self.sysaudio start];
     
     [NSThread detachNewThreadSelector:@selector(queryMeterLevels:) toTarget:self withObject:nil];
 
@@ -260,7 +324,15 @@ Boolean shutting_down;
     states[4] = _enable_b5.state;
     
     [proc_core_wrapper setBandEnablement:states];
-    
+}
+
+-(void) setup_ui_from_defaults {
+    NSControlStateValue be[5];
+    [_enable_b1 setState: [prefs boolForKey:@"ENABLE_B1"]];
+    [_enable_b2 setState: [prefs boolForKey:@"ENABLE_B2"]];
+    [_enable_b3 setState: [prefs boolForKey:@"ENABLE_B3"]];
+    [_enable_b4 setState: [prefs boolForKey:@"ENABLE_B4"]];
+    [_enable_b5 setState: [prefs boolForKey:@"ENABLE_B5"]];
 }
 
 @end

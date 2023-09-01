@@ -11,6 +11,7 @@
 @interface CompressionMeter5band() {
     Float32 min_lev;
     Float32 max_lev;
+    NSColor* meter_color;
 }
 @end
 
@@ -18,7 +19,7 @@
 
 - (void) awakeFromNib {
     self->min_lev = 0.0;
-    self->max_lev = -20.0;
+    self->max_lev = -25.0;
     comp_b1 = -3.0;
     comp_b2 = -6.0;
     comp_b3 = -9.0;
@@ -30,7 +31,7 @@
     self = [super initWithFrame:frame];
     if (self) {
         self->min_lev = 0.0;
-        self->max_lev = -20.0;
+        self->max_lev = -25.0;
         comp_b1 = -3.0;
         comp_b2 = -6.0;
         comp_b3 = -9.0;
@@ -45,7 +46,7 @@
     
     // Drawing code here.
     // erase the background by drawing lightgray
-    [[NSColor darkGrayColor] set];
+    [[NSColor blackColor] set];
     [NSBezierPath fillRect:dirtyRect];
     NSRect rect_b1;
     rect_b1.origin.x = 0.0;
@@ -88,7 +89,7 @@
     rect_b4.size.height = dirtyRect.size.height - rect_b4.origin.y;
     rect_b5.size.height = dirtyRect.size.height - rect_b5.origin.y;
     
-    [[NSColor magentaColor] set];
+    [meter_color set];
     [NSBezierPath fillRect:rect_b1];
     [NSBezierPath fillRect:rect_b2];
     [NSBezierPath fillRect:rect_b3];
@@ -105,5 +106,12 @@
     self.needsDisplay = true;
 }
 
+-(void) set_meter_color:(NSColor*)_color {
+    meter_color = _color;
+}
+
+- (void)set_meter_range:(float)_max_range {
+    max_lev = _max_range;
+}
 
 @end

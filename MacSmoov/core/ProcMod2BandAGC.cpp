@@ -62,7 +62,7 @@ ProcMod2BandAGC::ProcMod2BandAGC(const string& _name, uint32_t _f_samp, uint8_t 
     comp_lo = NULL;
     comp_hi = NULL;
     
-    comp_hi_gain_reduction_buf = new float[_n_samps];
+    comp_hi_gain_reduction_buf = new float[_n_samps]();
     
     master_outL = new float[_n_samps]();
     master_outR = new float[_n_samps]();
@@ -172,8 +172,8 @@ void ProcMod2BandAGC::setup(const AGC_PARAMS _parms) {
         delete comp_hi;
     }
     
-    comp_lo = new Compressor(CompressorType::AGC, this->get_f_samp(), this->get_n_samps(), comp_parms_lo);
-    comp_hi = new Compressor(CompressorType::AGC, this->get_f_samp(), this->get_n_samps(), comp_parms_hi);
+    comp_lo = new Compressor(CompressorType::STEREO, this->get_f_samp(), this->get_n_samps());
+    comp_hi = new Compressor(CompressorType::STEREO, this->get_f_samp(), this->get_n_samps());
     comp_lo->setup(comp_parms_lo);
     comp_hi->setup(comp_parms_hi);
 
