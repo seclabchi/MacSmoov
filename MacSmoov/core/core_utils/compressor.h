@@ -38,6 +38,7 @@ private:
     float indb, sc, gc, gs;
     float avg_gain_reduction, gain_reduction;
     bool gate_open;
+    float gate_open_calc;
 };
 
 }

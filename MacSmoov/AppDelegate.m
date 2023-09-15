@@ -134,24 +134,21 @@ Boolean shutting_down;
 
     shutting_down = NO;
     
+    [_comp_2band_agc set_meter_range:-35.0];
     [_comp_5band set_meter_color:[NSColor magentaColor]];
-    [_comp_5band set_meter_range:-25.0];
+    [_comp_5band set_meter_range:-15.0];
     [_lim_5band set_meter_color:[NSColor yellowColor]];
-    [_lim_5band set_meter_range:-12.0];
+    [_lim_5band set_meter_range:-5.0];
     
     
     NSUserDefaultsController *prefs_controller = [NSUserDefaultsController sharedUserDefaultsController];
     prefs = prefs_controller.defaults;
     
-    [self setup_ui_from_defaults];
+    [_slider_gain_main_in setFloatValue:[[prefs objectForKey:@"GAIN_IN_MAIN"] floatValue]];
     
     //TODO:  initialize signal generators here, and the eventual audio passthrough/processing chain
     siggenvc = [[SignalGeneratorViewController alloc] init];
     //[self output_device_changed:@"AQDefaultOutput"];
-    
-    
-    multiband_controls_view = [[MultibandControlsView alloc] init];
-    [multiband_controls_view setPrefs:prefs];
     
     self.sysaudio = [[OSXAudioInterface alloc] initWithCurrentInputDevice:nil OutputDevice:nil];
     [self.sysaudio discoverDevices];
@@ -176,11 +173,10 @@ Boolean shutting_down;
     [audio_device_selector set_watcher_for_input_device_change:self andSelector:@selector(input_device_changed:)];
     
     //process_sys_iface = [[ProcessorSysInterface alloc] initWithSampleRate:self.sysaudio.sample_rate numberOfChannels:self.sysaudio.num_channels bufferSize:self.sysaudio.buffer_size];
-    proc_core_wrapper = [[ProcessorCoreWrapper alloc] initWithSampleRate:self.sysaudio.sample_rate numberOfChannels:self.sysaudio.num_channels bufferSize:self.sysaudio.buffer_size defaults:prefs];
+    proc_core_wrapper = [[ProcessorCoreWrapper alloc] initWithSampleRate:self.sysaudio.sample_rate numberOfChannels:self.sysaudio.num_channels bufferSize:self.sysaudio.buffer_size];
     
-    [proc_core_wrapper read_prefs];
-    [multiband_controls_view setPrefs:prefs];
-    
+    multiband_controls_view = [[MultibandControlsView alloc] initWithPrefs:prefs delegate:self];
+        
     [self.sysaudio set_processor_hook:[proc_core_wrapper get_proc_core_hook]];
     [self.sysaudio start];
     
@@ -313,26 +309,18 @@ Boolean shutting_down;
     [prefs setObject:[NSString stringWithFormat:@"%f", gmi.cell.floatValue] forKey:@"GAIN_IN_MAIN"];
 }
 
--(IBAction) bandEnableChanged:(NSButton*)sender {
-    NSInteger band_num = [sender tag];
-    NSControlStateValue states[5];
+-(void) multiband_params_changed:(MULTIBAND_PARAMS) params {
+    NSLog(@"multiband_params_changed delegate called on app delegate!");
+    [proc_core_wrapper change_multiband_settings:params];
+}
 
-    states[0] = _enable_b1.state;
-    states[1] = _enable_b2.state;
-    states[2] = _enable_b3.state;
-    states[3] = _enable_b4.state;
-    states[4] = _enable_b5.state;
-    
-    [proc_core_wrapper setBandEnablement:states];
+-(void) band_enablement_changed:(NSControlStateValue[]) band_states {
+    NSLog(@"band_enablement_changed delegate called on app delegate!");
+    [proc_core_wrapper setBandEnablement:band_states];
 }
 
 -(void) setup_ui_from_defaults {
-    NSControlStateValue be[5];
-    [_enable_b1 setState: [prefs boolForKey:@"ENABLE_B1"]];
-    [_enable_b2 setState: [prefs boolForKey:@"ENABLE_B2"]];
-    [_enable_b3 setState: [prefs boolForKey:@"ENABLE_B3"]];
-    [_enable_b4 setState: [prefs boolForKey:@"ENABLE_B4"]];
-    [_enable_b5 setState: [prefs boolForKey:@"ENABLE_B5"]];
+    
 }
 
 @end

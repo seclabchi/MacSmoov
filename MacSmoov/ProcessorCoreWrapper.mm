@@ -10,7 +10,6 @@
 #import "ProcessorCore.hpp"
 
 @interface ProcessorCoreWrapper () {
-    NSUserDefaults* prefs;
 }
 @end
 
@@ -20,14 +19,12 @@ fmsmoov::ProcessorCore *cpp;
 PROCESSOR_CORE_HOOK proc_core_hook;
 
 //This is a non-interleaved buffer, so the total number of samples is twice what the buf size is
--(id) initWithSampleRate:(uint32_t)sample_rate numberOfChannels:(uint32_t)num_chans bufferSize:(uint32_t)buf_size
-            defaults:(NSUserDefaults*) defaults {
+-(id) initWithSampleRate:(uint32_t)sample_rate numberOfChannels:(uint32_t)num_chans bufferSize:(uint32_t)buf_size {
     self = [super init];
     if(self) {
         uint32_t n_samp = buf_size / sizeof(float);
         cpp = new fmsmoov::ProcessorCore(sample_rate, num_chans, n_samp);
         proc_core_hook = &processor_core_hook;
-        prefs = defaults;
     }
     
     return self;
@@ -62,27 +59,10 @@ void processor_core_hook(AudioBufferList* ab_list, AudioBufferList* ab_list_core
 -(void) setBandEnablement:(NSControlStateValue[]) _bands_enabled {
     bool bands_enabled[5] = {(bool)_bands_enabled[0], (bool)_bands_enabled[1], (bool)_bands_enabled[2], (bool)_bands_enabled[3], (bool)_bands_enabled[4]};
     cpp->set_bands_enabled(bands_enabled);
-    [prefs setBool:_bands_enabled[0] forKey:@"ENABLE_B1"];
-    [prefs setBool:_bands_enabled[1] forKey:@"ENABLE_B2"];
-    [prefs setBool:_bands_enabled[2] forKey:@"ENABLE_B3"];
-    [prefs setBool:_bands_enabled[3] forKey:@"ENABLE_B4"];
-    [prefs setBool:_bands_enabled[4] forKey:@"ENABLE_B5"];
 }
 
 -(void) change_multiband_settings:(MULTIBAND_PARAMS)_params {
     cpp->change_multiband_settings(_params);
-}
-
--(void) read_prefs {
-    NSControlStateValue be[5];
-    be[0] = [prefs boolForKey:@"ENABLE_B1"];
-    be[1] = [prefs boolForKey:@"ENABLE_B2"];
-    be[2] = [prefs boolForKey:@"ENABLE_B3"];
-    be[3] = [prefs boolForKey:@"ENABLE_B4"];
-    be[4] = [prefs boolForKey:@"ENABLE_B5"];
-    
-    [self setBandEnablement:be];
-    
 }
 
 @end

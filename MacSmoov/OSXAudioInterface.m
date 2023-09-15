@@ -54,7 +54,8 @@ static OSStatus playbackCallback(void *inRefCon,
                                   UInt32 inNumberFrames,
                                   AudioBufferList *ioData);
 
-uint32_t skip_count = 0;
+uint32_t skip_count_playback = 0;
+uint32_t skip_count_record = 0;
 
 AudioComponent audioUnitInput;
 AudioComponent audioUnitOutput;
@@ -691,6 +692,15 @@ static OSStatus recordingCallback(void *inRefCon,
                              buf_list);
     checkStatus(err);
     
+    if(skip_count_record < 0) {
+        memset(buf_list->mBuffers[0].mData, 0, buf_list->mBuffers[0].mDataByteSize);
+        memset(buf_list->mBuffers[1].mData, 0, buf_list->mBuffers[1].mDataByteSize);
+        memset(buf_list_coreout->mBuffers[0].mData, 0, buf_list_coreout->mBuffers[0].mDataByteSize);
+        memset(buf_list_coreout->mBuffers[1].mData, 0, buf_list_coreout->mBuffers[1].mDataByteSize);
+        skip_count_record++;
+        return noErr;
+    }
+    
     // Send the freshly rendered buffers to the DSP core.
     if(cb_proc_core_hook) {
         cb_proc_core_hook(buf_list, buf_list_coreout);
@@ -738,16 +748,6 @@ static OSStatus playbackCallback(void *inRefCon,
     //NSLog(@"playbackCallback - inTimeStamp %llu, inNumberFrames %d, ioData %p, current_buf_list %d", inTimeStamp->mHostTime, inNumberFrames, ioData, current_playback_buf_list);
     
     //OSXAudioInterface *osxai = (__bridge OSXAudioInterface*)inRefCon;
-    
-    //Having trouble with bursts of noise on startup, so an experiment: let's throw away the first 100 or so buffers to see if we
-    //can get past the noise problem...
-    
-    if(skip_count < 100) {
-        memset(ioData->mBuffers[0].mData, 0, buf_list_coreout->mBuffers[0].mDataByteSize);
-        memset(ioData->mBuffers[1].mData, 0, buf_list_coreout->mBuffers[1].mDataByteSize);
-        skip_count++;
-        return noErr;
-    }
     
     memcpy(ioData->mBuffers[0].mData, buf_list_coreout->mBuffers[0].mData, buf_list_coreout->mBuffers[0].mDataByteSize);
     memcpy(ioData->mBuffers[1].mData, buf_list_coreout->mBuffers[1].mData, buf_list_coreout->mBuffers[1].mDataByteSize);

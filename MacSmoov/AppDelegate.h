@@ -14,18 +14,15 @@
 #import "CompressionMeter5band.h"
 #import "OSXAudioInterface.h"
 
-@interface AppDelegate : NSObject <NSApplicationDelegate>
+@interface AppDelegate : NSObject <NSApplicationDelegate, MultibandControlsDelegate>
 
 @property (strong) IBOutlet LevelMeter* level_main_in;
+@property (strong) IBOutlet NSSlider* slider_gain_main_in;
 @property (strong) IBOutlet CompressionMeter* comp_2band_agc;
 @property (strong) IBOutlet NSBox* agc_lo_gate_closed;
 @property (strong) IBOutlet NSBox* agc_hi_gate_closed;
 @property (strong) IBOutlet CompressionMeter5band* comp_5band;
-@property (strong) IBOutlet NSButton* enable_b1;
-@property (strong) IBOutlet NSButton* enable_b2;
-@property (strong) IBOutlet NSButton* enable_b3;
-@property (strong) IBOutlet NSButton* enable_b4;
-@property (strong) IBOutlet NSButton* enable_b5;
+
 @property (strong) IBOutlet NSBox* gate_b1;
 @property (strong) IBOutlet NSBox* gate_b2;
 @property (strong) IBOutlet NSBox* gate_b3;
@@ -45,11 +42,14 @@
 
 
 -(IBAction) adjustGainMainIn:(id)sender;
--(IBAction) bandEnableChanged:(NSButton*)sender;
+
 -(IBAction) multibandAdjustMenuSelected:(id)sender;
 
 -(void) queryMeterLevels:(id)param;
 -(void) openAudioFile:(NSURL*)fileUrl;
+
+-(void) multiband_params_changed:(MULTIBAND_PARAMS) params;
+-(void) band_enablement_changed:(NSControlStateValue[]) band_states;
 
 @end
 

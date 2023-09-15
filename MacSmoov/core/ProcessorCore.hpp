@@ -38,6 +38,7 @@ private:
     float f_samp;
     uint32_t n_channels;
     uint32_t n_samp;  //total interleaved L+R samples
+    bool master_bypass;
     
     ProcModGain* proc_mod_gain_main_in;
     ProcModLevelMeter* proc_mod_level_main_in;

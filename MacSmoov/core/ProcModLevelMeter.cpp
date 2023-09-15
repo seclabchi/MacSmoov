@@ -33,11 +33,11 @@ ProcModLevelMeter::~ProcModLevelMeter() {
 }
 
 void ProcModLevelMeter::process() {
-    rms_l = 0.0;
-    rms_r = 0.0;
+    rms_l = 0.0f;
+    rms_r = 0.0f;
     
-    peak_l = 0.0;
-    peak_r = 0.0;
+    peak_l = 0.0f;
+    peak_r = 0.0f;
     
     float* inL = this->get_in_buf(0)->getbuf();
     float* inR = this->get_in_buf(1)->getbuf();
@@ -48,8 +48,8 @@ void ProcModLevelMeter::process() {
     uint32_t n_samps = this->get_n_samps();
     
     for(uint32_t i = 0; i < n_samps; i++) {
-        rms_l += powf(inL[i], 2.0);
-        rms_r += powf(inR[i], 2.0);
+        rms_l += powf(inL[i], 2.0f);
+        rms_r += powf(inR[i], 2.0f);
         tmp_samp_mag = fabs(inL[i]);
         if(tmp_samp_mag > peak_l) {
             peak_l = tmp_samp_mag;
@@ -60,14 +60,14 @@ void ProcModLevelMeter::process() {
             peak_r = tmp_samp_mag;
         }
         
-        outDBL[i] = 20 * log10(inL[i]);
-        outDBR[i] = 20 * log10(inR[i]);
+        outDBL[i] = 20.0f * log10f(inL[i]);
+        outDBR[i] = 20.0f * log10f(inR[i]);
     }
     
-    out_rms_l = 20 * log10(sqrt(rms_l / (float)(n_samps/2)));
-    out_rms_r = 20 * log10(sqrt(rms_r / (float)(n_samps/2)));
-    out_peak_l = 20 * log10(peak_l);
-    out_peak_r = 20 * log10(peak_r);
+    out_rms_l = 20.0f * log10f(sqrt(rms_l / (float)(n_samps/2)));
+    out_rms_r = 20.0f * log10f(sqrt(rms_r / (float)(n_samps/2)));
+    out_peak_l = 20.0f * log10f(peak_l);
+    out_peak_r = 20.0f * log10f(peak_r);
     
     //printf("Main Input RMS/Peak (L/R): %f, %f, %f, %f\n", rms_l, rms_r, peak_l, peak_r);
     

@@ -11,6 +11,7 @@
 @interface CompressionMeter() {
     Float32 min_lev;
     Float32 max_lev;
+    NSColor* meter_color;
 }
 @end
 
@@ -75,5 +76,12 @@
     self.needsDisplay = true;
 }
 
+-(void) set_meter_color:(NSColor*)_color {
+    meter_color = _color;
+}
+
+- (void)set_meter_range:(float)_max_range {
+    max_lev = _max_range;
+}
 
 @end

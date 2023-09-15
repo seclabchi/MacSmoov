@@ -16,7 +16,7 @@
 typedef void(*PROCESSOR_CORE_HOOK)(AudioBufferList* ab_list, AudioBufferList* ab_list_coreout);
 
 @interface ProcessorCoreWrapper : NSObject
--(id) initWithSampleRate:(uint32_t)sample_rate numberOfChannels:(uint32_t)num_chans bufferSize:(uint32_t)buf_size defaults:(NSUserDefaults*)defaults;
+-(id) initWithSampleRate:(uint32_t)sample_rate numberOfChannels:(uint32_t)num_chans bufferSize:(uint32_t)buf_size;
 -(PROCESSOR_CORE_HOOK) get_proc_core_hook;
 //-(void) processWithInput:(float*)in_buf output:(float*)out_buf ofSize:(uint32_t) n_samp;
 -(void) getMainInLevelsLrms:(float*)lrms Rrms:(float*)rrms Lpeak:(float*)lpeak Rpeak:(float*)rpeak;
@@ -25,7 +25,6 @@ typedef void(*PROCESSOR_CORE_HOOK)(AudioBufferList* ab_list, AudioBufferList* ab
 -(void) get5bandCompressorGainReduction:(float**) _bands_gr limiters:(float**) _bands_lim gates:(bool**) _bands_gate_open;
 -(void) setBandEnablement:(NSControlStateValue[]) _bands_enabled;
 -(void) change_multiband_settings:(MULTIBAND_PARAMS)_params;
--(void) read_prefs;
 
 @end
 

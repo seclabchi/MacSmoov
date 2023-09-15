@@ -31,6 +31,7 @@ AudioBuf::AudioBuf(AudioBufType _type, const string& _name, uint32_t _n_samps, A
         }
         else {
             buf = new float[n_samps]();
+            memset(buf, 0, n_samps*sizeof(float));
         }
     }
     else {

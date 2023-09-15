@@ -50,22 +50,33 @@ ProcMod2BandAGC::ProcMod2BandAGC(const string& _name, uint32_t _f_samp, uint8_t 
     filt_hi_R = new FilterLR4(&soshi, _n_samps);
     
     buf_lo_filtL = new float[_n_samps]();
+    memset(buf_lo_filtL, 0, _n_samps*sizeof(float));
     buf_lo_filtR = new float[_n_samps]();
+    memset(buf_lo_filtR, 0, _n_samps*sizeof(float));
     buf_hi_filtL = new float[_n_samps]();
+    memset(buf_hi_filtL, 0, _n_samps*sizeof(float));
     buf_hi_filtR = new float[_n_samps]();
+    memset(buf_hi_filtR, 0, _n_samps*sizeof(float));
     
     agc_out_loL = new float[_n_samps]();
+    memset(agc_out_loL, 0, _n_samps*sizeof(float));
     agc_out_hiL = new float[_n_samps]();
+    memset(agc_out_hiL, 0, _n_samps*sizeof(float));
     agc_out_loR = new float[_n_samps]();
+    memset(agc_out_loR, 0, _n_samps*sizeof(float));
     agc_out_hiR = new float[_n_samps]();
+    memset(agc_out_hiR, 0, _n_samps*sizeof(float));
     
     comp_lo = NULL;
     comp_hi = NULL;
     
     comp_hi_gain_reduction_buf = new float[_n_samps]();
+    memset(comp_hi_gain_reduction_buf, 0, n_samps*sizeof(float));
     
     master_outL = new float[_n_samps]();
+    memset(master_outL, 0, _n_samps*sizeof(float));
     master_outR = new float[_n_samps]();
+    memset(master_outR, 0, _n_samps*sizeof(float));
     
     this->set_out_buf(0, new AudioBuf(AudioBufType::REAL, "OUT_L", _n_samps));
     this->set_out_buf(1, new AudioBuf(AudioBufType::REAL, "OUT_R", _n_samps));
@@ -73,7 +84,7 @@ ProcMod2BandAGC::ProcMod2BandAGC(const string& _name, uint32_t _f_samp, uint8_t 
     linlogL = new LogLinConverter(LogLinConversionType::LIN_TO_LOG);
     linlogR = new LogLinConverter(LogLinConversionType::LIN_TO_LOG);
     
-
+    
 }
 
 ProcMod2BandAGC::~ProcMod2BandAGC() {
@@ -92,6 +103,9 @@ ProcMod2BandAGC::~ProcMod2BandAGC() {
     delete[] agc_out_loR;
     delete[] agc_out_hiR;
     
+    delete[] master_outL;
+    delete[] master_outR;
+    
     delete[] comp_hi_gain_reduction_buf;
 }
 
@@ -103,6 +117,9 @@ void ProcMod2BandAGC::process() {
         memcpy(this->get_out_buf(1)->getbuf(), this->get_in_buf(1)->getbuf(), n_samps * sizeof(float));
         return;
     }
+    
+    //memset(this->get_in_buf(0)->getbuf(), 0, n_samps * sizeof(float));
+    //memset(this->get_in_buf(1)->getbuf(), 0, n_samps * sizeof(float));
     
     filt_lo_L->process(this->get_in_buf(0)->getbuf(), buf_lo_filtL);
     filt_lo_R->process(this->get_in_buf(1)->getbuf(), buf_lo_filtR);
@@ -119,6 +136,8 @@ void ProcMod2BandAGC::process() {
     
     memcpy(this->get_out_buf(0)->getbuf(), master_outL, n_samps * sizeof(float));
     memcpy(this->get_out_buf(1)->getbuf(), master_outR, n_samps * sizeof(float));
+    //memset(this->get_out_buf(0)->getbuf(), 0, n_samps * sizeof(float));
+    //memset(this->get_out_buf(1)->getbuf(), 0, n_samps * sizeof(float));
 }
 
 void ProcMod2BandAGC::setup(const AGC_PARAMS _parms) {
@@ -141,7 +160,7 @@ void ProcMod2BandAGC::setup(const AGC_PARAMS _parms) {
         .drive = parms.drive,
         .release = parms.release_bass,
         .gate_thresh = parms.gate_thresh,
-        .use_coupling = true,
+        .use_coupling = false,
         .coupling = parms.bass_coupling,
         .window_size = parms.window_size,
         .window_release = parms.window_release,
