@@ -29,72 +29,72 @@
 @implementation MultibandControlsView
 
 COMPRESSOR_PARAMS factory_comp1 = {
-    .drive = -36.0,
-    .release = 0.500,
-    .gate_thresh = -70.0,
+    .drive = -42.0,
+    .release = 1.200,
+    .gate_thresh = -57.0,
     .use_coupling = false,
     .coupling = 0.0,
     .window_size = 99.0,
     .window_release = 99.0,
-    .ratio = 2,
+    .ratio = 1.3,
     .idle_gain = 0.0,
-    .attack = 0.150,
+    .attack = 0.100,
     .post_gain = 0.0
 };
 
 COMPRESSOR_PARAMS factory_comp2 = {
-    .drive = -36.0,
-    .release = 0.150,
-    .gate_thresh = -70.0,
+    .drive = -42.0,
+    .release = 0.600,
+    .gate_thresh = -57.0,
     .use_coupling = false,
     .coupling = 0.0,
     .window_size = 99.0,
     .window_release = 99.0,
-    .ratio = 2,
+    .ratio = 1.3,
     .idle_gain = 0.0,
-    .attack = 0.050,
+    .attack = 0.075,
     .post_gain = 0.0
 };
 
 COMPRESSOR_PARAMS factory_comp3 = {
-    .drive = -36.0,
-    .release = 0.075,
-    .gate_thresh = -70.0,
+    .drive = -42.0,
+    .release = 0.450,
+    .gate_thresh = -57.0,
     .use_coupling = false,
     .coupling = 0.0,
     .window_size = 99.0,
     .window_release = 99.0,
-    .ratio = 2,
+    .ratio = 1.3,
     .idle_gain = 0.0,
-    .attack = 0.025,
+    .attack = 0.05625,
     .post_gain = 0.0
 };
 
 COMPRESSOR_PARAMS factory_comp4 = {
-    .drive = -36.0,
-    .release = 0.300,
-    .gate_thresh = -70.0,
+    .drive = -42.0,
+    .release = 0.3375,
+    .gate_thresh = -57.0,
     .use_coupling = true,
     .coupling = 0.20,
     .window_size = 99.0,
     .window_release = 99.0,
-    .ratio = 2,
+    .ratio = 1.3,
     .idle_gain = 0.0,
-    .attack = 0.010,
+    .attack = 0.0421875,
     .post_gain = 0.0
 };
 
 COMPRESSOR_PARAMS factory_comp5 = {
-    .drive = -36.0,
-    .release = 0.300,
-    .gate_thresh = -70.0,
+    .drive = -42.0,
+    .release = 0.253125,
+    .gate_thresh = -57.0,
     .use_coupling = true,
     .coupling = 0.20,
     .window_size = 99.0,
     .window_release = 99.0,
-    .ratio = 2,
+    .ratio = 1.3,
     .idle_gain = 0.0,
-    .attack = 0.010,
+    .attack = 0.031640625,
     .post_gain = 0.0
 };
 
@@ -102,72 +102,72 @@ COMPRESSOR_PARAMS factory_comp5 = {
 /* LIMITERS                          */
 /*===================================*/
 COMPRESSOR_PARAMS factory_lim1 = {
-    .drive = 0.0,
-    .release = 0.200,
+    .drive = -34.0,
+    .release = 0.100,
     .gate_thresh = -100.0,
     .use_coupling = false,
     .coupling = 0.0,
     .window_size = 0.0,
     .window_release = 0.0,
-    .ratio = 10,
+    .ratio = 100,
     .idle_gain = 0.0,
-    .attack = 0.150,
-    .post_gain = 5.0
+    .attack = 0.100,
+    .post_gain = 3.0
 };
 
 COMPRESSOR_PARAMS factory_lim2 = {
-    .drive = 0.0,
+    .drive = -37.0,
     .release = 0.075,
     .gate_thresh = -100.0,
     .use_coupling = false,
     .coupling = 0.0,
     .window_size = 0.0,
     .window_release = 0.0,
-    .ratio = 10,
+    .ratio = 100,
     .idle_gain = 0.0,
-    .attack = 0.050,
-    .post_gain = 2.0
+    .attack = 0.075,
+    .post_gain = 4.0
 };
 
 COMPRESSOR_PARAMS factory_lim3 = {
-    .drive = 0.0,
-    .release = 0.016,
+    .drive = -40.0,
+    .release = 0.05625,
     .gate_thresh = -100.0,
     .use_coupling = false,
     .coupling = 0.0,
     .window_size = 0.0,
     .window_release = 0.0,
-    .ratio = 10,
+    .ratio = 100,
     .idle_gain = 0.0,
-    .attack = 0.016,
-    .post_gain = 1.0
+    .attack = 0.05625,
+    .post_gain = 4.0
 };
 
 COMPRESSOR_PARAMS factory_lim4 = {
-    .drive = 0.0,
-    .release = 0.008,
+    .drive = -43.0,
+    .release = 0.0421875,
     .gate_thresh = -100.0,
     .use_coupling = false,
     .coupling = 0.0,
     .window_size = 0.0,
     .window_release = 0.0,
-    .ratio = 10,
+    .ratio = 100,
     .idle_gain = 0.0,
-    .attack = 0.008,
-    .post_gain = 2.0
+    .attack = 0.0421875,
+    .post_gain = 5.0
 };
 
 COMPRESSOR_PARAMS factory_lim5 = {
-    .drive = 0.0,
-    .release = 0.004,
+    .drive = -46.0,
+    .release = 0.031640625,
     .gate_thresh = -100.0,
     .use_coupling = false,
     .coupling = 0.0,
     .window_size = 0.0,
     .window_release = 0.0,
-    .ratio = 10,
+    .ratio = 100,
     .idle_gain = 0.0,
-    .attack = 0.004,
+    .attack = 0.031640625,
     .post_gain = 6.0
 };
 
@@ -179,7 +179,7 @@ COMPRESSOR_PARAMS factory_lim5 = {
         prefs = defaults;
         delegate = mb_delegate;
         
-        [self setupPrefsIfNeeded:YES];
+        [self setupPrefsIfNeeded:NO];
         [self read_prefs];
         [delegate multiband_params_changed:mb_params];
     }
@@ -248,13 +248,14 @@ COMPRESSOR_PARAMS factory_lim5 = {
 
 -(IBAction) band_select:(NSButton*)sender {
     NSLog(@"Band %lu selected.", (long)[sender tag]);
-    current_band = (long)[sender tag] - 1;  //oof another off-by-one error
+    current_band = (long)[sender tag];
     [self populate_ui_elements:current_band];
 }
 
 -(void) setPrefs:(NSUserDefaults*) defaults {
     prefs = defaults;
 }
+
 -(void)showPanel {
     NSPanel* panel = (NSPanel*)[[self view] window];
     [panel setFloatingPanel:YES];
@@ -264,34 +265,37 @@ COMPRESSOR_PARAMS factory_lim5 = {
 -(IBAction) value_changed_compressor:(NSTextField*)sender {
     NSString* bandstr = [NSString stringWithFormat:@"B%d", current_band];
     NSString* propstr;
+    uint32_t band_index = current_band - 1;
     
     switch([sender tag]) {
         case 0: //compressor_drive
-            mb_params.comp_params[current_band].drive = [sender floatValue];
+            mb_params.comp_params[band_index].drive = [sender floatValue];
             break;
         case 1: //compressor_release
-            mb_params.comp_params[current_band].release = [sender floatValue] / 1000.0f;
+            mb_params.comp_params[band_index].release = [sender floatValue] / 1000.0f;
             break;
         case 2: //compressor_gate_thresh
-            mb_params.comp_params[current_band].gate_thresh = [sender floatValue];
+            mb_params.comp_params[band_index].gate_thresh = [sender floatValue];
             break;
         case 3: //compressor_ratio
-            mb_params.comp_params[current_band].ratio = [sender floatValue];
+            mb_params.comp_params[band_index].ratio = [sender floatValue];
             break;
         case 4: //compressor_idle_gain
-            mb_params.comp_params[current_band].idle_gain = [sender floatValue];
+            mb_params.comp_params[band_index].idle_gain = [sender floatValue];
             break;
         case 5: //compressor_attack
-            mb_params.comp_params[current_band].attack = [sender floatValue] / 1000.0f;
+            mb_params.comp_params[band_index].attack = [sender floatValue] / 1000.0f;
             break;
             
     }
     
-    [self set_band_pref:mb_params.comp_params[current_band] band_num:current_band is_comp:YES];
+    [self set_band_pref:mb_params.comp_params[band_index] band_num:current_band is_comp:YES];
     [delegate multiband_params_changed:mb_params];
 }
 
 -(IBAction) stepper_changed_compressor:(NSStepper*)sender {
+    uint32_t band_index = current_band - 1;
+    
     switch([sender tag]) {
         case 0: //compressor_drive
             [_compressor_drive setFloatValue:[_stepper_compressor_drive floatValue]];
@@ -314,11 +318,15 @@ COMPRESSOR_PARAMS factory_lim5 = {
             
     }
     
-    [self set_band_pref:mb_params.comp_params[current_band] band_num:current_band is_comp:YES];
+    [self set_band_pref:mb_params.comp_params[band_index] band_num:current_band is_comp:YES];
     [delegate multiband_params_changed:mb_params];
 }
 
--(IBAction) value_changed_limiter:(NSTextField*)sender{
+-(IBAction) value_changed_limiter:(NSTextField*)sender {
+    NSString* bandstr = [NSString stringWithFormat:@"B%d", current_band];
+    NSString* propstr;
+    uint32_t band_index = current_band - 1;
+    
     switch([sender tag]) {
         case 0: //limiter_drive
             break;
@@ -334,6 +342,7 @@ COMPRESSOR_PARAMS factory_lim5 = {
             break;
     }
     
+    [self set_band_pref:mb_params.lim_params[band_index] band_num:current_band is_comp:NO];
     [delegate multiband_params_changed:mb_params];
 }
 
@@ -648,6 +657,15 @@ COMPRESSOR_PARAMS factory_lim5 = {
         }
     }
     
+}
+
+-(IBAction) factory_reset:(NSButton*)sender {
+    [self setupPrefsIfNeeded:YES];
+    [self read_prefs];
+}
+
+- (void)controlTextDidChange:(NSNotification *)obj {
+    NSLog(@"Control text changed.");
 }
 
 @end

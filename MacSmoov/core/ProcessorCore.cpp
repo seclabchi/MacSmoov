@@ -51,18 +51,18 @@ ProcessorCore::ProcessorCore(uint32_t _f_samp, uint32_t _n_channels, uint32_t _n
      
     AGC_PARAMS agc_params = {
         .enabled = true,
-        .drive = -36.0,
-        .release_master = 4.0,
-        .release_bass = 4.0,
+        .drive = -40.0,
+        .release_master = 3.0,
+        .release_bass = 3.0,
         .gate_thresh = -55.0,
-        .bass_coupling = 0.6,
+        .bass_coupling = 0.3,
         .window_size = -3.0,
         .window_release = 60,
-        .ratio = 5.0,
+        .ratio = 4.5,
         .bass_thresh = 0.0,
         .idle_gain = 0.0,
-        .attack_master = 0.25,
-        .attack_bass = 0.25,
+        .attack_master = 0.200,
+        .attack_bass = 0.350,
         .post_gain = 17.0
     };
     

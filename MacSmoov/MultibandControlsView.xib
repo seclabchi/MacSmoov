@@ -159,6 +159,7 @@
                                     </textFieldCell>
                                     <connections>
                                         <action selector="value_changed_compressor:" target="-2" id="McI-Ha-e9k"/>
+                                        <outlet property="delegate" destination="-2" id="qdT-Lj-yDf"/>
                                     </connections>
                                 </textField>
                                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="5sW-cQ-BWD">
@@ -650,6 +651,17 @@
                             </subviews>
                         </view>
                     </box>
+                    <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="WTP-Zd-Yaz">
+                        <rect key="frame" x="9" y="91" width="118" height="32"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <buttonCell key="cell" type="push" title="Factory Reset" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="KAd-kT-7D8">
+                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                            <font key="font" metaFont="system"/>
+                        </buttonCell>
+                        <connections>
+                            <action selector="factory_reset:" target="-2" id="zIf-Xx-KMX"/>
+                        </connections>
+                    </button>
                 </subviews>
             </view>
             <point key="canvasLocation" x="162.5" y="-257.5"/>

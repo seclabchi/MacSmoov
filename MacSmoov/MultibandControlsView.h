@@ -63,10 +63,14 @@ NS_ASSUME_NONNULL_BEGIN
 
 -(IBAction) band_select:(NSButton*)sender;
 
+-(IBAction) factory_reset:(NSButton*)sender;
+
 -(id) initWithPrefs:(NSUserDefaults*) defaults delegate:(id)mb_delegate;
 -(void) setupPrefsIfNeeded:(BOOL)factory_reset;
 -(void) init_defaults:(BOOL)force_factory;
 -(void) showPanel;
+
+- (void)controlTextDidChange:(NSNotification *)obj;
 
 @end
 

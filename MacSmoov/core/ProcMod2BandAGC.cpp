@@ -160,7 +160,7 @@ void ProcMod2BandAGC::setup(const AGC_PARAMS _parms) {
         .drive = parms.drive,
         .release = parms.release_bass,
         .gate_thresh = parms.gate_thresh,
-        .use_coupling = false,
+        .use_coupling = true,
         .coupling = parms.bass_coupling,
         .window_size = parms.window_size,
         .window_release = parms.window_release,

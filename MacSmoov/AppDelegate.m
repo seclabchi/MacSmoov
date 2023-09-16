@@ -136,9 +136,9 @@ Boolean shutting_down;
     
     [_comp_2band_agc set_meter_range:-35.0];
     [_comp_5band set_meter_color:[NSColor magentaColor]];
-    [_comp_5band set_meter_range:-15.0];
+    [_comp_5band set_meter_range:-10.0];
     [_lim_5band set_meter_color:[NSColor yellowColor]];
-    [_lim_5band set_meter_range:-5.0];
+    [_lim_5band set_meter_range:-1.5];
     
     
     NSUserDefaultsController *prefs_controller = [NSUserDefaultsController sharedUserDefaultsController];
