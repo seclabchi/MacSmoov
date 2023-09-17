@@ -52,8 +52,8 @@ ProcessorCore::ProcessorCore(uint32_t _f_samp, uint32_t _n_channels, uint32_t _n
     AGC_PARAMS agc_params = {
         .enabled = true,
         .drive = -40.0,
-        .release_master = 3.0,
-        .release_bass = 3.0,
+        .release_master = 4.0,
+        .release_bass = 6.0,
         .gate_thresh = -55.0,
         .bass_coupling = 0.3,
         .window_size = -3.0,

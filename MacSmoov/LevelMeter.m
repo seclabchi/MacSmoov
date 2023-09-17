@@ -44,7 +44,7 @@
     
     // Drawing code here.
     // erase the background by drawing white
-    [[NSColor lightGrayColor] set];
+    [[NSColor grayColor] set];
     [NSBezierPath fillRect:dirtyRect];
     NSRect rect_l_rms;
     rect_l_rms.origin.x = 0.0;
@@ -71,11 +71,11 @@
     rect_l_peak.size.height = scaleFactor_l_peak;
     rect_r_peak.size.height = scaleFactor_r_peak;
     
-    [[NSColor yellowColor] set];
+    [[NSColor colorWithRed:1.0 green:0.5 blue:0.5 alpha:1.0] set];
     [NSBezierPath fillRect:rect_l_peak];
     [NSBezierPath fillRect:rect_r_peak];
     
-    [[NSColor greenColor] set];
+    [[NSColor cyanColor] set];
     [NSBezierPath fillRect:rect_l_rms];
     [NSBezierPath fillRect:rect_r_rms];
     
