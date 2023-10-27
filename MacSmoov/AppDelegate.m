@@ -134,7 +134,7 @@ Boolean shutting_down;
 
     shutting_down = NO;
     
-    [_comp_2band_agc set_meter_range:-35.0];
+    [_comp_2band_agc set_meter_range:-40.0];
     [_comp_5band set_meter_color:[NSColor magentaColor]];
     [_comp_5band set_meter_range:-10.0];
     [_lim_5band set_meter_color:[NSColor yellowColor]];

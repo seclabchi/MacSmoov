@@ -71,7 +71,7 @@
     rect_l_peak.size.height = scaleFactor_l_peak;
     rect_r_peak.size.height = scaleFactor_r_peak;
     
-    [[NSColor colorWithRed:1.0 green:0.5 blue:0.5 alpha:1.0] set];
+    [[NSColor colorWithRed:1.0 green:0.7 blue:0.7 alpha:1.0] set];
     [NSBezierPath fillRect:rect_l_peak];
     [NSBezierPath fillRect:rect_r_peak];
     

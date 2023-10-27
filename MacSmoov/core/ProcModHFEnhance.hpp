@@ -13,6 +13,7 @@
 #include "core_common.h"
 #include "core_utils/filter_3rdorder.h"
 #include "core_utils/filter_el.h"
+#include "core_utils/running_rms.h"
 #include "compressor.h"
 #include "LogLinConverter.hpp"
 
@@ -30,9 +31,12 @@ public:
 private:
     Filter3rdOrder* filt_110L, *filt_110R;
     FilterEL* filt_120L, *filt_120R;
+    RunningRMS* rms_150L, *rms_150R;
+    RunningRMS* rms_160L, *rms_160R;
     float* buf_130L, *buf_130R;
     float* buf_140L, *buf_140R;
-    float* buf_150L, *buf_150R, *buf_160L, *buf_160R;
+    float* buf_170L, *buf_170R;
+    float* buf_180L, *buf_180R;
     float* master_outL, *master_outR;
     
     LogLinConverter* linlogL;

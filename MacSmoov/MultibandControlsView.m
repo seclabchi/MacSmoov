@@ -30,15 +30,15 @@
 
 COMPRESSOR_PARAMS factory_comp1 = {
     .drive = -42.0,
-    .release = 1.200,
+    .release = 1.600,
     .gate_thresh = -57.0,
     .use_coupling = false,
     .coupling = 0.0,
     .window_size = 99.0,
     .window_release = 99.0,
-    .ratio = 1.3,
+    .ratio = 1.2,
     .idle_gain = 0.0,
-    .attack = 0.100,
+    .attack = 0.800,
     .post_gain = 0.0
 };
 
@@ -102,8 +102,8 @@ COMPRESSOR_PARAMS factory_comp5 = {
 /* LIMITERS                          */
 /*===================================*/
 COMPRESSOR_PARAMS factory_lim1 = {
-    .drive = -34.0,
-    .release = 0.100,
+    .drive = -35.0,
+    .release = 0.075,
     .gate_thresh = -100.0,
     .use_coupling = false,
     .coupling = 0.0,
@@ -111,12 +111,12 @@ COMPRESSOR_PARAMS factory_lim1 = {
     .window_release = 0.0,
     .ratio = 100,
     .idle_gain = 0.0,
-    .attack = 0.100,
-    .post_gain = 3.0
+    .attack = 0.050,
+    .post_gain = 5.0
 };
 
 COMPRESSOR_PARAMS factory_lim2 = {
-    .drive = -37.0,
+    .drive = -38.0,
     .release = 0.075,
     .gate_thresh = -100.0,
     .use_coupling = false,
@@ -130,7 +130,7 @@ COMPRESSOR_PARAMS factory_lim2 = {
 };
 
 COMPRESSOR_PARAMS factory_lim3 = {
-    .drive = -40.0,
+    .drive = -41.0,
     .release = 0.05625,
     .gate_thresh = -100.0,
     .use_coupling = false,
@@ -144,7 +144,7 @@ COMPRESSOR_PARAMS factory_lim3 = {
 };
 
 COMPRESSOR_PARAMS factory_lim4 = {
-    .drive = -43.0,
+    .drive = -44.0,
     .release = 0.0421875,
     .gate_thresh = -100.0,
     .use_coupling = false,
@@ -158,7 +158,7 @@ COMPRESSOR_PARAMS factory_lim4 = {
 };
 
 COMPRESSOR_PARAMS factory_lim5 = {
-    .drive = -46.0,
+    .drive = -47.0,
     .release = 0.031640625,
     .gate_thresh = -100.0,
     .use_coupling = false,

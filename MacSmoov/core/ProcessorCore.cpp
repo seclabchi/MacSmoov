@@ -52,29 +52,34 @@ ProcessorCore::ProcessorCore(uint32_t _f_samp, uint32_t _n_channels, uint32_t _n
     AGC_PARAMS agc_params = {
         .enabled = true,
         .drive = -40.0,
-        .release_master = 4.0,
-        .release_bass = 6.0,
-        .gate_thresh = -55.0,
+        .release_master = 6.000,
+        .release_bass = 6.000,
+        .gate_thresh = -53.0,
         .bass_coupling = 0.3,
         .window_size = -3.0,
         .window_release = 60,
-        .ratio = 4.5,
+        .ratio = 24.0,
         .bass_thresh = 0.0,
         .idle_gain = 0.0,
-        .attack_master = 0.200,
-        .attack_bass = 0.350,
+        .attack_master = 12.000,
+        .attack_bass = 12.000,
         .post_gain = 17.0
     };
     
-    proc_mod_2band_agc = new ProcMod2BandAGC("2BAND_AGC_IN", f_samp, n_channels, n_samp);
+    proc_mod_2band_agc = new ProcMod2BandAGC("2BAND_AGC", f_samp, n_channels, n_samp);
     proc_mod_2band_agc->set_in_buf(0, proc_mod_level_main_in->get_out_buf(0));
     proc_mod_2band_agc->set_in_buf(1, proc_mod_level_main_in->get_out_buf(1));
     proc_mod_2band_agc->setup(agc_params);
     proc_mod_2band_agc->set_bypass(false);
     
+    proc_mod_hf_enhance = new ProcModHFEnhance("HF_ENHANCE", f_samp, n_channels, n_samp);
+    proc_mod_hf_enhance->set_in_buf(0, proc_mod_2band_agc->get_out_buf(0));
+    proc_mod_hf_enhance->set_in_buf(1, proc_mod_2band_agc->get_out_buf(1));
+    proc_mod_hf_enhance->set_bypass(true);
+    
     proc_mod_5b_crossover = new ProcMod5bandCrossover("5BAND_CROSSOVER", f_samp, n_channels, n_samp);
-    proc_mod_5b_crossover->set_in_buf(0, proc_mod_2band_agc->get_out_buf(0), "IN_L");
-    proc_mod_5b_crossover->set_in_buf(1, proc_mod_2band_agc->get_out_buf(1), "IN_R");
+    proc_mod_5b_crossover->set_in_buf(0, proc_mod_hf_enhance->get_out_buf(0), "IN_L");
+    proc_mod_5b_crossover->set_in_buf(1, proc_mod_hf_enhance->get_out_buf(1), "IN_R");
     proc_mod_5b_crossover->band_enable(true, true, true, true, true);
     
 
@@ -119,6 +124,7 @@ void ProcessorCore::process(float* in_L, float* in_R, float* out_L, float* out_R
     proc_mod_level_main_in->process();
     //proc_mod_stereo_enhance->process();
     proc_mod_2band_agc->process();
+    proc_mod_hf_enhance->process();
     proc_mod_5b_crossover->process();
     proc_mod_5b_compressor->process();
 }

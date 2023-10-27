@@ -54,10 +54,15 @@ ProcModHFEnhance::ProcModHFEnhance(const string& _name, uint32_t _f_samp, uint8_
     buf_140L = new float[_n_samps]();
     buf_140R = new float[_n_samps]();
     
-    buf_150L = new float[_n_samps]();
-    buf_150R = new float[_n_samps]();
-    buf_160L = new float[_n_samps]();
-    buf_160R = new float[_n_samps]();
+    rms_150L = new RunningRMS(0.010f, 48000, _n_samps, 0.001, 0.030);
+    rms_150R = new RunningRMS(0.010f, 48000, _n_samps, 0.001, 0.030);
+    rms_160L = new RunningRMS(0.010f, 48000, _n_samps, 0.001, 0.030);
+    rms_160R = new RunningRMS(0.010f, 48000, _n_samps, 0.001, 0.030);
+    
+    buf_170L = new float[_n_samps]();
+    buf_170R = new float[_n_samps]();
+    buf_180L = new float[_n_samps]();
+    buf_180R = new float[_n_samps]();
     
     master_outL = new float[_n_samps]();
     memset(master_outL, 0, _n_samps*sizeof(float));
@@ -84,15 +89,37 @@ ProcModHFEnhance::~ProcModHFEnhance() {
     delete[] buf_130R;
     delete[] buf_140L;
     delete[] buf_140R;
+    
+    delete[] buf_170L;
+    delete[] buf_170R;
+    delete[] buf_180L;
+    delete[] buf_180R;
 }
 
 void ProcModHFEnhance::process() {
     uint32_t n_samps = this->get_n_samps();
+    float* inL = this->get_in_buf(0)->getbuf();
+    float* inR = this->get_in_buf(1)->getbuf();
     
     if(this->get_bypass()) {
-        memcpy(this->get_out_buf(0)->getbuf(), this->get_in_buf(0)->getbuf(), n_samps * sizeof(float));
-        memcpy(this->get_out_buf(1)->getbuf(), this->get_in_buf(1)->getbuf(), n_samps * sizeof(float));
+        memcpy(this->get_out_buf(0)->getbuf(), inL, n_samps * sizeof(float));
+        memcpy(this->get_out_buf(1)->getbuf(), inR, n_samps * sizeof(float));
         return;
+    }
+    
+    filt_110L->process(this->get_in_buf(0)->getbuf(), buf_130L);
+    filt_110R->process(this->get_in_buf(1)->getbuf(), buf_130R);
+    filt_120L->process(this->get_in_buf(0)->getbuf(), buf_140L);
+    filt_120R->process(this->get_in_buf(1)->getbuf(), buf_140R);
+    
+    rms_150L->process(buf_130L, buf_170L);
+    rms_150R->process(buf_130R, buf_170R);
+    rms_160L->process(buf_140L, buf_180L);
+    rms_160R->process(buf_140R, buf_180R);
+    
+    for(uint32_t i = 0; i < n_samps; i++) {
+        master_outL[i] = inL[i] * 100 * (buf_170L[i] - buf_180L[i]);
+        master_outR[i] = inR[i] * 100 * (buf_170R[i] - buf_180R[i]);
     }
     
     memcpy(this->get_out_buf(0)->getbuf(), master_outL, n_samps * sizeof(float));

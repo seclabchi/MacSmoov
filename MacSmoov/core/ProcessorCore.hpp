@@ -15,6 +15,7 @@
 #include "ProcModGain.hpp"
 #include "ProcModStereoEnhance.hpp"
 #include "ProcMod2BandAGC.hpp"
+#include "ProcModHFEnhance.hpp"
 #include "ProcMod5bandCrossover.hpp"
 #include "ProcMod5bandCompressor.hpp"
 #include "LogLinConverter.hpp"
@@ -44,6 +45,7 @@ private:
     ProcModLevelMeter* proc_mod_level_main_in;
     ProcModStereoEnhance* proc_mod_stereo_enhance;
     ProcMod2BandAGC* proc_mod_2band_agc;
+    ProcModHFEnhance* proc_mod_hf_enhance;
     ProcMod5bandCrossover* proc_mod_5b_crossover;
     ProcMod5bandCompressor* proc_mod_5b_compressor;
     
