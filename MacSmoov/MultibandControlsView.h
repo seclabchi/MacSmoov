@@ -16,8 +16,23 @@ NS_ASSUME_NONNULL_BEGIN
 @end
 
 @interface MultibandControlsView : NSViewController {
-    
+    int8_t b1_drive;
+    int16_t b1_attack;
+    int16_t b1_release;
+    float b1_ratio;
+    int8_t b1_gate_thresh;
+    bool b1_mute;
+    bool b1_solo;
 }
+
+@property (readwrite, assign) int8_t b1_drive;
+@property (readwrite, assign) int16_t b1_attack;
+@property (readwrite, assign) int16_t b1_release;
+@property (readwrite, assign) float b1_ratio;
+@property (readwrite, assign) int8_t b1_gate_thresh;
+@property (readwrite, assign) bool b1_mute;
+@property (readwrite, assign) bool b1_solo;
+
 
 @property (strong) IBOutlet NSStepper* stepper_compressor_drive;
 @property (strong) IBOutlet NSStepper* stepper_compressor_release;
@@ -64,6 +79,8 @@ NS_ASSUME_NONNULL_BEGIN
 -(IBAction) band_select:(NSButton*)sender;
 
 -(IBAction) factory_reset:(NSButton*)sender;
+
+-(IBAction) setting_changed:(id) sender;
 
 -(id) initWithPrefs:(NSUserDefaults*) defaults delegate:(id)mb_delegate;
 -(void) setupPrefsIfNeeded:(BOOL)factory_reset;

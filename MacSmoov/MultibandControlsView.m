@@ -25,8 +25,9 @@
 @end
 
 
-
 @implementation MultibandControlsView
+
+@synthesize b1_drive;
 
 COMPRESSOR_PARAMS factory_comp1 = {
     .drive = -42.0,
@@ -260,6 +261,10 @@ COMPRESSOR_PARAMS factory_lim5 = {
     NSPanel* panel = (NSPanel*)[[self view] window];
     [panel setFloatingPanel:YES];
     [panel orderFront:nil];
+}
+
+-(IBAction) setting_changed:(id) sender {
+    NSLog(@"Setting changed: %@", sender);
 }
 
 -(IBAction) value_changed_compressor:(NSTextField*)sender {
