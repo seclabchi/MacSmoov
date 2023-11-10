@@ -52,17 +52,17 @@ ProcessorCore::ProcessorCore(uint32_t _f_samp, uint32_t _n_channels, uint32_t _n
     AGC_PARAMS agc_params = {
         .enabled = true,
         .drive = -40.0,
-        .release_master = 6.000,
-        .release_bass = 6.000,
-        .gate_thresh = -53.0,
+        .release_master = 0.542,
+        .release_bass = 0.542,
+        .gate_thresh = -35.0,
         .bass_coupling = 0.3,
         .window_size = -3.0,
         .window_release = 60,
-        .ratio = 24.0,
+        .ratio = 200.0,
         .bass_thresh = 0.0,
         .idle_gain = 0.0,
-        .attack_master = 12.000,
-        .attack_bass = 12.000,
+        .attack_master = 8.685,
+        .attack_bass = 8.685,
         .post_gain = 17.0
     };
     
@@ -97,7 +97,7 @@ ProcessorCore::ProcessorCore(uint32_t _f_samp, uint32_t _n_channels, uint32_t _n
     proc_mod_5b_compressor->set_in_buf(10, proc_mod_5b_crossover->get_out_buf(10), "IN_B5_L");
     proc_mod_5b_compressor->set_in_buf(11, proc_mod_5b_crossover->get_out_buf(11), "IN_B5_R");
     //proc_mod_5b_compressor->setup(mb_params);  /*SHOULD BE PASSED INTO CORE BEFORE PROCESSING STARTS*/
-    proc_mod_5b_compressor->set_bypass(false);
+    proc_mod_5b_compressor->set_bypass(true);
     
     m_loglin = new LogLinConverter(LogLinConversionType::LOG_TO_LIN);
     m_linlog = new LogLinConverter(LogLinConversionType::LIN_TO_LOG);
