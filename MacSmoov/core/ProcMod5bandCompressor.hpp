@@ -23,6 +23,7 @@ class ProcMod5bandCompressor : public ProcessorModule {
 public:
     ProcMod5bandCompressor(const string& name, uint32_t _f_samp, uint8_t _n_channels, uint32_t _n_samps);
     virtual ~ProcMod5bandCompressor();
+    virtual bool init_impl(CoreConfig* cfg, ProcessorModule* prev_mod, ChannelMap* _channel_map);
     /* n samps is total interleaved stereo samples
      TODO: Figure this shit out to make it universal. */
     virtual void process();

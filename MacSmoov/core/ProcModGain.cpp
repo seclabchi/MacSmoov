@@ -25,6 +25,20 @@ ProcModGain::~ProcModGain() {
     delete this->get_out_buf(1);
 }
 
+bool ProcModGain::init_impl(CoreConfig* cfg, ProcessorModule* prev_mod, ChannelMap* _channel_map) {
+    if(nullptr != cfg) {
+        //TODO config
+    }
+    if((nullptr != _channel_map) && (nullptr != prev_mod)) {
+        for(CHANNEL_MAP_ELEMENT e : _channel_map->the_map)
+        {
+            this->set_in_buf(e.this_chan, prev_mod->get_out_buf(e.in_chan));
+        }
+    }
+    
+    return true;
+}
+
 void ProcModGain::process() {
     float* inL = this->get_in_buf(0)->getbuf();
     float* inR = this->get_in_buf(1)->getbuf();

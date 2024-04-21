@@ -23,6 +23,12 @@
 		9D3A20672A9562A800C7C620 /* CompressionMeter.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D3A20662A9562A800C7C620 /* CompressionMeter.m */; };
 		9D3A20682A9562A800C7C620 /* CompressionMeter.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D3A20662A9562A800C7C620 /* CompressionMeter.m */; };
 		9D3A20692A9562A800C7C620 /* CompressionMeter.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D3A20662A9562A800C7C620 /* CompressionMeter.m */; };
+		9D3ED8622AFFF65D008283FC /* AGCControlsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D3ED8602AFFF65C008283FC /* AGCControlsView.m */; };
+		9D3ED8632AFFF65D008283FC /* AGCControlsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D3ED8602AFFF65C008283FC /* AGCControlsView.m */; };
+		9D3ED8642AFFF65D008283FC /* AGCControlsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D3ED8602AFFF65C008283FC /* AGCControlsView.m */; };
+		9D3ED8652AFFF65D008283FC /* AGCControlsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9D3ED8612AFFF65C008283FC /* AGCControlsView.xib */; };
+		9D3ED8662AFFF65D008283FC /* AGCControlsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9D3ED8612AFFF65C008283FC /* AGCControlsView.xib */; };
+		9D3ED8672AFFF65D008283FC /* AGCControlsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9D3ED8612AFFF65C008283FC /* AGCControlsView.xib */; };
 		9D4517C72A9D89AD003BC1EB /* MultibandControlsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D4517C52A9D89AD003BC1EB /* MultibandControlsView.m */; };
 		9D4517C82A9D89AD003BC1EB /* MultibandControlsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D4517C52A9D89AD003BC1EB /* MultibandControlsView.m */; };
 		9D4517C92A9D89AD003BC1EB /* MultibandControlsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D4517C52A9D89AD003BC1EB /* MultibandControlsView.m */; };
@@ -65,6 +71,10 @@
 		9DB012882A71C376009BFCD8 /* CircularBuffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9DB012862A71C376009BFCD8 /* CircularBuffer.cpp */; };
 		9DB012892A71C376009BFCD8 /* CircularBuffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9DB012862A71C376009BFCD8 /* CircularBuffer.cpp */; };
 		9DB0128A2A71C376009BFCD8 /* CircularBuffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9DB012862A71C376009BFCD8 /* CircularBuffer.cpp */; };
+		9DB4B10E2BAF3C2600F9C076 /* Patchbay.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9DB4B10D2BAF3C2600F9C076 /* Patchbay.xib */; };
+		9DB4B10F2BAF3C2600F9C076 /* Patchbay.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9DB4B10D2BAF3C2600F9C076 /* Patchbay.xib */; };
+		9DB4B1112BAF3CFE00F9C076 /* Patchbay.m in Sources */ = {isa = PBXBuildFile; fileRef = 9DB4B1102BAF3CFE00F9C076 /* Patchbay.m */; };
+		9DB4B1122BAF3CFE00F9C076 /* Patchbay.m in Sources */ = {isa = PBXBuildFile; fileRef = 9DB4B1102BAF3CFE00F9C076 /* Patchbay.m */; };
 		9DB7A12829D7949D002E6F4E /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 9DB7A12729D7949D002E6F4E /* AppDelegate.m */; };
 		9DB7A12A29D7949E002E6F4E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9DB7A12929D7949E002E6F4E /* Assets.xcassets */; };
 		9DB7A12D29D7949E002E6F4E /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9DB7A12B29D7949E002E6F4E /* MainMenu.xib */; };
@@ -72,6 +82,12 @@
 		9DB7A13A29D7949E002E6F4E /* MacSmoovTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 9DB7A13929D7949E002E6F4E /* MacSmoovTests.m */; };
 		9DB7A14429D7949F002E6F4E /* MacSmoovUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 9DB7A14329D7949F002E6F4E /* MacSmoovUITests.m */; };
 		9DB7A14629D7949F002E6F4E /* MacSmoovUITestsLaunchTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 9DB7A14529D7949F002E6F4E /* MacSmoovUITestsLaunchTests.m */; };
+		9DC11C7B2BCACCE000263F73 /* CoreConfig.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9DC11C7A2BCACCE000263F73 /* CoreConfig.cpp */; };
+		9DC11C7C2BCACCE000263F73 /* CoreConfig.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9DC11C7A2BCACCE000263F73 /* CoreConfig.cpp */; };
+		9DC11C7F2BCAF8C200263F73 /* CoreStack.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9DC11C7D2BCAF8C200263F73 /* CoreStack.cpp */; };
+		9DC11C802BCAF8C200263F73 /* CoreStack.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9DC11C7D2BCAF8C200263F73 /* CoreStack.cpp */; };
+		9DC11C832BCAFFC300263F73 /* channel_map.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9DC11C812BCAFFC300263F73 /* channel_map.cpp */; };
+		9DC11C842BCAFFC300263F73 /* channel_map.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9DC11C812BCAFFC300263F73 /* channel_map.cpp */; };
 		9DD141072A81C5D60059864D /* LogLinConverter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9DD141052A81C5D60059864D /* LogLinConverter.cpp */; };
 		9DD141082A81C5D60059864D /* LogLinConverter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9DD141052A81C5D60059864D /* LogLinConverter.cpp */; };
 		9DD1410A2A81E1870059864D /* OSXAudioInterface.m in Sources */ = {isa = PBXBuildFile; fileRef = 9DD141092A81E1870059864D /* OSXAudioInterface.m */; };
@@ -86,6 +102,9 @@
 		9DEF3B462A9D2311004E78F3 /* ProcMod5bandCrossover.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9DEF3B452A9D2311004E78F3 /* ProcMod5bandCrossover.cpp */; };
 		9DF3B70D2A80088400867EA1 /* LevelMeter.m in Sources */ = {isa = PBXBuildFile; fileRef = 9DF3B70C2A80088400867EA1 /* LevelMeter.m */; };
 		9DF3B70E2A80088400867EA1 /* LevelMeter.m in Sources */ = {isa = PBXBuildFile; fileRef = 9DF3B70C2A80088400867EA1 /* LevelMeter.m */; };
+		9DFC35AC2BB09E260091A8DD /* ConfigReader.mm in Sources */ = {isa = PBXBuildFile; fileRef = 9DFC35AB2BB09E260091A8DD /* ConfigReader.mm */; };
+		9DFC35AD2BB09E260091A8DD /* ConfigReader.mm in Sources */ = {isa = PBXBuildFile; fileRef = 9DFC35AB2BB09E260091A8DD /* ConfigReader.mm */; };
+		9DFC35D92BB0A5E20091A8DD /* libyaml-cppd.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9DFC35D82BB0A5E10091A8DD /* libyaml-cppd.a */; };
 		9DFECDED2A86D80D00BFB1A2 /* ProcModGain.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9DFECDEC2A86D80D00BFB1A2 /* ProcModGain.cpp */; };
 		9DFECDEE2A86D80D00BFB1A2 /* ProcModGain.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9DFECDEC2A86D80D00BFB1A2 /* ProcModGain.cpp */; };
 		9DFECDF12A86F02C00BFB1A2 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 9DFECDF02A86F02C00BFB1A2 /* Credits.rtf */; };
@@ -133,6 +152,9 @@
 		9D281A9829E1C5B5009CF125 /* AudioDeviceSelector.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AudioDeviceSelector.xib; sourceTree = "<group>"; };
 		9D3A20652A9562A800C7C620 /* CompressionMeter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CompressionMeter.h; sourceTree = "<group>"; };
 		9D3A20662A9562A800C7C620 /* CompressionMeter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CompressionMeter.m; sourceTree = "<group>"; };
+		9D3ED85F2AFFF65C008283FC /* AGCControlsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AGCControlsView.h; sourceTree = "<group>"; };
+		9D3ED8602AFFF65C008283FC /* AGCControlsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AGCControlsView.m; sourceTree = "<group>"; };
+		9D3ED8612AFFF65C008283FC /* AGCControlsView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AGCControlsView.xib; sourceTree = "<group>"; };
 		9D4517C32A9D8799003BC1EB /* core_common.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = core_common.h; sourceTree = "<group>"; };
 		9D4517C42A9D89AD003BC1EB /* MultibandControlsView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MultibandControlsView.h; sourceTree = "<group>"; };
 		9D4517C52A9D89AD003BC1EB /* MultibandControlsView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MultibandControlsView.m; sourceTree = "<group>"; };
@@ -168,6 +190,9 @@
 		9DA7C1282A5E4D4700A01D92 /* LPFSinglePole.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = LPFSinglePole.hpp; sourceTree = "<group>"; };
 		9DB012862A71C376009BFCD8 /* CircularBuffer.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = CircularBuffer.cpp; sourceTree = "<group>"; };
 		9DB012872A71C376009BFCD8 /* CircularBuffer.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = CircularBuffer.hpp; sourceTree = "<group>"; };
+		9DB4B10D2BAF3C2600F9C076 /* Patchbay.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Patchbay.xib; sourceTree = "<group>"; };
+		9DB4B1102BAF3CFE00F9C076 /* Patchbay.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Patchbay.m; sourceTree = "<group>"; };
+		9DB4B1132BAF3D0B00F9C076 /* Patchbay.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Patchbay.h; sourceTree = "<group>"; };
 		9DB7A12329D7949D002E6F4E /* MacSmoov.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MacSmoov.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9DB7A12629D7949D002E6F4E /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		9DB7A12729D7949D002E6F4E /* AppDelegate.m */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -180,6 +205,12 @@
 		9DB7A13F29D7949F002E6F4E /* MacSmoovUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MacSmoovUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		9DB7A14329D7949F002E6F4E /* MacSmoovUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MacSmoovUITests.m; sourceTree = "<group>"; };
 		9DB7A14529D7949F002E6F4E /* MacSmoovUITestsLaunchTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MacSmoovUITestsLaunchTests.m; sourceTree = "<group>"; };
+		9DC11C792BCACC6600263F73 /* CoreConfig.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CoreConfig.h; sourceTree = "<group>"; };
+		9DC11C7A2BCACCE000263F73 /* CoreConfig.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = CoreConfig.cpp; sourceTree = "<group>"; };
+		9DC11C7D2BCAF8C200263F73 /* CoreStack.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = CoreStack.cpp; sourceTree = "<group>"; };
+		9DC11C7E2BCAF8C200263F73 /* CoreStack.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = CoreStack.hpp; sourceTree = "<group>"; };
+		9DC11C812BCAFFC300263F73 /* channel_map.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = channel_map.cpp; sourceTree = "<group>"; };
+		9DC11C822BCAFFC300263F73 /* channel_map.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = channel_map.hpp; sourceTree = "<group>"; };
 		9DD141052A81C5D60059864D /* LogLinConverter.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = LogLinConverter.cpp; sourceTree = "<group>"; };
 		9DD141062A81C5D60059864D /* LogLinConverter.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = LogLinConverter.hpp; sourceTree = "<group>"; };
 		9DD141092A81E1870059864D /* OSXAudioInterface.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OSXAudioInterface.m; sourceTree = "<group>"; };
@@ -198,6 +229,46 @@
 		9DEF3B452A9D2311004E78F3 /* ProcMod5bandCrossover.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ProcMod5bandCrossover.cpp; sourceTree = "<group>"; };
 		9DF3B70B2A80088400867EA1 /* LevelMeter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LevelMeter.h; sourceTree = "<group>"; };
 		9DF3B70C2A80088400867EA1 /* LevelMeter.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LevelMeter.m; sourceTree = "<group>"; };
+		9DFC35AA2BB09DFA0091A8DD /* ConfigReader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ConfigReader.h; sourceTree = "<group>"; };
+		9DFC35AB2BB09E260091A8DD /* ConfigReader.mm */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; path = ConfigReader.mm; sourceTree = "<group>"; };
+		9DFC35AF2BB0A2D80091A8DD /* traits.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = traits.h; sourceTree = "<group>"; };
+		9DFC35B02BB0A2D80091A8DD /* eventhandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = eventhandler.h; sourceTree = "<group>"; };
+		9DFC35B12BB0A2D80091A8DD /* emitter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = emitter.h; sourceTree = "<group>"; };
+		9DFC35B22BB0A2D80091A8DD /* anchor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = anchor.h; sourceTree = "<group>"; };
+		9DFC35B32BB0A2D80091A8DD /* mark.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = mark.h; sourceTree = "<group>"; };
+		9DFC35B42BB0A2D80091A8DD /* emitterdef.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = emitterdef.h; sourceTree = "<group>"; };
+		9DFC35B52BB0A2D80091A8DD /* parser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = parser.h; sourceTree = "<group>"; };
+		9DFC35B62BB0A2D80091A8DD /* null.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = null.h; sourceTree = "<group>"; };
+		9DFC35B72BB0A2D80091A8DD /* exceptions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = exceptions.h; sourceTree = "<group>"; };
+		9DFC35B82BB0A2D80091A8DD /* emitterstyle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = emitterstyle.h; sourceTree = "<group>"; };
+		9DFC35B92BB0A2D80091A8DD /* noexcept.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = noexcept.h; sourceTree = "<group>"; };
+		9DFC35BA2BB0A2D80091A8DD /* emittermanip.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = emittermanip.h; sourceTree = "<group>"; };
+		9DFC35BB2BB0A2D80091A8DD /* emitfromevents.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = emitfromevents.h; sourceTree = "<group>"; };
+		9DFC35BC2BB0A2D80091A8DD /* dll.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = dll.h; sourceTree = "<group>"; };
+		9DFC35BE2BB0A2D80091A8DD /* graphbuilder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = graphbuilder.h; sourceTree = "<group>"; };
+		9DFC35BF2BB0A2D80091A8DD /* anchordict.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = anchordict.h; sourceTree = "<group>"; };
+		9DFC35C02BB0A2D80091A8DD /* yaml.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = yaml.h; sourceTree = "<group>"; };
+		9DFC35C22BB0A2D80091A8DD /* type.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = type.h; sourceTree = "<group>"; };
+		9DFC35C32BB0A2D80091A8DD /* parse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = parse.h; sourceTree = "<group>"; };
+		9DFC35C42BB0A2D80091A8DD /* node.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = node.h; sourceTree = "<group>"; };
+		9DFC35C62BB0A2D80091A8DD /* node_data.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = node_data.h; sourceTree = "<group>"; };
+		9DFC35C72BB0A2D80091A8DD /* node_ref.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = node_ref.h; sourceTree = "<group>"; };
+		9DFC35C82BB0A2D80091A8DD /* node.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = node.h; sourceTree = "<group>"; };
+		9DFC35C92BB0A2D80091A8DD /* memory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = memory.h; sourceTree = "<group>"; };
+		9DFC35CA2BB0A2D80091A8DD /* node_iterator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = node_iterator.h; sourceTree = "<group>"; };
+		9DFC35CB2BB0A2D80091A8DD /* impl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = impl.h; sourceTree = "<group>"; };
+		9DFC35CC2BB0A2D80091A8DD /* iterator_fwd.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iterator_fwd.h; sourceTree = "<group>"; };
+		9DFC35CD2BB0A2D80091A8DD /* iterator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iterator.h; sourceTree = "<group>"; };
+		9DFC35CE2BB0A2D80091A8DD /* ptr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ptr.h; sourceTree = "<group>"; };
+		9DFC35CF2BB0A2D80091A8DD /* convert.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = convert.h; sourceTree = "<group>"; };
+		9DFC35D02BB0A2D80091A8DD /* impl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = impl.h; sourceTree = "<group>"; };
+		9DFC35D12BB0A2D80091A8DD /* emit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = emit.h; sourceTree = "<group>"; };
+		9DFC35D22BB0A2D80091A8DD /* iterator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iterator.h; sourceTree = "<group>"; };
+		9DFC35D32BB0A2D80091A8DD /* ostream_wrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ostream_wrapper.h; sourceTree = "<group>"; };
+		9DFC35D42BB0A2D80091A8DD /* stlemitter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = stlemitter.h; sourceTree = "<group>"; };
+		9DFC35D52BB0A2D80091A8DD /* binary.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = binary.h; sourceTree = "<group>"; };
+		9DFC35D62BB0A2D80091A8DD /* depthguard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = depthguard.h; sourceTree = "<group>"; };
+		9DFC35D82BB0A5E10091A8DD /* libyaml-cppd.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libyaml-cppd.a"; path = "../yaml-cpp/build/Debug/libyaml-cppd.a"; sourceTree = "<group>"; };
 		9DFECDEC2A86D80D00BFB1A2 /* ProcModGain.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ProcModGain.cpp; sourceTree = "<group>"; };
 		9DFECDEF2A86D82A00BFB1A2 /* ProcModGain.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = ProcModGain.hpp; sourceTree = "<group>"; };
 		9DFECDF02A86F02C00BFB1A2 /* Credits.rtf */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; path = Credits.rtf; sourceTree = "<group>"; };
@@ -218,6 +289,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9DFC35D92BB0A5E20091A8DD /* libyaml-cppd.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -245,6 +317,7 @@
 				9DB7A13829D7949E002E6F4E /* MacSmoovTests */,
 				9DB7A14229D7949F002E6F4E /* MacSmoovUITests */,
 				9DB7A12429D7949D002E6F4E /* Products */,
+				9DFC35D72BB0A5E10091A8DD /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -261,6 +334,7 @@
 		9DB7A12529D7949D002E6F4E /* MacSmoov */ = {
 			isa = PBXGroup;
 			children = (
+				9DFC35AE2BB0A2D80091A8DD /* yaml-cpp */,
 				9DFECDF42A87EA4C00BFB1A2 /* core */,
 				9DFECDF02A86F02C00BFB1A2 /* Credits.rtf */,
 				9D71CFB229F83E6100436F79 /* Info.plist */,
@@ -282,7 +356,10 @@
 				9D281A9529E05F67009CF125 /* SignalGenerator.h */,
 				9D281A9629E1C5B5009CF125 /* AudioDeviceSelector.h */,
 				9D281A9729E1C5B5009CF125 /* AudioDeviceSelector.m */,
+				9DB4B1132BAF3D0B00F9C076 /* Patchbay.h */,
+				9DB4B1102BAF3CFE00F9C076 /* Patchbay.m */,
 				9D281A9829E1C5B5009CF125 /* AudioDeviceSelector.xib */,
+				9DB4B10D2BAF3C2600F9C076 /* Patchbay.xib */,
 				9D98C7C829FC579E00586A86 /* ProcessorCoreWrapper.mm */,
 				9D98C7CC29FC57AB00586A86 /* ProcessorCoreWrapper.h */,
 				9D3A20652A9562A800C7C620 /* CompressionMeter.h */,
@@ -295,9 +372,14 @@
 				9DD1410C2A81E3EB0059864D /* OSXAudioInterface.h */,
 				9DD1410D2A82AD420059864D /* AudioDevice.m */,
 				9DD141102A82AD5B0059864D /* AudioDevice.h */,
+				9D3ED85F2AFFF65C008283FC /* AGCControlsView.h */,
+				9D3ED8602AFFF65C008283FC /* AGCControlsView.m */,
+				9D3ED8612AFFF65C008283FC /* AGCControlsView.xib */,
 				9D4517C42A9D89AD003BC1EB /* MultibandControlsView.h */,
 				9D4517C52A9D89AD003BC1EB /* MultibandControlsView.m */,
 				9D4517C62A9D89AD003BC1EB /* MultibandControlsView.xib */,
+				9DFC35AA2BB09DFA0091A8DD /* ConfigReader.h */,
+				9DFC35AB2BB09E260091A8DD /* ConfigReader.mm */,
 			);
 			path = MacSmoov;
 			sourceTree = "<group>";
@@ -317,6 +399,82 @@
 				9DB7A14529D7949F002E6F4E /* MacSmoovUITestsLaunchTests.m */,
 			);
 			path = MacSmoovUITests;
+			sourceTree = "<group>";
+		};
+		9DFC35AE2BB0A2D80091A8DD /* yaml-cpp */ = {
+			isa = PBXGroup;
+			children = (
+				9DFC35AF2BB0A2D80091A8DD /* traits.h */,
+				9DFC35B02BB0A2D80091A8DD /* eventhandler.h */,
+				9DFC35B12BB0A2D80091A8DD /* emitter.h */,
+				9DFC35B22BB0A2D80091A8DD /* anchor.h */,
+				9DFC35B32BB0A2D80091A8DD /* mark.h */,
+				9DFC35B42BB0A2D80091A8DD /* emitterdef.h */,
+				9DFC35B52BB0A2D80091A8DD /* parser.h */,
+				9DFC35B62BB0A2D80091A8DD /* null.h */,
+				9DFC35B72BB0A2D80091A8DD /* exceptions.h */,
+				9DFC35B82BB0A2D80091A8DD /* emitterstyle.h */,
+				9DFC35B92BB0A2D80091A8DD /* noexcept.h */,
+				9DFC35BA2BB0A2D80091A8DD /* emittermanip.h */,
+				9DFC35BB2BB0A2D80091A8DD /* emitfromevents.h */,
+				9DFC35BC2BB0A2D80091A8DD /* dll.h */,
+				9DFC35BD2BB0A2D80091A8DD /* contrib */,
+				9DFC35C02BB0A2D80091A8DD /* yaml.h */,
+				9DFC35C12BB0A2D80091A8DD /* node */,
+				9DFC35D32BB0A2D80091A8DD /* ostream_wrapper.h */,
+				9DFC35D42BB0A2D80091A8DD /* stlemitter.h */,
+				9DFC35D52BB0A2D80091A8DD /* binary.h */,
+				9DFC35D62BB0A2D80091A8DD /* depthguard.h */,
+			);
+			path = "yaml-cpp";
+			sourceTree = "<group>";
+		};
+		9DFC35BD2BB0A2D80091A8DD /* contrib */ = {
+			isa = PBXGroup;
+			children = (
+				9DFC35BE2BB0A2D80091A8DD /* graphbuilder.h */,
+				9DFC35BF2BB0A2D80091A8DD /* anchordict.h */,
+			);
+			path = contrib;
+			sourceTree = "<group>";
+		};
+		9DFC35C12BB0A2D80091A8DD /* node */ = {
+			isa = PBXGroup;
+			children = (
+				9DFC35C22BB0A2D80091A8DD /* type.h */,
+				9DFC35C32BB0A2D80091A8DD /* parse.h */,
+				9DFC35C42BB0A2D80091A8DD /* node.h */,
+				9DFC35C52BB0A2D80091A8DD /* detail */,
+				9DFC35CE2BB0A2D80091A8DD /* ptr.h */,
+				9DFC35CF2BB0A2D80091A8DD /* convert.h */,
+				9DFC35D02BB0A2D80091A8DD /* impl.h */,
+				9DFC35D12BB0A2D80091A8DD /* emit.h */,
+				9DFC35D22BB0A2D80091A8DD /* iterator.h */,
+			);
+			path = node;
+			sourceTree = "<group>";
+		};
+		9DFC35C52BB0A2D80091A8DD /* detail */ = {
+			isa = PBXGroup;
+			children = (
+				9DFC35C62BB0A2D80091A8DD /* node_data.h */,
+				9DFC35C72BB0A2D80091A8DD /* node_ref.h */,
+				9DFC35C82BB0A2D80091A8DD /* node.h */,
+				9DFC35C92BB0A2D80091A8DD /* memory.h */,
+				9DFC35CA2BB0A2D80091A8DD /* node_iterator.h */,
+				9DFC35CB2BB0A2D80091A8DD /* impl.h */,
+				9DFC35CC2BB0A2D80091A8DD /* iterator_fwd.h */,
+				9DFC35CD2BB0A2D80091A8DD /* iterator.h */,
+			);
+			path = detail;
+			sourceTree = "<group>";
+		};
+		9DFC35D72BB0A5E10091A8DD /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				9DFC35D82BB0A5E10091A8DD /* libyaml-cppd.a */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 		9DFECDF42A87EA4C00BFB1A2 /* core */ = {
@@ -344,6 +502,10 @@
 				9DD1BF2A2A9A811400D7C0B2 /* ProcMod5bandCompressor.hpp */,
 				9D81E9B12A5B2CC6007D46EF /* ProcessorModule.cpp */,
 				9D81E9B22A5B2CC6007D46EF /* ProcessorModule.hpp */,
+				9DC11C792BCACC6600263F73 /* CoreConfig.h */,
+				9DC11C7A2BCACCE000263F73 /* CoreConfig.cpp */,
+				9DC11C7D2BCAF8C200263F73 /* CoreStack.cpp */,
+				9DC11C7E2BCAF8C200263F73 /* CoreStack.hpp */,
 			);
 			path = core;
 			sourceTree = "<group>";
@@ -379,6 +541,8 @@
 				9DFECE072A87ECCD00BFB1A2 /* AudioBuf.hpp */,
 				9DD141052A81C5D60059864D /* LogLinConverter.cpp */,
 				9DD141062A81C5D60059864D /* LogLinConverter.hpp */,
+				9DC11C812BCAFFC300263F73 /* channel_map.cpp */,
+				9DC11C822BCAFFC300263F73 /* channel_map.hpp */,
 			);
 			path = core_utils;
 			sourceTree = "<group>";
@@ -488,8 +652,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				9DB7A12A29D7949E002E6F4E /* Assets.xcassets in Resources */,
+				9DB4B10E2BAF3C2600F9C076 /* Patchbay.xib in Resources */,
 				9DB7A12D29D7949E002E6F4E /* MainMenu.xib in Resources */,
 				9D5C639729DA5DE200E40A60 /* SignalGeneratorViewController.xib in Resources */,
+				9D3ED8652AFFF65D008283FC /* AGCControlsView.xib in Resources */,
 				9D4517CA2A9D89AD003BC1EB /* MultibandControlsView.xib in Resources */,
 				9D281A9C29E1C5B5009CF125 /* AudioDeviceSelector.xib in Resources */,
 				9DFECDF12A86F02C00BFB1A2 /* Credits.rtf in Resources */,
@@ -502,6 +668,7 @@
 			files = (
 				9D5C639829DA5DE200E40A60 /* SignalGeneratorViewController.xib in Resources */,
 				9D4517CB2A9D89AD003BC1EB /* MultibandControlsView.xib in Resources */,
+				9D3ED8662AFFF65D008283FC /* AGCControlsView.xib in Resources */,
 				9DFECDF22A86F02C00BFB1A2 /* Credits.rtf in Resources */,
 				9D281A9D29E1C5B5009CF125 /* AudioDeviceSelector.xib in Resources */,
 			);
@@ -511,8 +678,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9DB4B10F2BAF3C2600F9C076 /* Patchbay.xib in Resources */,
 				9D4517CC2A9D89AD003BC1EB /* MultibandControlsView.xib in Resources */,
 				9D5C639929DA5DE200E40A60 /* SignalGeneratorViewController.xib in Resources */,
+				9D3ED8672AFFF65D008283FC /* AGCControlsView.xib in Resources */,
 				9D281A9E29E1C5B5009CF125 /* AudioDeviceSelector.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -554,6 +723,7 @@
 				9D5C639429DA5DE200E40A60 /* SignalGeneratorViewController.m in Sources */,
 				9D98C7C929FC579E00586A86 /* ProcessorCoreWrapper.mm in Sources */,
 				9DD1BF292A9A549900D7C0B2 /* CompressionMeter5band.m in Sources */,
+				9D3ED8622AFFF65D008283FC /* AGCControlsView.m in Sources */,
 				9D5C638829D8E5D600E40A60 /* SignalGeneratorEngine.cpp in Sources */,
 				9DA7C1292A5E4D4700A01D92 /* LPFSinglePole.cpp in Sources */,
 				9D5C638C29D9FF5400E40A60 /* SignalGeneratorEngineWrapper.mm in Sources */,
@@ -561,6 +731,7 @@
 				9D037C972AB5F604002B2638 /* ProcModHFEnhance.cpp in Sources */,
 				9D9806D529EB849200B98415 /* ProcessorCore.cpp in Sources */,
 				9DB7A12F29D7949E002E6F4E /* main.m in Sources */,
+				9DC11C7B2BCACCE000263F73 /* CoreConfig.cpp in Sources */,
 				9D3A20672A9562A800C7C620 /* CompressionMeter.m in Sources */,
 				9D8EC5462A8BFFA0006C1E09 /* vca.cpp in Sources */,
 				9D81E9B32A5B2CC6007D46EF /* ProcessorModule.cpp in Sources */,
@@ -575,12 +746,16 @@
 				9D281A9929E1C5B5009CF125 /* AudioDeviceSelector.m in Sources */,
 				9DD1410A2A81E1870059864D /* OSXAudioInterface.m in Sources */,
 				9DFECE042A87EAF800BFB1A2 /* filter_lr4.cpp in Sources */,
+				9DFC35AC2BB09E260091A8DD /* ConfigReader.mm in Sources */,
 				9DFECE022A87EAF800BFB1A2 /* sos.cpp in Sources */,
+				9DB4B1112BAF3CFE00F9C076 /* Patchbay.m in Sources */,
 				9DD1BF2C2A9A811500D7C0B2 /* ProcMod5bandCompressor.cpp in Sources */,
 				9DD1410E2A82AD420059864D /* AudioDevice.m in Sources */,
+				9DC11C7F2BCAF8C200263F73 /* CoreStack.cpp in Sources */,
 				9D54D8B02ADC2F85006C3F57 /* ProcModDelay.cpp in Sources */,
 				9D81E9B82A5B2D70007D46EF /* ProcModLevelMeter.cpp in Sources */,
 				9D8EC53F2A8B1901006C1E09 /* ProcModStereoEnhance.cpp in Sources */,
+				9DC11C832BCAFFC300263F73 /* channel_map.cpp in Sources */,
 				9DEF3B462A9D2311004E78F3 /* ProcMod5bandCrossover.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -591,18 +766,21 @@
 			files = (
 				9D5C638D29D9FF5400E40A60 /* SignalGeneratorEngineWrapper.mm in Sources */,
 				9D8EC5402A8B1901006C1E09 /* ProcModStereoEnhance.cpp in Sources */,
+				9DC11C7C2BCACCE000263F73 /* CoreConfig.cpp in Sources */,
 				9D281A9A29E1C5B5009CF125 /* AudioDeviceSelector.m in Sources */,
 				9DFECE092A87ECCD00BFB1A2 /* AudioBuf.cpp in Sources */,
 				9D9806D629EB849200B98415 /* ProcessorCore.cpp in Sources */,
 				9DFECE052A87EAF800BFB1A2 /* filter_lr4.cpp in Sources */,
 				9DB012892A71C376009BFCD8 /* CircularBuffer.cpp in Sources */,
 				9D81E9B42A5B2CC6007D46EF /* ProcessorModule.cpp in Sources */,
+				9DFC35AD2BB09E260091A8DD /* ConfigReader.mm in Sources */,
 				9DFECDF82A87EAAF00BFB1A2 /* ProcMod2BandAGC.cpp in Sources */,
 				9D3A20682A9562A800C7C620 /* CompressionMeter.m in Sources */,
 				9DB7A13A29D7949E002E6F4E /* MacSmoovTests.m in Sources */,
 				9D81E9B92A5B2D70007D46EF /* ProcModLevelMeter.cpp in Sources */,
 				9D54D8B12ADC2F85006C3F57 /* ProcModDelay.cpp in Sources */,
 				9D98C7CA29FC579E00586A86 /* ProcessorCoreWrapper.mm in Sources */,
+				9D3ED8632AFFF65D008283FC /* AGCControlsView.m in Sources */,
 				9D281A9329E05F57009CF125 /* SignalGenerator.m in Sources */,
 				9D5C639529DA5DE200E40A60 /* SignalGeneratorViewController.m in Sources */,
 				9DD1410B2A81E1870059864D /* OSXAudioInterface.m in Sources */,
@@ -615,7 +793,9 @@
 				9DEF3B432A9D0FD0004E78F3 /* crossover_5_band.cpp in Sources */,
 				9DFECDEE2A86D80D00BFB1A2 /* ProcModGain.cpp in Sources */,
 				9DFECE032A87EAF800BFB1A2 /* sos.cpp in Sources */,
+				9DC11C802BCAF8C200263F73 /* CoreStack.cpp in Sources */,
 				9DF3B70E2A80088400867EA1 /* LevelMeter.m in Sources */,
+				9DC11C842BCAFFC300263F73 /* channel_map.cpp in Sources */,
 				9D5C638929D8E5D600E40A60 /* SignalGeneratorEngine.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -625,9 +805,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				9DA7C12B2A5E4D4700A01D92 /* LPFSinglePole.cpp in Sources */,
+				9DB4B1122BAF3CFE00F9C076 /* Patchbay.m in Sources */,
 				9D5C639629DA5DE200E40A60 /* SignalGeneratorViewController.m in Sources */,
 				9DB0128A2A71C376009BFCD8 /* CircularBuffer.cpp in Sources */,
 				9D4517C92A9D89AD003BC1EB /* MultibandControlsView.m in Sources */,
+				9D3ED8642AFFF65D008283FC /* AGCControlsView.m in Sources */,
 				9D81E9BA2A5B2D70007D46EF /* ProcModLevelMeter.cpp in Sources */,
 				9D5C638A29D8E5D600E40A60 /* SignalGeneratorEngine.cpp in Sources */,
 				9D81E9B52A5B2CC6007D46EF /* ProcessorModule.cpp in Sources */,
@@ -788,10 +970,11 @@
 				CODE_SIGN_ENTITLEMENTS = MacSmoov/MacSmoov.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 161;
+				CURRENT_PROJECT_VERSION = 423;
 				DEVELOPMENT_ASSET_PATHS = "";
 				ENABLE_HARDENED_RUNTIME = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				HEADER_SEARCH_PATHS = "/opt/repos/yaml-cpp/include/";
 				INFOPLIST_FILE = MacSmoov/Info.plist;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				INFOPLIST_KEY_NSMainNibFile = MainMenu;
@@ -801,6 +984,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
+				LIBRARY_SEARCH_PATHS = "/opt/repos/yaml-cpp/build/Debug";
 				MACOSX_DEPLOYMENT_TARGET = 10.15;
 				MARKETING_VERSION = 0.3;
 				PRODUCT_BUNDLE_IDENTIFIER = com.tonekids.osx.MacSmoov;
@@ -818,10 +1002,11 @@
 				CODE_SIGN_ENTITLEMENTS = MacSmoov/MacSmoov.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 161;
+				CURRENT_PROJECT_VERSION = 423;
 				DEVELOPMENT_ASSET_PATHS = "";
 				ENABLE_HARDENED_RUNTIME = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				HEADER_SEARCH_PATHS = "/opt/repos/yaml-cpp/include/";
 				INFOPLIST_FILE = MacSmoov/Info.plist;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				INFOPLIST_KEY_NSMainNibFile = MainMenu;
@@ -831,6 +1016,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
+				LIBRARY_SEARCH_PATHS = "/opt/repos/yaml-cpp/build/Debug";
 				MACOSX_DEPLOYMENT_TARGET = 10.15;
 				MARKETING_VERSION = 0.3;
 				PRODUCT_BUNDLE_IDENTIFIER = com.tonekids.osx.MacSmoov;
@@ -844,7 +1030,7 @@
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 161;
+				CURRENT_PROJECT_VERSION = 423;
 				GENERATE_INFOPLIST_FILE = YES;
 				MACOSX_DEPLOYMENT_TARGET = 11.6;
 				MARKETING_VERSION = 1.0;
@@ -860,7 +1046,7 @@
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 161;
+				CURRENT_PROJECT_VERSION = 423;
 				GENERATE_INFOPLIST_FILE = YES;
 				MACOSX_DEPLOYMENT_TARGET = 11.6;
 				MARKETING_VERSION = 1.0;
@@ -875,7 +1061,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 161;
+				CURRENT_PROJECT_VERSION = 423;
 				GENERATE_INFOPLIST_FILE = YES;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.tonekids.osx.MacSmoovUITests;
@@ -889,7 +1075,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 161;
+				CURRENT_PROJECT_VERSION = 423;
 				GENERATE_INFOPLIST_FILE = YES;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.tonekids.osx.MacSmoovUITests;

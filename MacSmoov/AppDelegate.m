@@ -8,6 +8,7 @@
 #import "AppDelegate.h"
 #import <AudioToolbox/AudioToolbox.h>
 #import "SignalGenerator.h"
+#import "AGCControlsView.h"
 #import "MultibandControlsView.h"
 #import "ProcessorCoreWrapper.h"
 #import "OSXAudioInterface.h"
@@ -25,6 +26,7 @@
 
 SignalGeneratorViewController *siggenvc;
 AudioDeviceSelector *audio_device_selector;
+AGCControlsView* agc_controls_view;
 MultibandControlsView* multiband_controls_view;
 ProcessorCoreWrapper* proc_core_wrapper;
 NSUserDefaults *prefs;
@@ -132,9 +134,12 @@ Boolean shutting_down;
     // Insert code here to initialize your application
     OSStatus err = 0;
 
+    _cfg_reader = [[ConfigReader alloc] init];
+    [_cfg_reader readCfgFromFile:@"/Users/zaremba/Library/Containers/com.tonekids.osx.MacSmoov/Data/tmp/config.yml"];
+    
     shutting_down = NO;
     
-    [_comp_2band_agc set_meter_range:-40.0];
+    [_comp_2band_agc set_meter_range:-30.0];
     [_comp_5band set_meter_color:[NSColor magentaColor]];
     [_comp_5band set_meter_range:-10.0];
     [_lim_5band set_meter_color:[NSColor yellowColor]];
@@ -175,9 +180,19 @@ Boolean shutting_down;
     //process_sys_iface = [[ProcessorSysInterface alloc] initWithSampleRate:self.sysaudio.sample_rate numberOfChannels:self.sysaudio.num_channels bufferSize:self.sysaudio.buffer_size];
     proc_core_wrapper = [[ProcessorCoreWrapper alloc] initWithSampleRate:self.sysaudio.sample_rate numberOfChannels:self.sysaudio.num_channels bufferSize:self.sysaudio.buffer_size];
     
+    AGC_PARAMS agc_params = [_cfg_reader getAgcParams];
+    [proc_core_wrapper change_agc_settings:agc_params];
+    
+    agc_controls_view = [[AGCControlsView alloc] initWithPrefs:prefs delegate:self];
     multiband_controls_view = [[MultibandControlsView alloc] initWithPrefs:prefs delegate:self];
         
     [self.sysaudio set_processor_hook:[proc_core_wrapper get_proc_core_hook]];
+    
+    if(NO == [proc_core_wrapper prepare]) {
+        NSLog(@"PROCESSOR CORE IS NOT READY.  WILL NOT START.");
+        return;
+    }
+    
     [self.sysaudio start];
     
     [NSThread detachNewThreadSelector:@selector(queryMeterLevels:) toTarget:self withObject:nil];
@@ -267,6 +282,23 @@ Boolean shutting_down;
     [audio_device_selector scanDevices];
 }
 
+-(IBAction) masterBypassSelected:(id)sender {
+    NSButton* button_bypass = (NSButton*) sender;
+    
+    if(button_bypass.state == NSControlStateValueOn) {
+        NSLog(@"Master Bypass On");
+    }
+    else {
+        NSLog(@"Master Bypass Off");
+    }
+    
+    [proc_core_wrapper setMasterBypass:button_bypass.state];
+}
+
+-(IBAction) agcFactoryMenuSelected:(id)sender {
+    [agc_controls_view showPanel];
+}
+
 -(IBAction) multibandAdjustMenuSelected:(id)sender {
     [multiband_controls_view showPanel];
 }
@@ -307,6 +339,11 @@ Boolean shutting_down;
     //NSLog(@"GainMainIn value changed: %4.2f dB", gmo.cell.floatValue);
     [proc_core_wrapper setMainInGainDBL:gmi.cell.floatValue R:gmi.cell.floatValue];
     [prefs setObject:[NSString stringWithFormat:@"%f", gmi.cell.floatValue] forKey:@"GAIN_IN_MAIN"];
+}
+
+-(void) agc_params_changed:(AGC_PARAMS) params {
+    NSLog(@"agc_params_changed delegate called on app delegate!");
+    //[proc_core_wrapper change_multiband_settings:params];
 }
 
 -(void) multiband_params_changed:(MULTIBAND_PARAMS) params {

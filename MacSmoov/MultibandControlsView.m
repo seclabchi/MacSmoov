@@ -177,12 +177,12 @@ COMPRESSOR_PARAMS factory_lim5 = {
 -(id) initWithPrefs:(NSUserDefaults*) defaults delegate:(id) mb_delegate {
     self = [super init];
     if(self) {
-        prefs = defaults;
-        delegate = mb_delegate;
+ //       prefs = defaults;
+ //       delegate = mb_delegate;
         
-        [self setupPrefsIfNeeded:NO];
-        [self read_prefs];
-        [delegate multiband_params_changed:mb_params];
+ //       [self setupPrefsIfNeeded:NO];
+ //       [self read_prefs];
+ //       [delegate multiband_params_changed:mb_params];
     }
     
     return self;
@@ -197,7 +197,7 @@ COMPRESSOR_PARAMS factory_lim5 = {
     //default band is 1 on startup
     current_band = 1;
     
-    [self populate_ui_elements:current_band];
+//    [self populate_ui_elements:current_band];
     
     //Read band enable settings
     NSControlStateValue bands_enabled[5];
@@ -208,14 +208,15 @@ COMPRESSOR_PARAMS factory_lim5 = {
     bands_enabled[3] = [prefs boolForKey:@"ENABLE_B4"];
     bands_enabled[4] = [prefs boolForKey:@"ENABLE_B5"];
     
-    [_enable_b1 setState: bands_enabled[0]];
-    [_enable_b2 setState: bands_enabled[1]];
-    [_enable_b3 setState: bands_enabled[2]];
-    [_enable_b4 setState: bands_enabled[3]];
-    [_enable_b5 setState: bands_enabled[4]];
+    //[_enable_b1 setState: bands_enabled[0]];
+    //[_enable_b2 setState: bands_enabled[1]];
+    //[_enable_b3 setState: bands_enabled[2]];
+    //[_enable_b4 setState: bands_enabled[3]];
+    //[_enable_b5 setState: bands_enabled[4]];
 }
 
 -(void) populate_ui_elements:(uint32_t)current_band {
+ /*
     NSString* bandstr = [NSString stringWithFormat:@"B%d", current_band];
     NSString* propstr;
     
@@ -245,12 +246,13 @@ COMPRESSOR_PARAMS factory_lim5 = {
     [_stepper_limiter_idle_gain setFloatValue: [_limiter_idle_gain floatValue]];
     [_stepper_limiter_attack setFloatValue: [_limiter_attack floatValue] * 1000];
     [_stepper_limiter_output_gain setFloatValue: [_limiter_output_gain floatValue]];
+*/
 }
 
 -(IBAction) band_select:(NSButton*)sender {
     NSLog(@"Band %lu selected.", (long)[sender tag]);
     current_band = (long)[sender tag];
-    [self populate_ui_elements:current_band];
+    //[self populate_ui_elements:current_band];
 }
 
 -(void) setPrefs:(NSUserDefaults*) defaults {
@@ -382,11 +384,11 @@ COMPRESSOR_PARAMS factory_lim5 = {
     NSString* bandstr;
     NSString* keystr;
     
-    states[0] = _enable_b1.state;
-    states[1] = _enable_b2.state;
-    states[2] = _enable_b3.state;
-    states[3] = _enable_b4.state;
-    states[4] = _enable_b5.state;
+    //states[0] = _enable_b1.state;
+    //states[1] = _enable_b2.state;
+    //states[2] = _enable_b3.state;
+    //states[3] = _enable_b4.state;
+    //states[4] = _enable_b5.state;
     
     for(uint32_t i = 0; i < 5; i++) {
         bandstr = [NSString stringWithFormat:@"B%d", i+1];

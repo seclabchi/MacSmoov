@@ -14,11 +14,9 @@ using namespace std;
 
 namespace fmsmoov {
 
-ProcessorModule::ProcessorModule(const string& _name, uint32_t _f_samp, uint32_t _n_channels, uint32_t _n_samps) : name(_name), f_samp(_f_samp), n_channels(_n_channels),
-    n_samps(_n_samps) {
+ProcessorModule::ProcessorModule(const string& _name, uint32_t _f_samp, uint32_t _n_channels, uint32_t _n_samps) : name(_name), f_samp(_f_samp), n_channels(_n_channels), n_samps(_n_samps), bypass(true), ready(false) {
         memset(inbufs, 0, MAX_INPUT_BUFFERS * sizeof(AudioBuf*));
         memset(outbufs, 0, MAX_OUTPUT_BUFFERS * sizeof(AudioBuf*));
-        bypass = false;
 }
 
 ProcessorModule::~ProcessorModule() {
@@ -33,6 +31,21 @@ ProcessorModule::~ProcessorModule() {
             delete outbufs[i];
         }
     }
+}
+
+void ProcessorModule::init(CoreConfig* _cfg, ProcessorModule* prev_mod, ChannelMap* _channel_map) {
+    ready = this->init_impl(_cfg, prev_mod, _channel_map);
+    
+    if(ready) {
+        cout << "Processor module " << this->name << " inited OK." << endl;
+    }
+    else {
+        cout << "Processor module " << this->name << " failed init." << endl;
+    }
+}
+
+bool ProcessorModule::is_ready() {
+    return (ready || bypass);
 }
 
 void ProcessorModule::set_bypass(bool _bypass) {
@@ -79,7 +92,7 @@ void ProcessorModule::set_in_buf(uint32_t buf_index, AudioBuf* abref, const stri
     }
     else {
         if(NULL == inbufs[buf_index]) {
-            cout << "Creating in_buf at position " << buf_index << " in " << __FILE__ << ":" << __LINE__ << " for module " << name << endl;
+            cout << "Creating in_buf at position " << buf_index << " for module " << name << endl;
             inbufs[buf_index] = new AudioBuf(*abref);
             inbufs[buf_index]->set_type(AudioBufType::REFERENCE);
             if(new_name.compare("")) {
@@ -87,7 +100,7 @@ void ProcessorModule::set_in_buf(uint32_t buf_index, AudioBuf* abref, const stri
             }
         }
         else {
-            cout << "Overwriting in_buf at position " << buf_index << " in " << __FILE__ << ":" << __LINE__ << " for module " << name << endl;
+            cout << "Overwriting in_buf at position " << buf_index << " for module " << name << endl;
             inbufs[buf_index] = abref;
             inbufs[buf_index]->set_type(AudioBufType::REFERENCE);
             if(new_name.compare("")) {
@@ -103,14 +116,14 @@ void ProcessorModule::set_out_buf(uint32_t buf_index, AudioBuf* abref) {
     }
     else {
         if(NULL == outbufs[buf_index]) {
-            cout << "Creating out_buf at position " << buf_index << " in " << __FILE__ << ":" << __LINE__ << " for module " << name << endl;
+            cout << "Creating out_buf at position " << buf_index << " for module " << name << endl;
             outbufs[buf_index] = new AudioBuf(*abref);
         }
         else {
             if(AudioBufType::REAL == outbufs[buf_index]->get_type()) {
                 delete[] outbufs[buf_index]->getbuf();
             }
-            cout << "Overwriting out_buf at position " << buf_index << " in " << __FILE__ << ":" << __LINE__ << " for module " << name << endl;
+            cout << "Overwriting out_buf at position " << buf_index << " for module " << name << endl;
             outbufs[buf_index] = abref;
         }
     }

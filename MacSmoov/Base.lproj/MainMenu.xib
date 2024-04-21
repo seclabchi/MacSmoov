@@ -380,9 +380,9 @@
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <menu key="submenu" title="Factory" id="gkE-9y-gP9">
                         <items>
-                            <menuItem title="AGC Tuning" keyEquivalent="a" id="5oc-4g-cor" userLabel="AGC Tuning">
+                            <menuItem title="AGC Tuning" keyEquivalent="a" id="5oc-4g-cor">
                                 <connections>
-                                    <action selector="multibandAdjustMenuSelected:" target="Voe-Tx-rLC" id="Iru-iG-aBk"/>
+                                    <action selector="agcFactoryMenuSelected:" target="Voe-Tx-rLC" id="vsE-Cb-Wiu"/>
                                 </connections>
                             </menuItem>
                             <menuItem title="Multiband Tuning" keyEquivalent="m" id="dnR-Ps-Ejj">
@@ -431,7 +431,7 @@
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
             <rect key="contentRect" x="335" y="390" width="940" height="543"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="1920" height="1080"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1920" height="1055"/>
             <view key="contentView" wantsLayer="YES" id="EiT-Mj-1SZ">
                 <rect key="frame" x="0.0" y="0.0" width="940" height="543"/>
                 <autoresizingMask key="autoresizingMask"/>
@@ -521,7 +521,7 @@
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 </customView>
                                 <view id="e18-Gm-rRp">
-                                    <rect key="frame" x="290" y="212" width="0.0" height="0.0"/>
+                                    <rect key="frame" x="290" y="212" width="10" height="5"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 </view>
                                 <box fixedFrame="YES" boxType="custom" borderType="line" borderWidth="2" title="Box2bandGateLo" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="fgD-Yv-iIX" userLabel="Box5bandgateb1">
@@ -696,6 +696,17 @@
                             </subviews>
                         </view>
                     </box>
+                    <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="a42-f6-UMw">
+                        <rect key="frame" x="13" y="54" width="144" height="32"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <buttonCell key="cell" type="push" title="Master Bypass" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="vPq-Kb-EYj">
+                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES" changeBackground="YES" changeGray="YES"/>
+                            <font key="font" metaFont="system"/>
+                        </buttonCell>
+                        <connections>
+                            <action selector="masterBypassSelected:" target="Voe-Tx-rLC" id="Dc2-mC-Wfq"/>
+                        </connections>
+                    </button>
                 </subviews>
             </view>
             <connections>

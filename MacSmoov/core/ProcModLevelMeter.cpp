@@ -32,6 +32,20 @@ ProcModLevelMeter::~ProcModLevelMeter() {
     delete[] prefiltered;
 }
 
+bool ProcModLevelMeter::init_impl(CoreConfig* cfg, ProcessorModule* prev_mod, ChannelMap* _channel_map) {
+    if(nullptr != cfg) {
+        //TODO config
+    }
+    if((nullptr != _channel_map) && (nullptr != prev_mod)) {
+        for(CHANNEL_MAP_ELEMENT e : _channel_map->the_map)
+        {
+            this->set_in_buf(e.this_chan, prev_mod->get_out_buf(e.in_chan));
+        }
+    }
+    
+    return true;
+}
+
 void ProcModLevelMeter::process() {
     rms_l = 0.0f;
     rms_r = 0.0f;

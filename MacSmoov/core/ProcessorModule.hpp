@@ -12,6 +12,8 @@
 #include <cstdint>
 #include <vector>
 #include <string>
+#include "CoreConfig.h"
+#include "core_utils/channel_map.hpp"
 #include "core_utils/AudioBuf.hpp"
 
 #define MAX_INPUT_BUFFERS 24
@@ -27,6 +29,9 @@ public:
     ProcessorModule(const string& _name, uint32_t _f_samp, uint32_t _n_channels, uint32_t _n_samps);
     virtual ~ProcessorModule();
     /* A "frame" is a stereo pair of float samples. */
+    void init(CoreConfig* _cfg, ProcessorModule* prev_mod, ChannelMap* _channel_map);
+    bool is_ready();
+    virtual bool init_impl(CoreConfig* _cfg, ProcessorModule* prev_mod, ChannelMap* _channel_map) = 0;
     virtual void process() = 0;
     void set_bypass(bool _bypass);
     bool get_bypass();
@@ -52,6 +57,8 @@ protected:
     uint32_t n_samps;
     AudioBuf* inbufs[MAX_INPUT_BUFFERS];
     AudioBuf* outbufs[MAX_OUTPUT_BUFFERS];
+    bool ready;
+    ChannelMap* channel_map;
 private:
     
 };

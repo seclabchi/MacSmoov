@@ -34,6 +34,10 @@ PROCESSOR_CORE_HOOK proc_core_hook;
     return proc_core_hook;
 }
 
+-(BOOL) prepare {
+    return cpp->prepare();
+}
+
 void processor_core_hook(AudioBufferList* ab_list, AudioBufferList* ab_list_coreout) {
     cpp->process((float*)ab_list->mBuffers[0].mData, (float*)ab_list->mBuffers[1].mData,
                  (float*)ab_list_coreout->mBuffers[0].mData, (float*)ab_list_coreout->mBuffers[1].mData,
@@ -61,8 +65,21 @@ void processor_core_hook(AudioBufferList* ab_list, AudioBufferList* ab_list_core
     cpp->set_bands_enabled(bands_enabled);
 }
 
+-(void) setMasterBypass:(NSControlStateValue) _master_bypass {
+    if(NSControlStateValueOn == _master_bypass) {
+        cpp->set_master_bypass(true);
+    }
+    else {
+        cpp->set_master_bypass(false);
+    }
+}
+
 -(void) change_multiband_settings:(MULTIBAND_PARAMS)_params {
     cpp->change_multiband_settings(_params);
+}
+
+-(void) change_agc_settings:(AGC_PARAMS)_params {
+    cpp->change_agc_settings(_params);
 }
 
 @end

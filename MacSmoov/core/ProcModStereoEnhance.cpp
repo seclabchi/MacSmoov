@@ -27,6 +27,20 @@ ProcModStereoEnhance::~ProcModStereoEnhance() {
     
 }
 
+bool ProcModStereoEnhance::init_impl(CoreConfig* cfg, ProcessorModule* prev_mod, ChannelMap* _channel_map) {
+    if(nullptr != cfg) {
+        //TODO config
+    }
+    if((nullptr != _channel_map) && (nullptr != prev_mod)) {
+        for(CHANNEL_MAP_ELEMENT e : _channel_map->the_map)
+        {
+            this->set_in_buf(e.this_chan, prev_mod->get_out_buf(e.in_chan));
+        }
+    }
+    
+    return true;
+}
+
 void ProcModStereoEnhance::process() {
     if(this->bypass) {
         memcpy(this->outbufs[0]->getbuf(), this->inbufs[0]->getbuf(), n_samps * sizeof(float));

@@ -17,6 +17,7 @@ class ProcModGain : public ProcessorModule {
 public:
     ProcModGain(const string& _name, uint32_t _f_samp, uint8_t _n_channels, uint32_t _n_samps);
     virtual ~ProcModGain();
+    virtual bool init_impl(CoreConfig* cfg, ProcessorModule* prev_mod, ChannelMap* _channel_map);
     /* n samps is total interleaved stereo samples
      TODO: Figure this shit out to make it universal. */
     virtual void process();

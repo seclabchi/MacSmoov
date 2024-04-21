@@ -15,92 +15,71 @@ using namespace std;
 
 /* n_samp is number of samples PER CHANNEL */
 ProcessorCore::ProcessorCore(uint32_t _f_samp, uint32_t _n_channels, uint32_t _n_samp) : f_samp(_f_samp), n_channels(_n_channels), n_samp(_n_samp) {
-    proc_mod_gain_main_in = new ProcModGain("GAIN_MAIN_IN", f_samp, n_channels, n_samp);
-    
-    proc_mod_level_main_in = new ProcModLevelMeter("LEVEL_MAIN_IN", f_samp, n_channels, n_samp);
-    AudioBuf* gmoL = proc_mod_gain_main_in->get_out_buf(0);
-    AudioBuf* gmoR = proc_mod_gain_main_in->get_out_buf(1);
-    proc_mod_level_main_in->set_in_buf(0, gmoL, "IN_L");
-    proc_mod_level_main_in->set_in_buf(1, gmoR, "IN_R");
-    
+    cfg = CoreConfig::get_instance();
+    core_stack = CoreStack::getInstance();
+
     master_bypass = false;
     
-    //proc_mod_stereo_enhance = new ProcModStereoEnhance("STEREO_ENHANCER", f_samp, n_channels, n_samp);
-    //AudioBuf* lmoL = proc_mod_level_main_in->get_out_buf(0);
-    //AudioBuf* lmoR = proc_mod_level_main_in->get_out_buf(1);
-    //proc_mod_stereo_enhance->set_in_buf(0, lmoL, "IN_L");
-    //proc_mod_stereo_enhance->set_in_buf(1, lmoR, "IN_R");
+    proc_mod_gain_main_in = new ProcModGain("GAIN_MAIN_IN", f_samp, n_channels, n_samp);
+    proc_mod_gain_main_in->init(nullptr, nullptr, nullptr);
+    core_stack->add_module(proc_mod_gain_main_in);
     
-    /*
-     typedef struct {
-         bool enabled;  //off-on
-         float drive;  //-10...+25 dB
-         float release_master;  //0.5...20 dB/s
-         float release_bass;    //1...10 dB/s
-         float gate_thresh;  //-80...-15 dB
-         float bass_coupling;  //0-100%
-         float window_size;  //-25...0 dB
-         float window_release;  //0.5...20 dB
-         float ratio;  //infinity:1....2:1
-         float bass_thresh;  //-12...2.5 dB
-         float idle_gain;  //-10...+10 dB
-         float attack_master;  //0.2...6 seconds
-         float attack_bass;   //1...10 seconds
-     } AGC_PARAMS;
-    */
-     
-    AGC_PARAMS agc_params = {
-        .enabled = true,
-        .drive = -40.0,
-        .release_master = 0.542,
-        .release_bass = 0.542,
-        .gate_thresh = -35.0,
-        .bass_coupling = 0.3,
-        .window_size = -3.0,
-        .window_release = 60,
-        .ratio = 200.0,
-        .bass_thresh = 0.0,
-        .idle_gain = 0.0,
-        .attack_master = 8.685,
-        .attack_bass = 8.685,
-        .post_gain = 17.0
-    };
+    ChannelMap* chan_map = new ChannelMap();
+    chan_map->the_map.push_back(CHANNEL_MAP_ELEMENT {0, 0, "IN_L"});
+    chan_map->the_map.push_back(CHANNEL_MAP_ELEMENT {1, 1, "IN_R"});
+    proc_mod_level_main_in = new ProcModLevelMeter("LEVEL_MAIN_IN", f_samp, n_channels, n_samp);
+    proc_mod_level_main_in->init(nullptr, proc_mod_gain_main_in, chan_map);
+    proc_mod_level_main_in->set_bypass(false);
+    core_stack->add_module(proc_mod_level_main_in);
     
+    chan_map = new ChannelMap();
+    chan_map->the_map.push_back(CHANNEL_MAP_ELEMENT {0, 0, "IN_L"});
+    chan_map->the_map.push_back(CHANNEL_MAP_ELEMENT {1, 1, "IN_R"});
     proc_mod_2band_agc = new ProcMod2BandAGC("2BAND_AGC", f_samp, n_channels, n_samp);
-    proc_mod_2band_agc->set_in_buf(0, proc_mod_level_main_in->get_out_buf(0));
-    proc_mod_2band_agc->set_in_buf(1, proc_mod_level_main_in->get_out_buf(1));
-    proc_mod_2band_agc->setup(agc_params);
-    proc_mod_2band_agc->set_bypass(false);
-    
-    proc_mod_hf_enhance = new ProcModHFEnhance("HF_ENHANCE", f_samp, n_channels, n_samp);
-    proc_mod_hf_enhance->set_in_buf(0, proc_mod_2band_agc->get_out_buf(0));
-    proc_mod_hf_enhance->set_in_buf(1, proc_mod_2band_agc->get_out_buf(1));
-    proc_mod_hf_enhance->set_bypass(true);
-    
-    proc_mod_5b_crossover = new ProcMod5bandCrossover("5BAND_CROSSOVER", f_samp, n_channels, n_samp);
-    proc_mod_5b_crossover->set_in_buf(0, proc_mod_hf_enhance->get_out_buf(0), "IN_L");
-    proc_mod_5b_crossover->set_in_buf(1, proc_mod_hf_enhance->get_out_buf(1), "IN_R");
-    proc_mod_5b_crossover->band_enable(true, true, true, true, true);
-    
+    proc_mod_2band_agc->init(nullptr, proc_mod_level_main_in, chan_map);
+    core_stack->add_module(proc_mod_2band_agc);
 
+    chan_map = new ChannelMap();
+    chan_map->the_map.push_back(CHANNEL_MAP_ELEMENT {0, 0, "IN_L"});
+    chan_map->the_map.push_back(CHANNEL_MAP_ELEMENT {1, 1, "IN_R"});
+    proc_mod_hf_enhance = new ProcModHFEnhance("HF_ENHANCE", f_samp, n_channels, n_samp);
+    proc_mod_hf_enhance->init(nullptr, proc_mod_2band_agc, chan_map);
+    proc_mod_hf_enhance->set_bypass(true);
+    core_stack->add_module(proc_mod_hf_enhance);
+    
+    chan_map = new ChannelMap();
+    chan_map->the_map.push_back(CHANNEL_MAP_ELEMENT {0, 0, "IN_L"});
+    chan_map->the_map.push_back(CHANNEL_MAP_ELEMENT {1, 1, "IN_R"});
+    proc_mod_5b_crossover = new ProcMod5bandCrossover("5BAND_CROSSOVER", f_samp, n_channels, n_samp);
+    proc_mod_5b_crossover->init(nullptr, proc_mod_hf_enhance, chan_map);
+    proc_mod_5b_crossover->set_bypass(true);
+    proc_mod_5b_crossover->band_enable(true, true, true, true, true);
+    core_stack->add_module(proc_mod_5b_crossover);
+    
+    chan_map = new ChannelMap();
+    chan_map->the_map.push_back(CHANNEL_MAP_ELEMENT {0, 0, "IN_L"});
+    chan_map->the_map.push_back(CHANNEL_MAP_ELEMENT {1, 1, "IN_R"});
+    chan_map->the_map.push_back(CHANNEL_MAP_ELEMENT {2, 2, "IN_B1_L"});
+    chan_map->the_map.push_back(CHANNEL_MAP_ELEMENT {3, 3, "IN_B1_R"});
+    chan_map->the_map.push_back(CHANNEL_MAP_ELEMENT {4, 4, "IN_B2_L"});
+    chan_map->the_map.push_back(CHANNEL_MAP_ELEMENT {5, 5, "IN_B2_R"});
+    chan_map->the_map.push_back(CHANNEL_MAP_ELEMENT {6, 6, "IN_B3_L"});
+    chan_map->the_map.push_back(CHANNEL_MAP_ELEMENT {7, 7, "IN_B3_R"});
+    chan_map->the_map.push_back(CHANNEL_MAP_ELEMENT {8, 8, "IN_B4_L"});
+    chan_map->the_map.push_back(CHANNEL_MAP_ELEMENT {9, 9, "IN_B4_R"});
+    chan_map->the_map.push_back(CHANNEL_MAP_ELEMENT {10, 10, "IN_B5_L"});
+    chan_map->the_map.push_back(CHANNEL_MAP_ELEMENT {11, 11, "IN_B5_R"});
     proc_mod_5b_compressor = new ProcMod5bandCompressor("5BAND_COMPRESSOR", f_samp, n_channels, n_samp);
-    proc_mod_5b_compressor->set_in_buf(0, proc_mod_5b_crossover->get_out_buf(0), "IN_L");
-    proc_mod_5b_compressor->set_in_buf(1, proc_mod_5b_crossover->get_out_buf(1), "IN_R");
-    proc_mod_5b_compressor->set_in_buf(2, proc_mod_5b_crossover->get_out_buf(2), "IN_B1_L");
-    proc_mod_5b_compressor->set_in_buf(3, proc_mod_5b_crossover->get_out_buf(3), "IN_B1_R");
-    proc_mod_5b_compressor->set_in_buf(4, proc_mod_5b_crossover->get_out_buf(4), "IN_B2_L");
-    proc_mod_5b_compressor->set_in_buf(5, proc_mod_5b_crossover->get_out_buf(5), "IN_B2_R");
-    proc_mod_5b_compressor->set_in_buf(6, proc_mod_5b_crossover->get_out_buf(6), "IN_B3_L");
-    proc_mod_5b_compressor->set_in_buf(7, proc_mod_5b_crossover->get_out_buf(7), "IN_B3_R");
-    proc_mod_5b_compressor->set_in_buf(8, proc_mod_5b_crossover->get_out_buf(8), "IN_B4_L");
-    proc_mod_5b_compressor->set_in_buf(9, proc_mod_5b_crossover->get_out_buf(9), "IN_B5_R");
-    proc_mod_5b_compressor->set_in_buf(10, proc_mod_5b_crossover->get_out_buf(10), "IN_B5_L");
-    proc_mod_5b_compressor->set_in_buf(11, proc_mod_5b_crossover->get_out_buf(11), "IN_B5_R");
-    //proc_mod_5b_compressor->setup(mb_params);  /*SHOULD BE PASSED INTO CORE BEFORE PROCESSING STARTS*/
+    proc_mod_5b_compressor->init(nullptr, proc_mod_5b_crossover, chan_map);
     proc_mod_5b_compressor->set_bypass(true);
+    core_stack->add_module(proc_mod_5b_compressor);
     
     m_loglin = new LogLinConverter(LogLinConversionType::LOG_TO_LIN);
     m_linlog = new LogLinConverter(LogLinConversionType::LIN_TO_LOG);
+}
+
+bool ProcessorCore::prepare() {
+    return core_stack->is_ready();
 }
 
 /* n_samp is the number of samples per channel, so each in_L and in_R will have this number of samples.
@@ -114,19 +93,20 @@ void ProcessorCore::process(float* in_L, float* in_R, float* out_L, float* out_R
         return;
     }
     
-    proc_mod_gain_main_in->update_in_buf_ref(0, in_L);
-    proc_mod_gain_main_in->update_in_buf_ref(1, in_R);
+    core_stack->process(in_L, in_R, out_L, out_R, n_samp);
+    //proc_mod_gain_main_in->update_in_buf_ref(0, in_L);
+    //proc_mod_gain_main_in->update_in_buf_ref(1, in_R);
     
-    proc_mod_5b_compressor->update_out_buf_ref(0, out_L);
-    proc_mod_5b_compressor->update_out_buf_ref(1, out_R);
+    //proc_mod_5b_compressor->update_out_buf_ref(0, out_L);
+    //proc_mod_5b_compressor->update_out_buf_ref(1, out_R);
     
-    proc_mod_gain_main_in->process();
-    proc_mod_level_main_in->process();
+    //proc_mod_gain_main_in->process();
+    //proc_mod_level_main_in->process();
     //proc_mod_stereo_enhance->process();
-    proc_mod_2band_agc->process();
-    proc_mod_hf_enhance->process();
-    proc_mod_5b_crossover->process();
-    proc_mod_5b_compressor->process();
+    //proc_mod_2band_agc->process();
+    //proc_mod_hf_enhance->process();
+    //proc_mod_5b_crossover->process();
+    //proc_mod_5b_compressor->process();
 }
 
 void ProcessorCore::get_main_in_levels(float* lrms, float* rrms, float* lpeak, float* rpeak) {
@@ -150,169 +130,18 @@ void ProcessorCore::set_bands_enabled(bool _bands_enabled[]) {
     proc_mod_5b_crossover->band_enable(_bands_enabled[0], _bands_enabled[1], _bands_enabled[2], _bands_enabled[3], _bands_enabled[4]);
 }
 
+void ProcessorCore::set_master_bypass(bool _master_bypass) {
+    master_bypass = _master_bypass;
+}
+
 void ProcessorCore::change_multiband_settings(MULTIBAND_PARAMS _params) {
     proc_mod_5b_compressor->setup(_params);
 }
 
+void ProcessorCore::change_agc_settings(AGC_PARAMS _params) {
+    proc_mod_2band_agc->setup(_params);
+}
 
-/*  DEFUNCT FACTORY SETTINGS, SHOULD HAPPEN EXTERNAL TO CORE
- COMPRESSOR_PARAMS comp_params_b1 = {
-     .drive = -40.0,
-     .release = .250,
-     .gate_thresh = -50.0,
-     .use_coupling = false,
-     .coupling = 0.0,
-     .window_size = 0.0,
-     .window_release = 2.0,
-     .ratio = 2.5,
-     .idle_gain = 0.0,
-     .attack = 0.125,
-     .post_gain = 0.0
- };
- 
- COMPRESSOR_PARAMS comp_params_b2 = {
-     .drive = -40.0,
-     .release = 0.240,
-     .gate_thresh = -50.0,
-     .use_coupling = false,
-     .coupling = 0.0,
-     .window_size = 0.0,
-     .window_release = 2.0,
-     .ratio = 1.7,
-     .idle_gain = 0.0,
-     .attack = 0.080,
-     .post_gain = 0.0
- };
- 
- COMPRESSOR_PARAMS comp_params_b3 = {
-     .drive = -40.0,
-     .release = .048,
-     .gate_thresh = -50.0,
-     .use_coupling = false,
-     .coupling = 0.0,
-     .window_size = 0.0,
-     .window_release = 2.0,
-     .ratio = 2,
-     .idle_gain = 0.0,
-     .attack = 0.016,
-     .post_gain = 0.0
- };
- 
- COMPRESSOR_PARAMS comp_params_b4 = {
-     .drive = -40.0,
-     .release = 0.032,
-     .gate_thresh = -50.0,
-     .use_coupling = true,
-     .coupling = 0.20,
-     .window_size = 0.0,
-     .window_release = 2.0,
-     .ratio = 2.2,
-     .idle_gain = 0.0,
-     .attack = 0.008,
-     .post_gain = 0.0
- };
- 
- COMPRESSOR_PARAMS comp_params_b5 = {
-     .drive = -40.0,
-     .release = .016,
-     .gate_thresh = -50.0,
-     .use_coupling = true,
-     .coupling = 0.20,
-     .window_size = 0.0,
-     .window_release = 2.0,
-     .ratio = 2.4,
-     .idle_gain = 0.0,
-     .attack = 0.004,
-     .post_gain = 0.0
- };
- 
- /*===================================*/
- /* LIMITERS                          */
- /*===================================*/
 
-/*
- COMPRESSOR_PARAMS lim_params_b1 = {
-     .drive = -49.0,
-     .release = 0.125,
-     .gate_thresh = -100.0,
-     .use_coupling = false,
-     .coupling = 0.0,
-     .window_size = 0.0,
-     .window_release = 0.0,
-     .ratio = 9,
-     .idle_gain = 0.0,
-     .attack = 0.100,
-     .post_gain = 14.0
- };
- 
- COMPRESSOR_PARAMS lim_params_b2 = {
-     .drive = -49.0,
-     .release = 0.080,
-     .gate_thresh = -100.0,
-     .use_coupling = false,
-     .coupling = 0.0,
-     .window_size = 0.0,
-     .window_release = 0.0,
-     .ratio = 9,
-     .idle_gain = 0.0,
-     .attack = 0.080,
-     .post_gain = 8.0
- };
- 
- COMPRESSOR_PARAMS lim_params_b3 = {
-     .drive = -49.0,
-     .release = 0.016,
-     .gate_thresh = -100.0,
-     .use_coupling = false,
-     .coupling = 0.0,
-     .window_size = 0.0,
-     .window_release = 0.0,
-     .ratio = 9,
-     .idle_gain = 0.0,
-     .attack = 0.016,
-     .post_gain = 8.0
- };
- 
- COMPRESSOR_PARAMS lim_params_b4 = {
-     .drive = -49.0,
-     .release = 0.008,
-     .gate_thresh = -100.0,
-     .use_coupling = false,
-     .coupling = 0.0,
-     .window_size = 0.0,
-     .window_release = 0.0,
-     .ratio = 9,
-     .idle_gain = 0.0,
-     .attack = 0.008,
-     .post_gain = 8.0
- };
- 
- COMPRESSOR_PARAMS lim_params_b5 = {
-     .drive = -49.0,
-     .release = 0.004,
-     .gate_thresh = -100.0,
-     .use_coupling = false,
-     .coupling = 0.0,
-     .window_size = 0.0,
-     .window_release = 0.0,
-     .ratio = 9,
-     .idle_gain = 0.0,
-     .attack = 0.004,
-     .post_gain = 12.0
- };
- 
- 
- MULTIBAND_PARAMS mb_params = {
-     .comp_params[0] = comp_params_b1,
-     .lim_params[0] = lim_params_b1,
-     .comp_params[1] = comp_params_b2,
-     .lim_params[1] = lim_params_b2,
-     .comp_params[2] = comp_params_b3,
-     .lim_params[2] = lim_params_b3,
-     .comp_params[3] = comp_params_b4,
-     .lim_params[3] = lim_params_b4,
-     .comp_params[4] = comp_params_b5,
-     .lim_params[4] = lim_params_b5
- };
- 
-*/
+
+

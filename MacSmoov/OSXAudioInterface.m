@@ -345,6 +345,21 @@ void checkStatus(int status) {
     
     checkStatus(err);
     
+    UInt32 prop_size = 0;
+    
+    SInt32 chan_map[4] = {0};
+    chan_map[0] = 0;
+    chan_map[1] = 1;
+    chan_map[2] = 0;
+    chan_map[3] = 1;
+    
+    prop_size = sizeof(chan_map);
+    
+    err = AudioUnitSetProperty(audioUnitOutput, kAudioOutputUnitProperty_ChannelMap, kAudioUnitScope_Input, OUTPUT_BUS,
+                               &chan_map, prop_size);
+    
+    checkStatus(err);
+    
 
     //STEP 4: Setup the desired input/output audio format
     AudioStreamBasicDescription audioFormat;
@@ -692,14 +707,14 @@ static OSStatus recordingCallback(void *inRefCon,
                              buf_list);
     checkStatus(err);
     
-    if(skip_count_record < 0) {
-        memset(buf_list->mBuffers[0].mData, 0, buf_list->mBuffers[0].mDataByteSize);
-        memset(buf_list->mBuffers[1].mData, 0, buf_list->mBuffers[1].mDataByteSize);
-        memset(buf_list_coreout->mBuffers[0].mData, 0, buf_list_coreout->mBuffers[0].mDataByteSize);
-        memset(buf_list_coreout->mBuffers[1].mData, 0, buf_list_coreout->mBuffers[1].mDataByteSize);
-        skip_count_record++;
-        return noErr;
-    }
+    //if(skip_count_record < 0) {
+    //    memset(buf_list->mBuffers[0].mData, 0, buf_list->mBuffers[0].mDataByteSize);
+    //    memset(buf_list->mBuffers[1].mData, 0, buf_list->mBuffers[1].mDataByteSize);
+    //    memset(buf_list_coreout->mBuffers[0].mData, 0, buf_list_coreout->mBuffers[0].mDataByteSize);
+    //    memset(buf_list_coreout->mBuffers[1].mData, 0, buf_list_coreout->mBuffers[1].mDataByteSize);
+    //    skip_count_record++;
+    //    return noErr;
+   //}
     
     // Send the freshly rendered buffers to the DSP core.
     if(cb_proc_core_hook) {
@@ -751,6 +766,8 @@ static OSStatus playbackCallback(void *inRefCon,
     
     memcpy(ioData->mBuffers[0].mData, buf_list_coreout->mBuffers[0].mData, buf_list_coreout->mBuffers[0].mDataByteSize);
     memcpy(ioData->mBuffers[1].mData, buf_list_coreout->mBuffers[1].mData, buf_list_coreout->mBuffers[1].mDataByteSize);
+    //memcpy(ioData->mBuffers[2].mData, buf_list_coreout->mBuffers[0].mData, buf_list_coreout->mBuffers[0].mDataByteSize);
+    //memcpy(ioData->mBuffers[3].mData, buf_list_coreout->mBuffers[1].mData, buf_list_coreout->mBuffers[1].mDataByteSize);
     
     return noErr;
 }
@@ -798,6 +815,11 @@ bool deviceHasBuffersInScope(AudioObjectID deviceID, AudioObjectPropertyScope sc
     }
 
     BOOL supportsScope = bufferList->mNumberBuffers > 0;
+    
+    if(supportsScope) {
+        NSLog(@"Device id %d supports scope %d with number of buffers %d", deviceID, scope, bufferList->mNumberBuffers);
+    }
+    
     free(bufferList);
 
     return supportsScope;

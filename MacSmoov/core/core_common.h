@@ -8,6 +8,7 @@
 #ifndef core_common_h
 #define core_common_h
 
+
 typedef struct {
     bool enabled;  //off-on
     float drive;  //-10...+25 dB

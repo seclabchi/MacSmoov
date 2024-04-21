@@ -140,12 +140,26 @@ ProcMod5bandCompressor::~ProcMod5bandCompressor() {
     
 }
 
+bool ProcMod5bandCompressor::init_impl(CoreConfig* cfg, ProcessorModule* prev_mod, ChannelMap* _channel_map) {
+    if(nullptr != cfg) {
+        //TODO config
+    }
+    if((nullptr != _channel_map) && (nullptr != prev_mod)) {
+        for(CHANNEL_MAP_ELEMENT e : _channel_map->the_map)
+        {
+            this->set_in_buf(e.this_chan, prev_mod->get_out_buf(e.in_chan));
+        }
+    }
+    
+    return true;
+}
+
 void ProcMod5bandCompressor::process() {
     uint32_t n_samps = this->get_n_samps();
     master_outL = this->get_out_buf(0)->getbuf();
     master_outR = this->get_out_buf(1)->getbuf();
     
-    if(this->get_bypass()) {
+    if(this->bypass) {
         memcpy(this->get_out_buf(0)->getbuf(), this->get_in_buf(0)->getbuf(), n_samps * sizeof(float));
         memcpy(this->get_out_buf(1)->getbuf(), this->get_in_buf(1)->getbuf(), n_samps * sizeof(float));
         return;
@@ -162,7 +176,6 @@ void ProcMod5bandCompressor::process() {
     lim_b3->process(procb3L, procb3R, limb3L, limb3R, n_samps, lim_b3_gain_reduction_buf, NULL);
     lim_b4->process(procb4L, procb4R, limb4L, limb4R, n_samps, lim_b4_gain_reduction_buf, NULL);
     lim_b5->process(procb5L, procb5R, limb5L, limb5R, n_samps, lim_b5_gain_reduction_buf, NULL);
-    
     
     
     for(uint32_t i = 0; i < n_samps; i++) {
@@ -185,7 +198,7 @@ void ProcMod5bandCompressor::setup(const MULTIBAND_PARAMS _params) {
     lim_b5->setup(params.lim_params[4]);
     
     
-    if(!first_setup_complete) {
+    //if(!first_setup_complete) {
         inb1L = this->get_in_buf(2)->getbuf();
         inb1R = this->get_in_buf(3)->getbuf();
         inb2L = this->get_in_buf(4)->getbuf();
@@ -197,7 +210,7 @@ void ProcMod5bandCompressor::setup(const MULTIBAND_PARAMS _params) {
         inb5L = this->get_in_buf(10)->getbuf();
         inb5R = this->get_in_buf(11)->getbuf();
         first_setup_complete = true;
-    }
+    //}
 }
 
 void ProcMod5bandCompressor::read(float** _bands_gr, float** _bands_lim, bool** _bands_gate_open) {

@@ -21,8 +21,6 @@ NS_ASSUME_NONNULL_BEGIN
     int16_t b1_release;
     float b1_ratio;
     int8_t b1_gate_thresh;
-    bool b1_mute;
-    bool b1_solo;
 }
 
 @property (readwrite, assign) int8_t b1_drive;
@@ -30,9 +28,6 @@ NS_ASSUME_NONNULL_BEGIN
 @property (readwrite, assign) int16_t b1_release;
 @property (readwrite, assign) float b1_ratio;
 @property (readwrite, assign) int8_t b1_gate_thresh;
-@property (readwrite, assign) bool b1_mute;
-@property (readwrite, assign) bool b1_solo;
-
 
 @property (strong) IBOutlet NSStepper* stepper_compressor_drive;
 @property (strong) IBOutlet NSStepper* stepper_compressor_release;
@@ -63,20 +58,19 @@ NS_ASSUME_NONNULL_BEGIN
 @property (strong) IBOutlet NSTextField* limiter_output_gain;
 
 
-@property (strong) IBOutlet NSButton* enable_b1;
-@property (strong) IBOutlet NSButton* enable_b2;
-@property (strong) IBOutlet NSButton* enable_b3;
-@property (strong) IBOutlet NSButton* enable_b4;
-@property (strong) IBOutlet NSButton* enable_b5;
+@property (strong) IBOutlet NSButton* select_b1;
+@property (strong) IBOutlet NSButton* select_b2;
+@property (strong) IBOutlet NSButton* select_b3;
+@property (strong) IBOutlet NSButton* select_b4;
+@property (strong) IBOutlet NSButton* select_b5;
 
 -(IBAction) bandEnableChanged:(NSButton*)sender;
+-(IBAction) band_select:(NSButton*)sender;
 
 -(IBAction) stepper_changed_compressor:(NSStepper*)sender;
 -(IBAction) value_changed_compressor:(NSTextField*)sender;
 -(IBAction) stepper_changed_limiter:(NSStepper*)sender;
 -(IBAction) value_changed_limiter:(NSTextField*)sender;
-
--(IBAction) band_select:(NSButton*)sender;
 
 -(IBAction) factory_reset:(NSButton*)sender;
 
