@@ -23,6 +23,13 @@
 #include "ProcMod5bandCompressor.hpp"
 #include "LogLinConverter.hpp"
 
+/*
+ * Define this to enable core debugging.  Right now it just bypasses the core entirely, so not
+ * sure about putting this here.
+ */
+#define CORE_BYPASS true
+#define CORE_DEBUG true
+
 namespace fmsmoov {
 
 using namespace std;
@@ -30,6 +37,7 @@ using namespace std;
 class ProcessorCore {
 public:
     ProcessorCore(uint32_t _f_samp, uint32_t _n_channels, uint32_t _n_samp);
+    bool load_config_from_file(const std::string& filename);
     bool prepare();
     void process(float* in_L, float* in_R, float* out_L, float* out_R, uint32_t n_samp);
     void get_main_in_levels(float* lrms, float* rrms, float* lpeak, float* rpeak);
@@ -47,7 +55,7 @@ private:
     uint32_t n_samp;  //total interleaved L+R samples
     bool master_bypass;
     
-    CoreConfig* cfg;
+    CoreConfig* core_config;
     CoreStack* core_stack;
     
     ProcModGain* proc_mod_gain_main_in;

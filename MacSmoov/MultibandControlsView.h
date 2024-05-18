@@ -12,15 +12,11 @@ NS_ASSUME_NONNULL_BEGIN
 
 @protocol MultibandControlsDelegate <NSObject>
 -(void) multiband_params_changed:(MULTIBAND_PARAMS) params;
--(void) band_enablement_changed:(NSControlStateValue[]) band_states;
+-(void) band_enablement_changed:(NSControlStateValue[_Nonnull]) band_states;
 @end
 
 @interface MultibandControlsView : NSViewController {
-    int8_t b1_drive;
-    int16_t b1_attack;
-    int16_t b1_release;
-    float b1_ratio;
-    int8_t b1_gate_thresh;
+ 
 }
 
 @property (readwrite, assign) int8_t b1_drive;
@@ -78,7 +74,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 -(id) initWithPrefs:(NSUserDefaults*) defaults delegate:(id)mb_delegate;
 -(void) setupPrefsIfNeeded:(BOOL)factory_reset;
--(void) init_defaults:(BOOL)force_factory;
+//-(void) init_defaults:(BOOL)force_factory;
 -(void) showPanel;
 
 - (void)controlTextDidChange:(NSNotification *)obj;

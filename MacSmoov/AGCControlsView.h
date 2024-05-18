@@ -15,13 +15,6 @@ NS_ASSUME_NONNULL_BEGIN
 @end
 
 @interface AGCControlsView : NSViewController {
-    int8_t b1_drive;
-    int16_t b1_attack;
-    int16_t b1_release;
-    float b1_ratio;
-    int8_t b1_gate_thresh;
-    bool b1_mute;
-    bool b1_solo;
 }
 
 @property (readwrite, assign) int8_t b1_drive;
@@ -68,14 +61,14 @@ NS_ASSUME_NONNULL_BEGIN
 @property (strong) IBOutlet NSButton* enable_b4;
 @property (strong) IBOutlet NSButton* enable_b5;
 
--(IBAction) bandEnableChanged:(NSButton*)sender;
+//-(IBAction) bandEnableChanged:(NSButton*)sender;
 
--(IBAction) stepper_changed_compressor:(NSStepper*)sender;
--(IBAction) value_changed_compressor:(NSTextField*)sender;
--(IBAction) stepper_changed_limiter:(NSStepper*)sender;
--(IBAction) value_changed_limiter:(NSTextField*)sender;
+//-(IBAction) stepper_changed_compressor:(NSStepper*)sender;
+//-(IBAction) value_changed_compressor:(NSTextField*)sender;
+//-(IBAction) stepper_changed_limiter:(NSStepper*)sender;
+//-(IBAction) value_changed_limiter:(NSTextField*)sender;
 
--(IBAction) band_select:(NSButton*)sender;
+//-(IBAction) band_select:(NSButton*)sender;
 
 -(IBAction) factory_reset:(NSButton*)sender;
 
@@ -83,7 +76,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 -(id) initWithPrefs:(NSUserDefaults*) defaults delegate:(id)mb_delegate;
 -(void) setupPrefsIfNeeded:(BOOL)factory_reset;
--(void) init_defaults:(BOOL)force_factory;
+//-(void) init_defaults:(BOOL)force_factory;
 -(void) showPanel;
 
 - (void)controlTextDidChange:(NSNotification *)obj;

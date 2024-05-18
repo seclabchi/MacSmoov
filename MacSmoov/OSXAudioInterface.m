@@ -19,16 +19,20 @@
 bool deviceHasBuffersInScope(AudioObjectID deviceID, AudioObjectPropertyScope scope);
 
 @interface OSXAudioInterface () {
-    
+    AudioComponentInstance audioUnitInput;
+    AudioComponentInstance audioUnitOutput;
 }
+
+-(AudioDevice*) find_input_device_with_name:(NSString*) name;
+-(AudioDevice*) find_output_device_with_name:(NSString*) name;
 
 @property (nonatomic, strong) NSMutableDictionary* input_devices;
 @property (nonatomic, strong) NSMutableDictionary* output_devices;
 @property (nonatomic, strong) AudioDevice* current_input_device;
 @property (nonatomic, strong) AudioDevice* current_output_device;
-@property (nonatomic) NSUInteger sample_rate;
-@property (nonatomic) NSUInteger num_channels;
-@property (nonatomic) NSUInteger buffer_size;
+@property (nonatomic) uint32_t sample_rate;
+@property (nonatomic) uint32_t num_channels;
+@property (nonatomic) uint32_t buffer_size;
 
 @end
 
@@ -57,24 +61,21 @@ static OSStatus playbackCallback(void *inRefCon,
 uint32_t skip_count_playback = 0;
 uint32_t skip_count_record = 0;
 
-AudioComponent audioUnitInput;
-AudioComponent audioUnitOutput;
+AudioDeviceID current_input_device_id = 0;
+AudioDeviceID current_output_device_id = 0;
 
-AudioDeviceID current_input_device_id;
-AudioDeviceID current_output_device_id;
+Boolean is_running = NO;
+Boolean is_reconfiguring = NO;
 
-Boolean is_running;
-Boolean is_reconfiguring;
+PROCESSOR_CORE_HOOK cb_proc_core_hook = NULL;
 
-PROCESSOR_CORE_HOOK cb_proc_core_hook;
-
-NSFileHandle* capture_file_handle;
+NSFileHandle* capture_file_handle = NULL;
 
 /* Input buffers */
-UInt32 lastNumberFrames;
-UInt32 buf_size_in_bytes;
-AudioBufferList* buf_list;
-AudioBufferList* buf_list_coreout;
+UInt32 lastNumberFrames = 0;
+UInt32 buf_size_in_bytes = 0;
+AudioBufferList* buf_list = NULL;
+AudioBufferList* buf_list_coreout = NULL;
 
 
 void checkStatus(int status) {
@@ -85,29 +86,15 @@ void checkStatus(int status) {
     }
 }
 
--(id) initWithCurrentInputDevice:(AudioDevice*)in_dev OutputDevice:(AudioDevice*)out_dev {
+-(id) init {
     self = [super init];
     
     if(self) {
-        audio_input_device_dict = [[NSMutableDictionary alloc] init];
-        audio_output_device_dict = [[NSMutableDictionary alloc] init];
-        self.input_devices = audio_input_device_dict;
-        self.output_devices = audio_output_device_dict;
-        if(nil != in_dev) {
-            current_input_device_id = in_dev.device_id;
-        }
-        else {
-            current_input_device_id = 0;
-        }
-        
-        if(nil != out_dev) {
-            current_output_device_id = out_dev.device_id;
-        }
-        else {
-            current_output_device_id = 0;
-        }
-        
         is_running = NO;
+        self.input_devices = [[NSMutableDictionary alloc] init];
+        self.output_devices = [[NSMutableDictionary alloc] init];
+        
+        [self discoverDevices];
         
         lastNumberFrames = 512;
         buf_size_in_bytes = lastNumberFrames * sizeof(Float32);
@@ -503,13 +490,13 @@ void checkStatus(int status) {
     return err;
 }
 
-- (OSStatus) set_input_device:(AudioDevice*)input_dev {
+- (OSStatus) set_input_device_from_name:(NSString*)input_dev {
     OSStatus err = 0;
 
     [self stop];
 
-    NSLog(@"Changing input device to %@ (%@)", input_dev.device_name, input_dev.device_uid);
-    _current_input_device = input_dev;
+    NSLog(@"Changing input device to %@", input_dev);
+    _current_input_device = [self find_input_device_with_name:input_dev];
     
     //[self start];
     
@@ -524,13 +511,13 @@ void checkStatus(int status) {
     return ad;
 }
 
-- (OSStatus) set_output_device:(AudioDevice*)output_dev {
+- (OSStatus) set_output_device_from_name:(NSString*)output_dev {
     OSStatus err = 0;
     
     [self stop];
     
-    NSLog(@"Changing output device to %@ (%@)", output_dev.device_name, output_dev.device_uid);
-    _current_output_device = output_dev;
+    NSLog(@"Changing output device to %@", output_dev);
+    _current_output_device = [self find_output_device_with_name:output_dev];
     
     //[self start];
     
@@ -544,6 +531,56 @@ void checkStatus(int status) {
     ad = _current_output_device;
     
     return ad;
+}
+
+- (void) get_all_input_device_names:(NSMutableArray*)in_devs {
+    AudioDevice* in_dev = NULL;
+    [in_devs removeAllObjects];
+    NSArray* dev_keys = [self.input_devices allKeys];
+    for(NSString* key in dev_keys) {
+        in_dev = [self.input_devices objectForKey:key];
+        [in_devs addObject:(NSString*)in_dev.device_name];
+    }
+}
+
+- (void) get_all_output_device_names:(NSMutableArray*)out_devs {
+    AudioDevice* out_dev = NULL;
+    [out_devs removeAllObjects];
+    NSArray* dev_keys = [self.output_devices allKeys];
+    for(NSString* key in dev_keys) {
+        out_dev = [self.output_devices objectForKey:key];
+        [out_devs addObject:(NSString*)out_dev.device_name];
+    }
+}
+
+- (AudioDevice*) find_input_device_with_name:(NSString*)name {
+    AudioDevice* in_dev = NULL;
+    NSArray* dev_keys = [self.input_devices allKeys];
+    for(NSString* key in dev_keys) {
+        AudioDevice* tmp = [self.input_devices objectForKey:key];
+        NSString* tmpname = (NSString*)tmp.device_name;
+        if([tmpname isEqualToString:name]) {
+            //found a match
+            in_dev = tmp;
+        }
+    }
+    
+    return in_dev;
+}
+
+- (AudioDevice*) find_output_device_with_name:(NSString*)name {
+    AudioDevice* out_dev = NULL;
+    NSArray* dev_keys = [self.output_devices allKeys];
+    for(NSString* key in dev_keys) {
+        AudioDevice* tmp = [self.output_devices objectForKey:key];
+        NSString* tmpname = (NSString*)tmp.device_name;
+        if([tmpname isEqualToString:name]) {
+            //found a match
+            out_dev = tmp;
+        }
+    }
+    
+    return out_dev;
 }
 
  - (OSStatus) discoverDevices {
@@ -615,25 +652,25 @@ void checkStatus(int status) {
             
             if(isInput) {
                 NSNumber* device_id_number = [NSNumber numberWithUnsignedInt:devices[i]];
-                [audio_input_device_dict setObject:ad forKey:device_id_number];
+                [self.input_devices setObject:ad forKey:device_id_number];
             }
             
             if(isOutput) {
                 NSNumber* device_id_number = [NSNumber numberWithUnsignedInt:devices[i]];
-                [audio_output_device_dict setObject:ad forKey:device_id_number];
+                [self.output_devices setObject:ad forKey:device_id_number];
             }
         }
     }
 
     NSLog(@"Finished discovering audio devices.");
      
-     for(NSNumber* key in audio_input_device_dict) {
-         AudioDevice* dev = audio_input_device_dict[key];
+     for(NSNumber* key in self.input_devices) {
+         AudioDevice* dev = self.input_devices[key];
          NSLog(@"Audio Input Device Discovered: ID: %d, Name: %@, UID: %@", dev.device_id, dev.device_name, dev.device_uid);
      }
      
-     for(NSNumber* key in audio_output_device_dict) {
-         AudioDevice* dev = audio_output_device_dict[key];
+     for(NSNumber* key in self.output_devices) {
+         AudioDevice* dev = self.output_devices[key];
          NSLog(@"Audio Output Device Discovered: ID: %d, Name: %@, UID: %@", dev.device_id, dev.device_name, dev.device_uid);
      }
      
@@ -707,18 +744,16 @@ static OSStatus recordingCallback(void *inRefCon,
                              buf_list);
     checkStatus(err);
     
-    //if(skip_count_record < 0) {
-    //    memset(buf_list->mBuffers[0].mData, 0, buf_list->mBuffers[0].mDataByteSize);
-    //    memset(buf_list->mBuffers[1].mData, 0, buf_list->mBuffers[1].mDataByteSize);
-    //    memset(buf_list_coreout->mBuffers[0].mData, 0, buf_list_coreout->mBuffers[0].mDataByteSize);
-    //    memset(buf_list_coreout->mBuffers[1].mData, 0, buf_list_coreout->mBuffers[1].mDataByteSize);
-    //    skip_count_record++;
-    //    return noErr;
-   //}
-    
-    // Send the freshly rendered buffers to the DSP core.
+    /*
+     * Send the freshly rendered buffers to the DSP core.
+     */
     if(cb_proc_core_hook) {
         cb_proc_core_hook(buf_list, buf_list_coreout);
+    }
+    else {
+        /* Processor core is bypassed, copy directly here. */
+        memcpy(buf_list_coreout->mBuffers[0].mData, buf_list->mBuffers[0].mData, buf_list->mBuffers[0].mDataByteSize);
+        memcpy(buf_list_coreout->mBuffers[1].mData, buf_list->mBuffers[1].mData, buf_list->mBuffers[1].mDataByteSize);
     }
         
     /*
@@ -739,10 +774,7 @@ static OSStatus recordingCallback(void *inRefCon,
     
     free(outdata);
     */
-    //free(buf_list->mBuffers[0].mData);
-    //free(buf_list->mBuffers[1].mData);
-    //free(buf_list);
-    
+
     return noErr;
 }
 
@@ -772,15 +804,15 @@ static OSStatus playbackCallback(void *inRefCon,
     return noErr;
 }
 
--(NSUInteger) get_sample_rate {
+-(uint32_t) get_sample_rate {
     return SAMPLE_RATE;
 }
 
--(NSUInteger) get_num_channels {
+-(uint32_t) get_num_channels {
     return NUM_CHANNELS;
 }
 
--(NSUInteger) get_buffer_size {
+-(uint32_t) get_buffer_size {
     return buf_size_in_bytes;
 }
 

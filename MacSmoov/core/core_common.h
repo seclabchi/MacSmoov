@@ -27,6 +27,8 @@ typedef struct {
 } AGC_PARAMS;
 
 typedef struct  {
+    bool enabled;
+    bool mute;
     float drive;
     float release;
     float gate_thresh;

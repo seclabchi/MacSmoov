@@ -67,8 +67,8 @@ ProcMod2BandAGC::ProcMod2BandAGC(const string& _name, uint32_t _f_samp, uint8_t 
     agc_out_hiR = new float[_n_samps]();
     memset(agc_out_hiR, 0, _n_samps*sizeof(float));
     
-    comp_lo = NULL;
-    comp_hi = NULL;
+    comp_lo = new Compressor(CompressorType::STEREO, this->get_f_samp(), this->get_n_samps());
+    comp_hi = new Compressor(CompressorType::STEREO, this->get_f_samp(), this->get_n_samps());
     
     comp_hi_gain_reduction_buf = new float[_n_samps]();
     memset(comp_hi_gain_reduction_buf, 0, n_samps*sizeof(float));

@@ -15,7 +15,7 @@ using namespace std;
 
 /* n_samp is number of samples PER CHANNEL */
 ProcessorCore::ProcessorCore(uint32_t _f_samp, uint32_t _n_channels, uint32_t _n_samp) : f_samp(_f_samp), n_channels(_n_channels), n_samp(_n_samp) {
-    cfg = CoreConfig::get_instance();
+    core_config = CoreConfig::get_instance();
     core_stack = CoreStack::getInstance();
 
     master_bypass = false;
@@ -80,6 +80,23 @@ ProcessorCore::ProcessorCore(uint32_t _f_samp, uint32_t _n_channels, uint32_t _n
 
 bool ProcessorCore::prepare() {
     return core_stack->is_ready();
+}
+
+bool ProcessorCore::load_config_from_file(const std::string& filename) {
+    bool retval = false;
+    AGC_PARAMS agc_params;
+    MULTIBAND_PARAMS mb_params;
+    
+    retval = core_config->load_cfg_from_file(filename);
+    
+    if(retval) {
+        core_config->get_agc_params(agc_params);
+        proc_mod_2band_agc->setup(agc_params);
+        core_config->get_mb_params(mb_params);
+        proc_mod_5b_compressor->setup(mb_params);
+    }
+    
+    return retval;
 }
 
 /* n_samp is the number of samples per channel, so each in_L and in_R will have this number of samples.

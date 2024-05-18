@@ -16,8 +16,8 @@
 }
 
 -(void) set_band_pref:(COMPRESSOR_PARAMS) params band_num:(uint32_t) num is_comp:(bool)comp;
--(void) initFloatPref:(NSString*)prefstr value:(float)val factory_reset:(BOOL)force_factory;
--(void) setBoolPref:(NSString*)prefstr value:(BOOL)val factory_reset:(BOOL)force_factory;
+//-(void) initFloatPref:(NSString*)prefstr value:(float)val factory_reset:(BOOL)force_factory;
+//-(void) setBoolPref:(NSString*)prefstr value:(BOOL)val factory_reset:(BOOL)force_factory;
 -(void) read_prefs;
 
 -(void) populate_ui_elements:(uint32_t)current_band;

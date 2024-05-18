@@ -12,9 +12,6 @@
 #import "ProcessorCoreWrapper.h"
 
 @interface OSXAudioInterface : NSObject {
-    NSMutableDictionary* audio_input_device_dict;
-    NSMutableDictionary* audio_output_device_dict;
-    AudioComponentInstance audioUnitInput, audioUnitOutput;
     
 }
 
@@ -23,19 +20,21 @@
 
 @property (readonly, nonatomic, strong) NSMutableDictionary* input_devices;
 @property (readonly, nonatomic, strong) NSMutableDictionary* output_devices;
-@property (readonly, nonatomic, getter = get_sample_rate) NSUInteger sample_rate;
-@property (readonly, nonatomic, getter = get_num_channels) NSUInteger num_channels;
-@property (readonly, nonatomic, getter = get_buffer_size) NSUInteger buffer_size;
+@property (readonly, nonatomic, getter = get_sample_rate) uint32_t sample_rate;
+@property (readonly, nonatomic, getter = get_num_channels) uint32_t num_channels;
+@property (readonly, nonatomic, getter = get_buffer_size) uint32_t buffer_size;
 
-- (id) initWithCurrentInputDevice:(AudioDevice*)in_dev OutputDevice:(AudioDevice*)out_dev;
+- (id) init;
 - (void) set_processor_hook:(PROCESSOR_CORE_HOOK)hook;
 - (OSStatus) discoverDevices;
-- (OSStatus) set_input_device:(AudioDevice*)input_dev;
-- (OSStatus) set_output_device:(AudioDevice*)output_dev;
+- (void) get_all_input_device_names:(NSMutableArray*)in_devs;
+- (void) get_all_output_device_names:(NSMutableArray*)out_devs;
+- (OSStatus) set_input_device_from_name:(NSString*)input_dev;
+- (OSStatus) set_output_device_from_name:(NSString*)output_dev;
 - (OSStatus) start;
 - (OSStatus) stop;
 
-- (void) writeAudioDataToFile:(AudioBufferList*)ioData;
+//- (void) writeAudioDataToFile:(AudioBufferList*)ioData;
 
 @end
 

@@ -14,8 +14,8 @@
     id<AGCControlsDelegate> delegate;
 }
 
--(void) initFloatPref:(NSString*)prefstr value:(float)val factory_reset:(BOOL)force_factory;
--(void) setBoolPref:(NSString*)prefstr value:(BOOL)val factory_reset:(BOOL)force_factory;
+//-(void) initFloatPref:(NSString*)prefstr value:(float)val factory_reset:(BOOL)force_factory;
+//-(void) setBoolPref:(NSString*)prefstr value:(BOOL)val factory_reset:(BOOL)force_factory;
 -(void) read_prefs;
 
 //-(void) populate_ui_elements:(uint32_t)current_band;

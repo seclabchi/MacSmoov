@@ -18,6 +18,7 @@ typedef void(*PROCESSOR_CORE_HOOK)(AudioBufferList* ab_list, AudioBufferList* ab
 @interface ProcessorCoreWrapper : NSObject
 -(id) initWithSampleRate:(uint32_t)sample_rate numberOfChannels:(uint32_t)num_chans bufferSize:(uint32_t)buf_size;
 -(PROCESSOR_CORE_HOOK) get_proc_core_hook;
+-(BOOL) load_config_from_file:(NSString*) _filename;
 -(BOOL) prepare;
 //-(void) processWithInput:(float*)in_buf output:(float*)out_buf ofSize:(uint32_t) n_samp;
 -(void) getMainInLevelsLrms:(float*)lrms Rrms:(float*)rrms Lpeak:(float*)lpeak Rpeak:(float*)rpeak;

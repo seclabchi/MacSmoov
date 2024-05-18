@@ -68,7 +68,7 @@
 - (void)comboBoxSelectionDidChange:(NSNotification *)notification {
 
     if(TRUE == self->can_select) {
-    NSComboBox* combo = [notification object];
+        NSComboBox* combo = [notification object];
         if([combo tag] == 0) {
             NSInteger selected_item = [combo indexOfSelectedItem];
             

@@ -6,7 +6,6 @@
 //
 
 #import <Cocoa/Cocoa.h>
-#import "ConfigReader.h"
 #import "SignalGeneratorViewController.h"
 #import "AudioDeviceSelector.h"
 #import "AGCControlsView.h"
@@ -33,8 +32,6 @@
 @property (strong) IBOutlet CompressionMeter5band* lim_5band;
 
 @property (nonatomic, strong) OSXAudioInterface * sysaudio;
-
-@property (nonatomic, strong) ConfigReader* cfg_reader;
 
 -(void) output_device_changed:(NSNumber*)output_device;
 -(void) input_device_changed:(NSNumber*)input_device;

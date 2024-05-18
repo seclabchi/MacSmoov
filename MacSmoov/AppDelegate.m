@@ -67,11 +67,12 @@ Boolean shutting_down;
     bands_gate_open[4] = malloc(sizeof(bool));
     
     while(false == shutting_down) {
+        
         [proc_core_wrapper getMainInLevelsLrms:&mainInLrms Rrms:&mainInRrms Lpeak:&mainInLpeak Rpeak:&mainInRpeak];
         [proc_core_wrapper get2bandAGCGainReductionlo:&gainReduct2blo hi:&gainReduct2bhi gatelo:&gate_open_agc2_lo gatehi:&gate_open_agc2_hi];
         [proc_core_wrapper get5bandCompressorGainReduction:bands_gr limiters:bands_lim gates:bands_gate_open];
         
-        dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void){
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void){
             //Background Thread
             dispatch_async(dispatch_get_main_queue(), ^(void){
                 [self->_level_main_in set_levels_Lrms:mainInLrms Rrms:mainInRrms Lpeak:mainInLpeak Rpeak:mainInRpeak];
@@ -123,6 +124,7 @@ Boolean shutting_down;
                 }
             });
         });
+         
         
         usleep(70000);
     }
@@ -132,10 +134,6 @@ Boolean shutting_down;
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
     // Insert code here to initialize your application
-    OSStatus err = 0;
-
-    _cfg_reader = [[ConfigReader alloc] init];
-    [_cfg_reader readCfgFromFile:@"/Users/zaremba/Library/Containers/com.tonekids.osx.MacSmoov/Data/tmp/config.yml"];
     
     shutting_down = NO;
     
@@ -145,46 +143,66 @@ Boolean shutting_down;
     [_lim_5band set_meter_color:[NSColor yellowColor]];
     [_lim_5band set_meter_range:-1.5];
     
+    //NSUserDefaultsController *prefs_controller = [NSUserDefaultsController sharedUserDefaultsController];
+    //prefs = prefs_controller.defaults;
     
-    NSUserDefaultsController *prefs_controller = [NSUserDefaultsController sharedUserDefaultsController];
-    prefs = prefs_controller.defaults;
-    
-    [_slider_gain_main_in setFloatValue:[[prefs objectForKey:@"GAIN_IN_MAIN"] floatValue]];
+    //[_slider_gain_main_in setFloatValue:[[prefs objectForKey:@"GAIN_IN_MAIN"] floatValue]];
     
     //TODO:  initialize signal generators here, and the eventual audio passthrough/processing chain
-    siggenvc = [[SignalGeneratorViewController alloc] init];
+    //siggenvc = [[SignalGeneratorViewController alloc] init];
     //[self output_device_changed:@"AQDefaultOutput"];
     
-    self.sysaudio = [[OSXAudioInterface alloc] initWithCurrentInputDevice:nil OutputDevice:nil];
-    [self.sysaudio discoverDevices];
+    self.sysaudio = [[OSXAudioInterface alloc] init];
     
-    audio_devices_output = self.sysaudio.output_devices;
-    audio_devices_input = self.sysaudio.input_devices;
+    NSMutableArray* in_devs = [[NSMutableArray alloc] init];
+    NSMutableArray* out_devs = [[NSMutableArray alloc] init];
     
-    stored_output_device = [prefs objectForKey:@"OUTPUT_DEVICE"];
-    if(nil != stored_output_device) {
-        AudioDevice* sel_outdev = [audio_devices_output objectForKey:stored_output_device];
-        [self.sysaudio set_output_device:sel_outdev];
-    }
+    [self.sysaudio get_all_input_device_names:in_devs];
+    [self.sysaudio get_all_output_device_names:out_devs];
     
-    stored_input_device = [prefs objectForKey:@"INPUT_DEVICE"];
-    if(nil != stored_input_device) {
-        AudioDevice* sel_indev = [audio_devices_input objectForKey:stored_input_device];
-        [self.sysaudio set_input_device:sel_indev];
-    }
+    NSLog(@"Input devices:\n%@", in_devs);
+    NSLog(@"Output devices:\n%@", out_devs);
+    
+    [self.sysaudio set_input_device_from_name:@"Studio 26c"];
+    [self.sysaudio set_output_device_from_name:@"Studio 26c"];
+    
+    //[self.sysaudio discoverDevices];
+    
+    //audio_devices_output = self.sysaudio.output_devices;
+    //audio_devices_input = self.sysaudio.input_devices;
+    
+    //stored_output_device = [prefs objectForKey:@"OUTPUT_DEVICE"];
+    //if(nil != stored_output_device) {
+    //    AudioDevice* sel_outdev = [audio_devices_output objectForKey:stored_output_device];
+    //    [self.sysaudio set_output_device:sel_outdev];
+    //}
+    //else {
+    //[self.sysaudio set_output_device_from_name:@"Studio 26"];
+    //}
+    
+    //stored_input_device = [prefs objectForKey:@"INPUT_DEVICE"];
+    //if(nil != stored_input_device) {
+    //    AudioDevice* sel_indev = [audio_devices_input objectForKey:stored_input_device];
+    //    [self.sysaudio set_input_device:sel_indev];
+    //}
+    //else {
+        //AudioDevice* sel_indev = [[audio_devices_input allValues] objectAtIndex:5];
+        //[self.sysaudio set_input_device:sel_indev];
+    //}
     
     audio_device_selector = [[AudioDeviceSelector alloc] initWithInputDevices:(NSMutableDictionary*)audio_devices_input outputDevices:(NSMutableDictionary*)audio_devices_output];
     [audio_device_selector set_watcher_for_output_device_change:self andSelector:@selector(output_device_changed:)];
     [audio_device_selector set_watcher_for_input_device_change:self andSelector:@selector(input_device_changed:)];
     
-    //process_sys_iface = [[ProcessorSysInterface alloc] initWithSampleRate:self.sysaudio.sample_rate numberOfChannels:self.sysaudio.num_channels bufferSize:self.sysaudio.buffer_size];
-    proc_core_wrapper = [[ProcessorCoreWrapper alloc] initWithSampleRate:self.sysaudio.sample_rate numberOfChannels:self.sysaudio.num_channels bufferSize:self.sysaudio.buffer_size];
+    proc_core_wrapper = [[ProcessorCoreWrapper alloc] initWithSampleRate:self.sysaudio.sample_rate numberOfChannels:self.sysaudio.num_channels bufferSize:(uint32_t)self.sysaudio.buffer_size];
     
-    AGC_PARAMS agc_params = [_cfg_reader getAgcParams];
-    [proc_core_wrapper change_agc_settings:agc_params];
+    [proc_core_wrapper load_config_from_file:@"/Users/zaremba/Library/Containers/com.tonekids.osx.MacSmoov/Data/tmp/config.yml"];
+
+    //AGC_PARAMS agc_params = [_cfg_reader getAgcParams];
+    //[proc_core_wrapper change_agc_settings:agc_params];
     
-    agc_controls_view = [[AGCControlsView alloc] initWithPrefs:prefs delegate:self];
-    multiband_controls_view = [[MultibandControlsView alloc] initWithPrefs:prefs delegate:self];
+    //agc_controls_view = [[AGCControlsView alloc] initWithPrefs:prefs delegate:self];
+    //multiband_controls_view = [[MultibandControlsView alloc] initWithPrefs:prefs delegate:self];
         
     [self.sysaudio set_processor_hook:[proc_core_wrapper get_proc_core_hook]];
     
@@ -195,10 +213,7 @@ Boolean shutting_down;
     
     [self.sysaudio start];
     
-    [NSThread detachNewThreadSelector:@selector(queryMeterLevels:) toTarget:self withObject:nil];
-
-    //[process_sys_iface outputDeviceChanged:@"AppleUSBAudioEngine:Plantronics:Plantronics Blackwire 3210 Series:FFE5F399D3F84D558CDC32EA0790A041:2"];
-    //[process_sys_iface start];
+    //[NSThread detachNewThreadSelector:@selector(queryMeterLevels:) toTarget:self withObject:nil];
 }
 
 
@@ -245,11 +260,11 @@ Boolean shutting_down;
 -(void) output_device_changed:(NSNumber*)output_device {
     NSLog(@"Got notification from AudioDeviceSelector about new output device: %@", output_device);
     if(nil != output_device) {
-        [prefs setObject:output_device forKey:@"OUTPUT_DEVICE"];
-        AudioDevice* sel_outdev = [audio_devices_output objectForKey:output_device];
-        [self.sysaudio stop];
-        [self.sysaudio set_output_device:sel_outdev];
-        [self.sysaudio start];
+ //       [prefs setObject:output_device forKey:@"OUTPUT_DEVICE"];
+ //       AudioDevice* sel_outdev = [audio_devices_output objectForKey:output_device];
+  //      [self.sysaudio stop];
+ //       [self.sysaudio set_output_device:sel_outdev];
+   //     [self.sysaudio start];
         //[siggenvc outputDeviceChanged:output_device];
         //[process_sys_iface outputDeviceChanged:output_device];
     }
@@ -261,11 +276,11 @@ Boolean shutting_down;
 -(void) input_device_changed:(NSNumber*)input_device {
     NSLog(@"Got notification from AudioDeviceSelector about new input device: %@", input_device);
     if(nil != input_device) {
-        [prefs setObject:input_device forKey:@"INPUT_DEVICE"];
-        AudioDevice* sel_indev = [audio_devices_input objectForKey:input_device];
-        [self.sysaudio stop];
-        [self.sysaudio set_input_device:sel_indev];
-        [self.sysaudio start];
+//        [prefs setObject:input_device forKey:@"INPUT_DEVICE"];
+//        AudioDevice* sel_indev = [audio_devices_input objectForKey:input_device];
+//        [self.sysaudio stop];
+//        [self.sysaudio set_input_device:sel_indev];
+//        [self.sysaudio start];
         //[process_sys_iface inputDeviceChanged:input_device];
     }
     else {
