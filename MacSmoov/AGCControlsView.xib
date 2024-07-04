@@ -42,7 +42,7 @@
                                 <slider horizontalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="hJW-mC-HZm" userLabel="DRIVE">
                                     <rect key="frame" x="21" y="60" width="24" height="135"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                    <sliderCell key="cell" controlSize="mini" alignment="left" minValue="-10" maxValue="25" doubleValue="-7.0599429890260836" tickMarkPosition="right" sliderType="linear" id="AbF-T5-S2S"/>
+                                    <sliderCell key="cell" controlSize="mini" alignment="left" minValue="-60" maxValue="-10" doubleValue="-10" tickMarkPosition="right" sliderType="linear" id="AbF-T5-S2S"/>
                                     <connections>
                                         <action selector="setting_changed:" target="-2" id="uoJ-da-Atx"/>
                                         <binding destination="NA2-ko-71w" name="value" keyPath="selection.drive" id="GXO-LD-PEk">

@@ -94,7 +94,11 @@ bool ProcessorCore::load_config_from_file(const std::string& filename) {
     return retval;
 }
 
-bool ProcessorCore::write_config_changes_agc(AGC_PARAMS _params) {
+bool ProcessorCore::write_config_changes_agc(const AGC_PARAMS& _params) {
+    return true;
+}
+
+bool ProcessorCore::write_config_changes_multiband(const MULTIBAND_PARAMS& _params) {
     return true;
 }
 
@@ -151,18 +155,23 @@ void ProcessorCore::set_master_bypass(bool _master_bypass) {
     master_bypass = _master_bypass;
 }
 
-void ProcessorCore::change_multiband_settings(MULTIBAND_PARAMS _params) {
-    proc_mod_5b_compressor->setup(_params);
-}
-
 void ProcessorCore::get_agc_settings(AGC_PARAMS& _params) {
     core_config->get_agc_params(_params);
 }
-void ProcessorCore::change_agc_settings(AGC_PARAMS _params) {
+
+bool ProcessorCore::change_agc_settings(const AGC_PARAMS& _params) {
     proc_mod_2band_agc->setup(_params);
     write_config_changes_agc(_params);
+    return true;
 }
 
+void ProcessorCore::get_multiband_settings(MULTIBAND_PARAMS& _params) {
+    core_config->get_mb_params(_params);
+}
 
-
+bool ProcessorCore::change_multiband_settings(const MULTIBAND_PARAMS& _params) {
+    proc_mod_5b_compressor->setup(_params);
+    write_config_changes_multiband(_params);
+    return true;
+}
 

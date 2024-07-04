@@ -203,7 +203,6 @@ static const MULTIBAND_PARAMS multiband_params_default = {
  };
  
 
-
 CoreConfig::CoreConfig() {
     version = "0.0";
     cfg_name = "default";
@@ -509,10 +508,8 @@ bool CoreConfig::load_cfg_from_file(const std::string &filename) {
     
     return true;
 }
-
-bool CoreConfig::write_cfg_to_file(const std::string& filename) {
-    return true;
 }
+
 
 /*  This was pulled from the AGCControlsView source file.
  *  just parking it here in case these are good settings.

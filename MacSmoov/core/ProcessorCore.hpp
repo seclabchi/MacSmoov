@@ -46,12 +46,14 @@ public:
     void get5bandCompressorGainReduction(float** _bands_gr, float** _bands_lim, bool** _bands_gate_open);
     void set_bands_enabled(bool _bands_enabled[]);
     void set_master_bypass(bool _master_bypass);
-    void change_multiband_settings(MULTIBAND_PARAMS _params);
     void get_agc_settings(AGC_PARAMS& _params);
-    void change_agc_settings(AGC_PARAMS _params);
+    bool change_agc_settings(const AGC_PARAMS& _params);
+    void get_multiband_settings(MULTIBAND_PARAMS& _params);
+    bool change_multiband_settings(const MULTIBAND_PARAMS& _params);
 private:
     ProcessorCore();
-    bool write_config_changes_agc(AGC_PARAMS _params);
+    bool write_config_changes_agc(const AGC_PARAMS& _params);
+    bool write_config_changes_multiband(const MULTIBAND_PARAMS& _params);
 
     float f_samp;
     uint32_t n_channels;

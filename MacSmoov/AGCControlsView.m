@@ -9,7 +9,6 @@
 #import "core/core_common.h"
 
 @interface AGCControlsView () {
-    NSUserDefaults* prefs;
     id<AGCControlsDelegate> delegate;
 }
 

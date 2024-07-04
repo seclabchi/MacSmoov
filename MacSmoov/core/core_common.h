@@ -31,6 +31,7 @@ typedef struct {
 typedef struct  {
     bool enabled;
     bool mute;
+    bool solo;
     float drive;
     float release;
     float gate_thresh;

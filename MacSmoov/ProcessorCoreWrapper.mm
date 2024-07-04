@@ -117,13 +117,6 @@ void processor_core_hook(AudioBufferList* ab_list, AudioBufferList* ab_list_core
 #endif
 }
 
--(void) change_multiband_settings:(MULTIBAND_PARAMS)_params {
-#if CORE_BYPASS
-#else
-    cpp->change_multiband_settings(_params);
-#endif
-}
-
 -(void) get_agc_settings:(AGC_PARAMS*)_params {
     AGC_PARAMS core_params;
     cpp->get_agc_settings(core_params);
@@ -134,6 +127,19 @@ void processor_core_hook(AudioBufferList* ab_list, AudioBufferList* ab_list_core
 #if CORE_BYPASS
 #else
     cpp->change_agc_settings(_params);
+#endif
+}
+
+-(void) get_multiband_settings:(MULTIBAND_PARAMS*)_params {
+    MULTIBAND_PARAMS core_params;
+    cpp->get_multiband_settings(core_params);
+    *_params = core_params;
+}
+
+-(void) change_multiband_settings:(MULTIBAND_PARAMS)_params {
+#if CORE_BYPASS
+#else
+    cpp->change_multiband_settings(_params);
 #endif
 }
 

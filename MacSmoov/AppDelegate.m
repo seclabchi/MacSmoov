@@ -178,7 +178,10 @@ Boolean shutting_down = NO;
     AGC_PARAMS agc_settings;
     [proc_core_wrapper get_agc_settings:&agc_settings];
     agc_controls_view = [[AGCControlsView alloc] initWithSettings:agc_settings delegate:self];
-    //multiband_controls_view = [[MultibandControlsView alloc] initWithPrefs:prefs delegate:self];
+    
+    MULTIBAND_PARAMS mb_settings;
+    [proc_core_wrapper get_multiband_settings:&mb_settings];
+    multiband_controls_view = [[MultibandControlsView alloc] initWithSettings:mb_settings delegate:self];
         
     [self.sysaudio set_processor_hook:[proc_core_wrapper get_proc_core_hook]];
     
