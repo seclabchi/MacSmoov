@@ -13,4 +13,8 @@
 @synthesize device_uid;
 @synthesize device_name;
 
+-(void) print_device {
+    NSLog(@"%d: %@ (%@)", device_id, device_name, device_uid);
+}
+
 @end

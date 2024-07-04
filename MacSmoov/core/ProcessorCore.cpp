@@ -21,39 +21,35 @@ ProcessorCore::ProcessorCore(uint32_t _f_samp, uint32_t _n_channels, uint32_t _n
     master_bypass = false;
     
     proc_mod_gain_main_in = new ProcModGain("GAIN_MAIN_IN", f_samp, n_channels, n_samp);
-    proc_mod_gain_main_in->init(nullptr, nullptr, nullptr);
+    proc_mod_gain_main_in->init(core_config, nullptr, nullptr);
     core_stack->add_module(proc_mod_gain_main_in);
     
     ChannelMap* chan_map = new ChannelMap();
     chan_map->the_map.push_back(CHANNEL_MAP_ELEMENT {0, 0, "IN_L"});
     chan_map->the_map.push_back(CHANNEL_MAP_ELEMENT {1, 1, "IN_R"});
     proc_mod_level_main_in = new ProcModLevelMeter("LEVEL_MAIN_IN", f_samp, n_channels, n_samp);
-    proc_mod_level_main_in->init(nullptr, proc_mod_gain_main_in, chan_map);
-    proc_mod_level_main_in->set_bypass(false);
+    proc_mod_level_main_in->init(core_config, proc_mod_gain_main_in, chan_map);
     core_stack->add_module(proc_mod_level_main_in);
     
     chan_map = new ChannelMap();
     chan_map->the_map.push_back(CHANNEL_MAP_ELEMENT {0, 0, "IN_L"});
     chan_map->the_map.push_back(CHANNEL_MAP_ELEMENT {1, 1, "IN_R"});
     proc_mod_2band_agc = new ProcMod2BandAGC("2BAND_AGC", f_samp, n_channels, n_samp);
-    proc_mod_2band_agc->init(nullptr, proc_mod_level_main_in, chan_map);
+    proc_mod_2band_agc->init(core_config, proc_mod_level_main_in, chan_map);
     core_stack->add_module(proc_mod_2band_agc);
 
     chan_map = new ChannelMap();
     chan_map->the_map.push_back(CHANNEL_MAP_ELEMENT {0, 0, "IN_L"});
     chan_map->the_map.push_back(CHANNEL_MAP_ELEMENT {1, 1, "IN_R"});
     proc_mod_hf_enhance = new ProcModHFEnhance("HF_ENHANCE", f_samp, n_channels, n_samp);
-    proc_mod_hf_enhance->init(nullptr, proc_mod_2band_agc, chan_map);
-    proc_mod_hf_enhance->set_bypass(true);
+    proc_mod_hf_enhance->init(core_config, proc_mod_2band_agc, chan_map);
     core_stack->add_module(proc_mod_hf_enhance);
     
     chan_map = new ChannelMap();
     chan_map->the_map.push_back(CHANNEL_MAP_ELEMENT {0, 0, "IN_L"});
     chan_map->the_map.push_back(CHANNEL_MAP_ELEMENT {1, 1, "IN_R"});
     proc_mod_5b_crossover = new ProcMod5bandCrossover("5BAND_CROSSOVER", f_samp, n_channels, n_samp);
-    proc_mod_5b_crossover->init(nullptr, proc_mod_hf_enhance, chan_map);
-    proc_mod_5b_crossover->set_bypass(true);
-    proc_mod_5b_crossover->band_enable(true, true, true, true, true);
+    proc_mod_5b_crossover->init(core_config, proc_mod_hf_enhance, chan_map);
     core_stack->add_module(proc_mod_5b_crossover);
     
     chan_map = new ChannelMap();
@@ -70,8 +66,7 @@ ProcessorCore::ProcessorCore(uint32_t _f_samp, uint32_t _n_channels, uint32_t _n
     chan_map->the_map.push_back(CHANNEL_MAP_ELEMENT {10, 10, "IN_B5_L"});
     chan_map->the_map.push_back(CHANNEL_MAP_ELEMENT {11, 11, "IN_B5_R"});
     proc_mod_5b_compressor = new ProcMod5bandCompressor("5BAND_COMPRESSOR", f_samp, n_channels, n_samp);
-    proc_mod_5b_compressor->init(nullptr, proc_mod_5b_crossover, chan_map);
-    proc_mod_5b_compressor->set_bypass(true);
+    proc_mod_5b_compressor->init(core_config, proc_mod_5b_crossover, chan_map);
     core_stack->add_module(proc_mod_5b_compressor);
     
     m_loglin = new LogLinConverter(LogLinConversionType::LOG_TO_LIN);
@@ -98,6 +93,11 @@ bool ProcessorCore::load_config_from_file(const std::string& filename) {
     
     return retval;
 }
+
+bool ProcessorCore::write_config_changes_agc(AGC_PARAMS _params) {
+    return true;
+}
+
 
 /* n_samp is the number of samples per channel, so each in_L and in_R will have this number of samples.
    Doing the first cut of this w/AUHAL on OSX so hopefully it's easy to get non-interleaved samples with JACK/ALSA
@@ -155,8 +155,12 @@ void ProcessorCore::change_multiband_settings(MULTIBAND_PARAMS _params) {
     proc_mod_5b_compressor->setup(_params);
 }
 
+void ProcessorCore::get_agc_settings(AGC_PARAMS& _params) {
+    core_config->get_agc_params(_params);
+}
 void ProcessorCore::change_agc_settings(AGC_PARAMS _params) {
     proc_mod_2band_agc->setup(_params);
+    write_config_changes_agc(_params);
 }
 
 

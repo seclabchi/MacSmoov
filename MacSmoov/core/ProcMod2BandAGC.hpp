@@ -25,7 +25,7 @@ public:
     /* n samps is total interleaved stereo samples
      TODO: Figure this shit out to make it universal. */
     virtual void process();
-    void setup(const AGC_PARAMS _parms);
+    void setup(const AGC_PARAMS& _parms);
     void read(float* _gain_reduction_lo, float* _gain_reduction_hi, bool* _gate_open_lo, bool* _gate_open_hi);
 private:
     FilterLR4* filt_lo_L, *filt_lo_R, *filt_hi_L, *filt_hi_R;

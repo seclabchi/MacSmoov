@@ -197,20 +197,18 @@ void ProcMod5bandCompressor::setup(const MULTIBAND_PARAMS _params) {
     lim_b4->setup(params.lim_params[3]);
     lim_b5->setup(params.lim_params[4]);
     
-    
-    //if(!first_setup_complete) {
-        inb1L = this->get_in_buf(2)->getbuf();
-        inb1R = this->get_in_buf(3)->getbuf();
-        inb2L = this->get_in_buf(4)->getbuf();
-        inb2R = this->get_in_buf(5)->getbuf();
-        inb3L = this->get_in_buf(6)->getbuf();
-        inb3R = this->get_in_buf(7)->getbuf();
-        inb4L = this->get_in_buf(8)->getbuf();
-        inb4R = this->get_in_buf(9)->getbuf();
-        inb5L = this->get_in_buf(10)->getbuf();
-        inb5R = this->get_in_buf(11)->getbuf();
-        first_setup_complete = true;
-    //}
+    inb1L = this->get_in_buf(2)->getbuf();
+    inb1R = this->get_in_buf(3)->getbuf();
+    inb2L = this->get_in_buf(4)->getbuf();
+    inb2R = this->get_in_buf(5)->getbuf();
+    inb3L = this->get_in_buf(6)->getbuf();
+    inb3R = this->get_in_buf(7)->getbuf();
+    inb4L = this->get_in_buf(8)->getbuf();
+    inb4R = this->get_in_buf(9)->getbuf();
+    inb5L = this->get_in_buf(10)->getbuf();
+    inb5R = this->get_in_buf(11)->getbuf();
+    first_setup_complete = true;
+  
 }
 
 void ProcMod5bandCompressor::read(float** _bands_gr, float** _bands_lim, bool** _bands_gate_open) {

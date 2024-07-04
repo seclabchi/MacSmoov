@@ -11,6 +11,8 @@
 #import "AudioDevice.h"
 #import "ProcessorCoreWrapper.h"
 
+//#define DEBUG_OSX_AUDIO_INTERFACE
+
 @interface OSXAudioInterface : NSObject {
     
 }
@@ -27,8 +29,8 @@
 - (id) init;
 - (void) set_processor_hook:(PROCESSOR_CORE_HOOK)hook;
 - (OSStatus) discoverDevices;
-- (void) get_all_input_device_names:(NSMutableArray*)in_devs;
-- (void) get_all_output_device_names:(NSMutableArray*)out_devs;
+- (void) get_all_input_devices:(NSMutableArray*)in_devs;
+- (void) get_all_output_devices:(NSMutableArray*)out_devs;
 - (OSStatus) set_input_device_from_name:(NSString*)input_dev;
 - (OSStatus) set_output_device_from_name:(NSString*)output_dev;
 - (OSStatus) start;

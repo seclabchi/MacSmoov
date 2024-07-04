@@ -22,6 +22,8 @@
 @property CFStringRef device_uid;
 @property CFStringRef device_name;
 
+-(void) print_device;
+
 @end
 
 #endif /* AudioDevice_h */

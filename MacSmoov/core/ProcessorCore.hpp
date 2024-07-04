@@ -27,7 +27,7 @@
  * Define this to enable core debugging.  Right now it just bypasses the core entirely, so not
  * sure about putting this here.
  */
-#define CORE_BYPASS true
+#define CORE_BYPASS false
 #define CORE_DEBUG true
 
 namespace fmsmoov {
@@ -47,9 +47,12 @@ public:
     void set_bands_enabled(bool _bands_enabled[]);
     void set_master_bypass(bool _master_bypass);
     void change_multiband_settings(MULTIBAND_PARAMS _params);
+    void get_agc_settings(AGC_PARAMS& _params);
     void change_agc_settings(AGC_PARAMS _params);
 private:
     ProcessorCore();
+    bool write_config_changes_agc(AGC_PARAMS _params);
+
     float f_samp;
     uint32_t n_channels;
     uint32_t n_samp;  //total interleaved L+R samples

@@ -17,66 +17,31 @@ NS_ASSUME_NONNULL_BEGIN
 @interface AGCControlsView : NSViewController {
 }
 
-@property (readwrite, assign) int8_t b1_drive;
-@property (readwrite, assign) int16_t b1_attack;
-@property (readwrite, assign) int16_t b1_release;
-@property (readwrite, assign) float b1_ratio;
-@property (readwrite, assign) int8_t b1_gate_thresh;
-@property (readwrite, assign) bool b1_mute;
-@property (readwrite, assign) bool b1_solo;
+@property (readwrite, assign) BOOL enabled;
+@property (readwrite, assign) float drive;
+@property (readwrite, assign) float release_master;
+@property (readwrite, assign) float release_bass;
+@property (readwrite, assign) float gate_thresh;
+@property (readwrite, assign) float bass_coupling;
+@property (readwrite, assign) float window_size;
+@property (readwrite, assign) float window_release;
+@property (readwrite, assign) float ratio;
+@property (readwrite, assign) float bass_thresh;
+@property (readwrite, assign) float idle_gain;
+@property (readwrite, assign) float attack_master;
+@property (readwrite, assign) float attack_bass;
+@property (readwrite, assign) float post_gain;
 
+@property (readwrite, assign) bool mute_lo;
+@property (readwrite, assign) bool mute_hi;
 
-@property (strong) IBOutlet NSStepper* stepper_compressor_drive;
-@property (strong) IBOutlet NSStepper* stepper_compressor_release;
-@property (strong) IBOutlet NSStepper* stepper_compressor_gate_thresh;
-@property (strong) IBOutlet NSStepper* stepper_compressor_ratio;
-@property (strong) IBOutlet NSStepper* stepper_compressor_idle_gain;
-@property (strong) IBOutlet NSStepper* stepper_compressor_attack;
-
-@property (strong) IBOutlet NSTextField* compressor_drive;
-@property (strong) IBOutlet NSTextField* compressor_release;
-@property (strong) IBOutlet NSTextField* compressor_gate_thresh;
-@property (strong) IBOutlet NSTextField* compressor_ratio;
-@property (strong) IBOutlet NSTextField* compressor_idle_gain;
-@property (strong) IBOutlet NSTextField* compressor_attack;
-
-@property (strong) IBOutlet NSStepper* stepper_limiter_drive;
-@property (strong) IBOutlet NSStepper* stepper_limiter_release;
-@property (strong) IBOutlet NSStepper* stepper_limiter_ratio;
-@property (strong) IBOutlet NSStepper* stepper_limiter_idle_gain;
-@property (strong) IBOutlet NSStepper* stepper_limiter_attack;
-@property (strong) IBOutlet NSStepper* stepper_limiter_output_gain;
-
-@property (strong) IBOutlet NSTextField* limiter_drive;
-@property (strong) IBOutlet NSTextField* limiter_release;
-@property (strong) IBOutlet NSTextField* limiter_ratio;
-@property (strong) IBOutlet NSTextField* limiter_idle_gain;
-@property (strong) IBOutlet NSTextField* limiter_attack;
-@property (strong) IBOutlet NSTextField* limiter_output_gain;
-
-
-@property (strong) IBOutlet NSButton* enable_b1;
-@property (strong) IBOutlet NSButton* enable_b2;
-@property (strong) IBOutlet NSButton* enable_b3;
-@property (strong) IBOutlet NSButton* enable_b4;
-@property (strong) IBOutlet NSButton* enable_b5;
-
-//-(IBAction) bandEnableChanged:(NSButton*)sender;
-
-//-(IBAction) stepper_changed_compressor:(NSStepper*)sender;
-//-(IBAction) value_changed_compressor:(NSTextField*)sender;
-//-(IBAction) stepper_changed_limiter:(NSStepper*)sender;
-//-(IBAction) value_changed_limiter:(NSTextField*)sender;
-
-//-(IBAction) band_select:(NSButton*)sender;
+@property (readwrite, assign) AGC_PARAMS agc_settings;
 
 -(IBAction) factory_reset:(NSButton*)sender;
 
 -(IBAction) setting_changed:(id) sender;
 
--(id) initWithPrefs:(NSUserDefaults*) defaults delegate:(id)mb_delegate;
--(void) setupPrefsIfNeeded:(BOOL)factory_reset;
-//-(void) init_defaults:(BOOL)force_factory;
+-(id) initWithSettings:(AGC_PARAMS) settings delegate:(id)agc_delegate;
 -(void) showPanel;
 
 - (void)controlTextDidChange:(NSNotification *)obj;

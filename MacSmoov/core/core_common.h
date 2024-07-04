@@ -11,6 +11,8 @@
 
 typedef struct {
     bool enabled;  //off-on
+    bool mute_lo;  //mute the low band
+    bool mute_hi;  //mute the hi band
     float drive;  //-10...+25 dB
     float release_master;  //0.5...20 dB/s
     float release_bass;    //1...10 dB/s

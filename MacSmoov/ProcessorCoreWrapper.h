@@ -28,6 +28,7 @@ typedef void(*PROCESSOR_CORE_HOOK)(AudioBufferList* ab_list, AudioBufferList* ab
 -(void) setBandEnablement:(NSControlStateValue[]) _bands_enabled;
 -(void) setMasterBypass:(NSControlStateValue) _master_bypass;
 -(void) change_multiband_settings:(MULTIBAND_PARAMS)_params;
+-(void) get_agc_settings:(AGC_PARAMS*)_params;
 -(void) change_agc_settings:(AGC_PARAMS)_params;
 
 @end

@@ -111,7 +111,9 @@ ProcMod2BandAGC::~ProcMod2BandAGC() {
 
 bool ProcMod2BandAGC::init_impl(CoreConfig* cfg, ProcessorModule* prev_mod, ChannelMap* _channel_map) {
     if(nullptr != cfg) {
-        //TODO config
+        AGC_PARAMS params;
+        cfg->get_agc_params(params);
+        this->setup(params);
     }
     if((nullptr != _channel_map) && (nullptr != prev_mod)) {
         for(CHANNEL_MAP_ELEMENT e : _channel_map->the_map)
@@ -119,6 +121,7 @@ bool ProcMod2BandAGC::init_impl(CoreConfig* cfg, ProcessorModule* prev_mod, Chan
             this->set_in_buf(e.this_chan, prev_mod->get_out_buf(e.in_chan));
         }
     }
+    this->ready = true;
     
     return true;
 }
@@ -131,9 +134,6 @@ void ProcMod2BandAGC::process() {
         memcpy(this->get_out_buf(1)->getbuf(), this->get_in_buf(1)->getbuf(), n_samps * sizeof(float));
         return;
     }
-    
-    //memset(this->get_in_buf(0)->getbuf(), 0, n_samps * sizeof(float));
-    //memset(this->get_in_buf(1)->getbuf(), 0, n_samps * sizeof(float));
     
     filt_lo_L->process(this->get_in_buf(0)->getbuf(), buf_lo_filtL);
     filt_lo_R->process(this->get_in_buf(1)->getbuf(), buf_lo_filtR);
@@ -150,14 +150,15 @@ void ProcMod2BandAGC::process() {
     
     memcpy(this->get_out_buf(0)->getbuf(), master_outL, n_samps * sizeof(float));
     memcpy(this->get_out_buf(1)->getbuf(), master_outR, n_samps * sizeof(float));
-    //memset(this->get_out_buf(0)->getbuf(), 0, n_samps * sizeof(float));
-    //memset(this->get_out_buf(1)->getbuf(), 0, n_samps * sizeof(float));
 }
 
-void ProcMod2BandAGC::setup(const AGC_PARAMS _parms) {
+void ProcMod2BandAGC::setup(const AGC_PARAMS& _parms) {
     parms = _parms;
     /*
      typedef struct  {
+         bool enabled;
+         bool mute_lo;
+         bool mute_hi;
          float drive;
          float release;
          float gate_thresh;
@@ -201,18 +202,8 @@ void ProcMod2BandAGC::setup(const AGC_PARAMS _parms) {
         .post_gain = parms.post_gain
     };
     
-    if(NULL != comp_lo) {
-        delete comp_lo;
-    }
-    if(NULL != comp_hi) {
-        delete comp_hi;
-    }
-    
-    comp_lo = new Compressor(CompressorType::STEREO, this->get_f_samp(), this->get_n_samps());
-    comp_hi = new Compressor(CompressorType::STEREO, this->get_f_samp(), this->get_n_samps());
     comp_lo->setup(comp_parms_lo);
     comp_hi->setup(comp_parms_hi);
-    this->ready = true;
 }
 
 void ProcMod2BandAGC::read(float* _gain_reduction_lo, float* _gain_reduction_hi, bool* _gate_open_lo, bool* _gate_open_hi) {

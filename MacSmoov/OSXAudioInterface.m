@@ -250,6 +250,7 @@ void checkStatus(int status) {
     
     
     //get available sample rates on the audio device.
+    
     UInt32 samprates_prop_size = 0;
     addr.mSelector = kAudioDevicePropertyAvailableNominalSampleRates;
     addr.mScope = kAudioObjectPropertyScopeGlobal;
@@ -268,6 +269,7 @@ void checkStatus(int status) {
     for(UInt32 i = 0; i < num_sampvals; i++) {
         NSLog(@"Device supported sample rate: %d", (UInt32)(available_samprates_prop[i].mMaximum));
     }
+    
     
     //set sample rate on the audio device.
     //TODO: Make user-settable so it's not a fixed value at compile time
@@ -533,23 +535,23 @@ void checkStatus(int status) {
     return ad;
 }
 
-- (void) get_all_input_device_names:(NSMutableArray*)in_devs {
+- (void) get_all_input_devices:(NSMutableArray*)in_devs {
     AudioDevice* in_dev = NULL;
     [in_devs removeAllObjects];
     NSArray* dev_keys = [self.input_devices allKeys];
     for(NSString* key in dev_keys) {
         in_dev = [self.input_devices objectForKey:key];
-        [in_devs addObject:(NSString*)in_dev.device_name];
+        [in_devs addObject:in_dev];
     }
 }
 
-- (void) get_all_output_device_names:(NSMutableArray*)out_devs {
+- (void) get_all_output_devices:(NSMutableArray*)out_devs {
     AudioDevice* out_dev = NULL;
     [out_devs removeAllObjects];
     NSArray* dev_keys = [self.output_devices allKeys];
     for(NSString* key in dev_keys) {
         out_dev = [self.output_devices objectForKey:key];
-        [out_devs addObject:(NSString*)out_dev.device_name];
+        [out_devs addObject:out_dev];
     }
 }
 
@@ -666,12 +668,16 @@ void checkStatus(int status) {
      
      for(NSNumber* key in self.input_devices) {
          AudioDevice* dev = self.input_devices[key];
+#ifdef DEBUG_OSX_AUDIO_INTERFACE
          NSLog(@"Audio Input Device Discovered: ID: %d, Name: %@, UID: %@", dev.device_id, dev.device_name, dev.device_uid);
+#endif
      }
      
      for(NSNumber* key in self.output_devices) {
          AudioDevice* dev = self.output_devices[key];
+#ifdef DEBUG_OSX_AUDIO_INTERFACE
          NSLog(@"Audio Output Device Discovered: ID: %d, Name: %@, UID: %@", dev.device_id, dev.device_name, dev.device_uid);
+#endif
      }
      
     return err;

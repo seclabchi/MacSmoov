@@ -102,7 +102,7 @@
 		9DEF3B462A9D2311004E78F3 /* ProcMod5bandCrossover.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9DEF3B452A9D2311004E78F3 /* ProcMod5bandCrossover.cpp */; };
 		9DF3B70D2A80088400867EA1 /* LevelMeter.m in Sources */ = {isa = PBXBuildFile; fileRef = 9DF3B70C2A80088400867EA1 /* LevelMeter.m */; };
 		9DF3B70E2A80088400867EA1 /* LevelMeter.m in Sources */ = {isa = PBXBuildFile; fileRef = 9DF3B70C2A80088400867EA1 /* LevelMeter.m */; };
-		9DFC35D92BB0A5E20091A8DD /* libyaml-cppd.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9DFC35D82BB0A5E10091A8DD /* libyaml-cppd.a */; };
+		9DF905F52BF94BBE003EAA5C /* libyaml-cppd.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9DFC35D82BB0A5E10091A8DD /* libyaml-cppd.a */; };
 		9DFECDED2A86D80D00BFB1A2 /* ProcModGain.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9DFECDEC2A86D80D00BFB1A2 /* ProcModGain.cpp */; };
 		9DFECDEE2A86D80D00BFB1A2 /* ProcModGain.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9DFECDEC2A86D80D00BFB1A2 /* ProcModGain.cpp */; };
 		9DFECDF12A86F02C00BFB1A2 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 9DFECDF02A86F02C00BFB1A2 /* Credits.rtf */; };
@@ -285,7 +285,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9DFC35D92BB0A5E20091A8DD /* libyaml-cppd.a in Frameworks */,
+				9DF905F52BF94BBE003EAA5C /* libyaml-cppd.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -336,6 +336,8 @@
 				9D71CFB229F83E6100436F79 /* Info.plist */,
 				9DB7A12629D7949D002E6F4E /* AppDelegate.h */,
 				9DB7A12729D7949D002E6F4E /* AppDelegate.m */,
+				9D98C7CC29FC57AB00586A86 /* ProcessorCoreWrapper.h */,
+				9D98C7C829FC579E00586A86 /* ProcessorCoreWrapper.mm */,
 				9DB7A12929D7949E002E6F4E /* Assets.xcassets */,
 				9DB7A12B29D7949E002E6F4E /* MainMenu.xib */,
 				9DB7A12E29D7949E002E6F4E /* main.m */,
@@ -356,8 +358,6 @@
 				9DB4B1102BAF3CFE00F9C076 /* Patchbay.m */,
 				9D281A9829E1C5B5009CF125 /* AudioDeviceSelector.xib */,
 				9DB4B10D2BAF3C2600F9C076 /* Patchbay.xib */,
-				9D98C7C829FC579E00586A86 /* ProcessorCoreWrapper.mm */,
-				9D98C7CC29FC57AB00586A86 /* ProcessorCoreWrapper.h */,
 				9D3A20652A9562A800C7C620 /* CompressionMeter.h */,
 				9D3A20662A9562A800C7C620 /* CompressionMeter.m */,
 				9DD1BF272A9A549900D7C0B2 /* CompressionMeter5band.h */,
@@ -959,10 +959,11 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
+				CLANG_ADDRESS_SANITIZER_CONTAINER_OVERFLOW = YES;
 				CODE_SIGN_ENTITLEMENTS = MacSmoov/MacSmoov.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 612;
+				CURRENT_PROJECT_VERSION = 334;
 				DEVELOPMENT_ASSET_PATHS = "";
 				ENABLE_HARDENED_RUNTIME = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -978,7 +979,7 @@
 				);
 				LIBRARY_SEARCH_PATHS = "/opt/repos/yaml-cpp/build/Debug";
 				MACOSX_DEPLOYMENT_TARGET = 10.15;
-				MARKETING_VERSION = 0.3;
+				MARKETING_VERSION = 0.4;
 				PRODUCT_BUNDLE_IDENTIFIER = com.tonekids.osx.MacSmoov;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -991,10 +992,11 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
+				CLANG_ADDRESS_SANITIZER_CONTAINER_OVERFLOW = YES;
 				CODE_SIGN_ENTITLEMENTS = MacSmoov/MacSmoov.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 612;
+				CURRENT_PROJECT_VERSION = 334;
 				DEVELOPMENT_ASSET_PATHS = "";
 				ENABLE_HARDENED_RUNTIME = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -1010,7 +1012,7 @@
 				);
 				LIBRARY_SEARCH_PATHS = "/opt/repos/yaml-cpp/build/Debug";
 				MACOSX_DEPLOYMENT_TARGET = 10.15;
-				MARKETING_VERSION = 0.3;
+				MARKETING_VERSION = 0.4;
 				PRODUCT_BUNDLE_IDENTIFIER = com.tonekids.osx.MacSmoov;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -1022,7 +1024,7 @@
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 612;
+				CURRENT_PROJECT_VERSION = 334;
 				GENERATE_INFOPLIST_FILE = YES;
 				MACOSX_DEPLOYMENT_TARGET = 11.6;
 				MARKETING_VERSION = 1.0;
@@ -1038,7 +1040,7 @@
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 612;
+				CURRENT_PROJECT_VERSION = 334;
 				GENERATE_INFOPLIST_FILE = YES;
 				MACOSX_DEPLOYMENT_TARGET = 11.6;
 				MARKETING_VERSION = 1.0;
@@ -1053,7 +1055,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 612;
+				CURRENT_PROJECT_VERSION = 334;
 				GENERATE_INFOPLIST_FILE = YES;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.tonekids.osx.MacSmoovUITests;
@@ -1067,7 +1069,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 612;
+				CURRENT_PROJECT_VERSION = 334;
 				GENERATE_INFOPLIST_FILE = YES;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.tonekids.osx.MacSmoovUITests;

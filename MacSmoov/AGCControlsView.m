@@ -10,49 +10,39 @@
 
 @interface AGCControlsView () {
     NSUserDefaults* prefs;
-    AGC_PARAMS agc_params;
     id<AGCControlsDelegate> delegate;
 }
-
-//-(void) initFloatPref:(NSString*)prefstr value:(float)val factory_reset:(BOOL)force_factory;
-//-(void) setBoolPref:(NSString*)prefstr value:(BOOL)val factory_reset:(BOOL)force_factory;
--(void) read_prefs;
-
-//-(void) populate_ui_elements:(uint32_t)current_band;
 
 @end
 
 
 @implementation AGCControlsView
 
+/*
+ * TODO: Store min/max values for everything as well and bind to the sliders?
+ */
 
-AGC_PARAMS factory_agc_params = {
-    .enabled = true,
-    .drive = -40.0,
-    .release_master = 0.542,
-    .release_bass = 0.542,
-    .gate_thresh = -35.0,
-    .bass_coupling = 0.3,
-    .window_size = -3.0,
-    .window_release = 60,
-    .ratio = 200.0,
-    .bass_thresh = 0.0,
-    .idle_gain = 0.0,
-    .attack_master = 8.685,
-    .attack_bass = 8.685,
-    .post_gain = 17.0
-};
-
-
--(id) initWithPrefs:(NSUserDefaults*) defaults delegate:(id) agc_delegate {
+-(id) initWithSettings:(AGC_PARAMS) settings delegate:(id)agc_delegate {
     self = [super init];
     if(self) {
-        prefs = defaults;
         delegate = agc_delegate;
-        
-        [self setupPrefsIfNeeded:NO];
-        [self read_prefs];
-        //[delegate multiband_params_changed:mb_params];
+        _agc_settings = settings;
+        _enabled  = _agc_settings.enabled;
+        _mute_lo = _agc_settings.mute_lo;
+        _mute_hi = _agc_settings.mute_hi;
+        _drive = _agc_settings.drive;
+        _release_master = _agc_settings.release_master;
+        _release_bass = _agc_settings.release_bass;
+        _gate_thresh = _agc_settings.gate_thresh;
+        _bass_coupling = _agc_settings.bass_coupling;
+        _window_size = _agc_settings.window_size;
+        _window_release = _agc_settings.window_release;
+        _ratio = _agc_settings.ratio;
+        _bass_thresh = _agc_settings.bass_thresh;
+        _idle_gain = _agc_settings.idle_gain;
+        _attack_master = _agc_settings.attack_master;
+        _attack_bass = _agc_settings.attack_bass;
+        _post_gain = _agc_settings.post_gain;
     }
     
     return self;
@@ -61,17 +51,8 @@ AGC_PARAMS factory_agc_params = {
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do view setup here.
     NSLog(@"AGCControlsView viewDidLoad");
     
-}
-
--(void) populate_ui_elements:(uint32_t)current_band {
-    
-}
-
--(void) setPrefs:(NSUserDefaults*) defaults {
-    prefs = defaults;
 }
 
 -(void)showPanel {
@@ -80,31 +61,31 @@ AGC_PARAMS factory_agc_params = {
     [panel orderFront:nil];
 }
 
--(IBAction) setting_changed:(id) sender {
-    NSLog(@"Setting changed: %@", sender);
-}
-
--(void) read_prefs {
-    [delegate agc_params_changed:agc_params];
-}
-
--(void) setFloatPref:(NSString*)prefstr value:(float)val {
-    [prefs setObject:[NSString stringWithFormat:@"%f", val] forKey:prefstr];
-}
-
--(void) setBoolPref:(NSString*)prefstr value:(BOOL)val {
-    [prefs setBool:val forKey:prefstr];
-}
-
-/* At startup, check for the presence of these prefs.  If they don't exist, create them. */
--(void) setupPrefsIfNeeded:(BOOL)factory_reset {
-    
-}
-
 -(IBAction) factory_reset:(NSButton*)sender {
-    [self setupPrefsIfNeeded:YES];
-    [self read_prefs];
+    NSLog(@"Factory reset pressed.");
 }
+
+-(IBAction) setting_changed:(NSSlider*) sender {
+    NSLog(@"Setting changed: %@", sender);
+    _agc_settings.enabled = _enabled;
+    _agc_settings.drive = _drive;
+    _agc_settings.release_master = _release_master;
+    _agc_settings.release_bass = _release_bass;
+    _agc_settings.gate_thresh = _gate_thresh;
+    _agc_settings.bass_coupling = _bass_coupling;
+    _agc_settings.window_size = _window_size;
+    _agc_settings.window_release = _window_release;
+    _agc_settings.ratio = _ratio;
+    _agc_settings.bass_thresh = _bass_thresh;
+    _agc_settings.idle_gain = _idle_gain;
+    _agc_settings.attack_master = _attack_master;
+    _agc_settings.attack_bass = _attack_bass;
+    _agc_settings.post_gain = _post_gain;
+    _agc_settings.mute_lo = _mute_lo;
+    _agc_settings.mute_hi = _mute_hi;
+    [delegate agc_params_changed:_agc_settings];
+}
+
 
 - (void)controlTextDidChange:(NSNotification *)obj {
     NSLog(@"Control text changed.");
