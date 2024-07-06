@@ -36,7 +36,7 @@
                                         <font key="font" metaFont="system"/>
                                     </buttonCell>
                                     <connections>
-                                        <action selector="capitalizeWord:" target="-2" id="D8J-cz-Mys"/>
+                                        <action selector="band_select:" target="-2" id="mHM-MC-Udg"/>
                                     </connections>
                                 </button>
                                 <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="bHk-dc-P5L" userLabel="ENABLE_B1">
@@ -47,7 +47,7 @@
                                         <font key="font" metaFont="system"/>
                                     </buttonCell>
                                     <connections>
-                                        <binding destination="Ufi-BG-aMF" name="value" keyPath="selection.enable_b1" id="d4a-Se-bXZ"/>
+                                        <binding destination="Ufi-BG-aMF" name="value" keyPath="selection.b1_enabled" id="HQE-4L-ba4"/>
                                     </connections>
                                 </button>
                                 <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="gFV-bM-DJK" userLabel="MUTE_B1">
@@ -58,7 +58,7 @@
                                         <font key="font" metaFont="system"/>
                                     </buttonCell>
                                     <connections>
-                                        <binding destination="Ufi-BG-aMF" name="value" keyPath="selection.mute_b1" id="4RQ-6H-TcK"/>
+                                        <binding destination="Ufi-BG-aMF" name="value" keyPath="selection.b1_mute" id="mGh-PE-Vfx"/>
                                     </connections>
                                 </button>
                                 <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="KTN-4s-X76" userLabel="SOLO_B1">
@@ -69,7 +69,7 @@
                                         <font key="font" metaFont="system"/>
                                     </buttonCell>
                                     <connections>
-                                        <binding destination="Ufi-BG-aMF" name="value" keyPath="selection.solo_b1" id="wZt-GP-EZr"/>
+                                        <binding destination="Ufi-BG-aMF" name="value" keyPath="selection.b1_solo" id="J0q-22-bNc"/>
                                     </connections>
                                 </button>
                                 <button verticalHuggingPriority="750" fixedFrame="YES" tag="2" translatesAutoresizingMaskIntoConstraints="NO" id="YdQ-wa-QRL" userLabel="SELECT_B2">
@@ -87,15 +87,18 @@
                                     <rect key="frame" x="44" y="171" width="42" height="32"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                     <buttonCell key="cell" type="push" title="E" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="55L-xq-akc" userLabel="E">
-                                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES" changeBackground="YES" changeGray="YES"/>
                                         <font key="font" metaFont="system"/>
                                     </buttonCell>
+                                    <connections>
+                                        <binding destination="Ufi-BG-aMF" name="value" keyPath="selection.b2_enabled" id="sVs-jE-biy"/>
+                                    </connections>
                                 </button>
                                 <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="VF0-jE-LB3" userLabel="MUTE_B2">
                                     <rect key="frame" x="80" y="171" width="46" height="32"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                     <buttonCell key="cell" type="push" title="M" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="g64-Ax-2Yk">
-                                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES" changeBackground="YES" changeGray="YES"/>
                                         <font key="font" metaFont="system"/>
                                     </buttonCell>
                                 </button>
@@ -103,7 +106,7 @@
                                     <rect key="frame" x="118" y="171" width="44" height="32"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                     <buttonCell key="cell" type="push" title="S" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Zqp-tX-f2r">
-                                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES" changeBackground="YES" changeGray="YES"/>
                                         <font key="font" metaFont="system"/>
                                     </buttonCell>
                                 </button>
@@ -225,9 +228,14 @@
                                 <slider horizontalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="N9C-G1-gSJ" userLabel="COMP_DRIVE">
                                     <rect key="frame" x="21" y="72" width="24" height="135"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                    <sliderCell key="cell" controlSize="mini" alignment="left" minValue="-10" maxValue="25" doubleValue="1.1354905467922389" tickMarkPosition="right" sliderType="linear" id="gFK-72-hzr"/>
+                                    <sliderCell key="cell" controlSize="mini" state="on" alignment="left" minValue="-10" maxValue="25" doubleValue="4.7238417803230934" tickMarkPosition="right" sliderType="linear" id="gFK-72-hzr"/>
                                     <connections>
                                         <action selector="setting_changed:" target="-2" id="wg7-WF-itO"/>
+                                        <binding destination="Ufi-BG-aMF" name="value" keyPath="selection.the_dict.drive" id="6LB-jo-pTZ">
+                                            <dictionary key="options">
+                                                <bool key="NSValidatesImmediately" value="YES"/>
+                                            </dictionary>
+                                        </binding>
                                     </connections>
                                 </slider>
                                 <slider horizontalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="gyv-Sz-RvI" userLabel="COMP_ATTACK">
@@ -236,6 +244,11 @@
                                     <sliderCell key="cell" controlSize="mini" alignment="left" minValue="1" maxValue="100" doubleValue="50" tickMarkPosition="right" sliderType="linear" id="c5q-ib-6Xy"/>
                                     <connections>
                                         <action selector="setting_changed:" target="-2" id="03j-H7-77t"/>
+                                        <binding destination="Ufi-BG-aMF" name="value" keyPath="selection.the_dict.attack" id="UFH-T3-jK2">
+                                            <dictionary key="options">
+                                                <bool key="NSValidatesImmediately" value="YES"/>
+                                            </dictionary>
+                                        </binding>
                                     </connections>
                                 </slider>
                                 <slider horizontalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Evr-2W-KKt" userLabel="COMP_RELEASE">
@@ -244,6 +257,7 @@
                                     <sliderCell key="cell" controlSize="mini" alignment="left" minValue="1" maxValue="100" doubleValue="50" tickMarkPosition="right" sliderType="linear" id="yvq-lM-Hs5"/>
                                     <connections>
                                         <action selector="setting_changed:" target="-2" id="Mft-A5-XE5"/>
+                                        <binding destination="Ufi-BG-aMF" name="value" keyPath="selection.the_dict.release" id="KPG-EP-6ph"/>
                                     </connections>
                                 </slider>
                                 <slider horizontalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="uNZ-T9-WL8" userLabel="COMP_RATIO">
@@ -252,14 +266,24 @@
                                     <sliderCell key="cell" controlSize="mini" alignment="left" minValue="1" maxValue="64" doubleValue="16" tickMarkPosition="right" sliderType="linear" id="tEj-bN-WVY"/>
                                     <connections>
                                         <action selector="setting_changed:" target="-2" id="Ffq-0o-tqF"/>
+                                        <binding destination="Ufi-BG-aMF" name="value" keyPath="selection.the_dict.ratio" id="jJE-mF-4E1">
+                                            <dictionary key="options">
+                                                <bool key="NSValidatesImmediately" value="YES"/>
+                                            </dictionary>
+                                        </binding>
                                     </connections>
                                 </slider>
                                 <slider horizontalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="tSm-MC-mft" userLabel="COMP_GATE_THRESH">
                                     <rect key="frame" x="177" y="72" width="24" height="135"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                    <sliderCell key="cell" controlSize="mini" alignment="left" minValue="-60" doubleValue="-35" tickMarkPosition="right" sliderType="linear" id="qJ2-6R-uZR"/>
+                                    <sliderCell key="cell" controlSize="mini" state="on" alignment="left" minValue="-60" doubleValue="-35.150332693326263" tickMarkPosition="right" sliderType="linear" id="qJ2-6R-uZR"/>
                                     <connections>
                                         <action selector="setting_changed:" target="-2" id="rUv-Wr-1Eb"/>
+                                        <binding destination="Ufi-BG-aMF" name="value" keyPath="selection.the_dict.gate_thresh" id="dnH-wV-T8h">
+                                            <dictionary key="options">
+                                                <bool key="NSValidatesImmediately" value="YES"/>
+                                            </dictionary>
+                                        </binding>
                                     </connections>
                                 </slider>
                                 <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="5Ld-JY-Pmq" userLabel="B1_DRIVE">
@@ -271,36 +295,64 @@
                                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                     </textFieldCell>
+                                    <connections>
+                                        <binding destination="Ufi-BG-aMF" name="value" keyPath="selection.the_dict.drive" id="qw9-yq-FDj">
+                                            <dictionary key="options">
+                                                <bool key="NSValidatesImmediately" value="YES"/>
+                                            </dictionary>
+                                        </binding>
+                                    </connections>
                                 </textField>
                                 <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="YUc-bV-V1w" userLabel="B1_ATTACK">
                                     <rect key="frame" x="53" y="213" width="38" height="21"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" alignment="center" title="0" drawsBackground="YES" id="Csg-eZ-QpA">
+                                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" alignment="center" title="0" drawsBackground="YES" id="Csg-eZ-QpA">
                                         <numberFormatter key="formatter" formatterBehavior="default10_4" numberStyle="decimal" formatWidth="-1" minimumIntegerDigits="1" maximumIntegerDigits="2000000000" maximumFractionDigits="3" id="9DZ-Yf-ezi"/>
                                         <font key="font" metaFont="system" size="10"/>
                                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                     </textFieldCell>
+                                    <connections>
+                                        <binding destination="Ufi-BG-aMF" name="value" keyPath="selection.the_dict.attack" id="zmr-wv-wdY">
+                                            <dictionary key="options">
+                                                <bool key="NSValidatesImmediately" value="YES"/>
+                                            </dictionary>
+                                        </binding>
+                                    </connections>
                                 </textField>
                                 <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="6ej-gv-mtQ" userLabel="B1_RELEASE">
                                     <rect key="frame" x="92" y="213" width="38" height="21"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" alignment="center" title="0" drawsBackground="YES" id="mx7-OG-pq8">
+                                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" alignment="center" title="0" drawsBackground="YES" id="mx7-OG-pq8">
                                         <numberFormatter key="formatter" formatterBehavior="default10_4" numberStyle="decimal" formatWidth="-1" minimumIntegerDigits="1" maximumIntegerDigits="2000000000" maximumFractionDigits="3" id="ohP-2l-Nw7"/>
                                         <font key="font" metaFont="system" size="10"/>
                                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                     </textFieldCell>
+                                    <connections>
+                                        <binding destination="Ufi-BG-aMF" name="value" keyPath="selection.the_dict.release" id="V04-m1-rwE">
+                                            <dictionary key="options">
+                                                <bool key="NSValidatesImmediately" value="YES"/>
+                                            </dictionary>
+                                        </binding>
+                                    </connections>
                                 </textField>
                                 <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="FwB-La-0st" userLabel="B1_GATE_THRESH">
                                     <rect key="frame" x="170" y="213" width="38" height="21"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" alignment="center" title="0" drawsBackground="YES" id="2ei-FX-whw">
+                                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" alignment="center" title="0" drawsBackground="YES" id="2ei-FX-whw">
                                         <numberFormatter key="formatter" formatterBehavior="default10_4" numberStyle="decimal" formatWidth="-1" minimumIntegerDigits="1" maximumIntegerDigits="2000000000" maximumFractionDigits="3" id="zzf-uU-f65"/>
                                         <font key="font" metaFont="system" size="10"/>
                                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                     </textFieldCell>
+                                    <connections>
+                                        <binding destination="Ufi-BG-aMF" name="value" keyPath="selection.the_dict.gate_thresh" id="EFI-Ht-XZm">
+                                            <dictionary key="options">
+                                                <bool key="NSValidatesImmediately" value="YES"/>
+                                            </dictionary>
+                                        </binding>
+                                    </connections>
                                 </textField>
                                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="FgT-58-Xok">
                                     <rect key="frame" x="52" y="53" width="39" height="13"/>
@@ -359,12 +411,19 @@
                                 <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="CYX-gc-OQj" userLabel="B1_RATIO">
                                     <rect key="frame" x="131" y="213" width="38" height="21"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" alignment="center" title="0" drawsBackground="YES" id="P7r-8M-dht">
+                                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" alignment="center" title="0" drawsBackground="YES" id="P7r-8M-dht">
                                         <numberFormatter key="formatter" formatterBehavior="default10_4" numberStyle="decimal" formatWidth="-1" minimumIntegerDigits="1" maximumIntegerDigits="2000000000" maximumFractionDigits="3" id="JUN-ej-4ad"/>
                                         <font key="font" metaFont="system" size="10"/>
                                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                     </textFieldCell>
+                                    <connections>
+                                        <binding destination="Ufi-BG-aMF" name="value" keyPath="selection.the_dict.ratio" id="khT-j4-hBk">
+                                            <dictionary key="options">
+                                                <bool key="NSValidatesImmediately" value="YES"/>
+                                            </dictionary>
+                                        </binding>
+                                    </connections>
                                 </textField>
                             </subviews>
                         </view>
@@ -520,10 +579,10 @@
             </view>
             <point key="canvasLocation" x="-347.5" y="-441"/>
         </window>
-        <objectController automaticallyPreparesContent="YES" id="Ufi-BG-aMF">
+        <objectController objectClassName="MultibandObjectController" automaticallyPreparesContent="YES" id="Ufi-BG-aMF">
+            <classReference key="objectClass" className="MultibandObjectController"/>
             <connections>
-                <binding destination="-2" name="contentObject" keyPath="self" id="Vej-VE-2Cu"/>
-                <outlet property="content" destination="-2" id="VyB-0v-c92"/>
+                <binding destination="-2" name="contentObject" keyPath="mb_obj_ctrl" id="YAr-mr-hZb"/>
             </connections>
         </objectController>
         <userDefaultsController representsSharedInstance="YES" id="PDk-jm-pB8"/>

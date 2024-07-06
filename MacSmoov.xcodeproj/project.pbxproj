@@ -29,6 +29,9 @@
 		9D3ED8652AFFF65D008283FC /* AGCControlsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9D3ED8612AFFF65C008283FC /* AGCControlsView.xib */; };
 		9D3ED8662AFFF65D008283FC /* AGCControlsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9D3ED8612AFFF65C008283FC /* AGCControlsView.xib */; };
 		9D3ED8672AFFF65D008283FC /* AGCControlsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9D3ED8612AFFF65C008283FC /* AGCControlsView.xib */; };
+		9D43EA592C3907DB00C9B45B /* MultibandObjectController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D43EA582C3907DB00C9B45B /* MultibandObjectController.m */; };
+		9D43EA5A2C3907DB00C9B45B /* MultibandObjectController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D43EA582C3907DB00C9B45B /* MultibandObjectController.m */; };
+		9D43EA5B2C3907DB00C9B45B /* MultibandObjectController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D43EA582C3907DB00C9B45B /* MultibandObjectController.m */; };
 		9D4517C72A9D89AD003BC1EB /* MultibandControlsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D4517C52A9D89AD003BC1EB /* MultibandControlsView.m */; };
 		9D4517C82A9D89AD003BC1EB /* MultibandControlsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D4517C52A9D89AD003BC1EB /* MultibandControlsView.m */; };
 		9D4517C92A9D89AD003BC1EB /* MultibandControlsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D4517C52A9D89AD003BC1EB /* MultibandControlsView.m */; };
@@ -153,6 +156,8 @@
 		9D3ED85F2AFFF65C008283FC /* AGCControlsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AGCControlsView.h; sourceTree = "<group>"; };
 		9D3ED8602AFFF65C008283FC /* AGCControlsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AGCControlsView.m; sourceTree = "<group>"; };
 		9D3ED8612AFFF65C008283FC /* AGCControlsView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AGCControlsView.xib; sourceTree = "<group>"; };
+		9D43EA582C3907DB00C9B45B /* MultibandObjectController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MultibandObjectController.m; sourceTree = "<group>"; };
+		9D43EA5C2C39080000C9B45B /* MultibandObjectController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MultibandObjectController.h; sourceTree = "<group>"; };
 		9D4517C32A9D8799003BC1EB /* core_common.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = core_common.h; sourceTree = "<group>"; };
 		9D4517C42A9D89AD003BC1EB /* MultibandControlsView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MultibandControlsView.h; sourceTree = "<group>"; };
 		9D4517C52A9D89AD003BC1EB /* MultibandControlsView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MultibandControlsView.m; sourceTree = "<group>"; };
@@ -374,6 +379,8 @@
 				9D4517C42A9D89AD003BC1EB /* MultibandControlsView.h */,
 				9D4517C52A9D89AD003BC1EB /* MultibandControlsView.m */,
 				9D4517C62A9D89AD003BC1EB /* MultibandControlsView.xib */,
+				9D43EA582C3907DB00C9B45B /* MultibandObjectController.m */,
+				9D43EA5C2C39080000C9B45B /* MultibandObjectController.h */,
 			);
 			path = MacSmoov;
 			sourceTree = "<group>";
@@ -748,6 +755,7 @@
 				9D54D8B02ADC2F85006C3F57 /* ProcModDelay.cpp in Sources */,
 				9D81E9B82A5B2D70007D46EF /* ProcModLevelMeter.cpp in Sources */,
 				9D8EC53F2A8B1901006C1E09 /* ProcModStereoEnhance.cpp in Sources */,
+				9D43EA592C3907DB00C9B45B /* MultibandObjectController.m in Sources */,
 				9DC11C832BCAFFC300263F73 /* channel_map.cpp in Sources */,
 				9DEF3B462A9D2311004E78F3 /* ProcMod5bandCrossover.cpp in Sources */,
 			);
@@ -765,6 +773,7 @@
 				9D9806D629EB849200B98415 /* ProcessorCore.cpp in Sources */,
 				9DFECE052A87EAF800BFB1A2 /* filter_lr4.cpp in Sources */,
 				9DB012892A71C376009BFCD8 /* CircularBuffer.cpp in Sources */,
+				9D43EA5A2C3907DB00C9B45B /* MultibandObjectController.m in Sources */,
 				9D81E9B42A5B2CC6007D46EF /* ProcessorModule.cpp in Sources */,
 				9DFECDF82A87EAAF00BFB1A2 /* ProcMod2BandAGC.cpp in Sources */,
 				9D3A20682A9562A800C7C620 /* CompressionMeter.m in Sources */,
@@ -808,6 +817,7 @@
 				9D5C638E29D9FF5400E40A60 /* SignalGeneratorEngineWrapper.mm in Sources */,
 				9D3A20692A9562A800C7C620 /* CompressionMeter.m in Sources */,
 				9D98C7CB29FC579E00586A86 /* ProcessorCoreWrapper.mm in Sources */,
+				9D43EA5B2C3907DB00C9B45B /* MultibandObjectController.m in Sources */,
 				9DB7A14429D7949F002E6F4E /* MacSmoovUITests.m in Sources */,
 				9DB7A14629D7949F002E6F4E /* MacSmoovUITestsLaunchTests.m in Sources */,
 				9D281A9429E05F57009CF125 /* SignalGenerator.m in Sources */,
@@ -963,7 +973,7 @@
 				CODE_SIGN_ENTITLEMENTS = MacSmoov/MacSmoov.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 345;
+				CURRENT_PROJECT_VERSION = 378;
 				DEVELOPMENT_ASSET_PATHS = "";
 				ENABLE_HARDENED_RUNTIME = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -996,7 +1006,7 @@
 				CODE_SIGN_ENTITLEMENTS = MacSmoov/MacSmoov.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 345;
+				CURRENT_PROJECT_VERSION = 378;
 				DEVELOPMENT_ASSET_PATHS = "";
 				ENABLE_HARDENED_RUNTIME = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -1024,7 +1034,7 @@
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 345;
+				CURRENT_PROJECT_VERSION = 378;
 				GENERATE_INFOPLIST_FILE = YES;
 				MACOSX_DEPLOYMENT_TARGET = 11.6;
 				MARKETING_VERSION = 1.0;
@@ -1040,7 +1050,7 @@
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 345;
+				CURRENT_PROJECT_VERSION = 378;
 				GENERATE_INFOPLIST_FILE = YES;
 				MACOSX_DEPLOYMENT_TARGET = 11.6;
 				MARKETING_VERSION = 1.0;
@@ -1055,7 +1065,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 345;
+				CURRENT_PROJECT_VERSION = 378;
 				GENERATE_INFOPLIST_FILE = YES;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.tonekids.osx.MacSmoovUITests;
@@ -1069,7 +1079,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 345;
+				CURRENT_PROJECT_VERSION = 378;
 				GENERATE_INFOPLIST_FILE = YES;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.tonekids.osx.MacSmoovUITests;

@@ -175,6 +175,8 @@ COMPRESSOR_PARAMS factory_lim5 = {
     if(self) {
         delegate = mb_delegate;
         _mb_settings = _settings;
+        _mb_obj_ctrl = [[MultibandObjectController alloc] init];
+        _objctrl.content = _mb_obj_ctrl;
     }
     
     return self;
@@ -188,7 +190,9 @@ COMPRESSOR_PARAMS factory_lim5 = {
 }
 
 -(IBAction) band_select:(NSButton*)sender {
-    NSLog(@"Band %@ selected.", [sender title]);
+    NSInteger band_num = [[sender title] integerValue];
+    NSLog(@"Band %d selected.", (uint8_t)band_num);
+    [_mb_obj_ctrl selectBand:band_num];
 }
 
 -(void)showPanel {
@@ -200,7 +204,7 @@ COMPRESSOR_PARAMS factory_lim5 = {
 -(IBAction) setting_changed:(id) sender {
     NSLog(@"Setting changed: %@", sender);
     [delegate multiband_params_changed:_mb_settings];
-
+    [_mb_obj_ctrl dumpSettings];
 }
 
 @end
