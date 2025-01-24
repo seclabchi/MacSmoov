@@ -171,6 +171,14 @@ CoreConfig* CoreConfig::get_instance() {
     return the_instance;
 }
 
+void CoreConfig::set_input_gain_enabled(bool enabled) {
+    enable_input_gain = enabled;
+}
+
+bool CoreConfig::get_input_gain_enabled() {
+    return enable_input_gain;
+}
+
 void CoreConfig::get_input_gain(std::pair<float, float>& gain) {
     gain = input_gain;
 }
@@ -287,7 +295,7 @@ bool CoreConfig::load_cfg_from_file(const std::string &filename) {
             
             /* Read AGC Params */
             YAML::Node agc = yaml_node["agc_params"];
-            agc_params.enabled = agc["enabled"].as<bool>();
+            enable_2band_agc = agc["enabled"].as<bool>();
             agc_params.mute_lo = agc["mute_lo"].as<bool>();
             agc_params.mute_hi = agc["mute_hi"].as<bool>();
             agc_params.drive = agc["drive"].as<float>();
@@ -479,7 +487,7 @@ bool CoreConfig::write_cfg_to_file() {
                         
             /* Read AGC Params */
             YAML::Node agc = yaml_node["agc_params"];
-            agc["enabled"] = agc_params.enabled;
+            agc["enabled"] = enable_2band_agc;
             agc["mute_lo"] = agc_params.mute_lo;
             agc["mute_hi"] = agc_params.mute_hi;
             agc["drive"] = agc_params.drive;

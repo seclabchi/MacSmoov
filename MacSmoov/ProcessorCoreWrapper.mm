@@ -19,13 +19,13 @@ fmsmoov::ProcessorCore *cpp;
 PROCESSOR_CORE_HOOK proc_core_hook;
 
 //This is a non-interleaved buffer, so the total number of samples is twice what the buf size is
--(id) initWithSampleRate:(uint32_t)sample_rate numberOfChannels:(uint32_t)num_chans bufferSize:(uint32_t)buf_size {
+-(id) initWithSampleRate:(uint32_t)sample_rate numberOfChannels:(uint32_t)num_chans bufferSize:(uint32_t)buf_size configFilename:(NSString *)filename {
     self = [super init];
 //#if CORE_BYPASS
 //#else
     if(self) {
         uint32_t n_samp = buf_size / sizeof(float);
-        cpp = new fmsmoov::ProcessorCore(sample_rate, num_chans, n_samp);
+        cpp = new fmsmoov::ProcessorCore(sample_rate, num_chans, n_samp, std::string([filename UTF8String]));
         proc_core_hook = &processor_core_hook;
     }
 //#endif

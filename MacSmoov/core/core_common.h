@@ -10,7 +10,6 @@
 
 
 typedef struct {
-    bool enabled;  //off-on
     bool mute_lo;  //mute the low band
     bool mute_hi;  //mute the hi band
     float drive;  //amount of gain at AGC input

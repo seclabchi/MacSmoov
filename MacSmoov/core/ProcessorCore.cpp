@@ -14,9 +14,11 @@ using namespace fmsmoov;
 using namespace std;
 
 /* n_samp is number of samples PER CHANNEL */
-ProcessorCore::ProcessorCore(uint32_t _f_samp, uint32_t _n_channels, uint32_t _n_samp) : f_samp(_f_samp), n_channels(_n_channels), n_samp(_n_samp) {
+ProcessorCore::ProcessorCore(uint32_t _f_samp, uint32_t _n_channels, uint32_t _n_samp, const std::string& _config_filename) : f_samp(_f_samp), n_channels(_n_channels), n_samp(_n_samp) {
     core_config = CoreConfig::get_instance();
     core_stack = CoreStack::getInstance();
+    
+    core_config->load_cfg_from_file(_config_filename);
 
     master_bypass = false;
     

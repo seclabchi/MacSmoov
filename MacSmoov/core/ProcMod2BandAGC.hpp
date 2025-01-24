@@ -10,7 +10,7 @@
 
 #include <stdio.h>
 #include "ProcessorModule.hpp"
-#include "ProcModGain.hpp"
+#include "simple_gain.hpp"
 #include "core_common.h"
 #include "compressor.h"
 #include "LogLinConverter.hpp"
@@ -41,7 +41,7 @@ private:
     float drive;
     AGC_PARAMS params;
     
-    ProcModGain* gain_mod;
+    SimpleGain* agc_drive;
     AudioBuf* post_drive_bufL, *post_drive_bufR;
 };
 

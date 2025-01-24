@@ -171,9 +171,11 @@ Boolean shutting_down = NO;
     //[audio_device_selector set_watcher_for_output_device_change:self andSelector:@selector(output_device_changed:)];
     //[audio_device_selector set_watcher_for_input_device_change:self andSelector:@selector(input_device_changed:)];
     
-    proc_core_wrapper = [[ProcessorCoreWrapper alloc] initWithSampleRate:self.sysaudio.sample_rate numberOfChannels:self.sysaudio.num_channels bufferSize:(uint32_t)self.sysaudio.buffer_size];
+    NSString* CONFIG_FILENAME = @"/Users/zaremba/Library/Containers/com.tonekids.osx.MacSmoov/Data/tmp/config.yml";
     
-    [proc_core_wrapper load_config_from_file:@"/Users/zaremba/Library/Containers/com.tonekids.osx.MacSmoov/Data/tmp/config.yml"];
+    proc_core_wrapper = [[ProcessorCoreWrapper alloc] initWithSampleRate:self.sysaudio.sample_rate numberOfChannels:self.sysaudio.num_channels bufferSize:(uint32_t)self.sysaudio.buffer_size configFilename:CONFIG_FILENAME];
+    
+    [proc_core_wrapper load_config_from_file:CONFIG_FILENAME];
     
     AGC_PARAMS agc_settings;
     [proc_core_wrapper get_agc_settings:&agc_settings];

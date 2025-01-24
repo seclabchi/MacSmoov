@@ -141,9 +141,7 @@ void ProcModBassClipper::setup(const AGC_PARAMS& _parms) {
          float attack;
      } COMPRESSOR_PARAMS;
      */
-    
-    this->bypass = !_parms.enabled;
-    
+        
 }
 
 void ProcModBassClipper::read(float* _gain_reduction_lo, float* _gain_reduction_hi, bool* _gate_open_lo, bool* _gate_open_hi) {

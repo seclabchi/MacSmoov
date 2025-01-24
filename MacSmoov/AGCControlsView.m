@@ -26,7 +26,7 @@
     if(self) {
         delegate = agc_delegate;
         _agc_settings = settings;
-        _enabled  = _agc_settings.enabled;
+        _enabled  = false;
         _mute_lo = _agc_settings.mute_lo;
         _mute_hi = _agc_settings.mute_hi;
         _drive = _agc_settings.drive;
@@ -67,7 +67,6 @@
 
 -(IBAction) setting_changed:(NSSlider*) sender {
     NSLog(@"Setting changed: %@", sender);
-    _agc_settings.enabled = _enabled;
     _agc_settings.drive = _drive;
     _agc_settings.release_master = _release_master;
     _agc_settings.release_bass = _release_bass;

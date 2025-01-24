@@ -36,7 +36,7 @@ using namespace std;
 
 class ProcessorCore {
 public:
-    ProcessorCore(uint32_t _f_samp, uint32_t _n_channels, uint32_t _n_samp);
+    ProcessorCore(uint32_t _f_samp, uint32_t _n_channels, uint32_t _n_samp, const std::string& _config_filename);
     bool load_config_from_file(const std::string& filename);
     bool prepare();
     void process(float* in_L, float* in_R, float* out_L, float* out_R, uint32_t n_samp);

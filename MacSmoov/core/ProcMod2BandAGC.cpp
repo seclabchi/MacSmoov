@@ -14,13 +14,14 @@ namespace fmsmoov {
 
 ProcMod2BandAGC::ProcMod2BandAGC(const string& _name, uint32_t _f_samp, uint8_t _n_channels, uint32_t _n_samps) : ProcessorModule (_name, _f_samp, _n_channels, _n_samps) {
     
-    post_drive_bufL = new AudioBuf(AudioBufType::REAL, "AGC_POST_DRIVE_L", _n_samps);
-    post_drive_bufR = new AudioBuf(AudioBufType::REAL, "AGC_POST_DRIVE_R", _n_samps);
-
-    filt_lo_L = new tonekids::dsp::FilterLR4(48000.0f, 150.0f, tonekids::dsp::BUTTERWORTH_TYPE::kLoPass, _n_samps);
-    filt_lo_R = new tonekids::dsp::FilterLR4(48000.0f, 150.0f, tonekids::dsp::BUTTERWORTH_TYPE::kLoPass, _n_samps);
-    filt_hi_L = new tonekids::dsp::FilterLR4(48000.0f, 150.0f, tonekids::dsp::BUTTERWORTH_TYPE::kHiPass, _n_samps);
-    filt_hi_R = new tonekids::dsp::FilterLR4(48000.0f, 150.0f, tonekids::dsp::BUTTERWORTH_TYPE::kHiPass, _n_samps);
+    agc_drive = new SimpleGain(0.0, _n_samps);
+    post_drive_bufL = new AudioBuf(AudioBufType::REAL, "AGC_DRIVE_L", _n_samps, NULL);
+    post_drive_bufR = new AudioBuf(AudioBufType::REAL, "AGC_DRIVE_R", _n_samps, NULL);
+    
+    filt_lo_L = new tonekids::dsp::FilterLR4(48000.0f, 200.0f, tonekids::dsp::BUTTERWORTH_TYPE::kLoPass, _n_samps);
+    filt_lo_R = new tonekids::dsp::FilterLR4(48000.0f, 200.0f, tonekids::dsp::BUTTERWORTH_TYPE::kLoPass, _n_samps);
+    filt_hi_L = new tonekids::dsp::FilterLR4(48000.0f, 200.0f, tonekids::dsp::BUTTERWORTH_TYPE::kHiPass, _n_samps);
+    filt_hi_R = new tonekids::dsp::FilterLR4(48000.0f, 200.0f, tonekids::dsp::BUTTERWORTH_TYPE::kHiPass, _n_samps);
     
     buf_lo_filtL = new float[_n_samps]();
     memset(buf_lo_filtL, 0, _n_samps*sizeof(float));
@@ -59,11 +60,11 @@ ProcMod2BandAGC::ProcMod2BandAGC(const string& _name, uint32_t _f_samp, uint8_t 
 }
 
 ProcMod2BandAGC::~ProcMod2BandAGC() {
+    delete agc_drive;
+    
     delete post_drive_bufL;
     delete post_drive_bufR;
-    
-    delete gain_mod;
-    
+        
     delete filt_lo_L;
     delete filt_lo_R;
     delete filt_hi_L;
@@ -99,10 +100,6 @@ bool ProcMod2BandAGC::init_impl(CoreConfig* cfg, ProcessorModule* prev_mod, Chan
         }
     }
     
-    gain_mod = new ProcModGain("AGC DRIVE", this->f_samp, this->n_channels, this->n_samps);
-    gain_mod->init(NULL, NULL, NULL);
-    gain_mod->init_manual(this->get_in_buf(0), this->get_in_buf(1), this->post_drive_bufL, this->post_drive_bufR);
-    gain_mod->set_gain_db(params.drive, params.drive);
     this->ready = true;
     
     return true;
@@ -120,8 +117,9 @@ void ProcMod2BandAGC::process() {
     /*
      * Apply drive
      */
-    gain_mod->set_bypass(true);
-    gain_mod->process();
+    
+    agc_drive->process(this->get_in_buf(0)->getbuf(), this->get_in_buf(1)->getbuf(), this->post_drive_bufL->getbuf(), this->post_drive_bufR->getbuf());
+    
     
     /*
      * 150 Hz Crossover
@@ -147,64 +145,6 @@ void ProcMod2BandAGC::process() {
 void ProcMod2BandAGC::configure(const AGC_PARAMS& _params) {
     params = _params;
     
-
-    /*
-    float target; //target value dB
-    float attack;
-    float release;
-    float ratio;
-    float gate_thresh;
-    bool use_coupling;
-    float coupling;
-    bool use_window;
-    float window_size;
-    float window_release;
-    bool use_idle_gain;
-    float idle_gain;
-    bool use_post_gain;
-    float post_gain;
-    float forced_gain_attack;
-    float forced_gain_release;
-    */
-    
-/*    DYNAMICS_PROCESSOR_PARAMS comp_parms_lo = {
-        .target = _params.target,
-        .attack = _params.attack_bass,
-        .release = _params.release_bass,
-        .ratio = _params.ratio,
-        .use_gating = true,
-        .gate_thresh = _params.gate_thresh,
-        .use_coupling = true,
-        .coupling = _params.bass_coupling,
-        .use_window = true,
-        .window_size = _params.window_size,
-        .window_release = _params.window_release,
-        .use_idle_gain = true,
-        .idle_gain = _params.idle_gain,
-        .use_post_gain = false,
-        .forced_gain_attack = 1.0f,
-        .forced_gain_release = 1.0f
-    };
-    
-    DYNAMICS_PROCESSOR_PARAMS comp_parms_hi = {
-        .target = _params.target,
-        .attack = _params.attack_master,
-        .release = _params.release_master,
-        .ratio = _params.ratio,
-        .use_gating = true,
-        .gate_thresh = _params.gate_thresh,
-        .use_coupling = false,
-        .coupling = 0.0f,
-        .use_window = true,
-        .window_size = _params.window_size,
-        .window_release = _params.window_release,
-        .use_idle_gain = true,
-        .idle_gain = _params.idle_gain,
-        .use_post_gain = false,
-        .forced_gain_attack = 0.0f,
-        .forced_gain_release = 0.0f
-    };
- */
     COMPRESSOR_PARAMS comp_parms_lo = {
         .target = _params.target,
         .release = _params.release_bass,
@@ -221,6 +161,7 @@ void ProcMod2BandAGC::configure(const AGC_PARAMS& _params) {
         .attack = _params.attack_master
     };
 
+    agc_drive->set_gain(_params.drive);
     comp_lo->config(comp_parms_lo);
     comp_hi->config(comp_parms_hi);
 }

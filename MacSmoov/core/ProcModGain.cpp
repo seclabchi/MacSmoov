@@ -27,7 +27,7 @@ ProcModGain::~ProcModGain() {
 
 bool ProcModGain::init_impl(CoreConfig* cfg, ProcessorModule* prev_mod, ChannelMap* _channel_map) {
     if(nullptr != cfg) {
-        //TODO config
+        this->set_bypass(!cfg->get_input_gain_enabled());
     }
     if((nullptr != _channel_map) && (nullptr != prev_mod)) {
         for(CHANNEL_MAP_ELEMENT e : _channel_map->the_map)
@@ -40,8 +40,8 @@ bool ProcModGain::init_impl(CoreConfig* cfg, ProcessorModule* prev_mod, ChannelM
 }
 
 bool ProcModGain::init_manual(AudioBuf* inL, AudioBuf* inR, AudioBuf* outL, AudioBuf* outR) {
-    this->set_in_buf(0, inL);
-    this->set_in_buf(1, inR);
+    this->update_in_buf_ref(0, inL->getbuf());
+    this->update_in_buf_ref(1, inR->getbuf());
     outL = this->get_out_buf(0);
     outR = this->get_out_buf(1);
     
@@ -54,16 +54,17 @@ void ProcModGain::process() {
         memcpy(this->get_out_buf(0)->getbuf(), this->get_in_buf(0)->getbuf(), n_samps * sizeof(float));
         memcpy(this->get_out_buf(1)->getbuf(), this->get_in_buf(1)->getbuf(), n_samps * sizeof(float));
     }
-    
-    float* inL = this->get_in_buf(0)->getbuf();
-    float* inR = this->get_in_buf(1)->getbuf();
-    float* outL = this->get_out_buf(0)->getbuf();
-    float* outR = this->get_out_buf(1)->getbuf();
-    uint32_t n_samps = this->get_n_samps();
-    
-    for(uint32_t i = 0; i < n_samps; i++) {
-        outL[i] = inL[i] * m_setgain_lin_L;
-        outR[i] = inR[i] * m_setgain_lin_R;
+    else {
+        float* inL = this->get_in_buf(0)->getbuf();
+        float* inR = this->get_in_buf(1)->getbuf();
+        float* outL = this->get_out_buf(0)->getbuf();
+        float* outR = this->get_out_buf(1)->getbuf();
+        uint32_t n_samps = this->get_n_samps();
+        
+        for(uint32_t i = 0; i < n_samps; i++) {
+            outL[i] = inL[i] * m_setgain_lin_L;
+            outR[i] = inR[i] * m_setgain_lin_R;
+        }
     }
 }
 

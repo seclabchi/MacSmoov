@@ -17,6 +17,8 @@ namespace fmsmoov {
 class CoreConfig {
 public:
     static CoreConfig* get_instance();
+    void set_input_gain_enabled(bool enabled);
+    bool get_input_gain_enabled();
     void get_input_gain(std::pair<float, float>& gain);
     void set_input_gain(const std::pair<float, float>& gain);
     bool get_input_level_enabled();
