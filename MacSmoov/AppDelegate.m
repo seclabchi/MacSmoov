@@ -137,7 +137,7 @@ Boolean shutting_down = NO;
     
     shutting_down = NO;
     
-    [_comp_2band_agc set_meter_range:-30.0];
+    [_comp_2band_agc set_meter_range:-24.0];
     [_comp_5band set_meter_color:[NSColor magentaColor]];
     [_comp_5band set_meter_range:-10.0];
     [_lim_5band set_meter_color:[NSColor yellowColor]];
@@ -335,7 +335,12 @@ Boolean shutting_down = NO;
     NSSlider* gmi = sender;
     //NSLog(@"GainMainIn value changed: %4.2f dB", gmo.cell.floatValue);
     [proc_core_wrapper setMainInGainDBL:gmi.cell.floatValue R:gmi.cell.floatValue];
-    [prefs setObject:[NSString stringWithFormat:@"%f", gmi.cell.floatValue] forKey:@"GAIN_IN_MAIN"];
+    NSEvent *event = [[NSApplication sharedApplication] currentEvent];
+    BOOL mouseUp = event.type == NSEventTypeLeftMouseUp;
+    
+    if(mouseUp) {
+        [proc_core_wrapper mainInGainChangeDoneL:gmi.cell.floatValue R:gmi.cell.floatValue];
+    }
 }
 
 -(void) agc_params_changed:(AGC_PARAMS) params {

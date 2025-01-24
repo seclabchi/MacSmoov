@@ -27,9 +27,13 @@ public:
     /* n samps is total interleaved stereo samples
      TODO: Figure this shit out to make it universal. */
     virtual void process();
-    void setup(const MULTIBAND_PARAMS _parms);
+    void configure(const MULTIBAND_PARAMS _parms);
     void read(float** _bands_gr, float** _bands_lim, bool** _bands_gate_open);
 private:
+    bool band_mute[5];
+    bool band_solo[5];
+    bool compressor_band_enabled[5];
+    bool limiter_band_enabled[5];
     float* master_outL, *master_outR;
     float* procb1L, *procb1R, *procb2L, *procb2R, *procb3L, *procb3R, *procb4L, *procb4R, *procb5L, *procb5R;
     float* limb1L, *limb1R, *limb2L, *limb2R, *limb3L, *limb3R, *limb4L, *limb4R, *limb5L, *limb5R;

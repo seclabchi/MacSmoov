@@ -78,73 +78,73 @@ Crossover_5_band::Crossover_5_band(uint32_t bufsize) {
     b0hi_sos =
        1.0000  -2.0000   1.0000   1.0000  -1.6692   0.7166
     g0hi = 0.8465
-    */
+    
     
     b0lo_sos = new SOS(0.011858, 1.0000,   2.0000,   1.0000,   1.0000,  -1.6692,   0.7166);
     b0hi_sos = new SOS(0.8465, 1.0000,  -2.0000,   1.0000,   1.0000,  -1.6692,   0.7166);
     
-    /*
+    
     b1lo_sos =
        1.0000   2.0000   1.0000   1.0000  -1.9038   0.9082
     g1lo = 1.1047e-03
     b1hi_sos =
        1.0000  -2.0000   1.0000   1.0000  -1.9038   0.9082
     g1hi = 0.9530
-    */
+   
     
     b1lo_sos = new SOS(1.1047e-03, 1.0000,   2.0000,   1.0000,   1.0000,  -1.9038,   0.9082);
     b1hi_sos = new SOS(0.9530, 1.0000,  -2.0000,   1.0000,   1.0000,  -1.9038,   0.9082);
     
-    /*
+    
     b2lo_sos =
        1.0000   2.0000   1.0000   1.0000  -0.9428   0.3333
     g2lo = 0.097631
     b2hi_sos =
        1.0000  -2.0000   1.0000   1.0000  -0.9428   0.3333
     g2hi = 0.5690
-     */
+    
     
     b2lo_sos = new SOS(0.097631, 1.0000,   2.0000,   1.0000,   1.0000,  -0.9428,   0.3333);
     b2hi_sos = new SOS(0.5690, 1.0000,  -2.0000,   1.0000,   1.0000,  -0.9428,   0.3333);
     
-     /*
+     
     b3lo_sos =
        1.0000   2.0000   1.0000   1.0000  -1.9630   0.9637
     g3lo = 1.6822e-04
     b3hi_sos =
        1.0000  -2.0000   1.0000   1.0000  -1.9630   0.9637
     g3hi = 0.9817
-    */
+    
     
     b3lo_sos = new SOS(1.6822e-04, 1.0000,   2.0000,   1.0000,   1.0000,  -1.9630,   0.9637);
     b3hi_sos = new SOS(0.9817, 1.0000,  -2.0000,   1.0000,   1.0000,  -1.9630,   0.9637);
-    
+    */
 
-	f0loL = new FilterLR4(b0lo_sos, m_bufsize);
-	f0loR = new FilterLR4(b0lo_sos, m_bufsize);
-	f0hiL = new FilterLR4(b0hi_sos, m_bufsize);
-	f0hiR = new FilterLR4(b0hi_sos, m_bufsize);
-	f1loL = new FilterLR4(b1lo_sos, m_bufsize);
-	f1loR = new FilterLR4(b1lo_sos, m_bufsize);
-	f1hiL = new FilterLR4(b1hi_sos, m_bufsize);
-	f1hiR = new FilterLR4(b1hi_sos, m_bufsize);
-	f2loL = new FilterLR4(b2lo_sos, m_bufsize);
-	f2loR = new FilterLR4(b2lo_sos, m_bufsize);
-	f2hiL = new FilterLR4(b2hi_sos, m_bufsize);
-	f2hiR = new FilterLR4(b2hi_sos, m_bufsize);
-	f3loL = new FilterLR4(b3lo_sos, m_bufsize);
-	f3loR = new FilterLR4(b3lo_sos, m_bufsize);
-	f3hiL = new FilterLR4(b3hi_sos, m_bufsize);
-	f3hiR = new FilterLR4(b3hi_sos, m_bufsize);
+	f0loL = new tonekids::dsp::FilterLR4(48000.0f, 1800.0f, tonekids::dsp::BUTTERWORTH_TYPE::kLoPass, m_bufsize);
+	f0loR = new tonekids::dsp::FilterLR4(48000.0f, 1800.0f, tonekids::dsp::BUTTERWORTH_TYPE::kLoPass, m_bufsize);
+	f0hiL = new tonekids::dsp::FilterLR4(48000.0f, 1800.0f, tonekids::dsp::BUTTERWORTH_TYPE::kHiPass, m_bufsize);
+	f0hiR = new tonekids::dsp::FilterLR4(48000.0f, 1800.0f, tonekids::dsp::BUTTERWORTH_TYPE::kHiPass, m_bufsize);
+	f1loL = new tonekids::dsp::FilterLR4(48000.0f, 520.0f, tonekids::dsp::BUTTERWORTH_TYPE::kLoPass, m_bufsize);
+	f1loR = new tonekids::dsp::FilterLR4(48000.0f, 520.0f, tonekids::dsp::BUTTERWORTH_TYPE::kLoPass, m_bufsize);
+	f1hiL = new tonekids::dsp::FilterLR4(48000.0f, 520.0f, tonekids::dsp::BUTTERWORTH_TYPE::kHiPass, m_bufsize);
+	f1hiR = new tonekids::dsp::FilterLR4(48000.0f, 520.0f, tonekids::dsp::BUTTERWORTH_TYPE::kHiPass, m_bufsize);
+	f2loL = new tonekids::dsp::FilterLR4(48000.0f, 6000.0f, tonekids::dsp::BUTTERWORTH_TYPE::kLoPass, m_bufsize);
+	f2loR = new tonekids::dsp::FilterLR4(48000.0f, 6000.0f, tonekids::dsp::BUTTERWORTH_TYPE::kLoPass, m_bufsize);
+	f2hiL = new tonekids::dsp::FilterLR4(48000.0f, 6000.0f, tonekids::dsp::BUTTERWORTH_TYPE::kHiPass, m_bufsize);
+	f2hiR = new tonekids::dsp::FilterLR4(48000.0f, 6000.0f, tonekids::dsp::BUTTERWORTH_TYPE::kHiPass, m_bufsize);
+	f3loL = new tonekids::dsp::FilterLR4(48000.0f, 200.0f, tonekids::dsp::BUTTERWORTH_TYPE::kLoPass, m_bufsize);
+	f3loR = new tonekids::dsp::FilterLR4(48000.0f, 200.0f, tonekids::dsp::BUTTERWORTH_TYPE::kLoPass, m_bufsize);
+	f3hiL = new tonekids::dsp::FilterLR4(48000.0f, 200.0f, tonekids::dsp::BUTTERWORTH_TYPE::kHiPass, m_bufsize);
+	f3hiR = new tonekids::dsp::FilterLR4(48000.0f, 200.0f, tonekids::dsp::BUTTERWORTH_TYPE::kHiPass, m_bufsize);
     
-    s0f1apL = new AllpassFilterLR4(b1lo_sos, b1hi_sos, m_bufsize);
-    s0f1apR = new AllpassFilterLR4(b1lo_sos, b1hi_sos, m_bufsize);
-    s0f2apL = new AllpassFilterLR4(b2lo_sos, b2hi_sos, m_bufsize);
-    s0f2apR = new AllpassFilterLR4(b2lo_sos, b2hi_sos, m_bufsize);
-    s0f3apL = new AllpassFilterLR4(b3lo_sos, b3hi_sos, m_bufsize);
-    s0f3apR = new AllpassFilterLR4(b3lo_sos, b3hi_sos, m_bufsize);
-    s1f3apL = new AllpassFilterLR4(b3lo_sos, b3hi_sos, m_bufsize);
-    s1f3apR = new AllpassFilterLR4(b3lo_sos, b3hi_sos, m_bufsize);
+    s0f1apL = new tonekids::dsp::AllpassFilterLR4(48000.0f, 520.0f, m_bufsize);
+    s0f1apR = new tonekids::dsp::AllpassFilterLR4(48000.0f, 520.0f, m_bufsize);
+    s0f2apL = new tonekids::dsp::AllpassFilterLR4(48000.0f, 6000.0f, m_bufsize);
+    s0f2apR = new tonekids::dsp::AllpassFilterLR4(48000.0f, 6000.0f, m_bufsize);
+    s0f3apL = new tonekids::dsp::AllpassFilterLR4(48000.0f, 200.0f, m_bufsize);
+    s0f3apR = new tonekids::dsp::AllpassFilterLR4(48000.0f, 200.0f, m_bufsize);
+    s1f3apL = new tonekids::dsp::AllpassFilterLR4(48000.0f, 200.0f, m_bufsize);
+    s1f3apR = new tonekids::dsp::AllpassFilterLR4(48000.0f, 200.0f, m_bufsize);
 }
 
 Crossover_5_band::~Crossover_5_band() {
@@ -182,15 +182,6 @@ Crossover_5_band::~Crossover_5_band() {
     delete s0f3apR;
     delete s1f3apL;
     delete s1f3apR;
-
-	delete b0lo_sos;
-	delete b0hi_sos;
-	delete b1lo_sos;
-	delete b1hi_sos;
-	delete b2lo_sos;
-	delete b2hi_sos;
-	delete b3lo_sos;
-	delete b3hi_sos;
 }
 
 void Crossover_5_band::band_enable(bool _b0, bool _b1, bool _b2, bool _b3, bool _b4)

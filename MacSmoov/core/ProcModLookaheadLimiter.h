@@ -1,28 +1,27 @@
 //
-//  ProcModGain.hpp
+//  ProcModLookaheadLimiter.hpp
 //  MacSmoov
 //
-//  Created by Paul Zaremba on 8/11/23.
+//  Created by Paul Zaremba on 9/20/24.
 //
 
-#ifndef ProcModGain_hpp
-#define ProcModGain_hpp
+#ifndef ProcModLookaheadLimiter_hpp
+#define ProcModLookaheadLimiter_hpp
 
 #include <stdio.h>
 #include "ProcessorModule.hpp"
 
 namespace fmsmoov {
 
-class ProcModGain : public ProcessorModule {
+class ProcModLookaheadLimiter : public ProcessorModule {
 public:
-    ProcModGain(const string& _name, uint32_t _f_samp, uint8_t _n_channels, uint32_t _n_samps);
-    virtual ~ProcModGain();
+    ProcModLookaheadLimiter(const string& _name, uint32_t _f_samp, uint8_t _n_channels, uint32_t _n_samps);
+    virtual ~ProcModLookaheadLimiter();
     virtual bool init_impl(CoreConfig* cfg, ProcessorModule* prev_mod, ChannelMap* _channel_map);
-    bool init_manual(AudioBuf* inL, AudioBuf* inR, AudioBuf* outL, AudioBuf* outR);
+    void set_gain_db(float gain_L, float gain_R);
     /* n samps is total interleaved stereo samples
      TODO: Figure this shit out to make it universal. */
     virtual void process();
-    void set_gain_db(float _gainL, float _gainR);
 private:
     float m_setgain_db_L;
     float m_setgain_db_R;
@@ -38,4 +37,4 @@ private:
 
 }
 
-#endif /* ProcModLevelMeter_hpp */
+#endif /* ProcModLookaheadLimiter_hpp */

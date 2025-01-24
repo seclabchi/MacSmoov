@@ -19,6 +19,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (readwrite, assign) BOOL enabled;
 @property (readwrite, assign) float drive;
+@property (readwrite, assign) float target;
 @property (readwrite, assign) float release_master;
 @property (readwrite, assign) float release_bass;
 @property (readwrite, assign) float gate_thresh;

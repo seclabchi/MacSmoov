@@ -6,12 +6,13 @@
 //
 
 #include "ProcMod5bandCrossover.hpp"
-#include "sos.h"
 
 namespace fmsmoov {
 
 ProcMod5bandCrossover::ProcMod5bandCrossover(const string& _name, uint32_t _f_samp, uint8_t _n_channels, uint32_t _n_samps) : ProcessorModule (_name, _f_samp, _n_channels, _n_samps) {
 
+    this->bypass = false;
+    
     this->set_out_buf(0, new AudioBuf(AudioBufType::REAL, "OUT_L", _n_samps));
     this->set_out_buf(1, new AudioBuf(AudioBufType::REAL, "OUT_R", _n_samps));
     
@@ -57,6 +58,7 @@ ProcMod5bandCrossover::~ProcMod5bandCrossover() {
 bool ProcMod5bandCrossover::init_impl(CoreConfig* cfg, ProcessorModule* prev_mod, ChannelMap* _channel_map) {
     if(nullptr != cfg) {
         //TODO config
+        this->set_bypass(!cfg->get_mb_compressor_enabled());
     }
     if((nullptr != _channel_map) && (nullptr != prev_mod)) {
         for(CHANNEL_MAP_ELEMENT e : _channel_map->the_map)
@@ -69,7 +71,7 @@ bool ProcMod5bandCrossover::init_impl(CoreConfig* cfg, ProcessorModule* prev_mod
 }
 
 void ProcMod5bandCrossover::process() {
-    if(this->bypass) {
+    if(this->get_bypass()) {
         memcpy(this->outbufs[0]->getbuf(), this->inbufs[0]->getbuf(), n_samps * sizeof(float));
         memcpy(this->outbufs[1]->getbuf(), this->inbufs[1]->getbuf(), n_samps * sizeof(float));
         return;

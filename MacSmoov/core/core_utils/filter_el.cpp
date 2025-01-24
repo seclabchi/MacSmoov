@@ -4,11 +4,11 @@
 
 using namespace std;
 
-FilterEL::FilterEL(SOS* _sos1, SOS* _sos2, SOS* _sos3, uint32_t _n_samp) : sos1(_sos1), sos2(_sos2), sos3(_sos3), m_nsamp(_n_samp)
+FilterEL::FilterEL(const tonekids::dsp::SOS& _sos1, const tonekids::dsp::SOS& _sos2, const tonekids::dsp::SOS& _sos3, uint32_t _n_samp) : sos1(_sos1), sos2(_sos2), sos3(_sos3), m_nsamp(_n_samp)
 {
-    bq1 = new Biquad(sos1);
-    bq2 = new Biquad(sos2);
-    bq3 = new Biquad(sos3);
+    bq1 = new tonekids::dsp::Biquad(sos1, 0.0f);
+    bq2 = new tonekids::dsp::Biquad(sos2, 0.0f);
+    bq3 = new tonekids::dsp::Biquad(sos3, 0.0f);
     tmpbuf1 = new float[m_nsamp]();
     tmpbuf2 = new float[m_nsamp]();
 }

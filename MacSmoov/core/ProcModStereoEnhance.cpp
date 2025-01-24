@@ -6,7 +6,6 @@
 //
 
 #include "ProcModStereoEnhance.hpp"
-#include "sos.h"
 
 namespace fmsmoov {
 

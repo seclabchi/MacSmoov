@@ -86,16 +86,17 @@ bool ProcessorCore::load_config_from_file(const std::string& filename) {
     
     if(retval) {
         core_config->get_agc_params(agc_params);
-        proc_mod_2band_agc->setup(agc_params);
+        proc_mod_2band_agc->configure(agc_params);
         core_config->get_mb_params(mb_params);
-        proc_mod_5b_compressor->setup(mb_params);
+        proc_mod_5b_compressor->configure(mb_params);
+        proc_mod_5b_compressor->set_bypass(!(core_config->get_mb_compressor_enabled()));
     }
     
     return retval;
 }
 
 bool ProcessorCore::write_config_changes_agc(const AGC_PARAMS& _params) {
-    return true;
+    return core_config->set_agc_params(_params);
 }
 
 bool ProcessorCore::write_config_changes_multiband(const MULTIBAND_PARAMS& _params) {
@@ -138,6 +139,10 @@ void ProcessorCore::set_main_in_gain_db(float loggain_l, float loggain_r) {
     proc_mod_gain_main_in->set_gain_db(loggain_l, loggain_r);
 }
 
+void ProcessorCore::main_in_gain_db_change_done(float loggain_l, float loggain_r) {
+    core_config->set_input_gain(std::pair<float,float>(loggain_l, loggain_r));
+}
+
 void ProcessorCore::get2bandAGCGainReduction(float* gainReduct2blo, float* gainReduct2bhi, bool* gateOpenLo, bool* gateOpenHi) {
     proc_mod_2band_agc->read(gainReduct2blo, gainReduct2bhi, gateOpenLo, gateOpenHi);
     //cout << "GainredL=" << *gainReduct2blo << " H=" << *gainReduct2bhi << " GATES " << gate_open_lo << "|" << gate_open_hi << endl;
@@ -160,7 +165,7 @@ void ProcessorCore::get_agc_settings(AGC_PARAMS& _params) {
 }
 
 bool ProcessorCore::change_agc_settings(const AGC_PARAMS& _params) {
-    proc_mod_2band_agc->setup(_params);
+    proc_mod_2band_agc->configure(_params);
     write_config_changes_agc(_params);
     return true;
 }
@@ -170,7 +175,7 @@ void ProcessorCore::get_multiband_settings(MULTIBAND_PARAMS& _params) {
 }
 
 bool ProcessorCore::change_multiband_settings(const MULTIBAND_PARAMS& _params) {
-    proc_mod_5b_compressor->setup(_params);
+    proc_mod_5b_compressor->configure(_params);
     write_config_changes_multiband(_params);
     return true;
 }

@@ -12,6 +12,9 @@
 #include "ProcessorModule.hpp"
 #include "LPFSinglePole.hpp"
 
+//TODO: Implement a "peak to average" measurement, i.e. how processed is the sound already, 
+//to be used for adjustment of downstream processing amount
+
 namespace fmsmoov {
 
 class ProcModLevelMeter : public ProcessorModule {

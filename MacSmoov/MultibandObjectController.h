@@ -10,6 +10,7 @@
 
 #import <Foundation/Foundation.h>
 #import <Cocoa/Cocoa.h>
+#import "core/core_common.h"
 
 
 @interface MultibandObjectController : NSObjectController {
@@ -43,6 +44,8 @@
 
 -(id) init;
 -(void) selectBand:(uint8_t) band;
+-(MULTIBAND_PARAMS) getAllSettings;
+-(void) setAllSettings:(MULTIBAND_PARAMS) settings;
 -(void) dumpSettings;
 
 @end

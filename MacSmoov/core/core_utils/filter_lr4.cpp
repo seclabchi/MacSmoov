@@ -1,60 +1,66 @@
 #include "filter_lr4.h"
-#include <string.h>
+#include <cstring>
 #include <iostream>
 
-using namespace std;
+namespace tonekids {
+namespace dsp {
 
-FilterLR4::FilterLR4(SOS* _sos, uint32_t _n_samp) : m_nsamp(_n_samp), sos(_sos)
-{
-    //  cout << "Creating new biquad with params " << s1->g << " " << s1->b0 << " " << s1->b1 << " " << s1->b2 << " " << s1->a1 << " " << s1->a2 << endl;
-    bq1 = new Biquad(sos);
-    //  cout << "Creating new biquad with params " << s2->g << " " << s2->b0 << " " << s2->b1 << " " << s2->b2 << " " << s2->a1 << " " << s2->a2 << endl;
-    bq2 = new Biquad(sos);
-    tmpbuf = new float[m_nsamp]();
-    memset(tmpbuf, 0, m_nsamp*sizeof(float));
+#define LR4_FILTER_ORDER 2
+
+FilterLR4::FilterLR4(double _fs, double _fc, tonekids::dsp::BUTTERWORTH_TYPE _type, uint32_t _n_samp) {
+    fs = _fs;
+    fc = _fc;
+    type = _type;
+    n_samp = _n_samp;
+
+    tmp_buf = new float[n_samp];
+
+    bw = new Butterworth();
+    bqv1_gain = 0.0;
+    bqv2_gain = 0.0;
+
+    if(_type == tonekids::dsp::kLoPass) {
+        bw->loPass(fs, fc, fc, LR4_FILTER_ORDER, bqv1, bqv1_gain);
+        bw->loPass(fs, fc, fc, LR4_FILTER_ORDER, bqv2, bqv2_gain);
+    }
+    else if(_type == tonekids::dsp::kHiPass) {
+        bw->hiPass(fs, fc, fc, LR4_FILTER_ORDER, bqv1, bqv1_gain);
+        bw->hiPass(fs, fc, fc, LR4_FILTER_ORDER, bqv2, bqv2_gain);
+    }
+    else {
+        std::cerr << "Invalid filter type for LR4" << std::endl;
+    }
 }
 
-FilterLR4::~FilterLR4()
-{
-    cout << "FilterLR4 DTOR" << endl;
-	delete bq1;
-	delete bq2;
-	delete[] tmpbuf;
+bool FilterLR4::retune(double _fc, tonekids::dsp::BUTTERWORTH_TYPE _type) {
+    fc = _fc;
+    type = _type;
+    
+    if(_type == tonekids::dsp::kLoPass) {
+        bw->loPass(fs, fc, fc, LR4_FILTER_ORDER, bqv1, bqv1_gain);
+        bw->loPass(fs, fc, fc, LR4_FILTER_ORDER, bqv2, bqv2_gain);
+    }
+    else if(_type == tonekids::dsp::kHiPass) {
+        bw->hiPass(fs, fc, fc, LR4_FILTER_ORDER, bqv1, bqv1_gain);
+        bw->hiPass(fs, fc, fc, LR4_FILTER_ORDER, bqv2, bqv2_gain);
+    }
+    else {
+        std::cerr << "Invalid filter type for LR4" << std::endl;
+        return false;
+    }
+    
+    return true;
 }
 
-void FilterLR4::process(float* in, float* out)
-{
-	//memcpy(tmpbuf1, in, m_nsamp * sizeof(float));
-    bq1->process(in, tmpbuf, m_nsamp);
-    bq2->process(tmpbuf, out, m_nsamp);
+void FilterLR4::process(float* in, float* out) {
+    bqv1[0].process(in, tmp_buf, n_samp);
+    bqv2[0].process(tmp_buf, out, n_samp);
 }
 
-AllpassFilterLR4::AllpassFilterLR4(SOS* _soslo, SOS* _soshi, uint32_t _n_samp) : m_nsamp(_n_samp)
-{
-	filterL = new FilterLR4(_soslo, m_nsamp);
-	filterH = new FilterLR4(_soshi, m_nsamp);
-	tmpbufL = new float[m_nsamp]();
-    memset(tmpbufL, 0, m_nsamp*sizeof(float));
-	tmpbufH = new float[m_nsamp]();
-    memset(tmpbufH, 0, m_nsamp*sizeof(float));
+FilterLR4::~FilterLR4() {
+    delete bw;
+    delete[] tmp_buf;
 }
 
-AllpassFilterLR4::~AllpassFilterLR4()
-{
-    cout << "AllpassFilterLR4 DTOR" << endl;
-	delete filterL;
-	delete filterH;
-	delete[] tmpbufL;
-	delete[] tmpbufH;
-}
-
-void AllpassFilterLR4::process(float* in, float* out)
-{
-	filterL->process(in, tmpbufL);
-	filterH->process(in, tmpbufH);
-
-	for(uint32_t i = 0; i < m_nsamp; i++)
-	{
-		out[i] = tmpbufL[i] + tmpbufH[i];
-	}
-}
+} /* dsp */
+} /* tonekids */

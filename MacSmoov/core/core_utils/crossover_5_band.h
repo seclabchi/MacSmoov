@@ -10,6 +10,7 @@
 
 #include <stdint.h>
 #include "filter_lr4.h"
+#include "allpass_filter_lr4.h"
 
 class Crossover_5_band {
 public:
@@ -28,22 +29,13 @@ private:
 
 	bool be0, be1, be2, be3, be4;
 
-    SOS* b0lo_sos;
-    SOS* b0hi_sos;
-    SOS* b1lo_sos;
-    SOS* b1hi_sos;
-    SOS* b2lo_sos;
-    SOS* b2hi_sos;
-    SOS* b3lo_sos;
-    SOS* b3hi_sos;
+    tonekids::dsp::FilterLR4 *f0loL, *f0loR, *f0hiL, *f0hiR;
+    tonekids::dsp::FilterLR4 *f1loL, *f1loR, *f1hiL, *f1hiR;
+    tonekids::dsp::FilterLR4 *f2loL, *f2loR, *f2hiL, *f2hiR;
+    tonekids::dsp::FilterLR4 *f3loL, *f3loR, *f3hiL, *f3hiR;
 
-	FilterLR4 *f0loL, *f0loR, *f0hiL, *f0hiR;
-    FilterLR4 *f1loL, *f1loR, *f1hiL, *f1hiR;
-    FilterLR4 *f2loL, *f2loR, *f2hiL, *f2hiR;
-    FilterLR4 *f3loL, *f3loR, *f3hiL, *f3hiR;
-
-    AllpassFilterLR4* s0f1apL, *s0f1apR, *s0f2apL, *s0f2apR, *s0f3apL, *s0f3apR;
-    AllpassFilterLR4* s1f3apL, *s1f3apR;
+    tonekids::dsp::AllpassFilterLR4* s0f1apL, *s0f1apR, *s0f2apL, *s0f2apR, *s0f3apL, *s0f3apR;
+    tonekids::dsp::AllpassFilterLR4* s1f3apL, *s1f3apR;
 };
 
 #endif /* INCLUDE_Crossover_5_band_H_ */

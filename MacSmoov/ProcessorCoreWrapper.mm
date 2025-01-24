@@ -83,6 +83,10 @@ void processor_core_hook(AudioBufferList* ab_list, AudioBufferList* ab_list_core
 #endif
 }
 
+-(void) mainInGainChangeDoneL:(float)mainInL R:(float)mainInR { /* Only fired when the mouse button is lifted or a key is pressed on the control to minimize cfg file writes */
+    cpp->main_in_gain_db_change_done(mainInL, mainInR);
+}
+
 -(void) get2bandAGCGainReductionlo:(float*)gainReduct2blo hi:(float*)gainReduct2bhi gatelo:(bool*)gate_open_agc2_lo gatehi:(bool*)gate_open_agc2_hi {
 #if CORE_BYPASS
 #else

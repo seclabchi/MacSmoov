@@ -21,7 +21,7 @@
     level_l_peak = min_lev;
     level_r_peak = min_lev;
     self->max_lev = 0.0;
-    self->min_lev = -70.0;
+    self->min_lev = -80.0;
 }
 
 - (id)initWithFrame:(NSRect)frame {
