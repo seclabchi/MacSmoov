@@ -24,6 +24,9 @@ static CoreConfig* the_instance = nullptr;
 /* 2-BAND AGC                        */
 /*===================================*/
 static const AGC_PARAMS agc_params_default = {
+    .enabled = true,
+    .mute_lo = false,
+    .mute_hi = false,
     .drive = 10.0,
     .target = -24.0,
     .release_master = 0.300,
@@ -37,7 +40,6 @@ static const AGC_PARAMS agc_params_default = {
     .idle_gain = 0.0,
     .attack_master = 8.000,
     .attack_bass = 8.000,
-    .post_gain = 0.0,
 };
 
 /*===================================*/
@@ -154,7 +156,6 @@ CoreConfig::CoreConfig() {
     enable_input_gain = true;
     input_gain = {0.0, 0.0};
     enable_input_level = true;
-    enable_2band_agc = true;
     agc_params = agc_params_default;
     enable_hf_enhance = false;
     enable_mb_crossover = false;
@@ -197,11 +198,11 @@ void CoreConfig::set_input_level_enabled(bool enabled) {
 }
 
 bool CoreConfig::get_2band_agc_enabled() {
-    return enable_2band_agc;
+    return agc_params.enabled;
 }
 
 void CoreConfig::set_2band_agc_enabled(bool _enabled) {
-    enable_2band_agc = _enabled;
+    agc_params.enabled = _enabled;
 }
 
 void CoreConfig::get_agc_params(AGC_PARAMS& params) {
@@ -295,7 +296,7 @@ bool CoreConfig::load_cfg_from_file(const std::string &filename) {
             
             /* Read AGC Params */
             YAML::Node agc = yaml_node["agc_params"];
-            enable_2band_agc = agc["enabled"].as<bool>();
+            agc_params.enabled = agc["enabled"].as<bool>();
             agc_params.mute_lo = agc["mute_lo"].as<bool>();
             agc_params.mute_hi = agc["mute_hi"].as<bool>();
             agc_params.drive = agc["drive"].as<float>();
@@ -311,7 +312,6 @@ bool CoreConfig::load_cfg_from_file(const std::string &filename) {
             agc_params.idle_gain = agc["idle_gain"].as<float>();
             agc_params.attack_master = agc["attack_master"].as<float>();
             agc_params.attack_bass = agc["attack_bass"].as<float>();
-            agc_params.post_gain = agc["post_gain"].as<float>();
         
             std::cout << "Loaded 2-band AGC settings." << std::endl;
             
@@ -487,7 +487,7 @@ bool CoreConfig::write_cfg_to_file() {
                         
             /* Read AGC Params */
             YAML::Node agc = yaml_node["agc_params"];
-            agc["enabled"] = enable_2band_agc;
+            agc["enabled"] = agc_params.enabled;
             agc["mute_lo"] = agc_params.mute_lo;
             agc["mute_hi"] = agc_params.mute_hi;
             agc["drive"] = agc_params.drive;
@@ -503,7 +503,6 @@ bool CoreConfig::write_cfg_to_file() {
             agc["idle_gain"] = agc_params.idle_gain;
             agc["attack_master"] = agc_params.attack_master;
             agc["attack_bass"] = agc_params.attack_bass;
-            agc["post_gain"] = agc_params.post_gain;
         
             std::cout << "Saved 2-band AGC settings." << std::endl;
             

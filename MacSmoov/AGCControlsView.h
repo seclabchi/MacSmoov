@@ -18,6 +18,8 @@ NS_ASSUME_NONNULL_BEGIN
 }
 
 @property (readwrite, assign) BOOL enabled;
+@property (readwrite, assign) bool mute_lo;
+@property (readwrite, assign) bool mute_hi;
 @property (readwrite, assign) float drive;
 @property (readwrite, assign) float target;
 @property (readwrite, assign) float release_master;
@@ -31,10 +33,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (readwrite, assign) float idle_gain;
 @property (readwrite, assign) float attack_master;
 @property (readwrite, assign) float attack_bass;
-@property (readwrite, assign) float post_gain;
 
-@property (readwrite, assign) bool mute_lo;
-@property (readwrite, assign) bool mute_hi;
+
 
 @property (readwrite, assign) AGC_PARAMS agc_settings;
 

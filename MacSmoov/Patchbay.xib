@@ -22,55 +22,76 @@
                 <rect key="frame" x="0.0" y="0.0" width="370" height="187"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Ojl-SJ-C8Z">
+                    <button verticalHuggingPriority="750" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Ojl-SJ-C8Z">
                         <rect key="frame" x="18" y="150" width="235" height="18"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="233" id="5Mj-md-axN"/>
+                        </constraints>
                         <buttonCell key="cell" type="check" title="2-Band AGC Enable" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="G6I-SQ-gZn">
                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                             <font key="font" metaFont="system"/>
                         </buttonCell>
                     </button>
-                    <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="6aP-sP-VlO">
+                    <button verticalHuggingPriority="750" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="6aP-sP-VlO">
                         <rect key="frame" x="18" y="128" width="235" height="18"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <buttonCell key="cell" type="check" title="Stereo Enhancer Enable" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="aJl-lZ-TAG">
                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                             <font key="font" metaFont="system"/>
                         </buttonCell>
                     </button>
-                    <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="UJz-wj-jqj">
+                    <button verticalHuggingPriority="750" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="UJz-wj-jqj">
                         <rect key="frame" x="18" y="106" width="235" height="18"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <buttonCell key="cell" type="check" title="HF Enhancer Enable" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="4gA-oN-6If">
                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                             <font key="font" metaFont="system"/>
                         </buttonCell>
                     </button>
-                    <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="153-4q-A5P">
+                    <button verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="153-4q-A5P">
                         <rect key="frame" x="18" y="84" width="235" height="18"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <buttonCell key="cell" type="check" title="Multiband Compressor Enable" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="eGb-Vv-zp3">
                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                             <font key="font" metaFont="system"/>
                         </buttonCell>
                     </button>
-                    <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="SLA-3Q-N9f">
+                    <button verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="SLA-3Q-N9f">
                         <rect key="frame" x="18" y="62" width="235" height="18"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="16" id="lBi-gL-biK"/>
+                        </constraints>
                         <buttonCell key="cell" type="check" title="MB Compressor Limiter Enable" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="xU0-OW-nOU">
                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                             <font key="font" metaFont="system"/>
                         </buttonCell>
                     </button>
-                    <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="r9d-Ue-tgr">
+                    <button verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="r9d-Ue-tgr">
                         <rect key="frame" x="18" y="40" width="235" height="18"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <buttonCell key="cell" type="check" title="Final Look-Ahead Limiter Enable" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="G4M-qo-L0u">
                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                             <font key="font" metaFont="system"/>
                         </buttonCell>
                     </button>
                 </subviews>
+                <constraints>
+                    <constraint firstItem="6aP-sP-VlO" firstAttribute="leading" secondItem="UJz-wj-jqj" secondAttribute="leading" id="0LY-Lp-cF6"/>
+                    <constraint firstItem="6aP-sP-VlO" firstAttribute="trailing" secondItem="UJz-wj-jqj" secondAttribute="trailing" id="2Zd-We-CI0"/>
+                    <constraint firstItem="Ojl-SJ-C8Z" firstAttribute="leading" secondItem="bpf-7S-oDN" secondAttribute="leading" constant="20" symbolic="YES" id="JRJ-Th-FmV"/>
+                    <constraint firstItem="153-4q-A5P" firstAttribute="centerY" secondItem="bpf-7S-oDN" secondAttribute="centerY" id="JsG-iQ-uKr"/>
+                    <constraint firstItem="6aP-sP-VlO" firstAttribute="top" secondItem="Ojl-SJ-C8Z" secondAttribute="bottom" constant="6" symbolic="YES" id="N55-XJ-zdF"/>
+                    <constraint firstItem="153-4q-A5P" firstAttribute="trailing" secondItem="SLA-3Q-N9f" secondAttribute="trailing" id="OmY-lm-TbA"/>
+                    <constraint firstItem="153-4q-A5P" firstAttribute="top" secondItem="UJz-wj-jqj" secondAttribute="bottom" constant="6" symbolic="YES" id="Pnz-po-J3Q"/>
+                    <constraint firstItem="Ojl-SJ-C8Z" firstAttribute="leading" secondItem="6aP-sP-VlO" secondAttribute="leading" id="Ue1-WC-yz5"/>
+                    <constraint firstItem="Ojl-SJ-C8Z" firstAttribute="trailing" secondItem="6aP-sP-VlO" secondAttribute="trailing" id="Vnm-XG-whk"/>
+                    <constraint firstItem="UJz-wj-jqj" firstAttribute="leading" secondItem="153-4q-A5P" secondAttribute="leading" id="WdA-gm-lqk"/>
+                    <constraint firstItem="UJz-wj-jqj" firstAttribute="top" secondItem="6aP-sP-VlO" secondAttribute="bottom" constant="6" symbolic="YES" id="WnV-3R-96h"/>
+                    <constraint firstItem="153-4q-A5P" firstAttribute="leading" secondItem="SLA-3Q-N9f" secondAttribute="leading" id="aSU-fv-8Bo"/>
+                    <constraint firstItem="Ojl-SJ-C8Z" firstAttribute="top" secondItem="bpf-7S-oDN" secondAttribute="top" constant="20" symbolic="YES" id="grM-MV-042"/>
+                    <constraint firstItem="SLA-3Q-N9f" firstAttribute="trailing" secondItem="r9d-Ue-tgr" secondAttribute="trailing" id="hEB-d9-Hhg"/>
+                    <constraint firstItem="SLA-3Q-N9f" firstAttribute="top" secondItem="153-4q-A5P" secondAttribute="bottom" constant="6" symbolic="YES" id="koM-Pt-MWj"/>
+                    <constraint firstItem="UJz-wj-jqj" firstAttribute="trailing" secondItem="153-4q-A5P" secondAttribute="trailing" id="kzi-lR-CQy"/>
+                    <constraint firstItem="r9d-Ue-tgr" firstAttribute="top" secondItem="SLA-3Q-N9f" secondAttribute="bottom" constant="6" symbolic="YES" id="nGg-Kk-GCL"/>
+                    <constraint firstItem="SLA-3Q-N9f" firstAttribute="leading" secondItem="r9d-Ue-tgr" secondAttribute="leading" id="o3g-p0-Ra8"/>
+                    <constraint firstAttribute="bottom" secondItem="r9d-Ue-tgr" secondAttribute="bottom" constant="41" id="ysz-Rz-9iX"/>
+                </constraints>
             </view>
             <point key="canvasLocation" x="1" y="175.5"/>
         </window>

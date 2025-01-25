@@ -26,7 +26,7 @@
     if(self) {
         delegate = agc_delegate;
         _agc_settings = settings;
-        _enabled  = false;
+        _enabled  = _agc_settings.enabled;
         _mute_lo = _agc_settings.mute_lo;
         _mute_hi = _agc_settings.mute_hi;
         _drive = _agc_settings.drive;
@@ -42,7 +42,6 @@
         _idle_gain = _agc_settings.idle_gain;
         _attack_master = _agc_settings.attack_master;
         _attack_bass = _agc_settings.attack_bass;
-        _post_gain = _agc_settings.post_gain;
     }
     
     return self;
@@ -65,9 +64,13 @@
     NSLog(@"Factory reset pressed.");
 }
 
--(IBAction) setting_changed:(NSSlider*) sender {
+-(IBAction) setting_changed:(NSTextField*) sender {
     NSLog(@"Setting changed: %@", sender);
+    _agc_settings.enabled = _enabled;
+    _agc_settings.mute_lo = _mute_lo;
+    _agc_settings.mute_hi = _mute_hi;
     _agc_settings.drive = _drive;
+    _agc_settings.target = _target;
     _agc_settings.release_master = _release_master;
     _agc_settings.release_bass = _release_bass;
     _agc_settings.gate_thresh = _gate_thresh;
@@ -79,9 +82,7 @@
     _agc_settings.idle_gain = _idle_gain;
     _agc_settings.attack_master = _attack_master;
     _agc_settings.attack_bass = _attack_bass;
-    _agc_settings.post_gain = _post_gain;
-    _agc_settings.mute_lo = _mute_lo;
-    _agc_settings.mute_hi = _mute_hi;
+
     [delegate agc_params_changed:_agc_settings];
 }
 

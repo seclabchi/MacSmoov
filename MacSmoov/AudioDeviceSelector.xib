@@ -26,27 +26,27 @@
                 <rect key="frame" x="0.0" y="0.0" width="532" height="108"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ews-Rj-ywD">
+                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="ews-Rj-ywD">
                         <rect key="frame" x="18" y="72" width="128" height="16"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="124" id="Huk-rZ-4vF"/>
+                        </constraints>
                         <textFieldCell key="cell" lineBreakMode="clipping" alignment="right" title="Input Device:" id="Cz2-Bm-8Pf">
                             <font key="font" usesAppearanceFont="YES"/>
                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                     </textField>
-                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="hhT-I5-qEd">
+                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="hhT-I5-qEd">
                         <rect key="frame" x="18" y="37" width="128" height="16"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <textFieldCell key="cell" lineBreakMode="clipping" alignment="right" title="Output Device:" id="OpM-Tq-JsL">
                             <font key="font" usesAppearanceFont="YES"/>
                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                     </textField>
-                    <comboBox verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="MvN-Fu-nKG">
+                    <comboBox verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="MvN-Fu-nKG">
                         <rect key="frame" x="161" y="66" width="354" height="25"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <comboBoxCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" drawsBackground="YES" completes="NO" usesDataSource="YES" numberOfVisibleItems="5" id="R5B-Xk-hHF">
                             <font key="font" metaFont="system"/>
                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -57,9 +57,8 @@
                             <outlet property="delegate" destination="-2" id="G0n-PH-ZeE"/>
                         </connections>
                     </comboBox>
-                    <comboBox verticalHuggingPriority="750" fixedFrame="YES" tag="1" translatesAutoresizingMaskIntoConstraints="NO" id="ssc-3y-7df">
+                    <comboBox verticalHuggingPriority="750" tag="1" translatesAutoresizingMaskIntoConstraints="NO" id="ssc-3y-7df">
                         <rect key="frame" x="161" y="31" width="354" height="25"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <comboBoxCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" drawsBackground="YES" completes="NO" usesDataSource="YES" numberOfVisibleItems="5" id="bII-qk-hkD">
                             <font key="font" metaFont="system"/>
                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -71,6 +70,19 @@
                         </connections>
                     </comboBox>
                 </subviews>
+                <constraints>
+                    <constraint firstAttribute="trailing" secondItem="MvN-Fu-nKG" secondAttribute="trailing" constant="20" symbolic="YES" id="H1t-Zf-Xl4"/>
+                    <constraint firstItem="ews-Rj-ywD" firstAttribute="leading" secondItem="hhT-I5-qEd" secondAttribute="leading" id="IDn-2U-q1F"/>
+                    <constraint firstItem="ews-Rj-ywD" firstAttribute="baseline" secondItem="MvN-Fu-nKG" secondAttribute="baseline" id="Qir-qR-ZXU"/>
+                    <constraint firstItem="ews-Rj-ywD" firstAttribute="top" secondItem="bpf-7S-oDN" secondAttribute="top" constant="20" symbolic="YES" id="RpU-ij-qqv"/>
+                    <constraint firstItem="ews-Rj-ywD" firstAttribute="trailing" secondItem="hhT-I5-qEd" secondAttribute="trailing" id="YuG-2b-ArX"/>
+                    <constraint firstItem="ews-Rj-ywD" firstAttribute="leading" secondItem="bpf-7S-oDN" secondAttribute="leading" constant="20" symbolic="YES" id="bac-RL-Rlg"/>
+                    <constraint firstItem="MvN-Fu-nKG" firstAttribute="leading" secondItem="ssc-3y-7df" secondAttribute="leading" id="fNj-8L-K8f"/>
+                    <constraint firstItem="hhT-I5-qEd" firstAttribute="baseline" secondItem="ssc-3y-7df" secondAttribute="baseline" id="fO5-12-iCA"/>
+                    <constraint firstItem="ssc-3y-7df" firstAttribute="top" secondItem="MvN-Fu-nKG" secondAttribute="bottom" constant="16" id="sG3-4E-O7y"/>
+                    <constraint firstItem="MvN-Fu-nKG" firstAttribute="leading" secondItem="ews-Rj-ywD" secondAttribute="trailing" constant="17" id="yDr-Z2-YtG"/>
+                    <constraint firstItem="MvN-Fu-nKG" firstAttribute="trailing" secondItem="ssc-3y-7df" secondAttribute="trailing" id="zbV-0U-hok"/>
+                </constraints>
             </view>
             <point key="canvasLocation" x="82" y="136"/>
         </window>

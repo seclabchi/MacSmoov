@@ -58,7 +58,6 @@ private:
     bool enable_input_gain;
     bool enable_input_level;
     bool enable_stereo_enhance;
-    bool enable_2band_agc;
     bool enable_hf_enhance;
     bool enable_mb_crossover;
     bool enable_mb_compressor;

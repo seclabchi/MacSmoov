@@ -10,6 +10,7 @@
 
 
 typedef struct {
+    bool enabled;  //is the AGC in or out
     bool mute_lo;  //mute the low band
     bool mute_hi;  //mute the hi band
     float drive;  //amount of gain at AGC input
@@ -25,7 +26,6 @@ typedef struct {
     float idle_gain;  //-10...+10 dB
     float attack_master;  //0.2...6 seconds
     float attack_bass;   //1...10 seconds
-    float post_gain;
 } AGC_PARAMS;
 
 typedef struct  {

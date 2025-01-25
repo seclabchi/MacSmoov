@@ -111,7 +111,14 @@ void Compressor::process(float* inL, float* inR, float* outL, float* outR, uint3
 
         /* TODO: Implement windowing and coupling */
         
-        gc = sc - indb;
+        if(!use_coupling) {
+            gc = sc - indb;
+        }
+        else {
+            gc = (1-coupling) * (sc - indb) + (coupling * gain_coupling_input[i]);
+        }
+        
+        
 
         if(indb < params.thresh){
             gs = gsPrev;

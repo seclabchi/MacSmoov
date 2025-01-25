@@ -90,7 +90,6 @@ bool ProcMod2BandAGC::init_impl(CoreConfig* cfg, ProcessorModule* prev_mod, Chan
     if(nullptr != cfg) {
         AGC_PARAMS params;
         cfg->get_agc_params(params);
-        this->set_bypass(!cfg->get_2band_agc_enabled());
         this->configure(params);
     }
     if((nullptr != _channel_map) && (nullptr != prev_mod)) {
@@ -126,12 +125,26 @@ void ProcMod2BandAGC::process() {
      */
     
     filt_lo_L->process(this->post_drive_bufL->getbuf(), buf_lo_filtL);
-    filt_lo_R->process(this->post_drive_bufL->getbuf(), buf_lo_filtR);
-    filt_hi_L->process(this->post_drive_bufR->getbuf(), buf_hi_filtL);
+    filt_lo_R->process(this->post_drive_bufR->getbuf(), buf_lo_filtR);
+    filt_hi_L->process(this->post_drive_bufL->getbuf(), buf_hi_filtL);
     filt_hi_R->process(this->post_drive_bufR->getbuf(), buf_hi_filtR);
     
+    /* If we want to mute the high or low side of the AGC output, still do the processing so the bass coupling will still work */
+    
     comp_hi->process(buf_hi_filtL, buf_hi_filtR, agc_out_hiL, agc_out_hiR, n_samps, comp_hi_gain_reduction_buf);
+    
+    if(params.mute_hi) {
+        memset(agc_out_hiL, 0, n_samps * sizeof(float));
+        memset(agc_out_hiR, 0, n_samps * sizeof(float));
+    }
+    
     comp_lo->process(buf_lo_filtL, buf_lo_filtR, agc_out_loL, agc_out_loR, n_samps, NULL, comp_hi_gain_reduction_buf);
+    
+    if(params.mute_lo) {
+        memset(agc_out_loL, 0, n_samps * sizeof(float));
+        memset(agc_out_loR, 0, n_samps * sizeof(float));
+    }
+    
     
     for(uint32_t i = 0; i < n_samps; i++) {
         master_outL[i] = agc_out_loL[i] + agc_out_hiL[i];
@@ -160,9 +173,16 @@ void ProcMod2BandAGC::configure(const AGC_PARAMS& _params) {
         .ratio = _params.ratio,
         .attack = _params.attack_master
     };
+    
+    bool use_coupling = false;
+    
+    if(params.bass_coupling > 0.0) {
+        use_coupling = true;
+    }
 
+    this->set_bypass(!(_params.enabled));
     agc_drive->set_gain(_params.drive);
-    comp_lo->config(comp_parms_lo);
+    comp_lo->config(comp_parms_lo, use_coupling, params.bass_coupling);
     comp_hi->config(comp_parms_hi);
 }
 

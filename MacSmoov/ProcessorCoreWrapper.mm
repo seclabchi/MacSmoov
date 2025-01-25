@@ -122,9 +122,7 @@ void processor_core_hook(AudioBufferList* ab_list, AudioBufferList* ab_list_core
 }
 
 -(void) get_agc_settings:(AGC_PARAMS*)_params {
-    AGC_PARAMS core_params;
-    cpp->get_agc_settings(core_params);
-    *_params = core_params;
+    cpp->get_agc_settings(*_params);
 }
 
 -(void) change_agc_settings:(AGC_PARAMS)_params {
