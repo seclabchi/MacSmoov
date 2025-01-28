@@ -137,6 +137,22 @@ static const COMPRESSOR_PARAMS lim_params_b5_default = {
  
  
 static const MULTIBAND_PARAMS multiband_params_default = {
+    .enabled = true,
+    .band1_solo = false,
+    .band1_mute = false,
+    .band2_solo = false,
+    .band2_mute = false,
+    .band3_solo = false,
+    .band3_mute = false,
+    .band4_solo = false,
+    .band4_mute = false,
+    .band5_solo = false,
+    .band5_mute = false,
+    .band1_compressor_enabled = true,
+    .band2_compressor_enabled = true,
+    .band3_compressor_enabled = true,
+    .band4_compressor_enabled = true,
+    .band5_compressor_enabled = true,
      .comp_params[0] = comp_params_b1_default,
      .lim_params[0] = lim_params_b1_default,
      .comp_params[1] = comp_params_b2_default,
@@ -159,8 +175,6 @@ CoreConfig::CoreConfig() {
     agc_params = agc_params_default;
     enable_hf_enhance = false;
     enable_mb_crossover = false;
-    enable_mb_compressor = false;
-    enable_mb_limiter = false;
     multiband_params = multiband_params_default;
 }
 
@@ -232,19 +246,20 @@ void CoreConfig::set_mb_crossover_enabled(bool enabled) {
 }
 
 bool CoreConfig::get_mb_compressor_enabled() {
-    return enable_mb_compressor;
+    return multiband_params.enabled;
 }
 
 void CoreConfig::set_mb_compressor_enabled(bool enabled) {
-    enable_mb_compressor = enabled;
+    multiband_params.enabled = enabled;
 }
 
 bool CoreConfig::get_mb_limiter_enabled() {
-    return enable_mb_limiter;
+    return false;
 }
 
 void CoreConfig::set_mb_limiter_enabled(bool enabled) {
-    enable_mb_limiter = enabled;
+    //enable_mb_limiter = enabled;
+    //TODO: get the limiter enable functionality implemented
 }
 
 void CoreConfig::get_mb_params(MULTIBAND_PARAMS& params) {
@@ -395,6 +410,16 @@ bool CoreConfig::load_cfg_from_file(const std::string &filename) {
                 std::cout << "Read compressor params for band " << band_num + 1 << std::endl;
                 
             }
+            
+            /* Need to populate each compressor band gate threshold based on upper-level config.  This is probably
+              * inefficient and might need to change later.
+              */
+            multiband_params.comp_params[0].thresh = mb_params["gate_thresh"].as<float>();
+            multiband_params.comp_params[1].thresh = mb_params["gate_thresh"].as<float>();
+            multiband_params.comp_params[2].thresh = mb_params["gate_thresh"].as<float>();
+            multiband_params.comp_params[3].thresh = mb_params["gate_thresh"].as<float>();
+            multiband_params.comp_params[4].thresh = mb_params["gate_thresh"].as<float>();
+            
             
             /* Read Limiter Bands */
             YAML::Node limiters = yaml_node["multiband_params"]["limiters"];

@@ -32,4 +32,8 @@ void SimpleGain::set_gain(float new_gain) {
     gain = new_gain;
 }
 
+float SimpleGain::get_gain() {
+    return gain;
+}
+
 } //namespace FMSMOOV

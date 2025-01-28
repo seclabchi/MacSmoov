@@ -60,8 +60,6 @@ private:
     bool enable_stereo_enhance;
     bool enable_hf_enhance;
     bool enable_mb_crossover;
-    bool enable_mb_compressor;
-    bool enable_mb_limiter;
     std::pair<float, float> input_gain;
     AGC_PARAMS agc_params;
     MULTIBAND_PARAMS multiband_params;

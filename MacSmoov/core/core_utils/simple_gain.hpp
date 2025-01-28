@@ -22,6 +22,7 @@ public:
     virtual ~SimpleGain();
     virtual void process(float* inL, float* inR, float* outL, float* outR);
     virtual void set_gain(float new_gain);
+    virtual float get_gain();
 private:
     float gain;
     LogLinConverter* dbToLinL, *dbToLinR;

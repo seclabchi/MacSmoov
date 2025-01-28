@@ -8,6 +8,67 @@
 #import <Foundation/Foundation.h>
 #import "MultibandObjectController.h"
 
+@implementation TimeConstantValueTransformer
++ (Class)transformedValueClass
+{
+    return [NSNumber class];
+}
+
++ (BOOL)allowsReverseTransformation
+{
+    return YES;
+}
+
+- (id)transformedValue:(id)value
+{
+    float timeconst_input;
+    float timeconst_slider_value;
+ 
+    if (value == nil) return nil;
+ 
+    // Attempt to get a reasonable value from the
+    // value object.
+    if ([value respondsToSelector: @selector(floatValue)]) {
+    // handles NSString and NSNumber
+        timeconst_input = [value floatValue];
+    } else {
+        [NSException raise: NSInternalInconsistencyException
+                    format: @"Value (%@) does not respond to -floatValue.",
+        [value class]];
+    }
+ 
+    // calculate slider value
+    timeconst_slider_value = timeconst_input * 1000.0f;
+ 
+    return [NSNumber numberWithFloat: timeconst_slider_value];
+}
+
+- (id)reverseTransformedValue:(id)value
+{
+    float timeconst_slider_value;
+    float timeconst_output;
+ 
+    if (value == nil) return nil;
+ 
+    // Attempt to get a reasonable value from the
+    // value object.
+    if ([value respondsToSelector: @selector(floatValue)]) {
+    // handles NSString and NSNumber
+        timeconst_slider_value = [value floatValue];
+    } else {
+        [NSException raise: NSInternalInconsistencyException
+                    format: @"Value (%@) does not respond to -floatValue.",
+        [value class]];
+    }
+ 
+    // calculate actual timeconst value
+    timeconst_output = timeconst_slider_value / 1000.0f;
+ 
+    return [NSNumber numberWithFloat: timeconst_output];
+}
+
+@end
+
 @interface MultibandObjectController () {
 }
 
@@ -59,32 +120,173 @@
 -(MULTIBAND_PARAMS) getAllSettings {
     MULTIBAND_PARAMS params;
     
-    params.comp_params[0].target = [[_b1_dict valueForKey:@"target"] floatValue];
-    params.comp_params[0].release = [[_b1_dict valueForKey:@"release"] floatValue];
-    params.comp_params[0].thresh = [[_b1_dict valueForKey:@"gate_thresh"] floatValue];
-    params.comp_params[0].ratio = [[_b1_dict valueForKey:@"ratio"] floatValue];
-    params.comp_params[0].attack = [[_b1_dict valueForKey:@"attack"] floatValue];
+    params.enabled = _enabled;
+    params.drive = _drive;
+    params.gate_thresh = _gate_thresh;
+    
+    params.band1_compressor_enabled = _band1_compressor_enabled;
+    params.band2_compressor_enabled = _band2_compressor_enabled;
+    params.band3_compressor_enabled = _band3_compressor_enabled;
+    params.band4_compressor_enabled = _band4_compressor_enabled;
+    params.band5_compressor_enabled = _band5_compressor_enabled;
+    
+    params.band1_limiter_enabled = _band1_limiter_enabled;
+    params.band2_limiter_enabled = _band2_limiter_enabled;
+    params.band3_limiter_enabled = _band3_limiter_enabled;
+    params.band4_limiter_enabled = _band4_limiter_enabled;
+    params.band5_limiter_enabled = _band5_limiter_enabled;
+    
+    params.band1_solo = _band1_solo;
+    params.band1_mute = _band1_mute;
+    params.band2_solo = _band2_solo;
+    params.band2_mute = _band2_mute;
+    params.band3_solo = _band3_solo;
+    params.band3_mute = _band3_mute;
+    params.band4_solo = _band4_solo;
+    params.band4_mute = _band4_mute;
+    params.band5_solo = _band5_solo;
+    params.band5_mute = _band5_mute;
+    
+    params.comp_params[0].release = [[_b1_dict valueForKey:@"comp_release"] floatValue];
+    params.comp_params[0].ratio = [[_b1_dict valueForKey:@"comp_ratio"] floatValue];
+    params.comp_params[0].attack = [[_b1_dict valueForKey:@"comp_attack"] floatValue];
+    params.comp_params[0].target = [[_b1_dict valueForKey:@"comp_target"] floatValue];
+    params.comp_params[0].thresh = [[_b1_dict valueForKey:@"comp_thresh"] floatValue];
+    params.lim_params[0].release = [[_b1_dict valueForKey:@"lim_release"] floatValue];
+    params.lim_params[0].ratio = [[_b1_dict valueForKey:@"lim_ratio"] floatValue];
+    params.lim_params[0].attack = [[_b1_dict valueForKey:@"lim_attack"] floatValue];
+    params.lim_params[0].target = [[_b1_dict valueForKey:@"lim_target"] floatValue];
+    params.lim_params[0].thresh = [[_b1_dict valueForKey:@"lim_thresh"] floatValue];
+    
+    params.comp_params[1].release = [[_b2_dict valueForKey:@"comp_release"] floatValue];
+    params.comp_params[1].ratio = [[_b2_dict valueForKey:@"comp_ratio"] floatValue];
+    params.comp_params[1].attack = [[_b2_dict valueForKey:@"comp_attack"] floatValue];
+    params.comp_params[1].target = [[_b2_dict valueForKey:@"comp_target"] floatValue];
+    params.comp_params[1].thresh = [[_b2_dict valueForKey:@"comp_thresh"] floatValue];
+    params.lim_params[1].release = [[_b2_dict valueForKey:@"lim_release"] floatValue];
+    params.lim_params[1].ratio = [[_b2_dict valueForKey:@"lim_ratio"] floatValue];
+    params.lim_params[1].attack = [[_b2_dict valueForKey:@"lim_attack"] floatValue];
+    params.lim_params[1].target = [[_b2_dict valueForKey:@"lim_target"] floatValue];
+    params.lim_params[1].thresh = [[_b2_dict valueForKey:@"lim_thresh"] floatValue];
+    
+    params.comp_params[2].release = [[_b3_dict valueForKey:@"comp_release"] floatValue];
+    params.comp_params[2].ratio = [[_b3_dict valueForKey:@"comp_ratio"] floatValue];
+    params.comp_params[2].attack = [[_b3_dict valueForKey:@"comp_attack"] floatValue];
+    params.comp_params[2].target = [[_b3_dict valueForKey:@"comp_target"] floatValue];
+    params.comp_params[2].thresh = [[_b3_dict valueForKey:@"comp_thresh"] floatValue];
+    params.lim_params[2].release = [[_b3_dict valueForKey:@"lim_release"] floatValue];
+    params.lim_params[2].ratio = [[_b3_dict valueForKey:@"lim_ratio"] floatValue];
+    params.lim_params[2].attack = [[_b3_dict valueForKey:@"lim_attack"] floatValue];
+    params.lim_params[2].target = [[_b3_dict valueForKey:@"lim_target"] floatValue];
+    params.lim_params[2].thresh = [[_b3_dict valueForKey:@"lim_thresh"] floatValue];
+    
+    params.comp_params[3].release = [[_b4_dict valueForKey:@"comp_release"] floatValue];
+    params.comp_params[3].ratio = [[_b4_dict valueForKey:@"comp_ratio"] floatValue];
+    params.comp_params[3].attack = [[_b4_dict valueForKey:@"comp_attack"] floatValue];
+    params.comp_params[3].target = [[_b4_dict valueForKey:@"comp_target"] floatValue];
+    params.comp_params[3].thresh = [[_b4_dict valueForKey:@"comp_thresh"] floatValue];
+    params.lim_params[3].release = [[_b4_dict valueForKey:@"lim_release"] floatValue];
+    params.lim_params[3].ratio = [[_b4_dict valueForKey:@"lim_ratio"] floatValue];
+    params.lim_params[3].attack = [[_b4_dict valueForKey:@"lim_attack"] floatValue];
+    params.lim_params[3].target = [[_b4_dict valueForKey:@"lim_target"] floatValue];
+    params.lim_params[3].thresh = [[_b4_dict valueForKey:@"lim_thresh"] floatValue];
+    
+    params.comp_params[4].release = [[_b5_dict valueForKey:@"comp_release"] floatValue];
+    params.comp_params[4].ratio = [[_b5_dict valueForKey:@"comp_ratio"] floatValue];
+    params.comp_params[4].attack = [[_b5_dict valueForKey:@"comp_attack"] floatValue];
+    params.comp_params[4].target = [[_b5_dict valueForKey:@"comp_target"] floatValue];
+    params.comp_params[4].thresh = [[_b5_dict valueForKey:@"comp_thresh"] floatValue];
+    params.lim_params[4].release = [[_b5_dict valueForKey:@"lim_release"] floatValue];
+    params.lim_params[4].ratio = [[_b5_dict valueForKey:@"lim_ratio"] floatValue];
+    params.lim_params[4].attack = [[_b5_dict valueForKey:@"lim_attack"] floatValue];
+    params.lim_params[4].target = [[_b5_dict valueForKey:@"lim_target"] floatValue];
+    params.lim_params[4].thresh = [[_b5_dict valueForKey:@"lim_thresh"] floatValue];
      
     return params;
 }
 
 -(void) setAllSettings:(MULTIBAND_PARAMS) settings {
-    //_b1_dict[@"enabled"] = [NSNumber numberWithBool:settings.comp_params[0].enabled];
-    //_b1_dict[@"solo"] = [NSNumber numberWithBool:settings.comp_params[0].solo];
-    //_b1_dict[@"mute"] = [NSNumber numberWithBool:settings.comp_params[0].mute];
-    //_b1_dict[@"drive"] = [NSNumber numberWithFloat:settings.comp_params[0].drive];
-    _b1_dict[@"target"] = [NSNumber numberWithFloat:settings.comp_params[0].target];
-    _b1_dict[@"release"] = [NSNumber numberWithFloat:settings.comp_params[0].release];
-    _b1_dict[@"gate_thresh"] = [NSNumber numberWithFloat:settings.comp_params[0].thresh];
-    //_b1_dict[@"use_coupling"] = [NSNumber numberWithBool:settings.comp_params[0].use_coupling];
-    //_b1_dict[@"coupling"] = [NSNumber numberWithFloat:settings.comp_params[0].coupling];
-    //_b1_dict[@"window_size"] = [NSNumber numberWithFloat:settings.comp_params[0].window_size];
-    //_b1_dict[@"window_release"] = [NSNumber numberWithFloat:settings.comp_params[0].window_release];
-    _b1_dict[@"ratio"] = [NSNumber numberWithFloat:settings.comp_params[0].ratio];
-    //_b1_dict[@"idle_gain"] = [NSNumber numberWithFloat:settings.comp_params[0].idle_gain];
-    _b1_dict[@"attack"] = [NSNumber numberWithFloat:settings.comp_params[0].attack];
-    //_b1_dict[@"post_gain"] = [NSNumber numberWithFloat:settings.comp_params[0].post_gain];
+    _enabled = settings.enabled;
+    _drive = settings.drive;
+    _gate_thresh = settings.gate_thresh;
     
+    _band1_compressor_enabled = settings.band1_compressor_enabled;
+    _band2_compressor_enabled = settings.band2_compressor_enabled;
+    _band3_compressor_enabled = settings.band3_compressor_enabled;
+    _band4_compressor_enabled = settings.band4_compressor_enabled;
+    _band5_compressor_enabled = settings.band5_compressor_enabled;
+    
+    _band1_limiter_enabled = settings.band1_limiter_enabled;
+    _band2_limiter_enabled = settings.band2_limiter_enabled;
+    _band3_limiter_enabled = settings.band3_limiter_enabled;
+    _band4_limiter_enabled = settings.band4_limiter_enabled;
+    _band5_limiter_enabled = settings.band5_limiter_enabled;
+    
+    _band1_solo = settings.band1_solo;
+    _band1_mute = settings.band1_mute;
+    _band2_solo = settings.band2_solo;
+    _band2_mute = settings.band2_mute;
+    _band3_solo = settings.band3_solo;
+    _band3_mute = settings.band3_mute;
+    _band4_solo = settings.band4_solo;
+    _band4_mute = settings.band4_mute;
+    _band5_solo = settings.band5_solo;
+    _band5_mute = settings.band5_mute;
+    
+    _b1_dict[@"comp_release"] = [NSNumber numberWithFloat:settings.comp_params[0].release];
+    _b1_dict[@"comp_ratio"] = [NSNumber numberWithFloat:settings.comp_params[0].ratio];
+    _b1_dict[@"comp_attack"] = [NSNumber numberWithFloat:settings.comp_params[0].attack];
+    _b1_dict[@"comp_target"] = [NSNumber numberWithFloat:settings.comp_params[0].target];
+    _b1_dict[@"comp_thresh"] = [NSNumber numberWithFloat:settings.comp_params[0].thresh];
+    _b1_dict[@"lim_release"] = [NSNumber numberWithFloat:settings.lim_params[0].release];
+    _b1_dict[@"lim_ratio"] = [NSNumber numberWithFloat:settings.lim_params[0].ratio];
+    _b1_dict[@"lim_attack"] = [NSNumber numberWithFloat:settings.lim_params[0].attack];
+    _b1_dict[@"lim_target"] = [NSNumber numberWithFloat:settings.comp_params[0].target];
+    _b1_dict[@"lim_thresh"] = [NSNumber numberWithFloat:settings.comp_params[0].thresh];
+    
+    _b2_dict[@"comp_release"] = [NSNumber numberWithFloat:settings.comp_params[1].release];
+    _b2_dict[@"comp_ratio"] = [NSNumber numberWithFloat:settings.comp_params[1].ratio];
+    _b2_dict[@"comp_attack"] = [NSNumber numberWithFloat:settings.comp_params[1].attack];
+    _b2_dict[@"comp_target"] = [NSNumber numberWithFloat:settings.comp_params[1].target];
+    _b2_dict[@"comp_thresh"] = [NSNumber numberWithFloat:settings.comp_params[1].thresh];
+    _b2_dict[@"lim_release"] = [NSNumber numberWithFloat:settings.lim_params[1].release];
+    _b2_dict[@"lim_ratio"] = [NSNumber numberWithFloat:settings.lim_params[1].ratio];
+    _b2_dict[@"lim_attack"] = [NSNumber numberWithFloat:settings.lim_params[1].attack];
+    _b2_dict[@"lim_target"] = [NSNumber numberWithFloat:settings.comp_params[1].target];
+    _b2_dict[@"lim_thresh"] = [NSNumber numberWithFloat:settings.comp_params[1].thresh];
+    
+    _b3_dict[@"comp_release"] = [NSNumber numberWithFloat:settings.comp_params[2].release];
+    _b3_dict[@"comp_ratio"] = [NSNumber numberWithFloat:settings.comp_params[2].ratio];
+    _b3_dict[@"comp_attack"] = [NSNumber numberWithFloat:settings.comp_params[2].attack];
+    _b3_dict[@"comp_target"] = [NSNumber numberWithFloat:settings.comp_params[2].target];
+    _b3_dict[@"comp_thresh"] = [NSNumber numberWithFloat:settings.comp_params[2].thresh];
+    _b3_dict[@"lim_release"] = [NSNumber numberWithFloat:settings.lim_params[2].release];
+    _b3_dict[@"lim_ratio"] = [NSNumber numberWithFloat:settings.lim_params[2].ratio];
+    _b3_dict[@"lim_attack"] = [NSNumber numberWithFloat:settings.lim_params[2].attack];
+    _b3_dict[@"lim_target"] = [NSNumber numberWithFloat:settings.comp_params[2].target];
+    _b3_dict[@"lim_thresh"] = [NSNumber numberWithFloat:settings.comp_params[2].thresh];
+    
+    _b4_dict[@"comp_release"] = [NSNumber numberWithFloat:settings.comp_params[3].release];
+    _b4_dict[@"comp_ratio"] = [NSNumber numberWithFloat:settings.comp_params[3].ratio];
+    _b4_dict[@"comp_attack"] = [NSNumber numberWithFloat:settings.comp_params[3].attack];
+    _b4_dict[@"comp_target"] = [NSNumber numberWithFloat:settings.comp_params[3].target];
+    _b4_dict[@"comp_thresh"] = [NSNumber numberWithFloat:settings.comp_params[3].thresh];
+    _b4_dict[@"lim_release"] = [NSNumber numberWithFloat:settings.lim_params[3].release];
+    _b4_dict[@"lim_ratio"] = [NSNumber numberWithFloat:settings.lim_params[3].ratio];
+    _b4_dict[@"lim_attack"] = [NSNumber numberWithFloat:settings.lim_params[3].attack];
+    _b4_dict[@"lim_target"] = [NSNumber numberWithFloat:settings.comp_params[3].target];
+    _b4_dict[@"lim_thresh"] = [NSNumber numberWithFloat:settings.comp_params[3].thresh];
+
+    _b5_dict[@"comp_release"] = [NSNumber numberWithFloat:settings.comp_params[4].release];
+    _b5_dict[@"comp_ratio"] = [NSNumber numberWithFloat:settings.comp_params[4].ratio];
+    _b5_dict[@"comp_attack"] = [NSNumber numberWithFloat:settings.comp_params[4].attack];
+    _b5_dict[@"comp_target"] = [NSNumber numberWithFloat:settings.comp_params[4].target];
+    _b5_dict[@"comp_thresh"] = [NSNumber numberWithFloat:settings.comp_params[4].thresh];
+    _b5_dict[@"lim_release"] = [NSNumber numberWithFloat:settings.lim_params[4].release];
+    _b5_dict[@"lim_ratio"] = [NSNumber numberWithFloat:settings.lim_params[4].ratio];
+    _b5_dict[@"lim_attack"] = [NSNumber numberWithFloat:settings.lim_params[4].attack];
+    _b5_dict[@"lim_target"] = [NSNumber numberWithFloat:settings.comp_params[4].target];
+    _b5_dict[@"lim_thresh"] = [NSNumber numberWithFloat:settings.comp_params[4].thresh];
 }
 
 -(void) dumpSettings {

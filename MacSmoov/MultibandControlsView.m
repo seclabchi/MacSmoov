@@ -12,11 +12,6 @@
     id<MultibandControlsDelegate> delegate;
 }
 
--(void) set_band_pref:(COMPRESSOR_PARAMS) params band_num:(uint32_t) num is_comp:(bool)comp;
-//-(void) initFloatPref:(NSString*)prefstr value:(float)val factory_reset:(BOOL)force_factory;
-//-(void) setBoolPref:(NSString*)prefstr value:(BOOL)val factory_reset:(BOOL)force_factory;
--(void) read_prefs;
-
 -(void) populate_ui_elements:(uint32_t)current_band;
 
 @end
@@ -24,9 +19,8 @@
 
 @implementation MultibandControlsView
 
-@synthesize b1_drive;
 
-COMPRESSOR_PARAMS factory_comp1 = {
+static const COMPRESSOR_PARAMS factory_comp1 = {
     .target = -18.0,
     .release = 0.100,
     .thresh = 0.0,
@@ -105,9 +99,60 @@ COMPRESSOR_PARAMS factory_lim5 = {
 };
 
 
+
 -(id) initWithSettings:(MULTIBAND_PARAMS) _settings delegate:(id)mb_delegate {
     self = [super init];
     if(self) {
+        COMPRESSOR_PARAMS factory_comp[5] = {
+            factory_comp1,
+            factory_comp2,
+            factory_comp3,
+            factory_comp4,
+            factory_comp5
+        };
+        
+        COMPRESSOR_PARAMS factory_lim[5] = {
+            factory_lim1,
+            factory_lim2,
+            factory_lim3,
+            factory_lim4,
+            factory_lim5
+        };
+
+        MULTIBAND_PARAMS factory_mb = {
+            .enabled = true,
+            .drive = 0.0,
+            .gate_thresh = -18.0f,
+            .band1_solo = false,
+            .band1_mute = false,
+            .band2_solo = false,
+            .band2_mute = false,
+            .band3_solo = false,
+            .band3_mute = false,
+            .band4_solo = false,
+            .band4_mute = false,
+            .band5_solo = false,
+            .band5_mute = false,
+            .band1_compressor_enabled = true,
+            .band2_compressor_enabled = true,
+            .band3_compressor_enabled = true,
+            .band4_compressor_enabled = true,
+            .band5_compressor_enabled = true,
+            .band1_limiter_enabled = true,
+            .band2_limiter_enabled = true,
+            .band3_limiter_enabled = true,
+            .band4_limiter_enabled = true,
+            .band5_limiter_enabled = true,
+            .band34_coupling = 0.0f,
+            .band45_coupling = 0.0f,
+            .band32_coupling = 0.0f,
+            .band23_coupling = 0.0f,
+            .band21_coupling = 0.0f,
+        };
+        
+        memcpy(factory_mb.comp_params, factory_comp, 5 * sizeof(COMPRESSOR_PARAMS));
+        memcpy(factory_mb.lim_params, factory_lim, 5 * sizeof(COMPRESSOR_PARAMS));
+        
         delegate = mb_delegate;
         _mb_settings = _settings;
         _mb_obj_ctrl = [[MultibandObjectController alloc] init];
@@ -138,8 +183,23 @@ COMPRESSOR_PARAMS factory_lim5 = {
 }
 
 -(IBAction) setting_changed:(id) sender {
-    NSLog(@"Setting changed: %@", sender);
-    [_mb_obj_ctrl dumpSettings];
+    if([sender class] == [NSTextField class]) {
+        NSTextField* textField = sender;
+        NSLog(@"Text field setting changed: %@ with tag %ld to value %@", sender, (long)textField.tag, [[textField cell] stringValue]);
+    }
+    else if([sender class] == [NSButton class]) {
+        NSButton* button = sender;
+        NSLog(@"Button setting changed: %@ with tag %ld", sender, (long)button.tag);
+    }
+    else if([sender class] == [NSSlider class]) {
+        NSSlider* slider = sender;
+        NSLog(@"Slider setting changed: %@ with tag %ld", sender, (long)slider.tag);
+    }
+    else {
+        NSLog(@"Unknown UI element caused a setting change: %@", sender);
+    }
+    
+    //[_mb_obj_ctrl dumpSettings];
     _mb_settings = [_mb_obj_ctrl getAllSettings];
     [delegate multiband_params_changed:_mb_settings];
 

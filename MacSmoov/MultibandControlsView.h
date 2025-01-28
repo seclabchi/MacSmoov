@@ -21,23 +21,21 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (readwrite, retain) MultibandObjectController* mb_obj_ctrl;
 
+
+
 @property (readwrite, assign) bool b1_enabled;
 @property (readwrite, assign) bool b1_mute;
 @property (readwrite, assign) bool b1_solo;
-@property (readwrite, assign) int8_t b1_drive;
 @property (readwrite, assign) int16_t b1_attack;
 @property (readwrite, assign) int16_t b1_release;
 @property (readwrite, assign) float b1_ratio;
-@property (readwrite, assign) int8_t b1_gate_thresh;
 
 @property (readwrite, assign) bool b2_enabled;
 @property (readwrite, assign) bool b2_mute;
 @property (readwrite, assign) bool b2_solo;
-@property (readwrite, assign) int8_t b2_drive;
 @property (readwrite, assign) int16_t b2_attack;
 @property (readwrite, assign) int16_t b2_release;
 @property (readwrite, assign) float b2_ratio;
-@property (readwrite, assign) int8_t b2_gate_thresh;
 
 @property (strong) IBOutlet NSButton* select_b1;
 @property (strong) IBOutlet NSButton* select_b2;

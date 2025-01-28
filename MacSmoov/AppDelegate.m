@@ -139,9 +139,9 @@ Boolean shutting_down = NO;
     
     [_comp_2band_agc set_meter_range:-24.0];
     [_comp_5band set_meter_color:[NSColor magentaColor]];
-    [_comp_5band set_meter_range:-10.0];
+    [_comp_5band set_meter_range:-24.0];
     [_lim_5band set_meter_color:[NSColor yellowColor]];
-    [_lim_5band set_meter_range:-1.5];
+    [_lim_5band set_meter_range:-10.0];
     
     //TODO:  initialize signal generators here
     //siggenvc = [[SignalGeneratorViewController alloc] init];
@@ -175,7 +175,7 @@ Boolean shutting_down = NO;
     
     proc_core_wrapper = [[ProcessorCoreWrapper alloc] initWithSampleRate:self.sysaudio.sample_rate numberOfChannels:self.sysaudio.num_channels bufferSize:(uint32_t)self.sysaudio.buffer_size configFilename:CONFIG_FILENAME];
     
-    [proc_core_wrapper load_config_from_file:CONFIG_FILENAME];
+    //[proc_core_wrapper load_config_from_file:CONFIG_FILENAME];
     
     AGC_PARAMS agc_settings;
     [proc_core_wrapper get_agc_settings:&agc_settings];
@@ -199,6 +199,7 @@ Boolean shutting_down = NO;
     
     /* To ease view controller debugging hell */
     [self agcFactoryMenuSelected:self];
+    [self multibandAdjustMenuSelected:self];
 }
 
 

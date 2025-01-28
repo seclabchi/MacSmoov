@@ -36,26 +36,6 @@ typedef struct  {
     float attack;
 } COMPRESSOR_PARAMS;
 
-typedef struct {
-    float target; //target value dB
-    float attack;
-    float release;
-    float ratio;
-    bool use_gating;
-    float gate_thresh;
-    bool use_coupling;
-    float coupling;
-    bool use_window;
-    float window_size;
-    float window_release;
-    bool use_idle_gain;
-    float idle_gain;
-    bool use_post_gain;
-    float post_gain;
-    float forced_gain_attack;
-    float forced_gain_release;
-} DYNAMICS_PROCESSOR_PARAMS;
-
 typedef struct  {
     bool enabled;
     float drive;

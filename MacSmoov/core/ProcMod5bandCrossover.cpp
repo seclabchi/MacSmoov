@@ -27,6 +27,10 @@ ProcMod5bandCrossover::ProcMod5bandCrossover(const string& _name, uint32_t _f_sa
     this->set_out_buf(10, new AudioBuf(AudioBufType::REAL, "OUT_B5_L", _n_samps));
     this->set_out_buf(11, new AudioBuf(AudioBufType::REAL, "OUT_B5_R", _n_samps));
     
+    mb_drive = new SimpleGain(0.0, _n_samps);
+    post_drive_bufL = new AudioBuf(AudioBufType::REAL, "MB_DRIVE_L", _n_samps, NULL);
+    post_drive_bufR = new AudioBuf(AudioBufType::REAL, "MB_DRIVE_R", _n_samps, NULL);
+    
     b1out = new float*[2];
     b1out[0] = this->get_out_buf(2)->getbuf();
     b1out[1] = this->get_out_buf(3)->getbuf();
@@ -48,6 +52,10 @@ ProcMod5bandCrossover::ProcMod5bandCrossover(const string& _name, uint32_t _f_sa
 }
 
 ProcMod5bandCrossover::~ProcMod5bandCrossover() {
+    delete mb_drive;
+    delete post_drive_bufL;
+    delete post_drive_bufR;
+    
     delete[] b1out;
     delete[] b2out;
     delete[] b3out;
@@ -58,7 +66,10 @@ ProcMod5bandCrossover::~ProcMod5bandCrossover() {
 bool ProcMod5bandCrossover::init_impl(CoreConfig* cfg, ProcessorModule* prev_mod, ChannelMap* _channel_map) {
     if(nullptr != cfg) {
         //TODO config
-        this->set_bypass(!cfg->get_mb_compressor_enabled());
+        MULTIBAND_PARAMS mb_params;
+        cfg->get_mb_params(mb_params);
+        this->set_bypass(!(cfg->get_mb_crossover_enabled()));
+        this->mb_drive->set_gain(mb_params.drive);
     }
     if((nullptr != _channel_map) && (nullptr != prev_mod)) {
         for(CHANNEL_MAP_ELEMENT e : _channel_map->the_map)
@@ -83,12 +94,22 @@ void ProcMod5bandCrossover::process() {
     outL = this->outbufs[0]->getbuf();
     outR = this->outbufs[1]->getbuf();
     
-    crossover->process(inL, inR, b1out, b2out, b3out, b4out, b5out, n_samps);
+    /*
+     * Apply drive
+     */
+    
+    mb_drive->process(this->get_in_buf(0)->getbuf(), this->get_in_buf(1)->getbuf(), this->post_drive_bufL->getbuf(), this->post_drive_bufR->getbuf());
+    
+    crossover->process(post_drive_bufL->getbuf(), post_drive_bufR->getbuf(), b1out, b2out, b3out, b4out, b5out, n_samps);
     
     //passthrough the input to the first two output bufs
     memcpy(this->get_out_buf(0)->getbuf(), this->get_in_buf(0)->getbuf(), n_samps * sizeof(float));
     memcpy(this->get_out_buf(1)->getbuf(), this->get_in_buf(1)->getbuf(), n_samps * sizeof(float));
     
+}
+
+void ProcMod5bandCrossover::configure(float _drive) {
+    mb_drive->set_gain(_drive);
 }
 
 void ProcMod5bandCrossover::band_enable(bool b1, bool b2, bool b3, bool b4, bool b5) {

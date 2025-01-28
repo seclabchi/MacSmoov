@@ -10,6 +10,7 @@
 
 #include <stdio.h>
 #include "ProcessorModule.hpp"
+#include "simple_gain.hpp"
 #include "crossover_5_band.h"
 
 namespace fmsmoov {
@@ -22,8 +23,11 @@ public:
     /* n samps is total interleaved stereo samples
      TODO: Figure this shit out to make it universal. */
     virtual void process();
+    virtual void configure(float _drive);
     void band_enable(bool b1, bool b2, bool b3, bool b4, bool b5);
 private:
+    SimpleGain* mb_drive;
+    AudioBuf* post_drive_bufL, *post_drive_bufR;
     float* inL, *inR, *outL, *outR;
     float** b1out, **b2out, **b3out, **b4out, **b5out;
     Crossover_5_band* crossover;

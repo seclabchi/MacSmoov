@@ -89,6 +89,7 @@ bool ProcessorCore::load_config_from_file(const std::string& filename) {
     if(retval) {
         core_config->get_agc_params(agc_params);
         proc_mod_2band_agc->configure(agc_params);
+        proc_mod_5b_crossover->set_bypass(!(core_config->get_mb_crossover_enabled()));
         core_config->get_mb_params(mb_params);
         proc_mod_5b_compressor->configure(mb_params);
         proc_mod_5b_compressor->set_bypass(!(core_config->get_mb_compressor_enabled()));
@@ -177,8 +178,23 @@ void ProcessorCore::get_multiband_settings(MULTIBAND_PARAMS& _params) {
 }
 
 bool ProcessorCore::change_multiband_settings(const MULTIBAND_PARAMS& _params) {
-    proc_mod_5b_compressor->configure(_params);
-    write_config_changes_multiband(_params);
+    
+    /*
+     * This is HOKEY as fuck.  Need to figure out a better way to manipulate
+     * common config values across the bands.
+     */
+    
+    MULTIBAND_PARAMS mbp = _params;
+    mbp.comp_params[0].thresh = _params.gate_thresh;
+    mbp.comp_params[1].thresh = _params.gate_thresh;
+    mbp.comp_params[2].thresh = _params.gate_thresh;
+    mbp.comp_params[3].thresh = _params.gate_thresh;
+    mbp.comp_params[4].thresh = _params.gate_thresh;
+    
+    proc_mod_5b_compressor->configure(mbp);
+    proc_mod_5b_crossover->configure(mbp.drive);
+    write_config_changes_multiband(mbp);
+    
     return true;
 }
 

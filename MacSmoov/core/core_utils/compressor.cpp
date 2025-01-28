@@ -26,8 +26,8 @@ Compressor::Compressor(uint32_t _samprate, uint32_t _n_samps)
     indb = 0.0f;
     sc = 0.0f;
     gc = 0.0f;
-    gs = -20.0f;
-    gsPrev = -20.0f;
+    gs = -10.0f;
+    gsPrev = -10.0f;
     alphaA = 1.0f;
     alphaR_norm = 1.0f;
     alphaR_window = 1.0f;
@@ -55,8 +55,8 @@ Compressor::Compressor(const Compressor& rhs)  {
     indb = 0.0;
     sc = 0.0;
     gc = 0.0;
-    gs = -20.0;
-    gsPrev = -20.0;
+    gs = -10.0f;
+    gsPrev = -10.0f;
     alphaA = rhs.alphaA;
     alphaR_norm = rhs.alphaR_norm;
     alphaR_window = rhs.alphaR_window;
@@ -118,8 +118,6 @@ void Compressor::process(float* inL, float* inR, float* outL, float* outR, uint3
             gc = (1-coupling) * (sc - indb) + (coupling * gain_coupling_input[i]);
         }
         
-        
-
         if(indb < params.thresh){
             gs = gsPrev;
             gated_counter++;

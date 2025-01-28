@@ -169,11 +169,11 @@ void ProcMod5bandCompressor::process() {
     }
     
     /* BAND 1 */
-    if(band_mute[0]) {
+    if(params.band1_mute) {
         memset(procb1L, 0, n_samps * sizeof(float));
         memset(procb1R, 0, n_samps * sizeof(float));
     }
-    else if(compressor_band_enabled[0]) {
+    else if(params.band1_compressor_enabled) {
         comp_b1->process(inb1L, inb1R, procb1L, procb1R, n_samps, comp_b1_gain_reduction_buf, NULL);
     }
     else {
@@ -182,11 +182,11 @@ void ProcMod5bandCompressor::process() {
     }
     
     /* BAND 2 */
-    if(band_mute[1]) {
+    if(params.band2_mute) {
         memset(procb2L, 0, n_samps * sizeof(float));
         memset(procb2R, 0, n_samps * sizeof(float));
     }
-    else if(compressor_band_enabled[1]) {
+    else if(params.band2_compressor_enabled) {
         comp_b2->process(inb2L, inb2R, procb2L, procb2R, n_samps, comp_b2_gain_reduction_buf, NULL);
     }
     else {
@@ -195,11 +195,11 @@ void ProcMod5bandCompressor::process() {
     }
     
     /* BAND 3 */
-    if(band_mute[2]) {
+    if(params.band3_mute) {
         memset(procb3L, 0, n_samps * sizeof(float));
         memset(procb3R, 0, n_samps * sizeof(float));
     }
-    else if(compressor_band_enabled[2]) {
+    else if(params.band3_compressor_enabled) {
         comp_b3->process(inb3L, inb3R, procb3L, procb3R, n_samps, comp_b3_gain_reduction_buf, NULL);
     }
     else {
@@ -208,11 +208,11 @@ void ProcMod5bandCompressor::process() {
     }
     
     /* BAND 4 */
-    if(band_mute[3]) {
+    if(params.band4_mute) {
         memset(procb4L, 0, n_samps * sizeof(float));
         memset(procb4R, 0, n_samps * sizeof(float));
     }
-    else if(compressor_band_enabled[3]) {
+    else if(params.band4_compressor_enabled) {
         comp_b4->process(inb4L, inb4R, procb4L, procb4R, n_samps, comp_b4_gain_reduction_buf, comp_b3_gain_reduction_buf);
     }
     else {
@@ -221,11 +221,11 @@ void ProcMod5bandCompressor::process() {
     }
     
     /* BAND 5 */
-    if(band_mute[4]) {
+    if(params.band5_mute) {
         memset(procb5L, 0, n_samps * sizeof(float));
         memset(procb5R, 0, n_samps * sizeof(float));
     }
-    else if(compressor_band_enabled[4]) {
+    else if(params.band5_compressor_enabled) {
         comp_b5->process(inb5L, inb5R, procb5L, procb5R, n_samps, comp_b5_gain_reduction_buf, comp_b3_gain_reduction_buf);
     }
     else {
@@ -237,7 +237,7 @@ void ProcMod5bandCompressor::process() {
     /* LIMITERS */
     
     /* BAND 1 */
-    if(limiter_band_enabled[0]) {
+    if(params.band1_limiter_enabled) {
         lim_b1->process(procb1L, procb1R, limb1L, limb1R, n_samps, lim_b1_gain_reduction_buf, NULL);
     }
     else {
@@ -246,7 +246,7 @@ void ProcMod5bandCompressor::process() {
     }
     
     /* BAND 2 */
-    if(limiter_band_enabled[1]) {
+    if(params.band2_limiter_enabled) {
         lim_b2->process(procb2L, procb2R, limb2L, limb2R, n_samps, lim_b2_gain_reduction_buf, NULL);
     }
     else {
@@ -255,7 +255,7 @@ void ProcMod5bandCompressor::process() {
     }
     
     /* BAND 3 */
-    if(limiter_band_enabled[2]) {
+    if(params.band3_limiter_enabled) {
         lim_b3->process(procb3L, procb3R, limb3L, limb3R, n_samps, lim_b3_gain_reduction_buf, NULL);
     }
     else {
@@ -264,7 +264,7 @@ void ProcMod5bandCompressor::process() {
     }
     
     /* BAND 4 */
-    if(limiter_band_enabled[3]) {
+    if(params.band4_limiter_enabled) {
         lim_b4->process(procb4L, procb4R, limb4L, limb4R, n_samps, lim_b4_gain_reduction_buf, NULL);
     }
     else {
@@ -273,7 +273,7 @@ void ProcMod5bandCompressor::process() {
     }
     
     /* BAND 5 */
-    if(limiter_band_enabled[4]) {
+    if(params.band5_limiter_enabled) {
         lim_b5->process(procb5L, procb5R, limb5L, limb5R, n_samps, lim_b5_gain_reduction_buf, NULL);
     }
     else {
@@ -289,6 +289,8 @@ void ProcMod5bandCompressor::process() {
 
 void ProcMod5bandCompressor::configure(const MULTIBAND_PARAMS _params) {
     params = _params;
+    
+    this->set_bypass(!_params.enabled);
     
     comp_b1->config(params.comp_params[0]);
     comp_b2->config(params.comp_params[1]);
