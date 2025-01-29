@@ -25,10 +25,12 @@
 @interface MultibandObjectController : NSObjectController {
     
 }
-@property (readwrite, assign) bool enabled;
+@property (readwrite, assign) bool multiband_enabled;
+@property (readwrite, assign) bool limiters_enabled;
 
 @property (readwrite, assign) float drive;
 @property (readwrite, assign) float gate_thresh;
+@property (readwrite, assign) float master_post_gain;
 
 @property (readwrite, assign) bool band1_compressor_enabled;
 @property (readwrite, assign) bool band2_compressor_enabled;
@@ -36,11 +38,11 @@
 @property (readwrite, assign) bool band4_compressor_enabled;
 @property (readwrite, assign) bool band5_compressor_enabled;
 
-@property (readwrite, assign) bool band1_limiter_enabled;
-@property (readwrite, assign) bool band2_limiter_enabled;
-@property (readwrite, assign) bool band3_limiter_enabled;
-@property (readwrite, assign) bool band4_limiter_enabled;
-@property (readwrite, assign) bool band5_limiter_enabled;
+@property (readwrite, assign) float band34_coupling;
+@property (readwrite, assign) float band45_coupling;
+@property (readwrite, assign) float band32_coupling;
+@property (readwrite, assign) float band23_coupling;
+@property (readwrite, assign) float band21_coupling;
 
 @property (readwrite, assign) bool band1_solo;
 @property (readwrite, assign) bool band1_mute;

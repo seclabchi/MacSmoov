@@ -36,7 +36,7 @@ public:
     bool get_mb_limiter_enabled();
     void set_mb_limiter_enabled(bool enabled);
     void get_mb_params(MULTIBAND_PARAMS& params);
-    void set_mb_params(const MULTIBAND_PARAMS& params);
+    bool set_mb_params(const MULTIBAND_PARAMS& params);
     float get_mb_comp_band34_coupling();
     void set_mb_comp_band34_coupling(float _coupling);
     float get_mb_comp_band45_coupling();

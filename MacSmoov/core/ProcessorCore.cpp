@@ -103,7 +103,7 @@ bool ProcessorCore::write_config_changes_agc(const AGC_PARAMS& _params) {
 }
 
 bool ProcessorCore::write_config_changes_multiband(const MULTIBAND_PARAMS& _params) {
-    return true;
+    return core_config->set_mb_params(_params);
 }
 
 

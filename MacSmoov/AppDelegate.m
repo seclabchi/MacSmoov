@@ -141,7 +141,7 @@ Boolean shutting_down = NO;
     [_comp_5band set_meter_color:[NSColor magentaColor]];
     [_comp_5band set_meter_range:-24.0];
     [_lim_5band set_meter_color:[NSColor yellowColor]];
-    [_lim_5band set_meter_range:-10.0];
+    [_lim_5band set_meter_range:-6.0];
     
     //TODO:  initialize signal generators here
     //siggenvc = [[SignalGeneratorViewController alloc] init];

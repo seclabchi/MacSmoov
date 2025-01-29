@@ -237,7 +237,7 @@ void ProcMod5bandCompressor::process() {
     /* LIMITERS */
     
     /* BAND 1 */
-    if(params.band1_limiter_enabled) {
+    if(params.limiters_enabled && params.band1_limiter_enabled) {
         lim_b1->process(procb1L, procb1R, limb1L, limb1R, n_samps, lim_b1_gain_reduction_buf, NULL);
     }
     else {
@@ -246,7 +246,7 @@ void ProcMod5bandCompressor::process() {
     }
     
     /* BAND 2 */
-    if(params.band2_limiter_enabled) {
+    if(params.limiters_enabled && params.band2_limiter_enabled) {
         lim_b2->process(procb2L, procb2R, limb2L, limb2R, n_samps, lim_b2_gain_reduction_buf, NULL);
     }
     else {
@@ -255,7 +255,7 @@ void ProcMod5bandCompressor::process() {
     }
     
     /* BAND 3 */
-    if(params.band3_limiter_enabled) {
+    if(params.limiters_enabled && params.band3_limiter_enabled) {
         lim_b3->process(procb3L, procb3R, limb3L, limb3R, n_samps, lim_b3_gain_reduction_buf, NULL);
     }
     else {
@@ -264,7 +264,7 @@ void ProcMod5bandCompressor::process() {
     }
     
     /* BAND 4 */
-    if(params.band4_limiter_enabled) {
+    if(params.limiters_enabled && params.band4_limiter_enabled) {
         lim_b4->process(procb4L, procb4R, limb4L, limb4R, n_samps, lim_b4_gain_reduction_buf, NULL);
     }
     else {
@@ -273,7 +273,7 @@ void ProcMod5bandCompressor::process() {
     }
     
     /* BAND 5 */
-    if(params.band5_limiter_enabled) {
+    if(params.limiters_enabled && params.band5_limiter_enabled) {
         lim_b5->process(procb5L, procb5R, limb5L, limb5R, n_samps, lim_b5_gain_reduction_buf, NULL);
     }
     else {
@@ -282,8 +282,8 @@ void ProcMod5bandCompressor::process() {
     }
     
     for(uint32_t i = 0; i < n_samps; i++) {
-        master_outL[i] = limb1L[i] + limb2L[i] + limb3L[i] + limb4L[i] + limb5L[i];
-        master_outR[i] = limb1R[i] + limb2R[i] + limb3R[i] + limb4R[i] + limb5R[i];
+        master_outL[i] = powf(10, params.master_post_gain/20.0f) * (limb1L[i] + limb2L[i] + limb3L[i] + limb4L[i] + limb5L[i]);
+        master_outR[i] = powf(10, params.master_post_gain/20.0f) * (limb1R[i] + limb2R[i] + limb3R[i] + limb4R[i] + limb5R[i]);
     }
 }
 

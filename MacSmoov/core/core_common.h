@@ -40,6 +40,8 @@ typedef struct  {
     bool enabled;
     float drive;
     float gate_thresh;
+    bool limiters_enabled;
+    float master_post_gain;
     bool band1_solo;
     bool band1_mute;
     bool band2_solo;
@@ -50,6 +52,11 @@ typedef struct  {
     bool band4_mute;
     bool band5_solo;
     bool band5_mute;
+    float band34_coupling;
+    float band45_coupling;
+    float band32_coupling;
+    float band23_coupling;
+    float band21_coupling;
     bool band1_compressor_enabled;
     bool band2_compressor_enabled;
     bool band3_compressor_enabled;
@@ -60,11 +67,11 @@ typedef struct  {
     bool band3_limiter_enabled;
     bool band4_limiter_enabled;
     bool band5_limiter_enabled;
-    float band34_coupling;
-    float band45_coupling;
-    float band32_coupling;
-    float band23_coupling;
-    float band21_coupling;
+    float band1_comp_lim_offset;
+    float band2_comp_lim_offset;
+    float band3_comp_lim_offset;
+    float band4_comp_lim_offset;
+    float band5_comp_lim_offset;
     COMPRESSOR_PARAMS comp_params[5];
     COMPRESSOR_PARAMS lim_params[5];
 } MULTIBAND_PARAMS;

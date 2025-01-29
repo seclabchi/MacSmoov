@@ -138,6 +138,10 @@ static const COMPRESSOR_PARAMS lim_params_b5_default = {
  
 static const MULTIBAND_PARAMS multiband_params_default = {
     .enabled = true,
+    .drive = 12.0f,
+    .gate_thresh = -40.0f,
+    .limiters_enabled = true,
+    .master_post_gain = 0.0f,
     .band1_solo = false,
     .band1_mute = false,
     .band2_solo = false,
@@ -257,18 +261,22 @@ bool CoreConfig::get_mb_limiter_enabled() {
     return false;
 }
 
+void CoreConfig::get_mb_params(MULTIBAND_PARAMS& params) {
+    params = multiband_params;
+}
+
+bool CoreConfig::set_mb_params(const MULTIBAND_PARAMS& params) {
+    multiband_params = params;
+    write_cfg_to_file();
+    return true;
+}
+
 void CoreConfig::set_mb_limiter_enabled(bool enabled) {
     //enable_mb_limiter = enabled;
     //TODO: get the limiter enable functionality implemented
 }
 
-void CoreConfig::get_mb_params(MULTIBAND_PARAMS& params) {
-    params = multiband_params;
-}
 
-void CoreConfig::set_mb_params(const MULTIBAND_PARAMS& params) {
-    multiband_params = params;;
-}
 
 /*
  * TODO: Rework the config file read
@@ -343,6 +351,8 @@ bool CoreConfig::load_cfg_from_file(const std::string &filename) {
             multiband_params.enabled = mb_params["enabled"].as<bool>();
             multiband_params.drive = mb_params["drive"].as<float>();
             multiband_params.gate_thresh = mb_params["gate_thresh"].as<float>();
+            multiband_params.limiters_enabled = mb_params["limiters_enabled"].as<bool>();
+            multiband_params.master_post_gain = mb_params["master_post_gain"].as<float>();
             multiband_params.band1_solo = mb_params["band1_solo"].as<bool>();
             multiband_params.band1_mute = mb_params["band1_mute"].as<bool>();
             multiband_params.band2_solo = mb_params["band2_solo"].as<bool>();
@@ -353,6 +363,12 @@ bool CoreConfig::load_cfg_from_file(const std::string &filename) {
             multiband_params.band4_mute = mb_params["band4_mute"].as<bool>();
             multiband_params.band5_solo = mb_params["band5_solo"].as<bool>();
             multiband_params.band5_mute = mb_params["band5_mute"].as<bool>();
+            
+            multiband_params.band1_comp_lim_offset = mb_params["band1_comp_lim_offset"].as<float>();
+            multiband_params.band2_comp_lim_offset = mb_params["band2_comp_lim_offset"].as<float>();
+            multiband_params.band3_comp_lim_offset = mb_params["band3_comp_lim_offset"].as<float>();
+            multiband_params.band4_comp_lim_offset = mb_params["band4_comp_lim_offset"].as<float>();
+            multiband_params.band5_comp_lim_offset = mb_params["band5_comp_lim_offset"].as<float>();
             
             /* Read compressor bands */
             
@@ -469,8 +485,19 @@ bool CoreConfig::load_cfg_from_file(const std::string &filename) {
                 
                 multiband_params.lim_params[band_num] = lim_params;
                 std::cout << "Read limiter params for band " << band_num + 1 << std::endl;
-                
             }
+            
+            /* Finished reading limiter bands, now populate each band by calculating the offset between the
+              * respective compressor target as the limiters threshold
+              * TODO: move this logic somewhere else?  Need to re-layer the settings read/write.  It's all
+              * over the place
+              */
+            
+            multiband_params.lim_params[0].thresh = multiband_params.comp_params[0].target + multiband_params.band1_comp_lim_offset;
+            multiband_params.lim_params[1].thresh = multiband_params.comp_params[1].target + multiband_params.band2_comp_lim_offset;
+            multiband_params.lim_params[2].thresh = multiband_params.comp_params[2].target + multiband_params.band3_comp_lim_offset;
+            multiband_params.lim_params[3].thresh = multiband_params.comp_params[3].target + multiband_params.band4_comp_lim_offset;
+            multiband_params.lim_params[4].thresh = multiband_params.comp_params[4].target + multiband_params.band5_comp_lim_offset;
         }
         
         cfg_file_stream.close();
@@ -544,6 +571,9 @@ bool CoreConfig::write_cfg_to_file() {
             multiband_params_node["enabled"] = multiband_params.enabled;
             multiband_params_node["drive"] = multiband_params.drive;
             multiband_params_node["gate_thresh"] = multiband_params.gate_thresh;
+            multiband_params_node["limiters_enabled"] = multiband_params.limiters_enabled;
+            multiband_params_node["master_post_gain"] = multiband_params.master_post_gain;
+            
             multiband_params_node["band1_solo"] = multiband_params.band1_solo;
             multiband_params_node["band1_mute"] = multiband_params.band1_mute;
             multiband_params_node["band2_solo"] = multiband_params.band2_solo;
@@ -554,6 +584,12 @@ bool CoreConfig::write_cfg_to_file() {
             multiband_params_node["band4_mute"] = multiband_params.band4_mute;
             multiband_params_node["band5_solo"] = multiband_params.band5_solo;
             multiband_params_node["band5_mute"] = multiband_params.band5_mute;
+            
+            multiband_params_node["band1_comp_lim_offset"] = multiband_params.band1_comp_lim_offset;
+            multiband_params_node["band2_comp_lim_offset"] = multiband_params.band2_comp_lim_offset;
+            multiband_params_node["band3_comp_lim_offset"] = multiband_params.band3_comp_lim_offset;
+            multiband_params_node["band4_comp_lim_offset"] = multiband_params.band4_comp_lim_offset;
+            multiband_params_node["band5_comp_lim_offset"] = multiband_params.band5_comp_lim_offset;
             
             YAML::Node compressors_node = multiband_params_node["compressors"];
             compressors_node["band1_compressor_enabled"] = multiband_params.band1_compressor_enabled;
