@@ -63,9 +63,14 @@ void processor_core_hook(AudioBufferList* ab_list, AudioBufferList* ab_list_core
     memcpy(ab_list_coreout->mBuffers[1].mData, ab_list->mBuffers[1].mData, ab_list->mBuffers[1].mDataByteSize);
     
 #else
-    cpp->process((float*)ab_list->mBuffers[0].mData, (float*)ab_list->mBuffers[1].mData,
-                 (float*)ab_list_coreout->mBuffers[0].mData, (float*)ab_list_coreout->mBuffers[1].mData,
-                 ab_list->mBuffers[0].mDataByteSize/sizeof(float));
+    try {
+        cpp->process((float*)ab_list->mBuffers[0].mData, (float*)ab_list->mBuffers[1].mData,
+                     (float*)ab_list_coreout->mBuffers[0].mData, (float*)ab_list_coreout->mBuffers[1].mData,
+                     ab_list->mBuffers[0].mDataByteSize/sizeof(float));
+    } catch (const std::exception& ex) {
+        NSLog(@"Caught a C++ exception in the processor core: %s", ex.what());
+        [NSException raise:@"PROCESSOR CORE EXCEPTION" format:@"%s", ex.what()];
+    }
 #endif //CORE_BYPASS
 }
 
@@ -75,6 +80,11 @@ void processor_core_hook(AudioBufferList* ab_list, AudioBufferList* ab_list_core
     cpp->get_main_in_levels(lrms, rrms, lpeak, rpeak);
 #endif
 }
+
+-(void) getMainOutLevelsLrms:(float*)lrms Rrms:(float*)rrms Lpeak:(float*)lpeak Rpeak:(float*)rpeak {
+    cpp->get_main_out_levels(lrms, rrms, lpeak, rpeak);
+}
+
 
 -(void) setMainInGainDBL:(float)mainInL R:(float)mainInR {
 #if CORE_BYPASS

@@ -38,6 +38,8 @@ private:
     Compressor* comp_hi;
     float* comp_hi_gain_reduction_buf;
     
+    float* gc_hi;
+    
     float drive;
     AGC_PARAMS params;
     

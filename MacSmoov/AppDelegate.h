@@ -23,6 +23,7 @@
 @property (strong) IBOutlet NSBox* agc_lo_gate_closed;
 @property (strong) IBOutlet NSBox* agc_hi_gate_closed;
 @property (strong) IBOutlet CompressionMeter5band* comp_5band;
+@property (strong) IBOutlet LevelMeter* level_main_out;
 
 @property (strong) IBOutlet NSBox* gate_b1;
 @property (strong) IBOutlet NSBox* gate_b2;

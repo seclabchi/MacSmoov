@@ -41,6 +41,7 @@ public:
     bool prepare();
     void process(float* in_L, float* in_R, float* out_L, float* out_R, uint32_t n_samp);
     void get_main_in_levels(float* lrms, float* rrms, float* lpeak, float* rpeak);
+    void get_main_out_levels(float* lrms, float* rrms, float* lpeak, float* rpeak);
     void set_main_in_gain_db(float loggain_l, float loggain_r);
     void main_in_gain_db_change_done(float loggain_l, float loggain_r);
     void get2bandAGCGainReduction(float* gainReduct2blo, float* gainReduct2bhi, bool* gateOpenLo, bool* gateOpenHi);
@@ -71,6 +72,7 @@ private:
     ProcModHFEnhance* proc_mod_hf_enhance;
     ProcMod5bandCrossover* proc_mod_5b_crossover;
     ProcMod5bandCompressor* proc_mod_5b_compressor;
+    ProcModLevelMeter* proc_mod_level_main_out;
     
     LogLinConverter* m_loglin;
     LogLinConverter* m_linlog;

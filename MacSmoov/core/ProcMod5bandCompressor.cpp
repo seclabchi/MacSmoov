@@ -57,6 +57,12 @@ ProcMod5bandCompressor::ProcMod5bandCompressor(const string& _name, uint32_t _f_
     comp_b4 = new Compressor(f_samp, n_samps);
     comp_b5 = new Compressor(f_samp, n_samps);
     
+    gc_rawb1 = new float[n_samps]();
+    gc_rawb2 = new float[n_samps]();
+    gc_rawb3 = new float[n_samps]();
+    gc_rawb4 = new float[n_samps]();
+    gc_rawb5 = new float[n_samps]();
+    
     comp_b1_gain_reduction_buf = new float[n_samps]();
     comp_b2_gain_reduction_buf = new float[n_samps]();
     comp_b3_gain_reduction_buf = new float[n_samps]();
@@ -102,6 +108,12 @@ ProcMod5bandCompressor::ProcMod5bandCompressor(const string& _name, uint32_t _f_
 }
 
 ProcMod5bandCompressor::~ProcMod5bandCompressor() {
+    
+    delete[] gc_rawb1;
+    delete[] gc_rawb2;
+    delete[] gc_rawb3;
+    delete[] gc_rawb4;
+    delete[] gc_rawb5;
     
     delete[] comp_b1_gain_reduction_buf;
     delete[] comp_b2_gain_reduction_buf;
@@ -168,13 +180,49 @@ void ProcMod5bandCompressor::process() {
         return;
     }
     
+    if(params.band1_compressor_enabled) {
+        comp_b1->compute_gc(inb1L, inb1R, gc_rawb1);
+    } else {
+        memset(gc_rawb1, 0, n_samps * sizeof(float));
+    }
+    
+    if(params.band2_compressor_enabled) {
+        comp_b2->compute_gc(inb2L, inb2R, gc_rawb2);
+    } else {
+        memset(gc_rawb2, 0, n_samps * sizeof(float));
+    }
+    
+    if(params.band3_compressor_enabled) {
+        comp_b3->compute_gc(inb3L, inb3R, gc_rawb3);
+    } else {
+        memset(gc_rawb3, 0, n_samps * sizeof(float));
+    }
+    
+    if(params.band4_compressor_enabled) {
+        comp_b4->compute_gc(inb4L, inb4R, gc_rawb4);
+    } else {
+        memset(gc_rawb4, 0, n_samps * sizeof(float));
+    }
+    
+    if(params.band5_compressor_enabled) {
+        comp_b5->compute_gc(inb5L, inb5R, gc_rawb5);
+    } else {
+        memset(gc_rawb5, 0, n_samps * sizeof(float));
+    }
+    
+    /*
+     *  Got the raw gain computation values because they can be coupled together in
+     *  both directions.  Now go back and apply the coupling and do the compression.
+     */
+    
     /* BAND 1 */
     if(params.band1_mute) {
         memset(procb1L, 0, n_samps * sizeof(float));
         memset(procb1R, 0, n_samps * sizeof(float));
     }
     else if(params.band1_compressor_enabled) {
-        comp_b1->process(inb1L, inb1R, procb1L, procb1R, n_samps, comp_b1_gain_reduction_buf, NULL);
+        /* Coupling is B2->B1 */
+        comp_b1->process(inb1L, inb1R, procb1L, procb1R, n_samps, gc_rawb2, comp_b1_gain_reduction_buf);
     }
     else {
         memcpy(procb1L, inb1L, n_samps * sizeof(float));
@@ -187,7 +235,8 @@ void ProcMod5bandCompressor::process() {
         memset(procb2R, 0, n_samps * sizeof(float));
     }
     else if(params.band2_compressor_enabled) {
-        comp_b2->process(inb2L, inb2R, procb2L, procb2R, n_samps, comp_b2_gain_reduction_buf, NULL);
+        /* Coupling is B3->B2 */
+        comp_b2->process(inb2L, inb2R, procb2L, procb2R, n_samps, gc_rawb3, comp_b2_gain_reduction_buf);
     }
     else {
         memcpy(procb2L, inb2L, n_samps * sizeof(float));
@@ -200,7 +249,8 @@ void ProcMod5bandCompressor::process() {
         memset(procb3R, 0, n_samps * sizeof(float));
     }
     else if(params.band3_compressor_enabled) {
-        comp_b3->process(inb3L, inb3R, procb3L, procb3R, n_samps, comp_b3_gain_reduction_buf, NULL);
+        /* Coupling is B2->B3 */
+        comp_b3->process(inb3L, inb3R, procb3L, procb3R, n_samps, gc_rawb2, comp_b3_gain_reduction_buf);
     }
     else {
         memcpy(procb3L, inb3L, n_samps * sizeof(float));
@@ -213,7 +263,8 @@ void ProcMod5bandCompressor::process() {
         memset(procb4R, 0, n_samps * sizeof(float));
     }
     else if(params.band4_compressor_enabled) {
-        comp_b4->process(inb4L, inb4R, procb4L, procb4R, n_samps, comp_b4_gain_reduction_buf, comp_b3_gain_reduction_buf);
+        /* Coupling is B3->B4 */
+        comp_b4->process(inb4L, inb4R, procb4L, procb4R, n_samps, gc_rawb3, comp_b4_gain_reduction_buf);
     }
     else {
         memcpy(procb4L, inb4L, n_samps * sizeof(float));
@@ -226,7 +277,8 @@ void ProcMod5bandCompressor::process() {
         memset(procb5R, 0, n_samps * sizeof(float));
     }
     else if(params.band5_compressor_enabled) {
-        comp_b5->process(inb5L, inb5R, procb5L, procb5R, n_samps, comp_b5_gain_reduction_buf, comp_b3_gain_reduction_buf);
+        /* Coupling is B4->B5 */
+        comp_b5->process(inb5L, inb5R, procb5L, procb5R, n_samps, gc_rawb4, comp_b5_gain_reduction_buf);
     }
     else {
         memcpy(procb5L, inb5L, n_samps * sizeof(float));
@@ -238,7 +290,8 @@ void ProcMod5bandCompressor::process() {
     
     /* BAND 1 */
     if(params.limiters_enabled && params.band1_limiter_enabled) {
-        lim_b1->process(procb1L, procb1R, limb1L, limb1R, n_samps, lim_b1_gain_reduction_buf, NULL);
+        lim_b1->compute_gc(procb1L, procb1R);
+        lim_b1->process(procb1L, procb1R, limb1L, limb1R, n_samps, NULL, lim_b1_gain_reduction_buf);
     }
     else {
         memcpy(limb1L, procb1L, n_samps * sizeof(float));
@@ -247,7 +300,8 @@ void ProcMod5bandCompressor::process() {
     
     /* BAND 2 */
     if(params.limiters_enabled && params.band2_limiter_enabled) {
-        lim_b2->process(procb2L, procb2R, limb2L, limb2R, n_samps, lim_b2_gain_reduction_buf, NULL);
+        lim_b2->compute_gc(procb2L, procb2R);
+        lim_b2->process(procb2L, procb2R, limb2L, limb2R, n_samps, NULL, lim_b2_gain_reduction_buf);
     }
     else {
         memcpy(limb2L, procb2L, n_samps * sizeof(float));
@@ -256,7 +310,8 @@ void ProcMod5bandCompressor::process() {
     
     /* BAND 3 */
     if(params.limiters_enabled && params.band3_limiter_enabled) {
-        lim_b3->process(procb3L, procb3R, limb3L, limb3R, n_samps, lim_b3_gain_reduction_buf, NULL);
+        lim_b3->compute_gc(procb3L, procb3R);
+        lim_b3->process(procb3L, procb3R, limb3L, limb3R, n_samps, NULL, lim_b3_gain_reduction_buf);
     }
     else {
         memcpy(limb3L, procb3L, n_samps * sizeof(float));
@@ -265,7 +320,8 @@ void ProcMod5bandCompressor::process() {
     
     /* BAND 4 */
     if(params.limiters_enabled && params.band4_limiter_enabled) {
-        lim_b4->process(procb4L, procb4R, limb4L, limb4R, n_samps, lim_b4_gain_reduction_buf, NULL);
+        lim_b4->compute_gc(procb4L, procb4R);
+        lim_b4->process(procb4L, procb4R, limb4L, limb4R, n_samps, NULL, lim_b4_gain_reduction_buf);
     }
     else {
         memcpy(limb4L, procb4L, n_samps * sizeof(float));
@@ -274,7 +330,8 @@ void ProcMod5bandCompressor::process() {
     
     /* BAND 5 */
     if(params.limiters_enabled && params.band5_limiter_enabled) {
-        lim_b5->process(procb5L, procb5R, limb5L, limb5R, n_samps, lim_b5_gain_reduction_buf, NULL);
+        lim_b5->compute_gc(procb5L, procb5R);
+        lim_b5->process(procb5L, procb5R, limb5L, limb5R, n_samps, NULL, lim_b5_gain_reduction_buf);
     }
     else {
         memcpy(limb5L, procb5L, n_samps * sizeof(float));

@@ -71,6 +71,13 @@ ProcessorCore::ProcessorCore(uint32_t _f_samp, uint32_t _n_channels, uint32_t _n
     proc_mod_5b_compressor->init(core_config, proc_mod_5b_crossover, chan_map);
     core_stack->add_module(proc_mod_5b_compressor);
     
+    chan_map = new ChannelMap();
+    chan_map->the_map.push_back(CHANNEL_MAP_ELEMENT {0, 0, "IN_L"});
+    chan_map->the_map.push_back(CHANNEL_MAP_ELEMENT {1, 1, "IN_R"});
+    proc_mod_level_main_out = new ProcModLevelMeter("LEVEL_MAIN_OUT", f_samp, n_channels, n_samp);
+    proc_mod_level_main_out->init(core_config, proc_mod_5b_compressor, chan_map);
+    core_stack->add_module(proc_mod_level_main_out);
+    
     m_loglin = new LogLinConverter(LogLinConversionType::LOG_TO_LIN);
     m_linlog = new LogLinConverter(LogLinConversionType::LIN_TO_LOG);
 }
@@ -136,6 +143,10 @@ void ProcessorCore::process(float* in_L, float* in_R, float* out_L, float* out_R
 
 void ProcessorCore::get_main_in_levels(float* lrms, float* rrms, float* lpeak, float* rpeak) {
     proc_mod_level_main_in->get_levels_db(lrms, rrms, lpeak, rpeak);
+}
+
+void ProcessorCore::get_main_out_levels(float* lrms, float* rrms, float* lpeak, float* rpeak) {
+    proc_mod_level_main_out->get_levels_db(lrms, rrms, lpeak, rpeak);
 }
 
 void ProcessorCore::set_main_in_gain_db(float loggain_l, float loggain_r) {

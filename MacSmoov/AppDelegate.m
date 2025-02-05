@@ -66,11 +66,14 @@ Boolean shutting_down = NO;
     bands_gate_open[3] = malloc(sizeof(bool));
     bands_gate_open[4] = malloc(sizeof(bool));
     
+    float mainOutLrms, mainOutRrms, mainOutLpeak, mainOutRpeak;
+    
     while(false == shutting_down) {
         
         [proc_core_wrapper getMainInLevelsLrms:&mainInLrms Rrms:&mainInRrms Lpeak:&mainInLpeak Rpeak:&mainInRpeak];
         [proc_core_wrapper get2bandAGCGainReductionlo:&gainReduct2blo hi:&gainReduct2bhi gatelo:&gate_open_agc2_lo gatehi:&gate_open_agc2_hi];
         [proc_core_wrapper get5bandCompressorGainReduction:bands_gr limiters:bands_lim gates:bands_gate_open];
+        [proc_core_wrapper getMainOutLevelsLrms:&mainOutLrms Rrms:&mainOutRrms Lpeak:&mainOutLpeak Rpeak:&mainOutRpeak];
         
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void){
             //Background Thread
@@ -122,6 +125,8 @@ Boolean shutting_down = NO;
                 else {
                     [self->_gate_b5 setFillColor:[NSColor blackColor]];
                 }
+                
+                [self->_level_main_out set_levels_Lrms:mainOutLrms Rrms:mainOutRrms Lpeak:mainOutLpeak Rpeak:mainOutRpeak];
             });
         });
          
@@ -202,6 +207,10 @@ Boolean shutting_down = NO;
     [self multibandAdjustMenuSelected:self];
 }
 
+- (NSApplicationTerminateReply) applicationShouldTerminate:(NSApplication *) sender {
+    NSLog(@"Got a teminate!");
+    return NSTerminateNow;
+}
 
 - (void)applicationWillTerminate:(NSNotification *)aNotification {
     // Insert code here to tear down your application

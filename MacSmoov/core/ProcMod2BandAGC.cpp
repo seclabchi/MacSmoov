@@ -41,6 +41,8 @@ ProcMod2BandAGC::ProcMod2BandAGC(const string& _name, uint32_t _f_samp, uint8_t 
     agc_out_hiR = new float[_n_samps]();
     memset(agc_out_hiR, 0, _n_samps*sizeof(float));
     
+    gc_hi = new float[_n_samps]();
+    
     comp_lo = new Compressor(this->get_f_samp(), this->get_n_samps());
     comp_hi = new Compressor(this->get_f_samp(), this->get_n_samps());
     
@@ -64,6 +66,8 @@ ProcMod2BandAGC::~ProcMod2BandAGC() {
     
     delete post_drive_bufL;
     delete post_drive_bufR;
+    
+    delete[] gc_hi;
         
     delete filt_lo_L;
     delete filt_lo_R;
@@ -131,19 +135,22 @@ void ProcMod2BandAGC::process() {
     
     /* If we want to mute the high or low side of the AGC output, still do the processing so the bass coupling will still work */
     
-    comp_hi->process(buf_hi_filtL, buf_hi_filtR, agc_out_hiL, agc_out_hiR, n_samps, comp_hi_gain_reduction_buf);
+    comp_hi->compute_gc(buf_hi_filtL, buf_hi_filtR, gc_hi);
+    comp_hi->process(buf_hi_filtL, buf_hi_filtR, agc_out_hiL, agc_out_hiR, n_samps, NULL, comp_hi_gain_reduction_buf);
     
     if(params.mute_hi) {
         memset(agc_out_hiL, 0, n_samps * sizeof(float));
         memset(agc_out_hiR, 0, n_samps * sizeof(float));
     }
     
-    comp_lo->process(buf_lo_filtL, buf_lo_filtR, agc_out_loL, agc_out_loR, n_samps, NULL, comp_hi_gain_reduction_buf);
+    comp_lo->compute_gc(buf_lo_filtL, buf_lo_filtR);
+    comp_lo->process(buf_lo_filtL, buf_lo_filtR, agc_out_loL, agc_out_loR, n_samps, gc_hi, comp_hi_gain_reduction_buf);
     
     if(params.mute_lo) {
         memset(agc_out_loL, 0, n_samps * sizeof(float));
         memset(agc_out_loR, 0, n_samps * sizeof(float));
     }
+    
     
     
     for(uint32_t i = 0; i < n_samps; i++) {

@@ -55,6 +55,12 @@ private:
     Compressor* lim_b4;
     Compressor* lim_b5;
     
+    float* gc_rawb1;
+    float* gc_rawb2;
+    float* gc_rawb3;
+    float* gc_rawb4;
+    float* gc_rawb5;
+    
     float* comp_b1_gain_reduction_buf;
     float* comp_b2_gain_reduction_buf;
     float* comp_b3_gain_reduction_buf;

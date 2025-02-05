@@ -25,6 +25,7 @@
                 <outlet property="gate_b4" destination="P2Z-E4-AUm" id="Gon-ZV-Zbz"/>
                 <outlet property="gate_b5" destination="5LO-bC-5I0" id="kfy-CQ-Hqz"/>
                 <outlet property="level_main_in" destination="mc0-9Q-64D" id="XWR-zu-Bad"/>
+                <outlet property="level_main_out" destination="MhY-PZ-2Lw" id="Rb9-84-3ni"/>
                 <outlet property="lim_5band" destination="dBL-p2-MUT" id="Hsi-8Y-c99"/>
                 <outlet property="slider_gain_main_in" destination="yiT-KE-WWL" id="qnY-BY-rcS"/>
                 <outlet property="window" destination="QvC-M9-y7g" id="gIp-Ho-8D9"/>
@@ -779,6 +780,19 @@
                             <action selector="masterBypassSelected:" target="Voe-Tx-rLC" id="Dc2-mC-Wfq"/>
                         </connections>
                     </button>
+                    <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="MhY-PZ-2Lw" userLabel="OutputLevel" customClass="LevelMeter">
+                        <rect key="frame" x="444" y="300" width="34" height="192"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    </customView>
+                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="9KO-xK-7I3">
+                        <rect key="frame" x="436" y="500" width="50" height="35"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <textFieldCell key="cell" alignment="center" title="PROC OUT" id="CHm-gR-NDF">
+                            <font key="font" metaFont="system"/>
+                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                    </textField>
                 </subviews>
                 <constraints>
                     <constraint firstItem="2II-d1-FJE" firstAttribute="top" secondItem="a42-f6-UMw" secondAttribute="bottom" constant="21" id="0Sm-Lh-bbg"/>

@@ -15,6 +15,8 @@ Compressor::Compressor(uint32_t _samprate, uint32_t _n_samps)
     memset(indbL, 0, n_samps*sizeof(float));
     indbR = new float[n_samps]();
     memset(indbR, 0, n_samps*sizeof(float));
+    gc_raw = new float[n_samps]();
+    memset(gc_raw, 0, n_samps*sizeof(float));
     use_coupling = false;
     coupling = 0.0;
     use_window = false;
@@ -39,9 +41,11 @@ Compressor::Compressor(const Compressor& rhs)  {
     n_samps = rhs.n_samps;
     params = rhs.params;
     indbL = new float[n_samps]();
-    memset(indbL, 0, n_samps*sizeof(float));
+    memcpy(indbL, rhs.indbL, n_samps*sizeof(float));
     indbR = new float[n_samps]();
-    memset(indbR, 0, n_samps*sizeof(float));
+    memcpy(indbR, rhs.indbR, n_samps*sizeof(float));
+    gc_raw = new float[n_samps]();
+    memcpy(gc_raw, rhs.gc_raw, n_samps*sizeof(float));
     samp_converter_todb = new LogLinConverter(LogLinConversionType::LIN_TO_LOG);
     use_coupling = rhs.use_coupling;
     coupling = rhs.coupling;
@@ -73,6 +77,9 @@ void Compressor::recalculate() {
 Compressor::~Compressor()
 {
     delete samp_converter_todb;
+    delete[] indbR;
+    delete[] indbL;
+    delete[] gc_raw;
 }
 
 void Compressor::config(const COMPRESSOR_PARAMS& _params, const bool _use_coupling, const float _coupling, const bool _use_window,
@@ -86,11 +93,7 @@ void Compressor::config(const COMPRESSOR_PARAMS& _params, const bool _use_coupli
     recalculate();
 }
 
-void Compressor::process(float* inL, float* inR, float* outL, float* outR, uint32_t n_samps, float* gain_reduction_output, float* gain_coupling_input, bool* force_gain, float* force_gain_target)
-{
-    gain_reduction = 0.0;
-    gated_counter = 0.0;
-    
+void Compressor::compute_gc(float* inL, float* inR, float* _gc_raw) {
     samp_converter_todb->process(inL, indbL, n_samps);
     samp_converter_todb->process(inR, indbR, n_samps);
     
@@ -109,13 +112,42 @@ void Compressor::process(float* inL, float* inR, float* outL, float* outR, uint3
             sc = params.target + ((indb - params.target) / params.ratio);
         }
 
-        /* TODO: Implement windowing and coupling */
+        gc_raw[i] = sc - indb;
         
+        if(_gc_raw) {
+            _gc_raw[i] = gc_raw[i];
+        }
+    }
+    
+    compute_gc_has_been_called = true;
+}
+
+/* HOKEY: You must call compute_gc before this function for each frame. */
+void Compressor::process(float* inL, float* inR, float* outL, float* outR, uint32_t n_samps, float* gainCouplingInput,
+                              float* gainReductionOutput) {
+    
+    if(!compute_gc_has_been_called) {
+        throw std::runtime_error("gc_compute has not been called on this frame");
+    }
+    
+    gain_reduction = 0.0;
+    gated_counter = 0.0;
+    
+    samp_converter_todb->process(inL, indbL, n_samps);
+    samp_converter_todb->process(inR, indbR, n_samps);
+    
+    for(uint32_t i = 0; i < n_samps; i++) {
+        
+        /* TODO: Implement windowing and coupling */
+                
         if(!use_coupling) {
-            gc = sc - indb;
+            gc = gc_raw[i];
         }
         else {
-            gc = (1-coupling) * (sc - indb) + (coupling * gain_coupling_input[i]);
+            if(NULL == gainCouplingInput) {
+                throw std::runtime_error("gainCouplingInput is NULL");
+            }
+            gc = ((1-coupling) * gc_raw[i]) + (coupling * gainCouplingInput[i]);
         }
         
         if(indb < params.thresh){
@@ -135,8 +167,8 @@ void Compressor::process(float* inL, float* inR, float* outL, float* outR, uint3
         
         gain_reduction += gs;
         
-        if(NULL != gain_reduction_output) {
-            gain_reduction_output[i] = gs;
+        if(NULL != gainReductionOutput) {
+            gainReductionOutput[i] = gs;
         }
         
         outL[i] = inL[i] * powf(10.0f, gs/20.0f);
@@ -146,7 +178,7 @@ void Compressor::process(float* inL, float* inR, float* outL, float* outR, uint3
     avg_gain_reduction = gain_reduction / (float)n_samps;
     
     is_gated = ((gated_counter/(float)n_samps) >= 0.5);
-    
+    compute_gc_has_been_called = false;
 }
 
 void Compressor::read(float* _gain_reduction, bool* _gate_open) {
