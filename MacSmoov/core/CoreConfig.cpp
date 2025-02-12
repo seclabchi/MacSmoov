@@ -215,6 +215,15 @@ void CoreConfig::set_input_level_enabled(bool enabled) {
     enable_input_level = enabled;
 }
 
+bool CoreConfig::get_stereo_enhance_enabled() {
+    return enable_stereo_enhance;
+}
+
+void CoreConfig::set_stereo_enhance_enabled(bool enabled) {
+    enable_stereo_enhance = enabled;
+    write_cfg_to_file();
+}
+
 bool CoreConfig::get_2band_agc_enabled() {
     return agc_params.enabled;
 }
@@ -239,6 +248,7 @@ bool CoreConfig::get_hf_enhance_enabled() {
 
 void CoreConfig::set_hf_enhance_enabled(bool enabled) {
     enable_hf_enhance = enabled;
+    write_cfg_to_file();
 }
 
 bool CoreConfig::get_mb_crossover_enabled() {
@@ -247,6 +257,7 @@ bool CoreConfig::get_mb_crossover_enabled() {
 
 void CoreConfig::set_mb_crossover_enabled(bool enabled) {
     enable_mb_crossover = enabled;
+    write_cfg_to_file();
 }
 
 bool CoreConfig::get_mb_compressor_enabled() {
@@ -255,10 +266,16 @@ bool CoreConfig::get_mb_compressor_enabled() {
 
 void CoreConfig::set_mb_compressor_enabled(bool enabled) {
     multiband_params.enabled = enabled;
+    write_cfg_to_file();
 }
 
 bool CoreConfig::get_mb_limiter_enabled() {
-    return false;
+    return multiband_params.limiters_enabled;
+}
+
+void CoreConfig::set_mb_limiter_enabled(bool enabled) {
+    multiband_params.limiters_enabled = enabled;
+    write_cfg_to_file();
 }
 
 void CoreConfig::get_mb_params(MULTIBAND_PARAMS& params) {
@@ -271,10 +288,7 @@ bool CoreConfig::set_mb_params(const MULTIBAND_PARAMS& params) {
     return true;
 }
 
-void CoreConfig::set_mb_limiter_enabled(bool enabled) {
-    //enable_mb_limiter = enabled;
-    //TODO: get the limiter enable functionality implemented
-}
+
 
 
 

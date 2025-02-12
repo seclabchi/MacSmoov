@@ -144,9 +144,9 @@ Boolean shutting_down = NO;
     
     [_comp_2band_agc set_meter_range:-24.0];
     [_comp_5band set_meter_color:[NSColor magentaColor]];
-    [_comp_5band set_meter_range:-24.0];
+    [_comp_5band set_meter_range:-12.0];
     [_lim_5band set_meter_color:[NSColor yellowColor]];
-    [_lim_5band set_meter_range:-6.0];
+    [_lim_5band set_meter_range:-12.0];
     
     //TODO:  initialize signal generators here
     //siggenvc = [[SignalGeneratorViewController alloc] init];
@@ -354,6 +354,11 @@ Boolean shutting_down = NO;
     if(mouseUp) {
         [proc_core_wrapper mainInGainChangeDoneL:gmi.cell.floatValue R:gmi.cell.floatValue];
     }
+}
+
+-(IBAction) stereoEnhanceEnableChanged:(id)sender {
+    NSButton* se_enabled = sender;
+    [proc_core_wrapper setStereoEnhanceEnabled: se_enabled.state];
 }
 
 -(void) agc_params_changed:(AGC_PARAMS) params {

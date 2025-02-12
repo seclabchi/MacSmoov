@@ -14,6 +14,9 @@
 #include "CoreConfig.h"
 #include "CoreStack.hpp"
 #include "core_utils/channel_map.hpp"
+#include "LogLinConverter.hpp"
+
+#include "ProcModInputHPF.hpp"
 #include "ProcModLevelMeter.hpp"
 #include "ProcModGain.hpp"
 #include "ProcModStereoEnhance.hpp"
@@ -21,7 +24,8 @@
 #include "ProcModHFEnhance.hpp"
 #include "ProcMod5bandCrossover.hpp"
 #include "ProcMod5bandCompressor.hpp"
-#include "LogLinConverter.hpp"
+#include "ProcModFinalLPF.hpp"
+
 
 /*
  * Define this to enable core debugging.  Right now it just bypasses the core entirely, so not
@@ -44,6 +48,8 @@ public:
     void get_main_out_levels(float* lrms, float* rrms, float* lpeak, float* rpeak);
     void set_main_in_gain_db(float loggain_l, float loggain_r);
     void main_in_gain_db_change_done(float loggain_l, float loggain_r);
+    void set_stereo_enhance_enabled(bool enabled);
+    bool get_stereo_enhance_enabled();
     void get2bandAGCGainReduction(float* gainReduct2blo, float* gainReduct2bhi, bool* gateOpenLo, bool* gateOpenHi);
     void get5bandCompressorGainReduction(float** _bands_gr, float** _bands_lim, bool** _bands_gate_open);
     void set_bands_enabled(bool _bands_enabled[]);
@@ -65,6 +71,7 @@ private:
     CoreConfig* core_config;
     CoreStack* core_stack;
     
+    ProcModInputHPF* proc_mod_input_hpf;
     ProcModGain* proc_mod_gain_main_in;
     ProcModLevelMeter* proc_mod_level_main_in;
     ProcModStereoEnhance* proc_mod_stereo_enhance;
@@ -73,6 +80,7 @@ private:
     ProcMod5bandCrossover* proc_mod_5b_crossover;
     ProcMod5bandCompressor* proc_mod_5b_compressor;
     ProcModLevelMeter* proc_mod_level_main_out;
+    ProcModFinalLPF* proc_mod_final_lpf;
     
     LogLinConverter* m_loglin;
     LogLinConverter* m_linlog;

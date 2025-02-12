@@ -18,6 +18,9 @@ ProcessorCore::ProcessorCore(uint32_t _f_samp, uint32_t _n_channels, uint32_t _n
     core_config = CoreConfig::get_instance();
     core_stack = CoreStack::getInstance();
     
+    m_loglin = new LogLinConverter(LogLinConversionType::LOG_TO_LIN);
+    m_linlog = new LogLinConverter(LogLinConversionType::LIN_TO_LOG);
+    
     core_config->load_cfg_from_file(_config_filename);
 
     master_bypass = false;
@@ -29,15 +32,29 @@ ProcessorCore::ProcessorCore(uint32_t _f_samp, uint32_t _n_channels, uint32_t _n
     ChannelMap* chan_map = new ChannelMap();
     chan_map->the_map.push_back(CHANNEL_MAP_ELEMENT {0, 0, "IN_L"});
     chan_map->the_map.push_back(CHANNEL_MAP_ELEMENT {1, 1, "IN_R"});
+    proc_mod_input_hpf = new ProcModInputHPF("INPUT_HPF", f_samp, n_channels, n_samp);
+    proc_mod_input_hpf->init(core_config, proc_mod_gain_main_in, chan_map);
+    core_stack->add_module(proc_mod_input_hpf);
+    
+    chan_map = new ChannelMap();
+    chan_map->the_map.push_back(CHANNEL_MAP_ELEMENT {0, 0, "IN_L"});
+    chan_map->the_map.push_back(CHANNEL_MAP_ELEMENT {1, 1, "IN_R"});
     proc_mod_level_main_in = new ProcModLevelMeter("LEVEL_MAIN_IN", f_samp, n_channels, n_samp);
-    proc_mod_level_main_in->init(core_config, proc_mod_gain_main_in, chan_map);
+    proc_mod_level_main_in->init(core_config, proc_mod_input_hpf, chan_map);
     core_stack->add_module(proc_mod_level_main_in);
     
     chan_map = new ChannelMap();
     chan_map->the_map.push_back(CHANNEL_MAP_ELEMENT {0, 0, "IN_L"});
     chan_map->the_map.push_back(CHANNEL_MAP_ELEMENT {1, 1, "IN_R"});
+    proc_mod_stereo_enhance = new ProcModStereoEnhance("STEREO_ENHANCE", f_samp, n_channels, n_samp);
+    proc_mod_stereo_enhance->init(core_config, proc_mod_level_main_in, chan_map);
+    core_stack->add_module(proc_mod_stereo_enhance);
+    
+    chan_map = new ChannelMap();
+    chan_map->the_map.push_back(CHANNEL_MAP_ELEMENT {0, 0, "IN_L"});
+    chan_map->the_map.push_back(CHANNEL_MAP_ELEMENT {1, 1, "IN_R"});
     proc_mod_2band_agc = new ProcMod2BandAGC("2BAND_AGC", f_samp, n_channels, n_samp);
-    proc_mod_2band_agc->init(core_config, proc_mod_level_main_in, chan_map);
+    proc_mod_2band_agc->init(core_config, proc_mod_stereo_enhance, chan_map);
     core_stack->add_module(proc_mod_2band_agc);
 
     chan_map = new ChannelMap();
@@ -74,12 +91,20 @@ ProcessorCore::ProcessorCore(uint32_t _f_samp, uint32_t _n_channels, uint32_t _n
     chan_map = new ChannelMap();
     chan_map->the_map.push_back(CHANNEL_MAP_ELEMENT {0, 0, "IN_L"});
     chan_map->the_map.push_back(CHANNEL_MAP_ELEMENT {1, 1, "IN_R"});
+    proc_mod_final_lpf = new ProcModFinalLPF("FINAL_LPF", f_samp, n_channels, n_samp);
+    proc_mod_final_lpf->init(core_config, proc_mod_5b_compressor, chan_map);
+    core_stack->add_module(proc_mod_final_lpf);
+    
+    chan_map = new ChannelMap();
+    chan_map->the_map.push_back(CHANNEL_MAP_ELEMENT {0, 0, "IN_L"});
+    chan_map->the_map.push_back(CHANNEL_MAP_ELEMENT {1, 1, "IN_R"});
     proc_mod_level_main_out = new ProcModLevelMeter("LEVEL_MAIN_OUT", f_samp, n_channels, n_samp);
-    proc_mod_level_main_out->init(core_config, proc_mod_5b_compressor, chan_map);
+    proc_mod_level_main_out->init(core_config, proc_mod_final_lpf, chan_map);
     core_stack->add_module(proc_mod_level_main_out);
     
-    m_loglin = new LogLinConverter(LogLinConversionType::LOG_TO_LIN);
-    m_linlog = new LogLinConverter(LogLinConversionType::LIN_TO_LOG);
+    
+    
+    
 }
 
 bool ProcessorCore::prepare() {
@@ -95,6 +120,7 @@ bool ProcessorCore::load_config_from_file(const std::string& filename) {
     
     if(retval) {
         core_config->get_agc_params(agc_params);
+        proc_mod_stereo_enhance->set_bypass(!(core_config->get_stereo_enhance_enabled()));
         proc_mod_2band_agc->configure(agc_params);
         proc_mod_5b_crossover->set_bypass(!(core_config->get_mb_crossover_enabled()));
         core_config->get_mb_params(mb_params);
@@ -155,6 +181,15 @@ void ProcessorCore::set_main_in_gain_db(float loggain_l, float loggain_r) {
 
 void ProcessorCore::main_in_gain_db_change_done(float loggain_l, float loggain_r) {
     core_config->set_input_gain(std::pair<float,float>(loggain_l, loggain_r));
+}
+
+void ProcessorCore::set_stereo_enhance_enabled(bool enabled) {
+    proc_mod_stereo_enhance->set_bypass(!enabled);
+    core_config->set_stereo_enhance_enabled(enabled);
+}
+
+bool ProcessorCore::get_stereo_enhance_enabled() {
+    return core_config->get_stereo_enhance_enabled();
 }
 
 void ProcessorCore::get2bandAGCGainReduction(float* gainReduct2blo, float* gainReduct2bhi, bool* gateOpenLo, bool* gateOpenHi) {

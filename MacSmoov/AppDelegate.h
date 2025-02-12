@@ -43,6 +43,8 @@
 
 -(IBAction) adjustGainMainIn:(id)sender;
 
+-(IBAction) stereoEnhanceEnableChanged:(id)sender;
+
 -(IBAction) agcFactoryMenuSelected:(id)sender;
 -(IBAction) multibandAdjustMenuSelected:(id)sender;
 

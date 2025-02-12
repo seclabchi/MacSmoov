@@ -97,6 +97,15 @@ void processor_core_hook(AudioBufferList* ab_list, AudioBufferList* ab_list_core
     cpp->main_in_gain_db_change_done(mainInL, mainInR);
 }
 
+-(void) setStereoEnhanceEnabled:(NSControlStateValue) _se_enabled {
+    if(NSControlStateValueOn == _se_enabled) {
+        cpp->set_stereo_enhance_enabled(true);
+    }
+    else {
+        cpp->set_stereo_enhance_enabled(false);
+    }
+}
+
 -(void) get2bandAGCGainReductionlo:(float*)gainReduct2blo hi:(float*)gainReduct2bhi gatelo:(bool*)gate_open_agc2_lo gatehi:(bool*)gate_open_agc2_hi {
 #if CORE_BYPASS
 #else

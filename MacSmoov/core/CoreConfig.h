@@ -23,6 +23,8 @@ public:
     void set_input_gain(const std::pair<float, float>& gain);
     bool get_input_level_enabled();
     void set_input_level_enabled(bool enabled);
+    bool get_stereo_enhance_enabled();
+    void set_stereo_enhance_enabled(bool enabled);
     bool get_2band_agc_enabled();
     void set_2band_agc_enabled(bool _enabled);
     void get_agc_params(AGC_PARAMS& params);

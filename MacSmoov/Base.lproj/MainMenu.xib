@@ -636,9 +636,19 @@
                                         </constraints>
                                     </view>
                                 </box>
-                                <customView translatesAutoresizingMaskIntoConstraints="NO" id="dBL-p2-MUT" userLabel="5band_Limiter" customClass="CompressionMeter5band">
-                                    <rect key="frame" x="11" y="13" width="140" height="80"/>
+                                <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="dBL-p2-MUT" userLabel="5band_Limiter" customClass="CompressionMeter5band">
+                                    <rect key="frame" x="11" y="13" width="140" height="61"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 </customView>
+                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="4UR-YU-bjm">
+                                    <rect key="frame" x="24" y="77" width="112" height="15"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                    <textFieldCell key="cell" alignment="center" title="LIMITERS" id="TYD-0W-Lcr">
+                                        <font key="font" metaFont="system" size="10"/>
+                                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                    </textFieldCell>
+                                </textField>
                             </subviews>
                             <constraints>
                                 <constraint firstItem="zyR-tD-v6C" firstAttribute="bottom" secondItem="P2Z-E4-AUm" secondAttribute="bottom" id="0yh-gI-7cj"/>
@@ -647,15 +657,11 @@
                                 <constraint firstItem="qQ3-fH-VjH" firstAttribute="bottom" secondItem="zyR-tD-v6C" secondAttribute="bottom" id="8gt-tI-eo3"/>
                                 <constraint firstItem="5LO-bC-5I0" firstAttribute="leading" secondItem="WKC-LI-udk" secondAttribute="leading" constant="126" id="9X8-dZ-u1x"/>
                                 <constraint firstItem="fgD-Yv-iIX" firstAttribute="bottom" secondItem="qQ3-fH-VjH" secondAttribute="bottom" id="Ddg-l7-R7y"/>
-                                <constraint firstItem="dBL-p2-MUT" firstAttribute="leading" secondItem="WKC-LI-udk" secondAttribute="leading" constant="11" id="E5x-48-hTH"/>
-                                <constraint firstItem="5LO-bC-5I0" firstAttribute="trailing" secondItem="dBL-p2-MUT" secondAttribute="trailing" id="EX9-sx-g6O"/>
                                 <constraint firstItem="qQ3-fH-VjH" firstAttribute="top" secondItem="zyR-tD-v6C" secondAttribute="top" id="Gf9-nI-9D8"/>
                                 <constraint firstItem="OZU-2m-L3C" firstAttribute="leading" secondItem="fgD-Yv-iIX" secondAttribute="leading" id="IEd-om-mA1"/>
                                 <constraint firstItem="zyR-tD-v6C" firstAttribute="leading" secondItem="qQ3-fH-VjH" secondAttribute="trailing" constant="3" id="Iv9-5j-c1D"/>
                                 <constraint firstItem="OZU-2m-L3C" firstAttribute="leading" secondItem="WKC-LI-udk" secondAttribute="leading" constant="10" id="LX3-f1-F1u"/>
-                                <constraint firstItem="zyR-tD-v6C" firstAttribute="centerX" secondItem="dBL-p2-MUT" secondAttribute="centerX" id="LqS-0M-FVd"/>
                                 <constraint firstItem="P2Z-E4-AUm" firstAttribute="bottom" secondItem="5LO-bC-5I0" secondAttribute="bottom" id="MCG-Ve-uvN"/>
-                                <constraint firstAttribute="bottom" secondItem="dBL-p2-MUT" secondAttribute="bottom" constant="13" id="MPB-YX-50U"/>
                                 <constraint firstItem="P2Z-E4-AUm" firstAttribute="leading" secondItem="zyR-tD-v6C" secondAttribute="trailing" constant="4" id="NBE-0w-WTd"/>
                                 <constraint firstItem="OZU-2m-L3C" firstAttribute="centerX" secondItem="zyR-tD-v6C" secondAttribute="centerX" id="NOU-pD-zDP"/>
                                 <constraint firstItem="y4d-x3-cJo" firstAttribute="leading" secondItem="WKC-LI-udk" secondAttribute="leading" constant="28" id="RV4-lR-4R8"/>
@@ -667,7 +673,6 @@
                                 <constraint firstItem="fgD-Yv-iIX" firstAttribute="top" secondItem="OZU-2m-L3C" secondAttribute="bottom" constant="8" id="fOd-Kr-ZTo"/>
                                 <constraint firstItem="qQ3-fH-VjH" firstAttribute="leading" secondItem="WKC-LI-udk" secondAttribute="leading" constant="40" id="hb6-pX-F6x"/>
                                 <constraint firstItem="zyR-tD-v6C" firstAttribute="leading" secondItem="WKC-LI-udk" secondAttribute="leading" constant="68" id="jop-4U-Lnk"/>
-                                <constraint firstItem="dBL-p2-MUT" firstAttribute="top" secondItem="fgD-Yv-iIX" secondAttribute="bottom" constant="7" id="tha-js-WXD"/>
                                 <constraint firstItem="zyR-tD-v6C" firstAttribute="top" secondItem="P2Z-E4-AUm" secondAttribute="top" id="tu2-NX-JWW"/>
                                 <constraint firstItem="fgD-Yv-iIX" firstAttribute="top" secondItem="WKC-LI-udk" secondAttribute="top" constant="232" id="vwb-Qi-Lqr"/>
                                 <constraint firstItem="y4d-x3-cJo" firstAttribute="centerX" secondItem="OZU-2m-L3C" secondAttribute="centerX" id="yck-3k-Q1c"/>
@@ -793,6 +798,17 @@
                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                     </textField>
+                    <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="9pC-cV-Eb0" userLabel="STEREO_EN_ENABLE">
+                        <rect key="frame" x="60" y="467" width="63" height="32"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <buttonCell key="cell" type="push" title="EN" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="JYX-Yt-1Kd">
+                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES" changeBackground="YES" changeGray="YES"/>
+                            <font key="font" metaFont="system"/>
+                        </buttonCell>
+                        <connections>
+                            <action selector="stereoEnhanceEnableChanged:" target="Voe-Tx-rLC" id="lJs-gT-Rec"/>
+                        </connections>
+                    </button>
                 </subviews>
                 <constraints>
                     <constraint firstItem="2II-d1-FJE" firstAttribute="top" secondItem="a42-f6-UMw" secondAttribute="bottom" constant="21" id="0Sm-Lh-bbg"/>

@@ -55,6 +55,11 @@
 		9D6392DC2C8921A000F52366 /* ProcModBassClipper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9D6392DB2C8921A000F52366 /* ProcModBassClipper.cpp */; };
 		9D6392DD2C8921A000F52366 /* ProcModBassClipper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9D6392DB2C8921A000F52366 /* ProcModBassClipper.cpp */; };
 		9D6392DE2C8921A000F52366 /* ProcModBassClipper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9D6392DB2C8921A000F52366 /* ProcModBassClipper.cpp */; };
+		9D791A782D587BEC00791DF8 /* ProcModFinalLPF.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9D791A762D587BEC00791DF8 /* ProcModFinalLPF.cpp */; };
+		9D791A792D587BEC00791DF8 /* ProcModFinalLPF.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9D791A762D587BEC00791DF8 /* ProcModFinalLPF.cpp */; };
+		9D791A7A2D587BEC00791DF8 /* ProcModFinalLPF.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9D791A762D587BEC00791DF8 /* ProcModFinalLPF.cpp */; };
+		9D791A7D2D58806400791DF8 /* ProcModInputHPF.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9D791A7B2D58806300791DF8 /* ProcModInputHPF.cpp */; };
+		9D791A7E2D58806400791DF8 /* ProcModInputHPF.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9D791A7B2D58806300791DF8 /* ProcModInputHPF.cpp */; };
 		9D81E9B32A5B2CC6007D46EF /* ProcessorModule.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9D81E9B12A5B2CC6007D46EF /* ProcessorModule.cpp */; };
 		9D81E9B42A5B2CC6007D46EF /* ProcessorModule.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9D81E9B12A5B2CC6007D46EF /* ProcessorModule.cpp */; };
 		9D81E9B52A5B2CC6007D46EF /* ProcessorModule.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9D81E9B12A5B2CC6007D46EF /* ProcessorModule.cpp */; };
@@ -102,6 +107,7 @@
 		9DC11C802BCAF8C200263F73 /* CoreStack.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9DC11C7D2BCAF8C200263F73 /* CoreStack.cpp */; };
 		9DC11C832BCAFFC300263F73 /* channel_map.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9DC11C812BCAFFC300263F73 /* channel_map.cpp */; };
 		9DC11C842BCAFFC300263F73 /* channel_map.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9DC11C812BCAFFC300263F73 /* channel_map.cpp */; };
+		9DC39A142D5C79E000EACFEC /* config.yml in Resources */ = {isa = PBXBuildFile; fileRef = 9DC39A122D5C76F800EACFEC /* config.yml */; };
 		9DD141072A81C5D60059864D /* LogLinConverter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9DD141052A81C5D60059864D /* LogLinConverter.cpp */; };
 		9DD141082A81C5D60059864D /* LogLinConverter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9DD141052A81C5D60059864D /* LogLinConverter.cpp */; };
 		9DD1410A2A81E1870059864D /* OSXAudioInterface.m in Sources */ = {isa = PBXBuildFile; fileRef = 9DD141092A81E1870059864D /* OSXAudioInterface.m */; };
@@ -190,6 +196,10 @@
 		9D6392DA2C89219400F52366 /* ProcMod2BandAGC.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = ProcMod2BandAGC.hpp; sourceTree = "<group>"; };
 		9D6392DB2C8921A000F52366 /* ProcModBassClipper.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ProcModBassClipper.cpp; sourceTree = "<group>"; };
 		9D71CFB229F83E6100436F79 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		9D791A762D587BEC00791DF8 /* ProcModFinalLPF.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ProcModFinalLPF.cpp; sourceTree = "<group>"; };
+		9D791A772D587BEC00791DF8 /* ProcModFinalLPF.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = ProcModFinalLPF.hpp; sourceTree = "<group>"; };
+		9D791A7B2D58806300791DF8 /* ProcModInputHPF.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ProcModInputHPF.cpp; sourceTree = "<group>"; };
+		9D791A7C2D58806300791DF8 /* ProcModInputHPF.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = ProcModInputHPF.hpp; sourceTree = "<group>"; };
 		9D81E9B12A5B2CC6007D46EF /* ProcessorModule.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ProcessorModule.cpp; sourceTree = "<group>"; };
 		9D81E9B22A5B2CC6007D46EF /* ProcessorModule.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = ProcessorModule.hpp; sourceTree = "<group>"; };
 		9D81E9B62A5B2D70007D46EF /* ProcModLevelMeter.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ProcModLevelMeter.cpp; sourceTree = "<group>"; };
@@ -235,6 +245,7 @@
 		9DC11C7E2BCAF8C200263F73 /* CoreStack.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = CoreStack.hpp; sourceTree = "<group>"; };
 		9DC11C812BCAFFC300263F73 /* channel_map.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = channel_map.cpp; sourceTree = "<group>"; };
 		9DC11C822BCAFFC300263F73 /* channel_map.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = channel_map.hpp; sourceTree = "<group>"; };
+		9DC39A122D5C76F800EACFEC /* config.yml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.yaml; path = config.yml; sourceTree = "<group>"; };
 		9DD141052A81C5D60059864D /* LogLinConverter.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = LogLinConverter.cpp; sourceTree = "<group>"; };
 		9DD141062A81C5D60059864D /* LogLinConverter.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = LogLinConverter.hpp; sourceTree = "<group>"; };
 		9DD141092A81E1870059864D /* OSXAudioInterface.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OSXAudioInterface.m; sourceTree = "<group>"; };
@@ -337,6 +348,7 @@
 		9DB7A11A29D7949D002E6F4E = {
 			isa = PBXGroup;
 			children = (
+				9DC39A122D5C76F800EACFEC /* config.yml */,
 				9DB7A12529D7949D002E6F4E /* MacSmoov */,
 				9DB7A13829D7949E002E6F4E /* MacSmoovTests */,
 				9DB7A14229D7949F002E6F4E /* MacSmoovUITests */,
@@ -508,32 +520,36 @@
 				9D4517C32A9D8799003BC1EB /* core_common.h */,
 				9DC11C792BCACC6600263F73 /* CoreConfig.h */,
 				9DC11C7A2BCACCE000263F73 /* CoreConfig.cpp */,
-				9DC11C7D2BCAF8C200263F73 /* CoreStack.cpp */,
 				9DC11C7E2BCAF8C200263F73 /* CoreStack.hpp */,
-				9D9806D329EB849200B98415 /* ProcessorCore.cpp */,
+				9DC11C7D2BCAF8C200263F73 /* CoreStack.cpp */,
 				9D9806D429EB849200B98415 /* ProcessorCore.hpp */,
-				9D81E9B12A5B2CC6007D46EF /* ProcessorModule.cpp */,
+				9D9806D329EB849200B98415 /* ProcessorCore.cpp */,
 				9D81E9B22A5B2CC6007D46EF /* ProcessorModule.hpp */,
-				9D54D8AF2ADC2F85006C3F57 /* ProcModDelay.cpp */,
-				9D54D8AE2ADC2F85006C3F57 /* ProcModDelay.hpp */,
+				9D81E9B12A5B2CC6007D46EF /* ProcessorModule.cpp */,
+				9D791A7C2D58806300791DF8 /* ProcModInputHPF.hpp */,
+				9D791A7B2D58806300791DF8 /* ProcModInputHPF.cpp */,
+				9D81E9B72A5B2D70007D46EF /* ProcModLevelMeter.hpp */,
+				9D81E9B62A5B2D70007D46EF /* ProcModLevelMeter.cpp */,
 				9DFECDEF2A86D82A00BFB1A2 /* ProcModGain.hpp */,
 				9DFECDEC2A86D80D00BFB1A2 /* ProcModGain.cpp */,
-				9D81E9B62A5B2D70007D46EF /* ProcModLevelMeter.cpp */,
-				9D81E9B72A5B2D70007D46EF /* ProcModLevelMeter.hpp */,
-				9D8EC53E2A8B1901006C1E09 /* ProcModStereoEnhance.cpp */,
 				9D8EC53D2A8B1901006C1E09 /* ProcModStereoEnhance.hpp */,
+				9D8EC53E2A8B1901006C1E09 /* ProcModStereoEnhance.cpp */,
 				9D6392DA2C89219400F52366 /* ProcMod2BandAGC.hpp */,
 				9DFECDF52A87EAAF00BFB1A2 /* ProcMod2BandAGC.cpp */,
-				9DFECDF62A87EAAF00BFB1A2 /* ProcModBassClipper.hpp */,
-				9D6392DB2C8921A000F52366 /* ProcModBassClipper.cpp */,
-				9D037C962AB5F604002B2638 /* ProcModHFEnhance.cpp */,
-				9D037C952AB5F604002B2638 /* ProcModHFEnhance.hpp */,
-				9DEF3B452A9D2311004E78F3 /* ProcMod5bandCrossover.cpp */,
 				9DEF3B442A9D2311004E78F3 /* ProcMod5bandCrossover.hpp */,
-				9DD1BF2B2A9A811400D7C0B2 /* ProcMod5bandCompressor.cpp */,
+				9DEF3B452A9D2311004E78F3 /* ProcMod5bandCrossover.cpp */,
 				9DD1BF2A2A9A811400D7C0B2 /* ProcMod5bandCompressor.hpp */,
+				9DD1BF2B2A9A811400D7C0B2 /* ProcMod5bandCompressor.cpp */,
 				9D86ADF22C9DD71F0025B964 /* ProcModLookaheadLimiter.h */,
 				9D86ADF32C9DD7330025B964 /* ProcModLookaheadLimiter.cpp */,
+				9D791A772D587BEC00791DF8 /* ProcModFinalLPF.hpp */,
+				9D791A762D587BEC00791DF8 /* ProcModFinalLPF.cpp */,
+				9D54D8AE2ADC2F85006C3F57 /* ProcModDelay.hpp */,
+				9D54D8AF2ADC2F85006C3F57 /* ProcModDelay.cpp */,
+				9DFECDF62A87EAAF00BFB1A2 /* ProcModBassClipper.hpp */,
+				9D6392DB2C8921A000F52366 /* ProcModBassClipper.cpp */,
+				9D037C952AB5F604002B2638 /* ProcModHFEnhance.hpp */,
+				9D037C962AB5F604002B2638 /* ProcModHFEnhance.cpp */,
 			);
 			path = core;
 			sourceTree = "<group>";
@@ -683,6 +699,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9DC39A142D5C79E000EACFEC /* config.yml in Resources */,
 				9DB7A12A29D7949E002E6F4E /* Assets.xcassets in Resources */,
 				9DB4B10E2BAF3C2600F9C076 /* Patchbay.xib in Resources */,
 				9DB7A12D29D7949E002E6F4E /* MainMenu.xib in Resources */,
@@ -767,6 +784,7 @@
 				9D9806D529EB849200B98415 /* ProcessorCore.cpp in Sources */,
 				9DB7A12F29D7949E002E6F4E /* main.m in Sources */,
 				9DC11C7B2BCACCE000263F73 /* CoreConfig.cpp in Sources */,
+				9D791A7D2D58806400791DF8 /* ProcModInputHPF.cpp in Sources */,
 				9D3A20672A9562A800C7C620 /* CompressionMeter.m in Sources */,
 				9D8EC5462A8BFFA0006C1E09 /* vca.cpp in Sources */,
 				9D81E9B32A5B2CC6007D46EF /* ProcessorModule.cpp in Sources */,
@@ -789,6 +807,7 @@
 				9DE7B68C2C861CE600313951 /* allpass_filter_lr4.cp in Sources */,
 				9D54D8B02ADC2F85006C3F57 /* ProcModDelay.cpp in Sources */,
 				9D81E9B82A5B2D70007D46EF /* ProcModLevelMeter.cpp in Sources */,
+				9D791A782D587BEC00791DF8 /* ProcModFinalLPF.cpp in Sources */,
 				9D8EC53F2A8B1901006C1E09 /* ProcModStereoEnhance.cpp in Sources */,
 				9D43EA592C3907DB00C9B45B /* MultibandObjectController.m in Sources */,
 				9DC11C832BCAFFC300263F73 /* channel_map.cpp in Sources */,
@@ -803,6 +822,7 @@
 				9D5C638D29D9FF5400E40A60 /* SignalGeneratorEngineWrapper.mm in Sources */,
 				9D8EC5402A8B1901006C1E09 /* ProcModStereoEnhance.cpp in Sources */,
 				9DC11C7C2BCACCE000263F73 /* CoreConfig.cpp in Sources */,
+				9D791A792D587BEC00791DF8 /* ProcModFinalLPF.cpp in Sources */,
 				9D281A9A29E1C5B5009CF125 /* AudioDeviceSelector.m in Sources */,
 				9DFECE092A87ECCD00BFB1A2 /* AudioBuf.cpp in Sources */,
 				9D9806D629EB849200B98415 /* ProcessorCore.cpp in Sources */,
@@ -821,6 +841,7 @@
 				9D98C7CA29FC579E00586A86 /* ProcessorCoreWrapper.mm in Sources */,
 				9D3ED8632AFFF65D008283FC /* AGCControlsView.m in Sources */,
 				9D281A9329E05F57009CF125 /* SignalGenerator.m in Sources */,
+				9D791A7E2D58806400791DF8 /* ProcModInputHPF.cpp in Sources */,
 				9D5C639529DA5DE200E40A60 /* SignalGeneratorViewController.m in Sources */,
 				9DD1410B2A81E1870059864D /* OSXAudioInterface.m in Sources */,
 				9DFECE012A87EAF800BFB1A2 /* biquad.cpp in Sources */,
@@ -857,6 +878,7 @@
 				9D86506F2D43604400F32A87 /* simple_gain.cpp in Sources */,
 				9D5C638A29D8E5D600E40A60 /* SignalGeneratorEngine.cpp in Sources */,
 				9D81E9B52A5B2CC6007D46EF /* ProcessorModule.cpp in Sources */,
+				9D791A7A2D587BEC00791DF8 /* ProcModFinalLPF.cpp in Sources */,
 				9D5C638E29D9FF5400E40A60 /* SignalGeneratorEngineWrapper.mm in Sources */,
 				9D3A20692A9562A800C7C620 /* CompressionMeter.m in Sources */,
 				9D98C7CB29FC579E00586A86 /* ProcessorCoreWrapper.mm in Sources */,
@@ -1019,7 +1041,7 @@
 				CODE_SIGN_ENTITLEMENTS = MacSmoov/MacSmoov.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 414;
+				CURRENT_PROJECT_VERSION = 482;
 				DEVELOPMENT_ASSET_PATHS = "";
 				ENABLE_HARDENED_RUNTIME = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -1052,7 +1074,7 @@
 				CODE_SIGN_ENTITLEMENTS = MacSmoov/MacSmoov.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 414;
+				CURRENT_PROJECT_VERSION = 482;
 				DEVELOPMENT_ASSET_PATHS = "";
 				ENABLE_HARDENED_RUNTIME = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -1069,6 +1091,7 @@
 				LIBRARY_SEARCH_PATHS = "/opt/repos/yaml-cpp/build/Debug";
 				MACOSX_DEPLOYMENT_TARGET = 10.15;
 				MARKETING_VERSION = 0.5;
+				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.tonekids.osx.MacSmoov;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -1080,7 +1103,7 @@
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 414;
+				CURRENT_PROJECT_VERSION = 482;
 				GENERATE_INFOPLIST_FILE = YES;
 				MACOSX_DEPLOYMENT_TARGET = 11.6;
 				MARKETING_VERSION = 1.0;
@@ -1096,7 +1119,7 @@
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 414;
+				CURRENT_PROJECT_VERSION = 482;
 				GENERATE_INFOPLIST_FILE = YES;
 				MACOSX_DEPLOYMENT_TARGET = 11.6;
 				MARKETING_VERSION = 1.0;
@@ -1111,7 +1134,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 414;
+				CURRENT_PROJECT_VERSION = 482;
 				GENERATE_INFOPLIST_FILE = YES;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.tonekids.osx.MacSmoovUITests;
@@ -1125,7 +1148,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 414;
+				CURRENT_PROJECT_VERSION = 482;
 				GENERATE_INFOPLIST_FILE = YES;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.tonekids.osx.MacSmoovUITests;

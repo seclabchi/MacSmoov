@@ -12,6 +12,8 @@
 #include "ProcessorModule.hpp"
 #include "vca_proportional.h"
 
+#define SQRT_2 1.41421356237f
+
 namespace fmsmoov {
 
 class ProcModStereoEnhance : public ProcessorModule {
@@ -21,15 +23,12 @@ public:
     virtual bool init_impl(CoreConfig* cfg, ProcessorModule* prev_mod, ChannelMap* _channel_map);
     /* n samps is total interleaved stereo samples
      TODO: Figure this shit out to make it universal. */
+    virtual void configure(float _drive);
     virtual void process();
 private:
-    void do_summer_add(float* in1, float* in2, float* out, uint32_t n_samps);
-    void do_summer_subtract(float* in1, float* in2, float* out, uint32_t n_samps);
-    void do_vca_23(float* in, float* control, float* out, uint32_t n_samps);
-    void do_vca_60(float* in, float* control, float* out, uint32_t n_samps);
     float* inL, *inR, *outL, *outR;
-    float* line39, *line57, *line61, *line17, *line19;
-    VCA* vca59, *vca60, *vca23;
+    float drive;
+    float M, S;
 };
 
 }

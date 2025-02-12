@@ -25,6 +25,7 @@ typedef void(*PROCESSOR_CORE_HOOK)(AudioBufferList* ab_list, AudioBufferList* ab
 -(void) getMainOutLevelsLrms:(float*)lrms Rrms:(float*)rrms Lpeak:(float*)lpeak Rpeak:(float*)rpeak;
 -(void) setMainInGainDBL:(float)mainInL R:(float)mainInR;
 -(void) mainInGainChangeDoneL:(float)mainInL R:(float)mainInR; /* Only fired when the mouse button is lifted or a key is pressed on the control to minimize cfg file writes */
+-(void) setStereoEnhanceEnabled:(NSControlStateValue) _se_enabled;
 -(void) get2bandAGCGainReductionlo:(float*)gainReduct2blo hi:(float*)gainReduct2bhi gatelo:(bool*)gate_open_agc2_lo gatehi:(bool*)gate_open_agc2_hi;
 -(void) get5bandCompressorGainReduction:(float**) _bands_gr limiters:(float**) _bands_lim gates:(bool**) _bands_gate_open;
 -(void) setBandEnablement:(NSControlStateValue[]) _bands_enabled;
