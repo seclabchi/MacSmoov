@@ -6,18 +6,15 @@
 //
 
 #import "AudioDeviceSelector.h"
-#import "AudioDevice.h"
 
 @interface AudioDeviceSelector ()
-@property (strong) IBOutlet NSPanel *audio_device_selector_panel;
-@property (strong) IBOutlet NSComboBox* inputDeviceComboBox;
-@property (strong) IBOutlet NSComboBox* outputDeviceComboBox;
+
 
 @end
 
 @implementation AudioDeviceSelector {
-    NSMutableDictionary* input_device_dict;
-    NSMutableDictionary* output_device_dict;
+    NSMutableArray<AudioDevice*>* input_devices;
+    NSMutableArray<AudioDevice*>* output_devices;
     NSNumber* cur_input_device_id;
     NSNumber* cur_output_device_id;
     id output_device_watcher_object;
@@ -27,15 +24,15 @@
     bool can_select;
 }
 
-- (id)initWithInputDevices:(NSMutableDictionary*)indevs outputDevices:(NSMutableDictionary*)outdevs {
+- (id)initWithInputDevices:(NSMutableArray<AudioDevice*>*)indevs outputDevices:(NSMutableArray<AudioDevice*>*)outdevs {
     
     NSLog(@"Initing device selector panel...");
     
     self = [super init];
     
     if(self) {
-        input_device_dict = indevs;
-        output_device_dict = outdevs;
+        input_devices = [NSMutableArray arrayWithArray:indevs];
+        output_devices = [NSMutableArray arrayWithArray:outdevs];
     }
     
     NSLog(@"Device selector panel inited.");
@@ -47,10 +44,6 @@
     [super viewDidLoad];
     // Do view setup here.
     self->can_select = FALSE;
-    NSUserDefaultsController *prefs_controller = [NSUserDefaultsController sharedUserDefaultsController];
-    NSUserDefaults *prefs = prefs_controller.defaults;
-    cur_output_device_id = [prefs objectForKey:@"OUTPUT_DEVICE"];
-    cur_input_device_id = [prefs objectForKey:@"INPUT_DEVICE"];
     NSLog(@"AudioDeviceSelector viewDidLoad");
     [self scanDevices];
 }
@@ -72,16 +65,14 @@
         if([combo tag] == 0) {
             NSInteger selected_item = [combo indexOfSelectedItem];
             
-            NSArray* keys = [input_device_dict allKeys];
-            AudioDevice* ad = [input_device_dict objectForKey:keys[selected_item]];
+            AudioDevice* ad = [input_devices objectAtIndex:selected_item];
             cur_input_device_id = [NSNumber numberWithUnsignedInt: ad.device_id];
             [input_device_watcher_object performSelector:input_device_watcher_selector withObject:cur_input_device_id];
         }
         else {
             NSInteger selected_item = [combo indexOfSelectedItem];
             
-            NSArray* keys = [output_device_dict allKeys];
-            AudioDevice* ad = [output_device_dict objectForKey:keys[selected_item]];
+            AudioDevice* ad = [output_devices objectAtIndex:selected_item];
             cur_output_device_id = [NSNumber numberWithUnsignedInt: ad.device_id];
             [output_device_watcher_object performSelector:output_device_watcher_selector withObject:cur_output_device_id];
         }
@@ -96,24 +87,19 @@
     [_audio_device_selector_panel orderFront:nil];
     _input_device_combo.delegate = self;
     _output_device_combo.delegate = self;
+    self.output_device_combo.dataSource = self;
+    self.input_device_combo.dataSource = self;
+    [self scanDevices];
 }
 
 -(void) scanDevices {
     
     self->can_select = FALSE;
     
-    //[self.inputDeviceComboBox removeAllItems];
-    //[self.outputDeviceComboBox removeAllItems];
+    //[self.input_device_combo removeAllItems];
+    //[self.output_device_combo removeAllItems];
     
-    for(NSNumber* key in [output_device_dict allKeys]) {
-        AudioDevice* ad = [output_device_dict objectForKey:key];
-        //[self.outputDeviceComboBox addItemWithObjectValue:(__bridge NSString*)ad.device_name];
-    }
     
-    for(NSNumber* key in [input_device_dict allKeys]) {
-        AudioDevice* ad = [input_device_dict objectForKey:key];
-        //[self.inputDeviceComboBox addItemWithObjectValue:(__bridge NSString*)ad.device_name];
-    }
     
     //[self.outputDeviceComboBox selectItemWithObjectValue:[output_device_dict objectForKey:cur_output_device_id]];
     //[self.inputDeviceComboBox selectItemWithObjectValue:[input_device_dict objectForKey:cur_input_device_id]];
@@ -121,25 +107,38 @@
     self->can_select = TRUE;
 }
 
+- (NSString*)comboBox:(NSComboBox*)comboBox completedString:(NSString*)string {
+    return @"";
+}
+
+- (NSUInteger) comboBox:(NSComboBox *) comboBox indexOfItemWithStringValue:(NSString *) string {
+    NSUInteger idx = 0;
+    
+    for(uint32_t i = 0; i < input_devices.count; i++) {
+        if([string compare: (__bridge NSString*) input_devices[i].device_name]) {
+            return i;
+        }
+    }
+    
+    return idx;
+}
+
 - (id)comboBox:(NSComboBox *)comboBox objectValueForItemAtIndex:(NSInteger)index {
     if([comboBox tag] == 0) {  //input combo
-        NSArray* keys = [input_device_dict allKeys];
-        AudioDevice* ad = [input_device_dict objectForKey:keys[index]];
+        AudioDevice* ad = [input_devices objectAtIndex:index];
         return (__bridge NSString*)ad.device_name;
     }
     else { //output combo
-        NSArray* keys = [output_device_dict allKeys];
-        AudioDevice* ad = [output_device_dict objectForKey:keys[index]];
+        AudioDevice* ad = [output_devices objectAtIndex:index];
         return (__bridge NSString*)ad.device_name;
     }
 }
 
 -(NSInteger) numberOfItemsInComboBox:(NSComboBox*)comboBox {
     if([comboBox tag] == 0) {  //input combo
-        return [[input_device_dict allKeys] count];
-    }
-    else { //output combo
-        return [[output_device_dict allKeys] count];
+        return [input_devices count];
+    } else { //output combo
+        return [output_devices count];
     }
 }
 

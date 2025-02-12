@@ -7,6 +7,7 @@
 
 #import <Cocoa/Cocoa.h>
 #import <AudioToolbox/AudioToolbox.h>
+#import "AudioDevice.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -14,10 +15,11 @@ NS_ASSUME_NONNULL_BEGIN
     id delegate;
 }
 
+@property (strong) IBOutlet NSPanel *audio_device_selector_panel;
 @property(strong) IBOutlet NSComboBox* input_device_combo;
 @property(strong) IBOutlet NSComboBox* output_device_combo;
 
-- (id)initWithInputDevices:(NSMutableDictionary*)indevs outputDevices:(NSMutableDictionary*)outdevs;
+- (id)initWithInputDevices:(NSMutableArray<AudioDevice*>*)indevs outputDevices:(NSMutableArray<AudioDevice*>*)outdevs;
 - (void) set_watcher_for_output_device_change:(id)object andSelector:(SEL)selector;
 - (void) set_watcher_for_input_device_change:(id)object andSelector:(SEL)selector;
 - (void)showPanel;
