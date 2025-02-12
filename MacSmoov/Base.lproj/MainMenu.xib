@@ -28,6 +28,9 @@
                 <outlet property="level_main_out" destination="MhY-PZ-2Lw" id="Rb9-84-3ni"/>
                 <outlet property="lim_5band" destination="dBL-p2-MUT" id="Hsi-8Y-c99"/>
                 <outlet property="slider_gain_main_in" destination="yiT-KE-WWL" id="qnY-BY-rcS"/>
+                <outlet property="slider_stereo_enhance" destination="EAw-u0-3zD" id="lxc-nL-YIT"/>
+                <outlet property="stereo_enhance_enabled" destination="9pC-cV-Eb0" id="wNm-HH-oLM"/>
+                <outlet property="stereo_enhance_lr_diff" destination="JsH-Ey-PbR" id="uen-Km-xbS"/>
                 <outlet property="window" destination="QvC-M9-y7g" id="gIp-Ho-8D9"/>
             </connections>
         </customObject>
@@ -437,12 +440,9 @@
                 <rect key="frame" x="0.0" y="0.0" width="940" height="543"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <slider horizontalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="yiT-KE-WWL" userLabel="Gain Main In">
+                    <slider horizontalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="yiT-KE-WWL" userLabel="Gain Main In">
                         <rect key="frame" x="30" y="129" width="24" height="167"/>
-                        <constraints>
-                            <constraint firstAttribute="width" constant="20" id="Rfb-L8-lOa"/>
-                            <constraint firstAttribute="height" constant="159" id="zIh-DX-q28"/>
-                        </constraints>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <shadow key="shadow" blurRadius="2">
                             <color key="color" name="labelColor" catalog="System" colorSpace="catalog"/>
                         </shadow>
@@ -451,16 +451,29 @@
                             <action selector="adjustGainMainIn:" target="Voe-Tx-rLC" id="SuW-Qo-1yr"/>
                         </connections>
                     </slider>
-                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="uKs-Ls-c1u">
+                    <slider horizontalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="EAw-u0-3zD" userLabel="Stereo Enhance Drive">
+                        <rect key="frame" x="80" y="129" width="24" height="167"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <shadow key="shadow" blurRadius="2">
+                            <color key="color" name="labelColor" catalog="System" colorSpace="catalog"/>
+                        </shadow>
+                        <sliderCell key="cell" state="on" alignment="left" maxValue="200" doubleValue="1" tickMarkPosition="right" numberOfTickMarks="10" sliderType="linear" id="fJz-fH-kUr"/>
+                        <connections>
+                            <action selector="stereoEnhanceSliderChanged:" target="Voe-Tx-rLC" id="eHC-gy-xbk"/>
+                        </connections>
+                    </slider>
+                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="uKs-Ls-c1u">
                         <rect key="frame" x="18" y="101" width="49" height="26"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <textFieldCell key="cell" alignment="center" title="Input Gain" id="Pkj-ue-wNp">
                             <font key="font" metaFont="system" size="10"/>
                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                     </textField>
-                    <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="aJZ-8z-X3w">
+                    <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="aJZ-8z-X3w">
                         <rect key="frame" x="155" y="13" width="144" height="32"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <buttonCell key="cell" type="push" title="Signal Generators" bezelStyle="rounded" alignment="center" enabled="NO" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="0Ll-eI-mP6">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
@@ -469,8 +482,9 @@
                             <action selector="showSignalGenerators:" target="Voe-Tx-rLC" id="vhg-cC-2lZ"/>
                         </connections>
                     </button>
-                    <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="2II-d1-FJE">
+                    <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2II-d1-FJE">
                         <rect key="frame" x="13" y="13" width="144" height="32"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <buttonCell key="cell" type="push" title="Audio Devices" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Xax-Ld-DNS">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
@@ -479,60 +493,62 @@
                             <action selector="showAudioDeviceSelector:" target="Voe-Tx-rLC" id="2f7-Rq-lWQ"/>
                         </connections>
                     </button>
-                    <customView translatesAutoresizingMaskIntoConstraints="NO" id="mc0-9Q-64D" userLabel="InputLevel" customClass="LevelMeter">
+                    <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="mc0-9Q-64D" userLabel="InputLevel" customClass="LevelMeter">
                         <rect key="frame" x="25" y="302" width="34" height="192"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     </customView>
-                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="n5W-86-HcX">
+                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="n5W-86-HcX">
                         <rect key="frame" x="17" y="502" width="50" height="35"/>
-                        <constraints>
-                            <constraint firstAttribute="height" constant="35" id="Fft-lu-lqN"/>
-                        </constraints>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <textFieldCell key="cell" alignment="center" title="PROC IN" id="otR-fZ-V3j">
                             <font key="font" metaFont="system"/>
                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                     </textField>
-                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="k8d-mh-6hd">
+                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="k8d-mh-6hd">
                         <rect key="frame" x="64" y="502" width="58" height="35"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <textFieldCell key="cell" alignment="center" title="STEREO ENH" id="R22-rg-WUR">
                             <font key="font" metaFont="cellTitle"/>
                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                     </textField>
-                    <box title="MULTIBAND COMPRESSOR" translatesAutoresizingMaskIntoConstraints="NO" id="NdS-Kb-jXI">
+                    <box fixedFrame="YES" title="MULTIBAND COMPRESSOR" translatesAutoresizingMaskIntoConstraints="NO" id="NdS-Kb-jXI">
                         <rect key="frame" x="262" y="158" width="171" height="377"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <view key="contentView" id="WKC-LI-udk">
                             <rect key="frame" x="3" y="3" width="165" height="359"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <subviews>
-                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="y4d-x3-cJo">
+                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="y4d-x3-cJo">
                                     <rect key="frame" x="26" y="320" width="108" height="26"/>
-                                    <constraints>
-                                        <constraint firstAttribute="height" constant="26" id="hpt-yh-J3N"/>
-                                    </constraints>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                     <textFieldCell key="cell" alignment="left" title="200   520   1.8k    6k" id="FGY-hc-HDp">
                                         <font key="font" metaFont="system" size="10"/>
                                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                     </textFieldCell>
                                 </textField>
-                                <customView misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="OZU-2m-L3C" userLabel="5band_Compressor" customClass="CompressionMeter5band">
+                                <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="OZU-2m-L3C" userLabel="5band_Compressor" customClass="CompressionMeter5band">
                                     <rect key="frame" x="10" y="135" width="140" height="192"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 </customView>
                                 <view id="e18-Gm-rRp">
                                     <rect key="frame" x="290" y="212" width="10" height="5"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 </view>
-                                <box boxType="custom" borderType="line" borderWidth="2" title="Box2bandGateLo" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="fgD-Yv-iIX" userLabel="Box5bandgateb1">
+                                <box fixedFrame="YES" boxType="custom" borderType="line" borderWidth="2" title="Box2bandGateLo" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="fgD-Yv-iIX" userLabel="Box5bandgateb1">
                                     <rect key="frame" x="10" y="100" width="25" height="27"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                     <view key="contentView" id="wr9-Ap-zdG">
                                         <rect key="frame" x="2" y="2" width="21" height="23"/>
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                         <subviews>
-                                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Hyh-Fy-QIn">
+                                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Hyh-Fy-QIn">
                                                 <rect key="frame" x="-2" y="5" width="25" height="15"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                 <textFieldCell key="cell" alignment="center" title="G" id="ZWC-D4-FLw">
                                                     <font key="font" metaFont="cellTitle"/>
                                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -540,22 +556,18 @@
                                                 </textFieldCell>
                                             </textField>
                                         </subviews>
-                                        <constraints>
-                                            <constraint firstItem="Hyh-Fy-QIn" firstAttribute="top" secondItem="wr9-Ap-zdG" secondAttribute="top" constant="3" id="OtI-80-r4I"/>
-                                            <constraint firstItem="Hyh-Fy-QIn" firstAttribute="leading" secondItem="wr9-Ap-zdG" secondAttribute="leading" id="PNM-Sa-6A6"/>
-                                            <constraint firstAttribute="trailing" secondItem="Hyh-Fy-QIn" secondAttribute="trailing" id="e2F-WM-clD"/>
-                                            <constraint firstAttribute="bottom" secondItem="Hyh-Fy-QIn" secondAttribute="bottom" constant="5" id="nYI-42-ogj"/>
-                                        </constraints>
                                     </view>
                                 </box>
-                                <box boxType="custom" borderType="line" borderWidth="2" title="Box2bandGateLo" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="qQ3-fH-VjH" userLabel="Box5bandgateb2">
+                                <box fixedFrame="YES" boxType="custom" borderType="line" borderWidth="2" title="Box2bandGateLo" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="qQ3-fH-VjH" userLabel="Box5bandgateb2">
                                     <rect key="frame" x="40" y="100" width="25" height="27"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                     <view key="contentView" id="3Mx-fk-Nlz">
                                         <rect key="frame" x="2" y="2" width="21" height="23"/>
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                         <subviews>
-                                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="9od-sy-WjV">
+                                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="9od-sy-WjV">
                                                 <rect key="frame" x="-2" y="5" width="25" height="15"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                 <textFieldCell key="cell" alignment="center" title="G" id="n9m-7A-xzd">
                                                     <font key="font" metaFont="cellTitle"/>
                                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -563,21 +575,18 @@
                                                 </textFieldCell>
                                             </textField>
                                         </subviews>
-                                        <constraints>
-                                            <constraint firstItem="9od-sy-WjV" firstAttribute="top" secondItem="3Mx-fk-Nlz" secondAttribute="top" constant="3" id="GuX-Ob-dIJ"/>
-                                            <constraint firstItem="9od-sy-WjV" firstAttribute="leading" secondItem="3Mx-fk-Nlz" secondAttribute="leading" id="Qcs-80-IBA"/>
-                                            <constraint firstAttribute="trailing" secondItem="9od-sy-WjV" secondAttribute="trailing" id="dJb-ef-wT9"/>
-                                        </constraints>
                                     </view>
                                 </box>
-                                <box misplaced="YES" boxType="custom" borderType="line" borderWidth="2" title="Box2bandGateLo" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="zyR-tD-v6C" userLabel="Box5bandgateb3">
+                                <box fixedFrame="YES" boxType="custom" borderType="line" borderWidth="2" title="Box2bandGateLo" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="zyR-tD-v6C" userLabel="Box5bandgateb3">
                                     <rect key="frame" x="68" y="100" width="25" height="27"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                     <view key="contentView" id="bIL-MV-95G">
                                         <rect key="frame" x="2" y="2" width="21" height="23"/>
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                         <subviews>
-                                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="whR-rA-RBa">
+                                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="whR-rA-RBa">
                                                 <rect key="frame" x="-2" y="5" width="25" height="15"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                 <textFieldCell key="cell" alignment="center" title="G" id="QJz-q6-oLY">
                                                     <font key="font" metaFont="cellTitle"/>
                                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -585,21 +594,18 @@
                                                 </textFieldCell>
                                             </textField>
                                         </subviews>
-                                        <constraints>
-                                            <constraint firstItem="whR-rA-RBa" firstAttribute="top" secondItem="bIL-MV-95G" secondAttribute="top" constant="3" id="2F5-aV-f3L"/>
-                                            <constraint firstItem="whR-rA-RBa" firstAttribute="leading" secondItem="bIL-MV-95G" secondAttribute="leading" id="Av9-Fd-hmc"/>
-                                            <constraint firstAttribute="trailing" secondItem="whR-rA-RBa" secondAttribute="trailing" id="rqK-Uh-rX3"/>
-                                        </constraints>
                                     </view>
                                 </box>
-                                <box misplaced="YES" boxType="custom" borderType="line" borderWidth="2" title="Box2bandGateLo" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="P2Z-E4-AUm" userLabel="Box5bandgateb4">
+                                <box fixedFrame="YES" boxType="custom" borderType="line" borderWidth="2" title="Box2bandGateLo" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="P2Z-E4-AUm" userLabel="Box5bandgateb4">
                                     <rect key="frame" x="97" y="100" width="25" height="27"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                     <view key="contentView" id="rvp-RI-ClZ">
                                         <rect key="frame" x="2" y="2" width="21" height="23"/>
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                         <subviews>
-                                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="izl-cb-HhH">
+                                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="izl-cb-HhH">
                                                 <rect key="frame" x="-2" y="5" width="25" height="15"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                 <textFieldCell key="cell" alignment="center" title="G" id="Qbv-mw-pA7">
                                                     <font key="font" metaFont="cellTitle"/>
                                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -607,21 +613,18 @@
                                                 </textFieldCell>
                                             </textField>
                                         </subviews>
-                                        <constraints>
-                                            <constraint firstAttribute="trailing" secondItem="izl-cb-HhH" secondAttribute="trailing" id="9Wy-DA-uIw"/>
-                                            <constraint firstItem="izl-cb-HhH" firstAttribute="leading" secondItem="rvp-RI-ClZ" secondAttribute="leading" id="qEw-Ga-ZWh"/>
-                                            <constraint firstItem="izl-cb-HhH" firstAttribute="top" secondItem="rvp-RI-ClZ" secondAttribute="top" constant="3" id="wvt-11-UUO"/>
-                                        </constraints>
                                     </view>
                                 </box>
-                                <box boxType="custom" borderType="line" borderWidth="2" title="Box2bandGateLo" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="5LO-bC-5I0" userLabel="Box5bandgateb5">
+                                <box fixedFrame="YES" boxType="custom" borderType="line" borderWidth="2" title="Box2bandGateLo" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="5LO-bC-5I0" userLabel="Box5bandgateb5">
                                     <rect key="frame" x="126" y="100" width="25" height="27"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                     <view key="contentView" id="5Ge-ia-r7C">
                                         <rect key="frame" x="2" y="2" width="21" height="23"/>
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                         <subviews>
-                                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="yZv-Ni-q8M">
+                                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="yZv-Ni-q8M">
                                                 <rect key="frame" x="-2" y="5" width="25" height="15"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                 <textFieldCell key="cell" alignment="center" title="G" id="5QO-p0-FgF">
                                                     <font key="font" metaFont="cellTitle"/>
                                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -629,11 +632,6 @@
                                                 </textFieldCell>
                                             </textField>
                                         </subviews>
-                                        <constraints>
-                                            <constraint firstAttribute="trailing" secondItem="yZv-Ni-q8M" secondAttribute="trailing" id="eBs-cC-31x"/>
-                                            <constraint firstItem="yZv-Ni-q8M" firstAttribute="top" secondItem="5Ge-ia-r7C" secondAttribute="top" constant="3" id="ktX-cA-CNJ"/>
-                                            <constraint firstItem="yZv-Ni-q8M" firstAttribute="leading" secondItem="5Ge-ia-r7C" secondAttribute="leading" id="vi2-6m-yE9"/>
-                                        </constraints>
                                     </view>
                                 </box>
                                 <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="dBL-p2-MUT" userLabel="5band_Limiter" customClass="CompressionMeter5band">
@@ -650,52 +648,29 @@
                                     </textFieldCell>
                                 </textField>
                             </subviews>
-                            <constraints>
-                                <constraint firstItem="zyR-tD-v6C" firstAttribute="bottom" secondItem="P2Z-E4-AUm" secondAttribute="bottom" id="0yh-gI-7cj"/>
-                                <constraint firstItem="P2Z-E4-AUm" firstAttribute="top" secondItem="5LO-bC-5I0" secondAttribute="top" id="4FM-8o-qhx"/>
-                                <constraint firstItem="fgD-Yv-iIX" firstAttribute="top" secondItem="qQ3-fH-VjH" secondAttribute="top" id="6Re-kV-AxB"/>
-                                <constraint firstItem="qQ3-fH-VjH" firstAttribute="bottom" secondItem="zyR-tD-v6C" secondAttribute="bottom" id="8gt-tI-eo3"/>
-                                <constraint firstItem="5LO-bC-5I0" firstAttribute="leading" secondItem="WKC-LI-udk" secondAttribute="leading" constant="126" id="9X8-dZ-u1x"/>
-                                <constraint firstItem="fgD-Yv-iIX" firstAttribute="bottom" secondItem="qQ3-fH-VjH" secondAttribute="bottom" id="Ddg-l7-R7y"/>
-                                <constraint firstItem="qQ3-fH-VjH" firstAttribute="top" secondItem="zyR-tD-v6C" secondAttribute="top" id="Gf9-nI-9D8"/>
-                                <constraint firstItem="OZU-2m-L3C" firstAttribute="leading" secondItem="fgD-Yv-iIX" secondAttribute="leading" id="IEd-om-mA1"/>
-                                <constraint firstItem="zyR-tD-v6C" firstAttribute="leading" secondItem="qQ3-fH-VjH" secondAttribute="trailing" constant="3" id="Iv9-5j-c1D"/>
-                                <constraint firstItem="OZU-2m-L3C" firstAttribute="leading" secondItem="WKC-LI-udk" secondAttribute="leading" constant="10" id="LX3-f1-F1u"/>
-                                <constraint firstItem="P2Z-E4-AUm" firstAttribute="bottom" secondItem="5LO-bC-5I0" secondAttribute="bottom" id="MCG-Ve-uvN"/>
-                                <constraint firstItem="P2Z-E4-AUm" firstAttribute="leading" secondItem="zyR-tD-v6C" secondAttribute="trailing" constant="4" id="NBE-0w-WTd"/>
-                                <constraint firstItem="OZU-2m-L3C" firstAttribute="centerX" secondItem="zyR-tD-v6C" secondAttribute="centerX" id="NOU-pD-zDP"/>
-                                <constraint firstItem="y4d-x3-cJo" firstAttribute="leading" secondItem="WKC-LI-udk" secondAttribute="leading" constant="28" id="RV4-lR-4R8"/>
-                                <constraint firstItem="y4d-x3-cJo" firstAttribute="top" secondItem="WKC-LI-udk" secondAttribute="top" constant="13" id="YIJ-es-n3b"/>
-                                <constraint firstItem="5LO-bC-5I0" firstAttribute="leading" secondItem="P2Z-E4-AUm" secondAttribute="trailing" constant="4" id="c61-gY-uzo"/>
-                                <constraint firstItem="qQ3-fH-VjH" firstAttribute="leading" secondItem="fgD-Yv-iIX" secondAttribute="trailing" constant="5" id="d02-b7-N5C"/>
-                                <constraint firstAttribute="trailing" secondItem="5LO-bC-5I0" secondAttribute="trailing" constant="14" id="dcv-iw-njq"/>
-                                <constraint firstItem="OZU-2m-L3C" firstAttribute="top" secondItem="WKC-LI-udk" secondAttribute="top" constant="32" id="du0-h7-bHs"/>
-                                <constraint firstItem="fgD-Yv-iIX" firstAttribute="top" secondItem="OZU-2m-L3C" secondAttribute="bottom" constant="8" id="fOd-Kr-ZTo"/>
-                                <constraint firstItem="qQ3-fH-VjH" firstAttribute="leading" secondItem="WKC-LI-udk" secondAttribute="leading" constant="40" id="hb6-pX-F6x"/>
-                                <constraint firstItem="zyR-tD-v6C" firstAttribute="leading" secondItem="WKC-LI-udk" secondAttribute="leading" constant="68" id="jop-4U-Lnk"/>
-                                <constraint firstItem="zyR-tD-v6C" firstAttribute="top" secondItem="P2Z-E4-AUm" secondAttribute="top" id="tu2-NX-JWW"/>
-                                <constraint firstItem="fgD-Yv-iIX" firstAttribute="top" secondItem="WKC-LI-udk" secondAttribute="top" constant="232" id="vwb-Qi-Lqr"/>
-                                <constraint firstItem="y4d-x3-cJo" firstAttribute="centerX" secondItem="OZU-2m-L3C" secondAttribute="centerX" id="yck-3k-Q1c"/>
-                            </constraints>
                         </view>
                     </box>
-                    <box title="2-BAND AGC" translatesAutoresizingMaskIntoConstraints="NO" id="yGK-H9-UCo">
+                    <box fixedFrame="YES" title="2-BAND AGC" translatesAutoresizingMaskIntoConstraints="NO" id="yGK-H9-UCo">
                         <rect key="frame" x="119" y="156" width="134" height="379"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <view key="contentView" id="698-JW-FAB">
                             <rect key="frame" x="3" y="3" width="128" height="361"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <subviews>
-                                <customView translatesAutoresizingMaskIntoConstraints="NO" id="zwt-md-HTN" userLabel="2band_AGC_Compression" customClass="CompressionMeter">
+                                <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="zwt-md-HTN" userLabel="2band_AGC_Compression" customClass="CompressionMeter">
                                     <rect key="frame" x="12" y="35" width="34" height="313"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 </customView>
-                                <box boxType="custom" borderType="line" borderWidth="2" title="Box2bandGateLo" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="cPC-Og-KrE">
+                                <box fixedFrame="YES" boxType="custom" borderType="line" borderWidth="2" title="Box2bandGateLo" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="cPC-Og-KrE">
                                     <rect key="frame" x="50" y="321" width="69" height="27"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                     <view key="contentView" id="qmL-bk-xip">
                                         <rect key="frame" x="2" y="2" width="65" height="23"/>
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                         <subviews>
-                                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Oj1-de-dAc">
+                                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Oj1-de-dAc">
                                                 <rect key="frame" x="-2" y="5" width="69" height="15"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                 <textFieldCell key="cell" alignment="center" title="GATE LO" id="AUx-6g-j1d">
                                                     <font key="font" metaFont="cellTitle"/>
                                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -703,21 +678,18 @@
                                                 </textFieldCell>
                                             </textField>
                                         </subviews>
-                                        <constraints>
-                                            <constraint firstItem="Oj1-de-dAc" firstAttribute="leading" secondItem="qmL-bk-xip" secondAttribute="leading" id="0kL-lL-AGh"/>
-                                            <constraint firstItem="Oj1-de-dAc" firstAttribute="top" secondItem="qmL-bk-xip" secondAttribute="top" constant="3" id="Awi-yt-llh"/>
-                                            <constraint firstAttribute="trailing" secondItem="Oj1-de-dAc" secondAttribute="trailing" id="qRe-LV-QRw"/>
-                                        </constraints>
                                     </view>
                                 </box>
-                                <box boxType="custom" borderType="line" borderWidth="2" title="Box2bandGateHi" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="08h-Af-GEY">
+                                <box fixedFrame="YES" boxType="custom" borderType="line" borderWidth="2" title="Box2bandGateHi" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="08h-Af-GEY">
                                     <rect key="frame" x="50" y="290" width="69" height="26"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                     <view key="contentView" id="XXs-0u-Sfc">
                                         <rect key="frame" x="2" y="2" width="65" height="22"/>
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                         <subviews>
-                                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="7Dj-5U-cMG">
+                                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="7Dj-5U-cMG">
                                                 <rect key="frame" x="-3" y="4" width="70" height="15"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                 <textFieldCell key="cell" alignment="center" title="GATE HI" id="nrh-bV-u6M">
                                                     <font key="font" metaFont="cellTitle"/>
                                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -725,24 +697,20 @@
                                                 </textFieldCell>
                                             </textField>
                                         </subviews>
-                                        <constraints>
-                                            <constraint firstItem="7Dj-5U-cMG" firstAttribute="centerX" secondItem="XXs-0u-Sfc" secondAttribute="centerX" id="FGW-iy-Voc"/>
-                                            <constraint firstItem="7Dj-5U-cMG" firstAttribute="centerY" secondItem="XXs-0u-Sfc" secondAttribute="centerY" id="Hx1-0A-fYs"/>
-                                            <constraint firstAttribute="trailing" secondItem="7Dj-5U-cMG" secondAttribute="trailing" id="TP6-DL-c3B"/>
-                                            <constraint firstItem="7Dj-5U-cMG" firstAttribute="top" secondItem="XXs-0u-Sfc" secondAttribute="top" constant="3" id="Zti-2P-udl"/>
-                                        </constraints>
                                     </view>
                                 </box>
-                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="orn-1C-Y3g">
+                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="orn-1C-Y3g">
                                     <rect key="frame" x="10" y="12" width="22" height="15"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                     <textFieldCell key="cell" alignment="center" title="L" id="QAo-Ih-sEW">
                                         <font key="font" metaFont="cellTitle"/>
                                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                     </textFieldCell>
                                 </textField>
-                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="DJn-be-dUO">
+                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="DJn-be-dUO">
                                     <rect key="frame" x="26" y="12" width="22" height="15"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                     <textFieldCell key="cell" alignment="center" title="H" id="btv-VE-E8J">
                                         <font key="font" metaFont="cellTitle"/>
                                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -750,33 +718,11 @@
                                     </textFieldCell>
                                 </textField>
                             </subviews>
-                            <constraints>
-                                <constraint firstItem="08h-Af-GEY" firstAttribute="top" secondItem="cPC-Og-KrE" secondAttribute="bottom" constant="5" id="4BZ-9Z-kcE"/>
-                                <constraint firstItem="orn-1C-Y3g" firstAttribute="baseline" secondItem="DJn-be-dUO" secondAttribute="baseline" id="DQb-sp-rgy"/>
-                                <constraint firstItem="cPC-Og-KrE" firstAttribute="trailing" secondItem="08h-Af-GEY" secondAttribute="trailing" id="Mey-NX-HLm"/>
-                                <constraint firstItem="08h-Af-GEY" firstAttribute="top" secondItem="698-JW-FAB" secondAttribute="top" constant="45" id="PvG-5g-LLD"/>
-                                <constraint firstAttribute="bottom" secondItem="08h-Af-GEY" secondAttribute="bottom" constant="290" id="R10-u7-elB"/>
-                                <constraint firstAttribute="trailing" secondItem="cPC-Og-KrE" secondAttribute="trailing" constant="9" id="SWj-S5-jAn"/>
-                                <constraint firstItem="zwt-md-HTN" firstAttribute="leading" secondItem="orn-1C-Y3g" secondAttribute="leading" id="SX9-5K-1ol"/>
-                                <constraint firstItem="cPC-Og-KrE" firstAttribute="leading" secondItem="zwt-md-HTN" secondAttribute="trailing" constant="4" id="VTR-KB-FBo"/>
-                                <constraint firstAttribute="bottom" secondItem="orn-1C-Y3g" secondAttribute="bottom" constant="12" id="WMU-gW-XUa"/>
-                                <constraint firstItem="DJn-be-dUO" firstAttribute="leading" secondItem="698-JW-FAB" secondAttribute="leading" constant="28" id="YCd-rj-wQ6"/>
-                                <constraint firstAttribute="trailing" secondItem="DJn-be-dUO" secondAttribute="trailing" constant="82" id="Z5n-X2-y3S"/>
-                                <constraint firstItem="orn-1C-Y3g" firstAttribute="top" secondItem="zwt-md-HTN" secondAttribute="bottom" constant="8" symbolic="YES" id="cpE-aO-zQC"/>
-                                <constraint firstItem="zwt-md-HTN" firstAttribute="leading" secondItem="698-JW-FAB" secondAttribute="leading" constant="12" id="fp4-GN-Jsa"/>
-                                <constraint firstItem="zwt-md-HTN" firstAttribute="top" secondItem="cPC-Og-KrE" secondAttribute="top" id="i69-Qa-SEN"/>
-                                <constraint firstItem="zwt-md-HTN" firstAttribute="trailing" secondItem="DJn-be-dUO" secondAttribute="trailing" id="l9D-jx-uli"/>
-                                <constraint firstItem="zwt-md-HTN" firstAttribute="top" secondItem="698-JW-FAB" secondAttribute="top" constant="13" id="mVc-ee-xBc"/>
-                                <constraint firstItem="cPC-Og-KrE" firstAttribute="leading" secondItem="08h-Af-GEY" secondAttribute="leading" id="oyk-Vb-wSd"/>
-                                <constraint firstAttribute="trailing" secondItem="orn-1C-Y3g" secondAttribute="trailing" constant="98" id="ztg-q6-9W8"/>
-                            </constraints>
                         </view>
                     </box>
-                    <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="a42-f6-UMw">
+                    <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="a42-f6-UMw">
                         <rect key="frame" x="13" y="54" width="144" height="32"/>
-                        <constraints>
-                            <constraint firstAttribute="width" constant="130" id="FEH-IZ-fe0"/>
-                        </constraints>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <buttonCell key="cell" type="push" title="Master Bypass" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="vPq-Kb-EYj">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES" changeBackground="YES" changeGray="YES"/>
                             <font key="font" metaFont="system"/>
@@ -799,7 +745,7 @@
                         </textFieldCell>
                     </textField>
                     <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="9pC-cV-Eb0" userLabel="STEREO_EN_ENABLE">
-                        <rect key="frame" x="60" y="467" width="63" height="32"/>
+                        <rect key="frame" x="62" y="97" width="63" height="32"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <buttonCell key="cell" type="push" title="EN" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="JYX-Yt-1Kd">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES" changeBackground="YES" changeGray="YES"/>
@@ -809,41 +755,11 @@
                             <action selector="stereoEnhanceEnableChanged:" target="Voe-Tx-rLC" id="lJs-gT-Rec"/>
                         </connections>
                     </button>
+                    <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="JsH-Ey-PbR" userLabel="Stereo Enhance Level" customClass="LevelMeter">
+                        <rect key="frame" x="75" y="302" width="34" height="192"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    </customView>
                 </subviews>
-                <constraints>
-                    <constraint firstItem="2II-d1-FJE" firstAttribute="top" secondItem="a42-f6-UMw" secondAttribute="bottom" constant="21" id="0Sm-Lh-bbg"/>
-                    <constraint firstItem="a42-f6-UMw" firstAttribute="trailing" secondItem="2II-d1-FJE" secondAttribute="trailing" id="6Uh-nd-pPp"/>
-                    <constraint firstItem="n5W-86-HcX" firstAttribute="centerX" secondItem="mc0-9Q-64D" secondAttribute="centerX" id="9gM-iA-Azm"/>
-                    <constraint firstItem="mc0-9Q-64D" firstAttribute="centerX" secondItem="yiT-KE-WWL" secondAttribute="centerX" id="CbW-tk-CwO"/>
-                    <constraint firstItem="aJZ-8z-X3w" firstAttribute="leading" secondItem="2II-d1-FJE" secondAttribute="trailing" constant="12" symbolic="YES" id="EO3-6r-jFJ"/>
-                    <constraint firstItem="uKs-Ls-c1u" firstAttribute="leading" secondItem="EiT-Mj-1SZ" secondAttribute="leading" constant="20" symbolic="YES" id="Isa-LT-vK7"/>
-                    <constraint firstItem="a42-f6-UMw" firstAttribute="top" secondItem="yGK-H9-UCo" secondAttribute="bottom" constant="79" id="KCq-NG-rhg"/>
-                    <constraint firstItem="a42-f6-UMw" firstAttribute="leading" secondItem="2II-d1-FJE" secondAttribute="leading" id="Kxi-Ji-9oW"/>
-                    <constraint firstItem="uKs-Ls-c1u" firstAttribute="leading" secondItem="a42-f6-UMw" secondAttribute="leading" id="NKX-wn-8Da"/>
-                    <constraint firstItem="NdS-Kb-jXI" firstAttribute="leading" secondItem="EiT-Mj-1SZ" secondAttribute="leading" constant="265" id="NTY-yZ-Wye"/>
-                    <constraint firstItem="yGK-H9-UCo" firstAttribute="leading" secondItem="mc0-9Q-64D" secondAttribute="trailing" constant="63" id="OdT-KF-YJX"/>
-                    <constraint firstAttribute="bottom" secondItem="NdS-Kb-jXI" secondAttribute="bottom" constant="162" id="SAd-Zd-uQc"/>
-                    <constraint firstItem="n5W-86-HcX" firstAttribute="trailing" secondItem="uKs-Ls-c1u" secondAttribute="trailing" id="T3G-xu-hEF"/>
-                    <constraint firstItem="n5W-86-HcX" firstAttribute="top" secondItem="EiT-Mj-1SZ" secondAttribute="top" constant="6" id="Tl6-xa-cbO"/>
-                    <constraint firstItem="a42-f6-UMw" firstAttribute="top" secondItem="uKs-Ls-c1u" secondAttribute="bottom" constant="20" id="Usb-Y6-dFv"/>
-                    <constraint firstItem="n5W-86-HcX" firstAttribute="top" secondItem="k8d-mh-6hd" secondAttribute="top" id="YlQ-Wc-0dZ"/>
-                    <constraint firstItem="n5W-86-HcX" firstAttribute="baseline" secondItem="k8d-mh-6hd" secondAttribute="baseline" id="b68-AW-abs"/>
-                    <constraint firstItem="yiT-KE-WWL" firstAttribute="top" secondItem="mc0-9Q-64D" secondAttribute="bottom" constant="8" symbolic="YES" id="eKK-QU-zFp"/>
-                    <constraint firstItem="mc0-9Q-64D" firstAttribute="top" secondItem="n5W-86-HcX" secondAttribute="bottom" constant="8" symbolic="YES" id="eeD-xJ-ndR"/>
-                    <constraint firstItem="yGK-H9-UCo" firstAttribute="top" secondItem="EiT-Mj-1SZ" secondAttribute="top" constant="8" id="fOQ-dh-nX5"/>
-                    <constraint firstItem="NdS-Kb-jXI" firstAttribute="leading" secondItem="yGK-H9-UCo" secondAttribute="trailing" constant="15" id="gUr-6d-f4v"/>
-                    <constraint firstAttribute="bottom" secondItem="2II-d1-FJE" secondAttribute="bottom" constant="20" symbolic="YES" id="hQe-P7-W6C"/>
-                    <constraint firstItem="yGK-H9-UCo" firstAttribute="leading" secondItem="yiT-KE-WWL" secondAttribute="trailing" constant="70" id="hqq-zq-B9q"/>
-                    <constraint firstItem="yiT-KE-WWL" firstAttribute="centerX" secondItem="uKs-Ls-c1u" secondAttribute="centerX" id="kdV-56-HVU"/>
-                    <constraint firstItem="k8d-mh-6hd" firstAttribute="leading" secondItem="n5W-86-HcX" secondAttribute="trailing" constant="1" id="mp7-bb-tCV"/>
-                    <constraint firstItem="2II-d1-FJE" firstAttribute="baseline" secondItem="aJZ-8z-X3w" secondAttribute="baseline" id="muX-Yp-opG"/>
-                    <constraint firstItem="mc0-9Q-64D" firstAttribute="leading" secondItem="EiT-Mj-1SZ" secondAttribute="leading" constant="25" id="rxk-3M-Ykk"/>
-                    <constraint firstItem="yGK-H9-UCo" firstAttribute="leading" secondItem="k8d-mh-6hd" secondAttribute="trailing" constant="2" id="v3u-eK-HnO"/>
-                    <constraint firstItem="yiT-KE-WWL" firstAttribute="top" secondItem="EiT-Mj-1SZ" secondAttribute="top" constant="249" id="w0G-xR-Avi"/>
-                    <constraint firstItem="uKs-Ls-c1u" firstAttribute="top" secondItem="yiT-KE-WWL" secondAttribute="bottom" constant="8" symbolic="YES" id="wuF-Vc-q4a"/>
-                    <constraint firstAttribute="trailing" secondItem="NdS-Kb-jXI" secondAttribute="trailing" constant="510" id="yCZ-zu-Ntj"/>
-                    <constraint firstItem="yGK-H9-UCo" firstAttribute="top" secondItem="NdS-Kb-jXI" secondAttribute="top" id="zYv-eT-SeQ"/>
-                </constraints>
             </view>
             <connections>
                 <outlet property="delegate" destination="Voe-Tx-rLC" id="TbV-AQ-Ffd"/>

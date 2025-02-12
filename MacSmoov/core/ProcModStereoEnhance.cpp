@@ -31,7 +31,8 @@ bool ProcModStereoEnhance::init_impl(CoreConfig* cfg, ProcessorModule* prev_mod,
         }
     }
     
-    drive = 0.15f;
+    drive = cfg->get_stereo_enhance_drive();
+    avg_lr_diff = 0.0f;
     
     return true;
 }
@@ -47,19 +48,28 @@ void ProcModStereoEnhance::process() {
         return;
     }
     
+    avg_lr_diff = 0.0f;
+    
     inL = this->inbufs[0]->getbuf();
     inR = this->inbufs[1]->getbuf();
     outL = this->outbufs[0]->getbuf();
     outR = this->outbufs[1]->getbuf();
     
     for(size_t i = 0; i < n_samps; i++) {
-        M = ((inL[i] + inR[i])/SQRT_2) * ((2.0f * (1.0f - drive)));
-        S = ((inL[i] - inR[i])/SQRT_2) * (2.0f * drive);
-        outL[i] = (M + S) / SQRT_2;
-        outR[i] = (M - S) / SQRT_2;
+        M = (inL[i] + inR[i]) / 2.0f;
+        S = (inL[i] - inR[i]) * drive;
+        avg_lr_diff += fabs(S);
+        outL[i] = M + S;
+        outR[i] = M - S;
     }
     
+    avg_lr_diff = avg_lr_diff / n_samps;
+}
+
+void ProcModStereoEnhance::read(float* _lrdiff) {
+    if(_lrdiff) {
+        *_lrdiff = avg_lr_diff;
+    }
 }
     
-
 }

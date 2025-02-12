@@ -50,6 +50,9 @@ public:
     void main_in_gain_db_change_done(float loggain_l, float loggain_r);
     void set_stereo_enhance_enabled(bool enabled);
     bool get_stereo_enhance_enabled();
+    void get_stereo_enhance_lr_diff(float* _lr_diff);
+    float get_stereo_enhance_drive();
+    void set_stereo_enhance_drive(float _drive);
     void get2bandAGCGainReduction(float* gainReduct2blo, float* gainReduct2bhi, bool* gateOpenLo, bool* gateOpenHi);
     void get5bandCompressorGainReduction(float** _bands_gr, float** _bands_lim, bool** _bands_gate_open);
     void set_bands_enabled(bool _bands_enabled[]);

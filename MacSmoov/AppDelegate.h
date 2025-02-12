@@ -19,6 +19,9 @@
 
 @property (strong) IBOutlet LevelMeter* level_main_in;
 @property (strong) IBOutlet NSSlider* slider_gain_main_in;
+@property (strong) IBOutlet LevelMeter* stereo_enhance_lr_diff;
+@property (strong) IBOutlet NSButton* stereo_enhance_enabled;
+@property (strong) IBOutlet NSSlider* slider_stereo_enhance;
 @property (strong) IBOutlet CompressionMeter* comp_2band_agc;
 @property (strong) IBOutlet NSBox* agc_lo_gate_closed;
 @property (strong) IBOutlet NSBox* agc_hi_gate_closed;
@@ -44,6 +47,7 @@
 -(IBAction) adjustGainMainIn:(id)sender;
 
 -(IBAction) stereoEnhanceEnableChanged:(id)sender;
+-(IBAction) stereoEnhanceSliderChanged:(id)sender;
 
 -(IBAction) agcFactoryMenuSelected:(id)sender;
 -(IBAction) multibandAdjustMenuSelected:(id)sender;

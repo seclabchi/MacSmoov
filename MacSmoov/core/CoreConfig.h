@@ -25,6 +25,8 @@ public:
     void set_input_level_enabled(bool enabled);
     bool get_stereo_enhance_enabled();
     void set_stereo_enhance_enabled(bool enabled);
+    float get_stereo_enhance_drive();
+    void set_stereo_enhance_drive(float _drive);
     bool get_2band_agc_enabled();
     void set_2band_agc_enabled(bool _enabled);
     void get_agc_params(AGC_PARAMS& params);
@@ -60,6 +62,7 @@ private:
     bool enable_input_gain;
     bool enable_input_level;
     bool enable_stereo_enhance;
+    float stereo_enhance_drive;
     bool enable_hf_enhance;
     bool enable_mb_crossover;
     std::pair<float, float> input_gain;

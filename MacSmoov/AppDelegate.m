@@ -43,6 +43,7 @@ Boolean shutting_down = NO;
     NSLog(@"Started meter driver thread.");
     
     float mainInLrms, mainInRrms, mainInLpeak, mainInRpeak;
+    float stereoEnhanceLRDiff;
     float gainReduct2blo, gainReduct2bhi;
     bool gate_open_agc2_lo, gate_open_agc2_hi;
     float** bands_gr = (float**)malloc(5 * sizeof(float*));
@@ -71,6 +72,7 @@ Boolean shutting_down = NO;
     while(false == shutting_down) {
         
         [proc_core_wrapper getMainInLevelsLrms:&mainInLrms Rrms:&mainInRrms Lpeak:&mainInLpeak Rpeak:&mainInRpeak];
+        [proc_core_wrapper getStereoEnhanceLRDiff:&stereoEnhanceLRDiff];
         [proc_core_wrapper get2bandAGCGainReductionlo:&gainReduct2blo hi:&gainReduct2bhi gatelo:&gate_open_agc2_lo gatehi:&gate_open_agc2_hi];
         [proc_core_wrapper get5bandCompressorGainReduction:bands_gr limiters:bands_lim gates:bands_gate_open];
         [proc_core_wrapper getMainOutLevelsLrms:&mainOutLrms Rrms:&mainOutRrms Lpeak:&mainOutLpeak Rpeak:&mainOutRpeak];
@@ -79,6 +81,7 @@ Boolean shutting_down = NO;
             //Background Thread
             dispatch_async(dispatch_get_main_queue(), ^(void){
                 [self->_level_main_in set_levels_Lrms:mainInLrms Rrms:mainInRrms Lpeak:mainInLpeak Rpeak:mainInRpeak];
+                [self->_stereo_enhance_lr_diff set_level:stereoEnhanceLRDiff];
                 [self->_comp_2band_agc set_comp_lo:gainReduct2blo hi:gainReduct2bhi];
                 if(!gate_open_agc2_lo) {
                     [self->_agc_lo_gate_closed setFillColor:[NSColor redColor]];
@@ -142,6 +145,8 @@ Boolean shutting_down = NO;
     
     shutting_down = NO;
     
+    [_level_main_in setMeterDbMinVal:-30.0f maxVal:1.0f];
+    [_stereo_enhance_lr_diff setMeterLinearMinVal:0.0f maxVal:0.5f];
     [_comp_2band_agc set_meter_range:-24.0];
     [_comp_5band set_meter_color:[NSColor magentaColor]];
     [_comp_5band set_meter_range:-12.0];
@@ -172,15 +177,65 @@ Boolean shutting_down = NO;
     [self.sysaudio set_input_device_from_name:@"Studio 26c"];
     [self.sysaudio set_output_device_from_name:@"Studio 26c"];
     
-    //audio_device_selector = [[AudioDeviceSelector alloc] initWithInputDevices:(NSMutableDictionary*)audio_devices_input outputDevices:(NSMutableDictionary*)audio_devices_output];
-    //[audio_device_selector set_watcher_for_output_device_change:self andSelector:@selector(output_device_changed:)];
-    //[audio_device_selector set_watcher_for_input_device_change:self andSelector:@selector(input_device_changed:)];
+    audio_device_selector = [[AudioDeviceSelector alloc] initWithInputDevices:audio_devices_input outputDevices:audio_devices_output];
+    [audio_device_selector set_watcher_for_output_device_change:self andSelector:@selector(output_device_changed:)];
+    [audio_device_selector set_watcher_for_input_device_change:self andSelector:@selector(input_device_changed:)];
     
-    NSString* CONFIG_FILENAME = @"/Users/zaremba/Library/Containers/com.tonekids.osx.MacSmoov/Data/tmp/config.yml";
+    //NSString* CONFIG_FILENAME = @"/Users/zaremba/Library/Containers/com.tonekids.osx.MacSmoov/Data/tmp/config.yml";
+    NSString* BUNDLED_CONFIG_FILENAME = @"config.yml";
+    NSBundle *bundle = [NSBundle mainBundle];
+    NSString *resourceFolderPath = [bundle resourcePath];
+    NSString* BUNDLED_CONFIG_FILEPATH = [NSString stringWithFormat:@"%@/%@", resourceFolderPath, BUNDLED_CONFIG_FILENAME];
     
-    proc_core_wrapper = [[ProcessorCoreWrapper alloc] initWithSampleRate:self.sysaudio.sample_rate numberOfChannels:self.sysaudio.num_channels bufferSize:(uint32_t)self.sysaudio.buffer_size configFilename:CONFIG_FILENAME];
+    NSString *executableName = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleExecutable"];
+    NSArray<NSURL *>* app_support_paths = [[NSFileManager defaultManager] URLsForDirectory:NSApplicationSupportDirectory inDomains:NSUserDomainMask];
+    
+    NSString* app_support_path = [[app_support_paths objectAtIndex:0] path];
+    app_support_path = [app_support_path stringByAppendingPathComponent:executableName];
+    
+    NSLog(@"Creating app support directory if it doesn't exist...");
+        
+    NSError * error = nil;
+    [[NSFileManager defaultManager] createDirectoryAtPath:app_support_path withIntermediateDirectories:YES attributes:nil error:&error];
+    if (error != nil) {
+        NSLog(@"error creating app support directory directory: %@", error);
+        exit(-1);
+    }
+    
+    NSString* config_file_path = [app_support_path stringByAppendingPathComponent:BUNDLED_CONFIG_FILENAME];
+    
+    /*
+     * Check to see if there is a config file there already.  If it doesn't exist, copy the factory defaults from
+     * inside the bundle.
+     */
+    
+    bool config_file_exists = [[NSFileManager defaultManager] fileExistsAtPath:config_file_path];
+    
+    if(!config_file_exists) {
+        NSLog(@"No config file found.  Copying factory defaults from bundle...");
+        [[NSFileManager defaultManager] copyItemAtPath:BUNDLED_CONFIG_FILEPATH toPath:config_file_path error:&error];
+        
+        if(error != nil) {
+            NSLog(@"Error copying factory defaults to app support directory: %@", error);
+            exit(-2);
+        }
+    }
+    
+    
+    proc_core_wrapper = [[ProcessorCoreWrapper alloc] initWithSampleRate:self.sysaudio.sample_rate numberOfChannels:self.sysaudio.num_channels bufferSize:(uint32_t)self.sysaudio.buffer_size configFilename:config_file_path];
     
     //[proc_core_wrapper load_config_from_file:CONFIG_FILENAME];
+    bool se_enabled = [proc_core_wrapper getStereoEnhanceEnabled];
+    float se_drive = [proc_core_wrapper getStereoEnhanceDrive];
+    int se_slider_val = ((se_drive * 100.0f) - 100.0f);
+    
+    if(se_enabled) {
+        [_stereo_enhance_enabled setState:NSControlStateValueOn];
+    } else {
+        [_stereo_enhance_enabled setState:NSControlStateValueOff];
+    }
+    
+    [_slider_stereo_enhance setIntValue:se_slider_val];
     
     AGC_PARAMS agc_settings;
     [proc_core_wrapper get_agc_settings:&agc_settings];
@@ -359,6 +414,16 @@ Boolean shutting_down = NO;
 -(IBAction) stereoEnhanceEnableChanged:(id)sender {
     NSButton* se_enabled = sender;
     [proc_core_wrapper setStereoEnhanceEnabled: se_enabled.state];
+}
+
+-(IBAction) stereoEnhanceSliderChanged:(id)sender {
+    /*
+     * The slider, as configured, goes from 1 to 200.  I'm mapping that
+     * to a stereo enhance drive (L-R boost) from 1.00 to 3.00.
+     */
+    NSSlider* slider = (NSSlider*)sender;
+    float se_drive = 1.00f + ([slider intValue] / 100.0f);
+    [proc_core_wrapper setStereoEnhanceDrive:se_drive];
 }
 
 -(void) agc_params_changed:(AGC_PARAMS) params {

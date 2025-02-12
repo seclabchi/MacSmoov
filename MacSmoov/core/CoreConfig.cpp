@@ -224,6 +224,15 @@ void CoreConfig::set_stereo_enhance_enabled(bool enabled) {
     write_cfg_to_file();
 }
 
+float CoreConfig::get_stereo_enhance_drive() {
+    return stereo_enhance_drive;
+}
+
+void CoreConfig::set_stereo_enhance_drive(float _drive) {
+    stereo_enhance_drive = _drive;
+    write_cfg_to_file();
+}
+
 bool CoreConfig::get_2band_agc_enabled() {
     return agc_params.enabled;
 }
@@ -328,6 +337,7 @@ bool CoreConfig::load_cfg_from_file(const std::string &filename) {
             
             YAML::Node stereo_enhance_node = yaml_node["stereo_enhance"];
             enable_stereo_enhance = stereo_enhance_node["enabled"].as<bool>();
+            stereo_enhance_drive = stereo_enhance_node["drive"].as<float>();
             
             std::cout << "Reading AGC Params..." << std::endl;
             
@@ -550,6 +560,7 @@ bool CoreConfig::write_cfg_to_file() {
             
             YAML::Node stereo_enhance = yaml_node["stereo_enhance"];
             stereo_enhance["enabled"] = enable_stereo_enhance;
+            stereo_enhance["drive"] = stereo_enhance_drive;
                         
             /* Read AGC Params */
             YAML::Node agc = yaml_node["agc_params"];

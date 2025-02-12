@@ -192,6 +192,19 @@ bool ProcessorCore::get_stereo_enhance_enabled() {
     return core_config->get_stereo_enhance_enabled();
 }
 
+void ProcessorCore::get_stereo_enhance_lr_diff(float* _lr_diff) {
+    proc_mod_stereo_enhance->read(_lr_diff);
+}
+
+float ProcessorCore::get_stereo_enhance_drive() {
+    return core_config->get_stereo_enhance_drive();
+}
+
+void ProcessorCore::set_stereo_enhance_drive(float _drive) {
+    proc_mod_stereo_enhance->configure(_drive);
+    core_config->set_stereo_enhance_drive(_drive);
+}
+
 void ProcessorCore::get2bandAGCGainReduction(float* gainReduct2blo, float* gainReduct2bhi, bool* gateOpenLo, bool* gateOpenHi) {
     proc_mod_2band_agc->read(gainReduct2blo, gainReduct2bhi, gateOpenLo, gateOpenHi);
     //cout << "GainredL=" << *gainReduct2blo << " H=" << *gainReduct2bhi << " GATES " << gate_open_lo << "|" << gate_open_hi << endl;

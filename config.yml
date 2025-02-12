@@ -1,19 +1,20 @@
 input_gain:
   enabled: true
-  L: -0.873732388
-  R: -0.873732388
+  L: 0.678274393
+  R: 0.678274393
 input_level:
   enabled: true
 stereo_enhance:
-  enabled: false
+  enabled: true
+  drive: 1.58999991
 agc_params:
   enabled: true
   mute_lo: false
   mute_hi: false
-  drive: 13
+  drive: 8
   target: -12
-  release_master: 30
-  release_bass: 30
+  release_master: 15
+  release_bass: 15
   gate_thresh: -24
   bass_coupling: 0.25
   window_size: -6
@@ -21,8 +22,8 @@ agc_params:
   ratio: 100000
   bass_thresh: 0
   idle_gain: 0
-  attack_master: 0.200000003
-  attack_bass: 0.200000003
+  attack_master: 0.300000012
+  attack_bass: 0.5
 hf_enhance:
   enabled: false
 multiband_crossover:
@@ -32,7 +33,7 @@ multiband_params:
   drive: 8
   gate_thresh: -60
   limiters_enabled: true
-  master_post_gain: 0
+  master_post_gain: 3
   band1_solo: false
   band1_mute: false
   band2_solo: false
@@ -54,8 +55,8 @@ multiband_params:
     band3_compressor_enabled: true
     band4_compressor_enabled: true
     band5_compressor_enabled: true
-    band34_coupling: 0.300000012
-    band45_coupling: 0.300000012
+    band34_coupling: 0.200000003
+    band45_coupling: 0.200000003
     band32_coupling: 0.300000012
     band23_coupling: 0.300000012
     band21_coupling: 0.300000012

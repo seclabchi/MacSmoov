@@ -25,10 +25,12 @@ public:
      TODO: Figure this shit out to make it universal. */
     virtual void configure(float _drive);
     virtual void process();
+    void read(float* _lrdiff);
 private:
     float* inL, *inR, *outL, *outR;
     float drive;
     float M, S;
+    float avg_lr_diff;
 };
 
 }

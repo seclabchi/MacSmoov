@@ -10,6 +10,7 @@
 @interface LevelMeter() {
     Float32 max_lev;
     Float32 min_lev;
+    bool is_linear;
 }
 @end
 
@@ -22,6 +23,7 @@
     level_r_peak = min_lev;
     self->max_lev = 0.0;
     self->min_lev = -30.0;
+    self->is_linear = false;
 }
 
 - (id)initWithFrame:(NSRect)frame {
@@ -33,8 +35,21 @@
         level_r_peak = min_lev;
         self->max_lev = 0.0;
         self->min_lev = -30.0;
+        self->is_linear = false;
     }
     return self;
+}
+
+- (void)setMeterDbMinVal:(Float32)minVal maxVal:(Float32)maxVal {
+    self->is_linear = false;
+    self->min_lev = minVal;
+    self->max_lev = maxVal;
+}
+
+- (void)setMeterLinearMinVal:(Float32)minVal maxVal:(Float32)maxVal {
+    self->is_linear = true;
+    self->min_lev = minVal;
+    self->max_lev = maxVal;
 }
 
 - (void)drawRect:(NSRect)dirtyRect {
@@ -86,6 +101,14 @@
     level_r_rms = rrms;
     level_l_peak = lpeak;
     level_r_peak = rpeak;
+    self.needsDisplay = true;
+}
+
+- (void)set_level:(Float32)level {
+    level_l_rms = 0.0;
+    level_r_rms = 0.0;
+    level_l_peak = level;
+    level_r_peak = level;
     self.needsDisplay = true;
 }
 
