@@ -247,11 +247,11 @@ bool ProcessorCore::change_multiband_settings(const MULTIBAND_PARAMS& _params) {
      */
     
     MULTIBAND_PARAMS mbp = _params;
-    mbp.comp_params[0].thresh = _params.gate_thresh;
-    mbp.comp_params[1].thresh = _params.gate_thresh;
-    mbp.comp_params[2].thresh = _params.gate_thresh;
-    mbp.comp_params[3].thresh = _params.gate_thresh;
-    mbp.comp_params[4].thresh = _params.gate_thresh;
+    mbp.comp_params[0].gate_thresh = _params.gate_thresh;
+    mbp.comp_params[1].gate_thresh = _params.gate_thresh;
+    mbp.comp_params[2].gate_thresh = _params.gate_thresh;
+    mbp.comp_params[3].gate_thresh = _params.gate_thresh;
+    mbp.comp_params[4].gate_thresh = _params.gate_thresh;
     
     proc_mod_5b_compressor->configure(mbp);
     proc_mod_5b_crossover->configure(mbp.drive);

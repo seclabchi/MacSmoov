@@ -21,41 +21,41 @@
 
 
 static const COMPRESSOR_PARAMS factory_comp1 = {
-    .target = -18.0,
+    .thresh = -18.0,
     .release = 0.100,
-    .thresh = 0.0,
+    .gate_thresh = 0.0,
     .ratio = 1.5,
     .attack = .050
 };
 
 COMPRESSOR_PARAMS factory_comp2 = {
-    .target = -18.0,
+    .thresh = -18.0,
     .release = 0.100,
-    .thresh = 0.0,
+    .gate_thresh = 0.0,
     .ratio = 1.5,
     .attack = .050
 };
 
 COMPRESSOR_PARAMS factory_comp3 = {
-    .target = -18.0,
+    .thresh = -18.0,
     .release = 0.100,
-    .thresh = 0.0,
+    .gate_thresh = 0.0,
     .ratio = 1.5,
     .attack = .050
 };
 
 COMPRESSOR_PARAMS factory_comp4 = {
-    .target = -18.0,
+    .thresh = -18.0,
     .release = 0.100,
-    .thresh = 0.0,
+    .gate_thresh = 0.0,
     .ratio = 1.5,
     .attack = .050
 };
 
 COMPRESSOR_PARAMS factory_comp5 = {
-    .target = -18.0,
+    .thresh = -18.0,
     .release = 0.100,
-    .thresh = 0.0,
+    .gate_thresh = 0.0,
     .ratio = 1.5,
     .attack = .050
 };
@@ -64,36 +64,41 @@ COMPRESSOR_PARAMS factory_comp5 = {
 /* LIMITERS                          */
 /*===================================*/
 COMPRESSOR_PARAMS factory_lim1 = {
-    .target = -18.0,
+    .thresh = -18.0,
     .release = 0.050,
+    .gate_thresh = 0.0,
     .ratio = 20.0,
     .attack = 0.050,
 };
 
 COMPRESSOR_PARAMS factory_lim2 = {
-    .target = -18.0,
+    .thresh = -18.0,
     .release = 0.050,
+    .gate_thresh = 0.0,
     .ratio = 20.0,
     .attack = 0.050,
 };
 
 COMPRESSOR_PARAMS factory_lim3 = {
-    .target = -18.0,
+    .thresh = -18.0,
     .release = 0.050,
+    .gate_thresh = 0.0,
     .ratio = 20.0,
     .attack = 0.050,
 };
 
 COMPRESSOR_PARAMS factory_lim4 = {
-    .target = -18.0,
+    .thresh = -18.0,
     .release = 0.050,
+    .gate_thresh = 0.0,
     .ratio = 20.0,
     .attack = 0.050,
 };
 
 COMPRESSOR_PARAMS factory_lim5 = {
-    .target = -18.0,
+    .thresh = -18.0,
     .release = 0.050,
+    .gate_thresh = 0.0,
     .ratio = 20.0,
     .attack = 0.050,
 };

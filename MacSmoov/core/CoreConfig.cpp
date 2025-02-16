@@ -10,6 +10,62 @@
 #include <fstream>
 #include "CoreConfig.h"
 
+namespace YAML {
+  template<>
+  struct convert<COMPRESSOR_KNEE_TYPE> {
+    static Node encode(const COMPRESSOR_KNEE_TYPE& rhs) {
+      switch (rhs) {
+          case COMPRESSOR_KNEE_TYPE::HARD_KNEE:   return Node("hard");
+          case COMPRESSOR_KNEE_TYPE::SOFT_KNEE:   return Node("soft");
+          default:                              return Node("unknown");
+      }
+    }
+
+    static bool decode(const Node& node, COMPRESSOR_KNEE_TYPE& rhs) {
+      if (!node.IsScalar()) {
+        return false;
+      }
+      const std::string value = node.Scalar();
+      if (value == "hard") {
+          rhs = COMPRESSOR_KNEE_TYPE::HARD_KNEE;
+      } else if (value == "soft") {
+          rhs = COMPRESSOR_KNEE_TYPE::SOFT_KNEE;
+      } else {
+        return false;
+      }
+      return true;
+    }
+  };
+}
+
+namespace YAML {
+  template<>
+  struct convert<MAKEUP_GAIN_MODE> {
+    static Node encode(const MAKEUP_GAIN_MODE& rhs) {
+      switch (rhs) {
+          case MAKEUP_GAIN_MODE::AUTO:    return Node("auto");
+          case MAKEUP_GAIN_MODE::MANUAL:  return Node("manual");
+          default:                       return Node("unknown");
+      }
+    }
+
+    static bool decode(const Node& node, MAKEUP_GAIN_MODE& rhs) {
+      if (!node.IsScalar()) {
+        return false;
+      }
+      const std::string value = node.Scalar();
+      if (value == "auto") {
+          rhs = MAKEUP_GAIN_MODE::AUTO;
+      } else if (value == "manual") {
+          rhs = MAKEUP_GAIN_MODE::MANUAL;
+      } else {
+        return false;
+      }
+      return true;
+    }
+  };
+}
+
 namespace fmsmoov {
 
 static CoreConfig* the_instance = nullptr;
@@ -28,9 +84,9 @@ static const AGC_PARAMS agc_params_default = {
     .mute_lo = false,
     .mute_hi = false,
     .drive = 10.0,
-    .target = -24.0,
-    .release_master = 0.300,
-    .release_bass = 0.600,
+    .thresh = -24.0,
+    .release_master = 15.000,
+    .release_bass = 15.000,
     .gate_thresh = -24.0,
     .bass_coupling = 0.3,
     .window_size = -3.0,
@@ -38,8 +94,8 @@ static const AGC_PARAMS agc_params_default = {
     .ratio = 1000.0,
     .bass_thresh = 0.0,
     .idle_gain = 0.0,
-    .attack_master = 8.000,
-    .attack_bass = 8.000,
+    .attack_master = 0.3,
+    .attack_bass = 0.4,
 };
 
 /*===================================*/
@@ -50,44 +106,69 @@ static const float multiband_drive = 10.0f;
 static const float multiband_gate_thresh = -30.0f;
 
 static const COMPRESSOR_PARAMS comp_params_b1_default = {
-    .target = -24.0,
+    .thresh = -24.0,
     .release = .100,
-    .thresh = multiband_gate_thresh,
+    .gate_thresh = multiband_gate_thresh,
     .ratio = 1.5,
-    .attack = 0.100
+    .attack = 0.100,
+    .knee_type = COMPRESSOR_KNEE_TYPE::SOFT_KNEE,
+    .knee_width = 3.0f,
+    .idle_gain = 0.0f,
+    .makeup_gain_mode = MAKEUP_GAIN_MODE::MANUAL,
+    .makeup_gain = 0.0f
  };
  
 static const COMPRESSOR_PARAMS comp_params_b2_default = {
-    .target = -24.0,
+    .thresh = -24.0,
     .release = .100,
-    .thresh = multiband_gate_thresh,
+    .gate_thresh = multiband_gate_thresh,
     .ratio = 1.5,
-    .attack = 0.100
+    .attack = 0.100,
+    .knee_type = COMPRESSOR_KNEE_TYPE::SOFT_KNEE,
+    .knee_width = 3.0f,
+    .idle_gain = 0.0f,
+    .makeup_gain_mode = MAKEUP_GAIN_MODE::MANUAL,
+    .makeup_gain = 0.0f
 
  };
  
 static const COMPRESSOR_PARAMS comp_params_b3_default = {
-    .target = -24.0,
+    .thresh = -24.0,
     .release = .100,
-    .thresh = multiband_gate_thresh,
+    .gate_thresh = multiband_gate_thresh,
     .ratio = 1.5,
-    .attack = 0.100
+    .attack = 0.100,
+    .knee_type = COMPRESSOR_KNEE_TYPE::SOFT_KNEE,
+    .knee_width = 3.0f,
+    .idle_gain = 0.0f,
+    .makeup_gain_mode = MAKEUP_GAIN_MODE::MANUAL,
+    .makeup_gain = 0.0f
  };
  
 static const COMPRESSOR_PARAMS comp_params_b4_default = {
-    .target = -24.0,
+    .thresh = -24.0,
     .release = .100,
-    .thresh = multiband_gate_thresh,
+    .gate_thresh = multiband_gate_thresh,
     .ratio = 1.5,
-    .attack = 0.100
+    .attack = 0.100,
+    .knee_type = COMPRESSOR_KNEE_TYPE::SOFT_KNEE,
+    .knee_width = 3.0f,
+    .idle_gain = 0.0f,
+    .makeup_gain_mode = MAKEUP_GAIN_MODE::MANUAL,
+    .makeup_gain = 0.0f
  };
  
 static const COMPRESSOR_PARAMS comp_params_b5_default = {
-    .target = -24.0,
+    .thresh = -24.0,
     .release = .100,
-    .thresh = multiband_gate_thresh,
+    .gate_thresh = multiband_gate_thresh,
     .ratio = 1.5,
-    .attack = 0.100
+    .attack = 0.100,
+    .knee_type = COMPRESSOR_KNEE_TYPE::SOFT_KNEE,
+    .knee_width = 3.0f,
+    .idle_gain = 0.0f,
+    .makeup_gain_mode = MAKEUP_GAIN_MODE::MANUAL,
+    .makeup_gain = 0.0f
  };
  
  /*===================================*/
@@ -96,43 +177,68 @@ static const COMPRESSOR_PARAMS comp_params_b5_default = {
 
 
 static const COMPRESSOR_PARAMS lim_params_b1_default = {
-    .target = -24.0,
+    .thresh = -24.0,
     .release = .020,
-    .thresh = multiband_gate_thresh,
+    .gate_thresh = multiband_gate_thresh,
     .ratio = 10,
-    .attack = .020
+    .attack = .020,
+    .knee_type = COMPRESSOR_KNEE_TYPE::SOFT_KNEE,
+    .knee_width = 3.0f,
+    .idle_gain = 0.0f,
+    .makeup_gain_mode = MAKEUP_GAIN_MODE::MANUAL,
+    .makeup_gain = 0.0f
  };
  
 static const COMPRESSOR_PARAMS lim_params_b2_default = {
-    .target = -24.0,
+    .thresh = -24.0,
     .release = .020,
-    .thresh = multiband_gate_thresh,
+    .gate_thresh = multiband_gate_thresh,
     .ratio = 10,
-    .attack = .020
+    .attack = .020,
+    .knee_type = COMPRESSOR_KNEE_TYPE::SOFT_KNEE,
+    .knee_width = 3.0f,
+    .idle_gain = 0.0f,
+    .makeup_gain_mode = MAKEUP_GAIN_MODE::MANUAL,
+    .makeup_gain = 0.0f
  };
  
 static const COMPRESSOR_PARAMS lim_params_b3_default = {
-    .target = -24.0,
+    .thresh = -24.0,
     .release = .020,
-    .thresh = multiband_gate_thresh,
+    .gate_thresh = multiband_gate_thresh,
     .ratio = 10,
-    .attack = .020
+    .attack = .020,
+    .knee_type = COMPRESSOR_KNEE_TYPE::SOFT_KNEE,
+    .knee_width = 3.0f,
+    .idle_gain = 0.0f,
+    .makeup_gain_mode = MAKEUP_GAIN_MODE::MANUAL,
+    .makeup_gain = 0.0f
  };
  
 static const COMPRESSOR_PARAMS lim_params_b4_default = {
-    .target = -24.0,
+    .thresh = -24.0,
     .release = .020,
-    .thresh = multiband_gate_thresh,
+    .gate_thresh = multiband_gate_thresh,
     .ratio = 10,
-    .attack = .020
+    .attack = .020,
+    .knee_type = COMPRESSOR_KNEE_TYPE::SOFT_KNEE,
+    .knee_width = 3.0f,
+    .idle_gain = 0.0f,
+    .makeup_gain_mode = MAKEUP_GAIN_MODE::MANUAL,
+    .makeup_gain = 0.0f
  };
  
 static const COMPRESSOR_PARAMS lim_params_b5_default = {
-    .target = -24.0,
+    .thresh = -24.0,
     .release = .020,
-    .thresh = multiband_gate_thresh,
+    .gate_thresh = multiband_gate_thresh,
     .ratio = 10,
-    .attack = .020
+    .attack = .020,
+    .knee_type = COMPRESSOR_KNEE_TYPE::SOFT_KNEE,
+    .knee_width = 3.0f,
+    .idle_gain = 0.0f,
+    .makeup_gain_mode = MAKEUP_GAIN_MODE::MANUAL,
+    .makeup_gain = 0.0f
  };
  
  
@@ -305,8 +411,6 @@ void CoreConfig::set_clip_level(float _clip_level) {
     write_cfg_to_file();
 }
 
-
-
 /*
  * TODO: Rework the config file read
  * This entire section is hokey, we don't need to iterate through the map
@@ -353,7 +457,7 @@ bool CoreConfig::load_cfg_from_file(const std::string &filename) {
             agc_params.mute_lo = agc["mute_lo"].as<bool>();
             agc_params.mute_hi = agc["mute_hi"].as<bool>();
             agc_params.drive = agc["drive"].as<float>();
-            agc_params.target = agc["target"].as<float>();
+            agc_params.thresh = agc["thresh"].as<float>();
             agc_params.release_master = agc["release_master"].as<float>();
             agc_params.release_bass = agc["release_bass"].as<float>();
             agc_params.gate_thresh = agc["gate_thresh"].as<float>();
@@ -434,8 +538,11 @@ bool CoreConfig::load_cfg_from_file(const std::string &filename) {
                     if(!key.compare("band")) {
                         //don't care, just for human readable purposes
                     }
-                    else if(!key.compare("target")) {
-                        comp_params.target = value.as<float>();
+                    else if(!key.compare("thresh")) {
+                        comp_params.thresh = value.as<float>();
+                    }
+                    else if(!key.compare("gate_thresh")) {
+                        comp_params.gate_thresh = value.as<float>();
                     }
                     else if(!key.compare("release")) {
                         comp_params.release = value.as<float>();
@@ -445,6 +552,21 @@ bool CoreConfig::load_cfg_from_file(const std::string &filename) {
                     }
                     else if(!key.compare("attack")) {
                         comp_params.attack = value.as<float>();
+                    }
+                    else if(!key.compare("knee_type")) {
+                        comp_params.knee_type = value.as<COMPRESSOR_KNEE_TYPE>();
+                    }
+                    else if(!key.compare("knee_width")) {
+                        comp_params.knee_width = value.as<float>();
+                    }
+                    else if(!key.compare("idle_gain")) {
+                        comp_params.idle_gain = value.as<float>();
+                    }
+                    else if(!key.compare("makeup_gain_mode")) {
+                        comp_params.makeup_gain_mode = value.as<MAKEUP_GAIN_MODE>();
+                    }
+                    else if(!key.compare("makeup_gain")) {
+                        comp_params.makeup_gain = value.as<float>();
                     }
                     else {
                         //unknown cfg element in COMPRESSOR params
@@ -460,11 +582,11 @@ bool CoreConfig::load_cfg_from_file(const std::string &filename) {
             /* Need to populate each compressor band gate threshold based on upper-level config.  This is probably
               * inefficient and might need to change later.
               */
-            multiband_params.comp_params[0].thresh = mb_params["gate_thresh"].as<float>();
-            multiband_params.comp_params[1].thresh = mb_params["gate_thresh"].as<float>();
-            multiband_params.comp_params[2].thresh = mb_params["gate_thresh"].as<float>();
-            multiband_params.comp_params[3].thresh = mb_params["gate_thresh"].as<float>();
-            multiband_params.comp_params[4].thresh = mb_params["gate_thresh"].as<float>();
+            multiband_params.comp_params[0].gate_thresh = mb_params["gate_thresh"].as<float>();
+            multiband_params.comp_params[1].gate_thresh = mb_params["gate_thresh"].as<float>();
+            multiband_params.comp_params[2].gate_thresh = mb_params["gate_thresh"].as<float>();
+            multiband_params.comp_params[3].gate_thresh = mb_params["gate_thresh"].as<float>();
+            multiband_params.comp_params[4].gate_thresh = mb_params["gate_thresh"].as<float>();
             
             
             /* Read Limiter Bands */
@@ -495,8 +617,11 @@ bool CoreConfig::load_cfg_from_file(const std::string &filename) {
                     if(!key.compare("band")) {
                         //don't care, just for human readable purposes
                     }
-                    else if(!key.compare("target")) {
-                        lim_params.target = value.as<float>();
+                    else if(!key.compare("thresh")) {
+                        lim_params.thresh = value.as<float>();
+                    }
+                    else if(!key.compare("gate_thresh")) {
+                        lim_params.gate_thresh = value.as<float>();
                     }
                     else if(!key.compare("release")) {
                         lim_params.release = value.as<float>();
@@ -507,9 +632,24 @@ bool CoreConfig::load_cfg_from_file(const std::string &filename) {
                     else if(!key.compare("attack")) {
                         lim_params.attack = value.as<float>();
                     }
+                    else if(!key.compare("knee_type")) {
+                        lim_params.knee_type = value.as<COMPRESSOR_KNEE_TYPE>();
+                    }
+                    else if(!key.compare("knee_width")) {
+                        lim_params.knee_width = value.as<float>();
+                    }
+                    else if(!key.compare("idle_gain")) {
+                        lim_params.idle_gain = value.as<float>();
+                    }
+                    else if(!key.compare("makeup_gain_mode")) {
+                        lim_params.makeup_gain_mode = value.as<MAKEUP_GAIN_MODE>();
+                    }
+                    else if(!key.compare("makeup_gain")) {
+                        lim_params.makeup_gain = value.as<float>();
+                    }
                     else {
                         //unknown cfg element in COMPRESSOR params
-                        std::cout << "UNKNOWN ELEMENT " << key << " IN COMPRESSOR PARAMS" << std::endl;
+                        std::cout << "UNKNOWN ELEMENT " << key << " IN LIMITER PARAMS" << std::endl;
                     }
                 }
                 
@@ -523,11 +663,11 @@ bool CoreConfig::load_cfg_from_file(const std::string &filename) {
               * over the place
               */
             
-            multiband_params.lim_params[0].thresh = multiband_params.comp_params[0].target + multiband_params.band1_comp_lim_offset;
-            multiband_params.lim_params[1].thresh = multiband_params.comp_params[1].target + multiband_params.band2_comp_lim_offset;
-            multiband_params.lim_params[2].thresh = multiband_params.comp_params[2].target + multiband_params.band3_comp_lim_offset;
-            multiband_params.lim_params[3].thresh = multiband_params.comp_params[3].target + multiband_params.band4_comp_lim_offset;
-            multiband_params.lim_params[4].thresh = multiband_params.comp_params[4].target + multiband_params.band5_comp_lim_offset;
+            //multiband_params.lim_params[0].thresh = multiband_params.comp_params[0].thresh + multiband_params.band1_comp_lim_offset;
+            //multiband_params.lim_params[1].thresh = multiband_params.comp_params[1].thresh + multiband_params.band2_comp_lim_offset;
+            //multiband_params.lim_params[2].thresh = multiband_params.comp_params[2].thresh + multiband_params.band3_comp_lim_offset;
+            //multiband_params.lim_params[3].thresh = multiband_params.comp_params[3].thresh + multiband_params.band4_comp_lim_offset;
+            //multiband_params.lim_params[4].thresh = multiband_params.comp_params[4].thresh + multiband_params.band5_comp_lim_offset;
             
             YAML::Node clipper_node = yaml_node["clipper"];
             enable_clipper = clipper_node["enabled"].as<bool>();
@@ -578,7 +718,7 @@ bool CoreConfig::write_cfg_to_file() {
             agc["mute_lo"] = agc_params.mute_lo;
             agc["mute_hi"] = agc_params.mute_hi;
             agc["drive"] = agc_params.drive;
-            agc["target"] = agc_params.target;
+            agc["thresh"] = agc_params.thresh;
             agc["release_master"] = agc_params.release_master;
             agc["release_bass"] = agc_params.release_bass;
             agc["gate_thresh"] = agc_params.gate_thresh;
@@ -645,10 +785,16 @@ bool CoreConfig::write_cfg_to_file() {
             for(std::size_t band = 0; band < 5; band++) {
                 YAML::Node band_settings;
                 band_settings["band"] = band + 1;
-                band_settings["target"] = multiband_params.comp_params[band].target;
+                band_settings["thresh"] = multiband_params.comp_params[band].thresh;
+                band_settings["gate_thresh"] = multiband_params.comp_params[band].gate_thresh;
                 band_settings["release"] = multiband_params.comp_params[band].release;
                 band_settings["ratio"] = multiband_params.comp_params[band].ratio;
                 band_settings["attack"] = multiband_params.comp_params[band].attack;
+                band_settings["knee_type"] = multiband_params.comp_params[band].knee_type;
+                band_settings["knee_width"] = multiband_params.comp_params[band].knee_width;
+                band_settings["idle_gain"] = multiband_params.comp_params[band].idle_gain;
+                band_settings["makeup_gain_mode"] = multiband_params.comp_params[band].makeup_gain_mode;
+                band_settings["makeup_gain"] = multiband_params.comp_params[band].makeup_gain;
                 comp_bands[band] = band_settings;
             }
             
@@ -666,10 +812,16 @@ bool CoreConfig::write_cfg_to_file() {
             for(std::size_t band = 0; band < 5; band++) {
                 YAML::Node band_settings;
                 band_settings["band"] = band + 1;
-                band_settings["target"] = multiband_params.lim_params[band].target;
+                band_settings["thresh"] = multiband_params.lim_params[band].thresh;
+                band_settings["gate_thresh"] = multiband_params.lim_params[band].gate_thresh;
                 band_settings["release"] = multiband_params.lim_params[band].release;
                 band_settings["ratio"] = multiband_params.lim_params[band].ratio;
                 band_settings["attack"] = multiband_params.lim_params[band].attack;
+                band_settings["knee_type"] = multiband_params.lim_params[band].knee_type;
+                band_settings["knee_width"] = multiband_params.lim_params[band].knee_width;
+                band_settings["idle_gain"] = multiband_params.lim_params[band].idle_gain;
+                band_settings["makeup_gain_mode"] = multiband_params.lim_params[band].makeup_gain_mode;
+                band_settings["makeup_gain"] = multiband_params.lim_params[band].makeup_gain;
                 lim_bands[band] = band_settings;
             }
             

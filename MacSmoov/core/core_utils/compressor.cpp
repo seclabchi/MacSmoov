@@ -71,7 +71,6 @@ void Compressor::recalculate() {
     alphaA = expf(-logf(9.0f)/(samprate * params.attack));
     alphaR_norm = expf(-logf(9.0f)/(samprate * params.release));
     alphaR_window = expf(-logf(9.0f)/(samprate * window_release));
-    M = -(params.target - (params.target/params.ratio)); //dB
 }
 
 Compressor::~Compressor()
@@ -105,13 +104,13 @@ void Compressor::compute_gc(float* inL, float* inR, float* _gc_raw) {
             indb = indbR[i];
         }
         
-        if(indb < params.target) {
+        if(indb < params.thresh) {
             sc = indb;
         }
         else {
-            sc = params.target + ((indb - params.target) / params.ratio);
+            sc = params.thresh + ((indb - params.thresh) / params.ratio);
         }
-
+        
         gc_raw[i] = sc - indb;
         
         if(_gc_raw) {
@@ -150,7 +149,7 @@ void Compressor::process(float* inL, float* inR, float* outL, float* outR, uint3
             gc = ((1-coupling) * gc_raw[i]) + (coupling * gainCouplingInput[i]);
         }
         
-        if(indb < params.thresh){
+        if(indb < params.gate_thresh) {
             gs = gsPrev;
             gated_counter++;
         }

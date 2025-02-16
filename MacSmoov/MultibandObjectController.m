@@ -69,6 +69,7 @@
 
 @end
 
+
 @interface MultibandObjectController () {
 }
 
@@ -161,70 +162,246 @@
     params.band4_comp_lim_offset = [[_b4_dict valueForKey:@"comp_offset"] floatValue];
     params.band5_comp_lim_offset = [[_b5_dict valueForKey:@"comp_offset"] floatValue];
     
+    /* ======================= BAND 1 ======================= */
+    
     params.comp_params[0].release = [[_b1_dict valueForKey:@"comp_release"] floatValue];
     params.comp_params[0].ratio = [[_b1_dict valueForKey:@"comp_ratio"] floatValue];
     params.comp_params[0].attack = [[_b1_dict valueForKey:@"comp_attack"] floatValue];
-    params.comp_params[0].target = [[_b1_dict valueForKey:@"comp_target"] floatValue];
     params.comp_params[0].thresh = [[_b1_dict valueForKey:@"comp_thresh"] floatValue];
+    params.comp_params[0].gate_thresh = [[_b1_dict valueForKey:@"comp_gate_thresh"] floatValue];
+    params.comp_params[0].idle_gain = [[_b1_dict valueForKey:@"comp_idle_gain"] floatValue];
+    if([[_b1_dict valueForKey:@"comp_hard_knee"] boolValue]) {
+        params.comp_params[0].knee_type = HARD_KNEE;
+    }
+    else {
+        params.comp_params[0].knee_type = SOFT_KNEE;
+    }
+    params.comp_params[0].knee_width = [[_b1_dict valueForKey:@"comp_knee_width"] floatValue];
+    if([[_b1_dict valueForKey:@"comp_makeup_gain_auto"] boolValue]) {
+        params.comp_params[0].makeup_gain_mode = AUTO;
+    }
+    else {
+        params.comp_params[0].makeup_gain_mode = MANUAL;
+    }
+    params.comp_params[0].makeup_gain = [[_b1_dict valueForKey:@"comp_makeup_gain"] floatValue];
+    
+    /* ============== LIMITERS =============== */
+    
     params.lim_params[0].release = [[_b1_dict valueForKey:@"lim_release"] floatValue];
     params.lim_params[0].ratio = [[_b1_dict valueForKey:@"lim_ratio"] floatValue];
     params.lim_params[0].attack = [[_b1_dict valueForKey:@"lim_attack"] floatValue];
-    params.lim_params[0].target = [[_b1_dict valueForKey:@"lim_target"] floatValue];
     params.lim_params[0].thresh = [[_b1_dict valueForKey:@"lim_thresh"] floatValue];
+    params.lim_params[0].gate_thresh = [[_b1_dict valueForKey:@"lim_gate_thresh"] floatValue];
+    params.lim_params[0].idle_gain = [[_b1_dict valueForKey:@"lim_idle_gain"] floatValue];
+    if([[_b1_dict valueForKey:@"lim_hard_knee"] boolValue]) {
+        params.lim_params[0].knee_type = HARD_KNEE;
+    }
+    else {
+        params.lim_params[0].knee_type = SOFT_KNEE;
+    }
+    params.lim_params[0].knee_width = [[_b1_dict valueForKey:@"lim_knee_width"] floatValue];
+    if([[_b1_dict valueForKey:@"lim_makeup_gain_auto"] boolValue]) {
+        params.lim_params[0].makeup_gain_mode = AUTO;
+    }
+    else {
+        params.lim_params[0].makeup_gain_mode = MANUAL;
+    }
+    params.lim_params[0].makeup_gain = [[_b1_dict valueForKey:@"lim_makeup_gain"] floatValue];
+    
+    /* ======================= BAND 2 ======================= */
     
     params.comp_params[1].release = [[_b2_dict valueForKey:@"comp_release"] floatValue];
     params.comp_params[1].ratio = [[_b2_dict valueForKey:@"comp_ratio"] floatValue];
     params.comp_params[1].attack = [[_b2_dict valueForKey:@"comp_attack"] floatValue];
-    params.comp_params[1].target = [[_b2_dict valueForKey:@"comp_target"] floatValue];
     params.comp_params[1].thresh = [[_b2_dict valueForKey:@"comp_thresh"] floatValue];
+    params.comp_params[1].gate_thresh = [[_b2_dict valueForKey:@"comp_gate_thresh"] floatValue];
+    params.comp_params[1].idle_gain = [[_b2_dict valueForKey:@"comp_idle_gain"] floatValue];
+    if([[_b2_dict valueForKey:@"comp_hard_knee"] boolValue]) {
+        params.comp_params[1].knee_type = HARD_KNEE;
+    }
+    else {
+        params.comp_params[1].knee_type = SOFT_KNEE;
+    }
+    params.comp_params[1].knee_width = [[_b2_dict valueForKey:@"comp_knee_width"] floatValue];
+    if([[_b2_dict valueForKey:@"comp_makeup_gain_auto"] boolValue]) {
+        params.comp_params[1].makeup_gain_mode = AUTO;
+    }
+    else {
+        params.comp_params[1].makeup_gain_mode = MANUAL;
+    }
+    params.comp_params[1].makeup_gain = [[_b2_dict valueForKey:@"comp_makeup_gain"] floatValue];
+
+    /* ============== LIMITERS =============== */
+
     params.lim_params[1].release = [[_b2_dict valueForKey:@"lim_release"] floatValue];
     params.lim_params[1].ratio = [[_b2_dict valueForKey:@"lim_ratio"] floatValue];
     params.lim_params[1].attack = [[_b2_dict valueForKey:@"lim_attack"] floatValue];
-    params.lim_params[1].target = [[_b2_dict valueForKey:@"lim_target"] floatValue];
     params.lim_params[1].thresh = [[_b2_dict valueForKey:@"lim_thresh"] floatValue];
+    params.lim_params[1].gate_thresh = [[_b2_dict valueForKey:@"lim_gate_thresh"] floatValue];
+    params.lim_params[1].idle_gain = [[_b2_dict valueForKey:@"lim_idle_gain"] floatValue];
+    if([[_b2_dict valueForKey:@"lim_hard_knee"] boolValue]) {
+        params.lim_params[1].knee_type = HARD_KNEE;
+    }
+    else {
+        params.lim_params[1].knee_type = SOFT_KNEE;
+    }
+    params.lim_params[1].knee_width = [[_b2_dict valueForKey:@"lim_knee_width"] floatValue];
+    if([[_b2_dict valueForKey:@"lim_makeup_gain_auto"] boolValue]) {
+        params.lim_params[1].makeup_gain_mode = AUTO;
+    }
+    else {
+        params.lim_params[1].makeup_gain_mode = MANUAL;
+    }
+    params.lim_params[1].makeup_gain = [[_b2_dict valueForKey:@"lim_makeup_gain"] floatValue];
+    
+    /* ======================= BAND 3 ======================= */
     
     params.comp_params[2].release = [[_b3_dict valueForKey:@"comp_release"] floatValue];
     params.comp_params[2].ratio = [[_b3_dict valueForKey:@"comp_ratio"] floatValue];
     params.comp_params[2].attack = [[_b3_dict valueForKey:@"comp_attack"] floatValue];
-    params.comp_params[2].target = [[_b3_dict valueForKey:@"comp_target"] floatValue];
     params.comp_params[2].thresh = [[_b3_dict valueForKey:@"comp_thresh"] floatValue];
+    params.comp_params[2].gate_thresh = [[_b3_dict valueForKey:@"comp_gate_thresh"] floatValue];
+    params.comp_params[2].idle_gain = [[_b3_dict valueForKey:@"comp_idle_gain"] floatValue];
+    if([[_b3_dict valueForKey:@"comp_hard_knee"] boolValue]) {
+        params.comp_params[2].knee_type = HARD_KNEE;
+    }
+    else {
+        params.comp_params[2].knee_type = SOFT_KNEE;
+    }
+    params.comp_params[2].knee_width = [[_b3_dict valueForKey:@"comp_knee_width"] floatValue];
+    if([[_b3_dict valueForKey:@"comp_makeup_gain_auto"] boolValue]) {
+        params.comp_params[2].makeup_gain_mode = AUTO;
+    }
+    else {
+        params.comp_params[2].makeup_gain_mode = MANUAL;
+    }
+    params.comp_params[2].makeup_gain = [[_b3_dict valueForKey:@"comp_makeup_gain"] floatValue];
+
+    /* ============== LIMITERS =============== */
+
     params.lim_params[2].release = [[_b3_dict valueForKey:@"lim_release"] floatValue];
     params.lim_params[2].ratio = [[_b3_dict valueForKey:@"lim_ratio"] floatValue];
     params.lim_params[2].attack = [[_b3_dict valueForKey:@"lim_attack"] floatValue];
-    params.lim_params[2].target = [[_b3_dict valueForKey:@"lim_target"] floatValue];
     params.lim_params[2].thresh = [[_b3_dict valueForKey:@"lim_thresh"] floatValue];
+    params.lim_params[2].gate_thresh = [[_b3_dict valueForKey:@"lim_gate_thresh"] floatValue];
+    params.lim_params[2].idle_gain = [[_b3_dict valueForKey:@"lim_idle_gain"] floatValue];
+    if([[_b3_dict valueForKey:@"lim_hard_knee"] boolValue]) {
+        params.lim_params[2].knee_type = HARD_KNEE;
+    }
+    else {
+        params.lim_params[2].knee_type = SOFT_KNEE;
+    }
+    params.lim_params[2].knee_width = [[_b3_dict valueForKey:@"lim_knee_width"] floatValue];
+    if([[_b3_dict valueForKey:@"lim_makeup_gain_auto"] boolValue]) {
+        params.lim_params[2].makeup_gain_mode = AUTO;
+    }
+    else {
+        params.lim_params[2].makeup_gain_mode = MANUAL;
+    }
+    params.lim_params[2].makeup_gain = [[_b3_dict valueForKey:@"lim_makeup_gain"] floatValue];
+    
+    /* ======================= BAND 4 ======================= */
     
     params.comp_params[3].release = [[_b4_dict valueForKey:@"comp_release"] floatValue];
     params.comp_params[3].ratio = [[_b4_dict valueForKey:@"comp_ratio"] floatValue];
     params.comp_params[3].attack = [[_b4_dict valueForKey:@"comp_attack"] floatValue];
-    params.comp_params[3].target = [[_b4_dict valueForKey:@"comp_target"] floatValue];
     params.comp_params[3].thresh = [[_b4_dict valueForKey:@"comp_thresh"] floatValue];
+    params.comp_params[3].gate_thresh = [[_b4_dict valueForKey:@"comp_gate_thresh"] floatValue];
+    params.comp_params[3].idle_gain = [[_b4_dict valueForKey:@"comp_idle_gain"] floatValue];
+    if([[_b4_dict valueForKey:@"comp_hard_knee"] boolValue]) {
+        params.comp_params[3].knee_type = HARD_KNEE;
+    }
+    else {
+        params.comp_params[3].knee_type = SOFT_KNEE;
+    }
+    params.comp_params[3].knee_width = [[_b4_dict valueForKey:@"comp_knee_width"] floatValue];
+    if([[_b4_dict valueForKey:@"comp_makeup_gain_auto"] boolValue]) {
+        params.comp_params[3].makeup_gain_mode = AUTO;
+    }
+    else {
+        params.comp_params[3].makeup_gain_mode = MANUAL;
+    }
+    params.comp_params[3].makeup_gain = [[_b4_dict valueForKey:@"comp_makeup_gain"] floatValue];
+
+
+    /* ============== LIMITERS =============== */
+
     params.lim_params[3].release = [[_b4_dict valueForKey:@"lim_release"] floatValue];
     params.lim_params[3].ratio = [[_b4_dict valueForKey:@"lim_ratio"] floatValue];
     params.lim_params[3].attack = [[_b4_dict valueForKey:@"lim_attack"] floatValue];
-    params.lim_params[3].target = [[_b4_dict valueForKey:@"lim_target"] floatValue];
     params.lim_params[3].thresh = [[_b4_dict valueForKey:@"lim_thresh"] floatValue];
+    params.lim_params[3].gate_thresh = [[_b4_dict valueForKey:@"lim_gate_thresh"] floatValue];
+    params.lim_params[3].idle_gain = [[_b4_dict valueForKey:@"lim_idle_gain"] floatValue];
+    if([[_b4_dict valueForKey:@"lim_hard_knee"] boolValue]) {
+        params.lim_params[3].knee_type = HARD_KNEE;
+    }
+    else {
+        params.lim_params[3].knee_type = SOFT_KNEE;
+    }
+    params.lim_params[3].knee_width = [[_b4_dict valueForKey:@"lim_knee_width"] floatValue];
+    if([[_b4_dict valueForKey:@"lim_makeup_gain_auto"] boolValue]) {
+        params.lim_params[3].makeup_gain_mode = AUTO;
+    }
+    else {
+        params.lim_params[3].makeup_gain_mode = MANUAL;
+    }
+    params.lim_params[3].makeup_gain = [[_b4_dict valueForKey:@"lim_makeup_gain"] floatValue];
+    
+    /* ======================= BAND 5 ======================= */
     
     params.comp_params[4].release = [[_b5_dict valueForKey:@"comp_release"] floatValue];
     params.comp_params[4].ratio = [[_b5_dict valueForKey:@"comp_ratio"] floatValue];
     params.comp_params[4].attack = [[_b5_dict valueForKey:@"comp_attack"] floatValue];
-    params.comp_params[4].target = [[_b5_dict valueForKey:@"comp_target"] floatValue];
     params.comp_params[4].thresh = [[_b5_dict valueForKey:@"comp_thresh"] floatValue];
+    params.comp_params[4].gate_thresh = [[_b5_dict valueForKey:@"comp_gate_thresh"] floatValue];
+    params.comp_params[4].idle_gain = [[_b5_dict valueForKey:@"comp_idle_gain"] floatValue];
+    if([[_b5_dict valueForKey:@"comp_hard_knee"] boolValue]) {
+        params.comp_params[4].knee_type = HARD_KNEE;
+    }
+    else {
+        params.comp_params[4].knee_type = SOFT_KNEE;
+    }
+    params.comp_params[4].knee_width = [[_b5_dict valueForKey:@"comp_knee_width"] floatValue];
+    if([[_b5_dict valueForKey:@"comp_makeup_gain_auto"] boolValue]) {
+        params.comp_params[4].makeup_gain_mode = AUTO;
+    }
+    else {
+        params.comp_params[4].makeup_gain_mode = MANUAL;
+    }
+    params.comp_params[4].makeup_gain = [[_b5_dict valueForKey:@"comp_makeup_gain"] floatValue];
+
+    /* ============== LIMITERS =============== */
+
     params.lim_params[4].release = [[_b5_dict valueForKey:@"lim_release"] floatValue];
     params.lim_params[4].ratio = [[_b5_dict valueForKey:@"lim_ratio"] floatValue];
     params.lim_params[4].attack = [[_b5_dict valueForKey:@"lim_attack"] floatValue];
-    params.lim_params[4].target = [[_b5_dict valueForKey:@"lim_target"] floatValue];
     params.lim_params[4].thresh = [[_b5_dict valueForKey:@"lim_thresh"] floatValue];
+    params.lim_params[4].gate_thresh = [[_b5_dict valueForKey:@"lim_gate_thresh"] floatValue];
+    params.lim_params[4].idle_gain = [[_b5_dict valueForKey:@"lim_idle_gain"] floatValue];
+    if([[_b5_dict valueForKey:@"lim_hard_knee"] boolValue]) {
+        params.lim_params[4].knee_type = HARD_KNEE;
+    }
+    else {
+        params.lim_params[4].knee_type = SOFT_KNEE;
+    }
+    params.lim_params[4].knee_width = [[_b5_dict valueForKey:@"lim_knee_width"] floatValue];
+    if([[_b5_dict valueForKey:@"lim_makeup_gain_auto"] boolValue]) {
+        params.lim_params[4].makeup_gain_mode = AUTO;
+    }
+    else {
+        params.lim_params[4].makeup_gain_mode = MANUAL;
+    }
+    params.lim_params[4].makeup_gain = [[_b5_dict valueForKey:@"lim_makeup_gain"] floatValue];
     
     /* Gotta recalculate the limiter thresholds per band with offset
      * TODO: FIGURE OUT THE SETTINGS - one single place to compute everything
      */
     
-    params.lim_params[0].thresh = params.comp_params[0].target + params.band1_comp_lim_offset;
-    params.lim_params[1].thresh = params.comp_params[1].target + params.band2_comp_lim_offset;
-    params.lim_params[2].thresh = params.comp_params[2].target + params.band3_comp_lim_offset;
-    params.lim_params[3].thresh = params.comp_params[3].target + params.band4_comp_lim_offset;
-    params.lim_params[4].thresh = params.comp_params[4].target + params.band5_comp_lim_offset;
+    //params.lim_params[0].thresh = params.comp_params[0].thresh + params.band1_comp_lim_offset;
+    //params.lim_params[1].thresh = params.comp_params[1].thresh + params.band2_comp_lim_offset;
+    //params.lim_params[2].thresh = params.comp_params[2].thresh + params.band3_comp_lim_offset;
+    //params.lim_params[3].thresh = params.comp_params[3].thresh + params.band4_comp_lim_offset;
+    //params.lim_params[4].thresh = params.comp_params[4].thresh + params.band5_comp_lim_offset;
      
     return params;
 }
@@ -271,60 +448,276 @@
     _b4_dict[@"comp_offset"] = [NSNumber numberWithFloat:settings.band4_comp_lim_offset];
     _b5_dict[@"comp_offset"] = [NSNumber numberWithFloat:settings.band5_comp_lim_offset];
     
+    
+    /* ============================== BAND 1 =============================== */
+    
     _b1_dict[@"comp_release"] = [NSNumber numberWithFloat:settings.comp_params[0].release];
     _b1_dict[@"comp_ratio"] = [NSNumber numberWithFloat:settings.comp_params[0].ratio];
     _b1_dict[@"comp_attack"] = [NSNumber numberWithFloat:settings.comp_params[0].attack];
-    _b1_dict[@"comp_target"] = [NSNumber numberWithFloat:settings.comp_params[0].target];
     _b1_dict[@"comp_thresh"] = [NSNumber numberWithFloat:settings.comp_params[0].thresh];
+    _b1_dict[@"comp_gate_thresh"] = [NSNumber numberWithFloat:settings.comp_params[0].gate_thresh];
+    _b1_dict[@"comp_idle_gain"] = [NSNumber numberWithFloat:settings.comp_params[0].idle_gain];
+    if(settings.comp_params[0].knee_type == HARD_KNEE) {
+        _b1_dict[@"comp_hard_knee"] = [NSNumber numberWithBool:true];
+        _b1_dict[@"comp_soft_knee"] = [NSNumber numberWithBool:false];
+    }
+    else {
+        _b1_dict[@"comp_hard_knee"] = [NSNumber numberWithBool:false];
+        _b1_dict[@"comp_soft_knee"] = [NSNumber numberWithBool:true];
+    }
+    _b1_dict[@"comp_knee_width"] = [NSNumber numberWithFloat:settings.comp_params[0].knee_width];
+    if(settings.comp_params[0].makeup_gain_mode == AUTO) {
+        _b1_dict[@"comp_makeup_gain_auto"] = [NSNumber numberWithBool:true];
+        _b1_dict[@"comp_makeup_gain_manual"] = [NSNumber numberWithBool:false];
+    }
+    else {
+        _b1_dict[@"comp_makeup_gain_auto"] = [NSNumber numberWithBool:false];
+        _b1_dict[@"comp_makeup_gain_manual"] = [NSNumber numberWithBool:true];
+    }
+    _b1_dict[@"comp_makeup_gain"] = [NSNumber numberWithFloat:settings.comp_params[0].makeup_gain];
+    
+    /* ================== LIMITERS =================== */
+    
     _b1_dict[@"lim_release"] = [NSNumber numberWithFloat:settings.lim_params[0].release];
     _b1_dict[@"lim_ratio"] = [NSNumber numberWithFloat:settings.lim_params[0].ratio];
     _b1_dict[@"lim_attack"] = [NSNumber numberWithFloat:settings.lim_params[0].attack];
-    _b1_dict[@"lim_target"] = [NSNumber numberWithFloat:settings.lim_params[0].target];
     _b1_dict[@"lim_thresh"] = [NSNumber numberWithFloat:settings.lim_params[0].thresh];
+    _b1_dict[@"lim_gate_thresh"] = [NSNumber numberWithFloat:settings.lim_params[0].gate_thresh];
+    _b1_dict[@"lim_idle_gain"] = [NSNumber numberWithFloat:settings.lim_params[0].idle_gain];
+    if(settings.lim_params[0].knee_type == HARD_KNEE) {
+        _b1_dict[@"lim_hard_knee"] = [NSNumber numberWithBool:true];
+        _b1_dict[@"lim_soft_knee"] = [NSNumber numberWithBool:false];
+    }
+    else {
+        _b1_dict[@"lim_hard_knee"] = [NSNumber numberWithBool:false];
+        _b1_dict[@"lim_soft_knee"] = [NSNumber numberWithBool:true];
+    }
+    _b1_dict[@"lim_knee_width"] = [NSNumber numberWithFloat:settings.lim_params[0].knee_width];
+    if(settings.lim_params[0].makeup_gain_mode == AUTO) {
+        _b1_dict[@"lim_makeup_gain_auto"] = [NSNumber numberWithBool:true];
+        _b1_dict[@"lim_makeup_gain_manual"] = [NSNumber numberWithBool:false];
+    }
+    else {
+        _b1_dict[@"lim_makeup_gain_auto"] = [NSNumber numberWithBool:false];
+        _b1_dict[@"lim_makeup_gain_manual"] = [NSNumber numberWithBool:true];
+    }
+    _b1_dict[@"lim_makeup_gain"] = [NSNumber numberWithFloat:settings.lim_params[0].makeup_gain];
     
+    /* ============================== BAND 2 =============================== */
+
     _b2_dict[@"comp_release"] = [NSNumber numberWithFloat:settings.comp_params[1].release];
     _b2_dict[@"comp_ratio"] = [NSNumber numberWithFloat:settings.comp_params[1].ratio];
     _b2_dict[@"comp_attack"] = [NSNumber numberWithFloat:settings.comp_params[1].attack];
-    _b2_dict[@"comp_target"] = [NSNumber numberWithFloat:settings.comp_params[1].target];
     _b2_dict[@"comp_thresh"] = [NSNumber numberWithFloat:settings.comp_params[1].thresh];
+    _b2_dict[@"comp_gate_thresh"] = [NSNumber numberWithFloat:settings.comp_params[1].gate_thresh];
+    _b2_dict[@"comp_idle_gain"] = [NSNumber numberWithFloat:settings.comp_params[1].idle_gain];
+    if(settings.comp_params[1].knee_type == HARD_KNEE) {
+        _b2_dict[@"comp_hard_knee"] = [NSNumber numberWithBool:true];
+        _b2_dict[@"comp_soft_knee"] = [NSNumber numberWithBool:false];
+    }
+    else {
+        _b2_dict[@"comp_hard_knee"] = [NSNumber numberWithBool:false];
+        _b2_dict[@"comp_soft_knee"] = [NSNumber numberWithBool:true];
+    }
+    _b2_dict[@"comp_knee_width"] = [NSNumber numberWithFloat:settings.comp_params[1].knee_width];
+    if(settings.comp_params[1].makeup_gain_mode == AUTO) {
+        _b2_dict[@"comp_makeup_gain_auto"] = [NSNumber numberWithBool:true];
+        _b2_dict[@"comp_makeup_gain_manual"] = [NSNumber numberWithBool:false];
+    }
+    else {
+        _b2_dict[@"comp_makeup_gain_auto"] = [NSNumber numberWithBool:false];
+        _b2_dict[@"comp_makeup_gain_manual"] = [NSNumber numberWithBool:true];
+    }
+    _b2_dict[@"comp_makeup_gain"] = [NSNumber numberWithFloat:settings.comp_params[1].makeup_gain];
+    
+    /* ================== LIMITERS =================== */
+    
     _b2_dict[@"lim_release"] = [NSNumber numberWithFloat:settings.lim_params[1].release];
     _b2_dict[@"lim_ratio"] = [NSNumber numberWithFloat:settings.lim_params[1].ratio];
     _b2_dict[@"lim_attack"] = [NSNumber numberWithFloat:settings.lim_params[1].attack];
-    _b2_dict[@"lim_target"] = [NSNumber numberWithFloat:settings.lim_params[1].target];
     _b2_dict[@"lim_thresh"] = [NSNumber numberWithFloat:settings.lim_params[1].thresh];
-    
+    _b2_dict[@"lim_gate_thresh"] = [NSNumber numberWithFloat:settings.lim_params[1].gate_thresh];
+    _b2_dict[@"lim_idle_gain"] = [NSNumber numberWithFloat:settings.lim_params[1].idle_gain];
+    if(settings.lim_params[1].knee_type == HARD_KNEE) {
+        _b2_dict[@"lim_hard_knee"] = [NSNumber numberWithBool:true];
+        _b2_dict[@"lim_soft_knee"] = [NSNumber numberWithBool:false];
+    }
+    else {
+        _b2_dict[@"lim_hard_knee"] = [NSNumber numberWithBool:false];
+        _b2_dict[@"lim_soft_knee"] = [NSNumber numberWithBool:true];
+    }
+    _b2_dict[@"lim_knee_width"] = [NSNumber numberWithFloat:settings.lim_params[1].knee_width];
+    if(settings.lim_params[1].makeup_gain_mode == AUTO) {
+        _b2_dict[@"lim_makeup_gain_auto"] = [NSNumber numberWithBool:true];
+        _b2_dict[@"lim_makeup_gain_manual"] = [NSNumber numberWithBool:false];
+    }
+    else {
+        _b2_dict[@"lim_makeup_gain_auto"] = [NSNumber numberWithBool:false];
+        _b2_dict[@"lim_makeup_gain_manual"] = [NSNumber numberWithBool:true];
+    }
+    _b2_dict[@"lim_makeup_gain"] = [NSNumber numberWithFloat:settings.lim_params[1].makeup_gain];
+
+    /* ============================== BAND 3 =============================== */
+   
     _b3_dict[@"comp_release"] = [NSNumber numberWithFloat:settings.comp_params[2].release];
     _b3_dict[@"comp_ratio"] = [NSNumber numberWithFloat:settings.comp_params[2].ratio];
     _b3_dict[@"comp_attack"] = [NSNumber numberWithFloat:settings.comp_params[2].attack];
-    _b3_dict[@"comp_target"] = [NSNumber numberWithFloat:settings.comp_params[2].target];
     _b3_dict[@"comp_thresh"] = [NSNumber numberWithFloat:settings.comp_params[2].thresh];
+    _b3_dict[@"comp_gate_thresh"] = [NSNumber numberWithFloat:settings.comp_params[2].gate_thresh];
+    _b3_dict[@"comp_idle_gain"] = [NSNumber numberWithFloat:settings.comp_params[2].idle_gain];
+    if(settings.comp_params[2].knee_type == HARD_KNEE) {
+        _b3_dict[@"comp_hard_knee"] = [NSNumber numberWithBool:true];
+        _b3_dict[@"comp_soft_knee"] = [NSNumber numberWithBool:false];
+    }
+    else {
+        _b3_dict[@"comp_hard_knee"] = [NSNumber numberWithBool:false];
+        _b3_dict[@"comp_soft_knee"] = [NSNumber numberWithBool:true];
+    }
+    _b3_dict[@"comp_knee_width"] = [NSNumber numberWithFloat:settings.comp_params[2].knee_width];
+    if(settings.comp_params[2].makeup_gain_mode == AUTO) {
+        _b3_dict[@"comp_makeup_gain_auto"] = [NSNumber numberWithBool:true];
+        _b3_dict[@"comp_makeup_gain_manual"] = [NSNumber numberWithBool:false];
+    }
+    else {
+        _b3_dict[@"comp_makeup_gain_auto"] = [NSNumber numberWithBool:false];
+        _b3_dict[@"comp_makeup_gain_manual"] = [NSNumber numberWithBool:true];
+    }
+    _b3_dict[@"comp_makeup_gain"] = [NSNumber numberWithFloat:settings.comp_params[2].makeup_gain];
+    
+    /* ================== LIMITERS =================== */
+    
     _b3_dict[@"lim_release"] = [NSNumber numberWithFloat:settings.lim_params[2].release];
     _b3_dict[@"lim_ratio"] = [NSNumber numberWithFloat:settings.lim_params[2].ratio];
     _b3_dict[@"lim_attack"] = [NSNumber numberWithFloat:settings.lim_params[2].attack];
-    _b3_dict[@"lim_target"] = [NSNumber numberWithFloat:settings.lim_params[2].target];
     _b3_dict[@"lim_thresh"] = [NSNumber numberWithFloat:settings.lim_params[2].thresh];
+    _b3_dict[@"lim_gate_thresh"] = [NSNumber numberWithFloat:settings.lim_params[2].gate_thresh];
+    _b3_dict[@"lim_idle_gain"] = [NSNumber numberWithFloat:settings.lim_params[2].idle_gain];
+    if(settings.lim_params[2].knee_type == HARD_KNEE) {
+        _b3_dict[@"lim_hard_knee"] = [NSNumber numberWithBool:true];
+        _b3_dict[@"lim_soft_knee"] = [NSNumber numberWithBool:false];
+    }
+    else {
+        _b3_dict[@"lim_hard_knee"] = [NSNumber numberWithBool:false];
+        _b3_dict[@"lim_soft_knee"] = [NSNumber numberWithBool:true];
+    }
+    _b3_dict[@"lim_knee_width"] = [NSNumber numberWithFloat:settings.lim_params[2].knee_width];
+    if(settings.lim_params[2].makeup_gain_mode == AUTO) {
+        _b3_dict[@"lim_makeup_gain_auto"] = [NSNumber numberWithBool:true];
+        _b3_dict[@"lim_makeup_gain_manual"] = [NSNumber numberWithBool:false];
+    }
+    else {
+        _b3_dict[@"lim_makeup_gain_auto"] = [NSNumber numberWithBool:false];
+        _b3_dict[@"lim_makeup_gain_manual"] = [NSNumber numberWithBool:true];
+    }
+    _b3_dict[@"lim_makeup_gain"] = [NSNumber numberWithFloat:settings.lim_params[2].makeup_gain];
+
+    /* ============================== BAND 4 =============================== */
     
     _b4_dict[@"comp_release"] = [NSNumber numberWithFloat:settings.comp_params[3].release];
     _b4_dict[@"comp_ratio"] = [NSNumber numberWithFloat:settings.comp_params[3].ratio];
     _b4_dict[@"comp_attack"] = [NSNumber numberWithFloat:settings.comp_params[3].attack];
-    _b4_dict[@"comp_target"] = [NSNumber numberWithFloat:settings.comp_params[3].target];
     _b4_dict[@"comp_thresh"] = [NSNumber numberWithFloat:settings.comp_params[3].thresh];
+    _b4_dict[@"comp_gate_thresh"] = [NSNumber numberWithFloat:settings.comp_params[3].gate_thresh];
+    _b4_dict[@"comp_idle_gain"] = [NSNumber numberWithFloat:settings.comp_params[3].idle_gain];
+    if(settings.comp_params[3].knee_type == HARD_KNEE) {
+        _b4_dict[@"comp_hard_knee"] = [NSNumber numberWithBool:true];
+        _b4_dict[@"comp_soft_knee"] = [NSNumber numberWithBool:false];
+    }
+    else {
+        _b4_dict[@"comp_hard_knee"] = [NSNumber numberWithBool:false];
+        _b4_dict[@"comp_soft_knee"] = [NSNumber numberWithBool:true];
+    }
+    _b4_dict[@"comp_knee_width"] = [NSNumber numberWithFloat:settings.comp_params[3].knee_width];
+    if(settings.comp_params[3].makeup_gain_mode == AUTO) {
+        _b4_dict[@"comp_makeup_gain_auto"] = [NSNumber numberWithBool:true];
+        _b4_dict[@"comp_makeup_gain_manual"] = [NSNumber numberWithBool:false];
+    }
+    else {
+        _b4_dict[@"comp_makeup_gain_auto"] = [NSNumber numberWithBool:false];
+        _b4_dict[@"comp_makeup_gain_manual"] = [NSNumber numberWithBool:true];
+    }
+    _b4_dict[@"comp_makeup_gain"] = [NSNumber numberWithFloat:settings.comp_params[3].makeup_gain];
+    
+    /* ================== LIMITERS =================== */
+    
     _b4_dict[@"lim_release"] = [NSNumber numberWithFloat:settings.lim_params[3].release];
     _b4_dict[@"lim_ratio"] = [NSNumber numberWithFloat:settings.lim_params[3].ratio];
     _b4_dict[@"lim_attack"] = [NSNumber numberWithFloat:settings.lim_params[3].attack];
-    _b4_dict[@"lim_target"] = [NSNumber numberWithFloat:settings.lim_params[3].target];
     _b4_dict[@"lim_thresh"] = [NSNumber numberWithFloat:settings.lim_params[3].thresh];
+    _b4_dict[@"lim_gate_thresh"] = [NSNumber numberWithFloat:settings.lim_params[3].gate_thresh];
+    _b4_dict[@"lim_idle_gain"] = [NSNumber numberWithFloat:settings.lim_params[3].idle_gain];
+    if(settings.lim_params[3].knee_type == HARD_KNEE) {
+        _b4_dict[@"lim_hard_knee"] = [NSNumber numberWithBool:true];
+        _b4_dict[@"lim_soft_knee"] = [NSNumber numberWithBool:false];
+    }
+    else {
+        _b4_dict[@"lim_hard_knee"] = [NSNumber numberWithBool:false];
+        _b4_dict[@"lim_soft_knee"] = [NSNumber numberWithBool:true];
+    }
+    _b4_dict[@"lim_knee_width"] = [NSNumber numberWithFloat:settings.lim_params[3].knee_width];
+    if(settings.lim_params[3].makeup_gain_mode == AUTO) {
+        _b4_dict[@"lim_makeup_gain_auto"] = [NSNumber numberWithBool:true];
+        _b4_dict[@"lim_makeup_gain_manual"] = [NSNumber numberWithBool:false];
+    }
+    else {
+        _b4_dict[@"lim_makeup_gain_auto"] = [NSNumber numberWithBool:false];
+        _b4_dict[@"lim_makeup_gain_manual"] = [NSNumber numberWithBool:true];
+    }
+    _b4_dict[@"lim_makeup_gain"] = [NSNumber numberWithFloat:settings.lim_params[3].makeup_gain];
+
+    /* ============================== BAND 5 =============================== */
 
     _b5_dict[@"comp_release"] = [NSNumber numberWithFloat:settings.comp_params[4].release];
     _b5_dict[@"comp_ratio"] = [NSNumber numberWithFloat:settings.comp_params[4].ratio];
     _b5_dict[@"comp_attack"] = [NSNumber numberWithFloat:settings.comp_params[4].attack];
-    _b5_dict[@"comp_target"] = [NSNumber numberWithFloat:settings.comp_params[4].target];
     _b5_dict[@"comp_thresh"] = [NSNumber numberWithFloat:settings.comp_params[4].thresh];
+    _b5_dict[@"comp_gate_thresh"] = [NSNumber numberWithFloat:settings.comp_params[4].gate_thresh];
+    _b5_dict[@"comp_idle_gain"] = [NSNumber numberWithFloat:settings.comp_params[4].idle_gain];
+    if(settings.comp_params[4].knee_type == HARD_KNEE) {
+        _b5_dict[@"comp_hard_knee"] = [NSNumber numberWithBool:true];
+        _b5_dict[@"comp_soft_knee"] = [NSNumber numberWithBool:false];
+    }
+    else {
+        _b5_dict[@"comp_hard_knee"] = [NSNumber numberWithBool:false];
+        _b5_dict[@"comp_soft_knee"] = [NSNumber numberWithBool:true];
+    }
+    _b5_dict[@"comp_knee_width"] = [NSNumber numberWithFloat:settings.comp_params[4].knee_width];
+    if(settings.comp_params[4].makeup_gain_mode == AUTO) {
+        _b5_dict[@"comp_makeup_gain_auto"] = [NSNumber numberWithBool:true];
+        _b5_dict[@"comp_makeup_gain_manual"] = [NSNumber numberWithBool:false];
+    }
+    else {
+        _b5_dict[@"comp_makeup_gain_auto"] = [NSNumber numberWithBool:false];
+        _b5_dict[@"comp_makeup_gain_manual"] = [NSNumber numberWithBool:true];
+    }
+    _b5_dict[@"comp_makeup_gain"] = [NSNumber numberWithFloat:settings.comp_params[4].makeup_gain];
+    
+    /* ================== LIMITERS =================== */
+    
     _b5_dict[@"lim_release"] = [NSNumber numberWithFloat:settings.lim_params[4].release];
     _b5_dict[@"lim_ratio"] = [NSNumber numberWithFloat:settings.lim_params[4].ratio];
     _b5_dict[@"lim_attack"] = [NSNumber numberWithFloat:settings.lim_params[4].attack];
-    _b5_dict[@"lim_target"] = [NSNumber numberWithFloat:settings.lim_params[4].target];
     _b5_dict[@"lim_thresh"] = [NSNumber numberWithFloat:settings.lim_params[4].thresh];
+    _b5_dict[@"lim_gate_thresh"] = [NSNumber numberWithFloat:settings.lim_params[4].gate_thresh];
+    _b5_dict[@"lim_idle_gain"] = [NSNumber numberWithFloat:settings.lim_params[4].idle_gain];
+    if(settings.lim_params[4].knee_type == HARD_KNEE) {
+        _b5_dict[@"lim_hard_knee"] = [NSNumber numberWithBool:true];
+        _b5_dict[@"lim_soft_knee"] = [NSNumber numberWithBool:false];
+    }
+    else {
+        _b5_dict[@"lim_hard_knee"] = [NSNumber numberWithBool:false];
+        _b5_dict[@"lim_soft_knee"] = [NSNumber numberWithBool:true];
+    }
+    _b5_dict[@"lim_knee_width"] = [NSNumber numberWithFloat:settings.lim_params[4].knee_width];
+    if(settings.lim_params[4].makeup_gain_mode == AUTO) {
+        _b5_dict[@"lim_makeup_gain_auto"] = [NSNumber numberWithBool:true];
+        _b5_dict[@"lim_makeup_gain_manual"] = [NSNumber numberWithBool:false];
+    }
+    else {
+        _b5_dict[@"lim_makeup_gain_auto"] = [NSNumber numberWithBool:false];
+        _b5_dict[@"lim_makeup_gain_manual"] = [NSNumber numberWithBool:true];
+    }
+    _b5_dict[@"lim_makeup_gain"] = [NSNumber numberWithFloat:settings.lim_params[4].makeup_gain];
 }
 
 -(void) dumpSettings {

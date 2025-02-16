@@ -17,11 +17,11 @@ NS_ASSUME_NONNULL_BEGIN
 @interface AGCControlsView : NSViewController {
 }
 
-@property (readwrite, assign) BOOL enabled;
+@property (readwrite, assign) bool enabled;
 @property (readwrite, assign) bool mute_lo;
 @property (readwrite, assign) bool mute_hi;
 @property (readwrite, assign) float drive;
-@property (readwrite, assign) float target;
+@property (readwrite, assign) float thresh;
 @property (readwrite, assign) float release_master;
 @property (readwrite, assign) float release_bass;
 @property (readwrite, assign) float gate_thresh;

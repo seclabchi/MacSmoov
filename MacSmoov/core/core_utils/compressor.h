@@ -42,6 +42,7 @@ private:
     float alphaA, alphaR_norm, alphaR_window;
     float gsPrev;
     float indb, sc, gc, gs;
+    float gc_prev;
     float avg_gain_reduction, gain_reduction;
     bool is_gated;
     float gated_counter;

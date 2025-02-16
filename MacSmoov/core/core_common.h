@@ -23,7 +23,7 @@ typedef struct {
     bool mute_lo;  //mute the low band
     bool mute_hi;  //mute the hi band
     float drive;  //amount of gain at AGC input
-    float threshold; //threshold of AGC
+    float thresh; //threshold of AGC
     float release_master;  //0.5...20 dB/s
     float release_bass;    //1...10 dB/s
     float gate_thresh;  //-80...-15 dB
@@ -38,7 +38,6 @@ typedef struct {
 } AGC_PARAMS;
 
 typedef struct  {
-    float target;
     float release;
     float thresh;
     float gate_thresh;

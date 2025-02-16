@@ -30,7 +30,7 @@
         _mute_lo = _agc_settings.mute_lo;
         _mute_hi = _agc_settings.mute_hi;
         _drive = _agc_settings.drive;
-        _target = _agc_settings.target;
+        _thresh = _agc_settings.thresh;
         _release_master = _agc_settings.release_master;
         _release_bass = _agc_settings.release_bass;
         _gate_thresh = _agc_settings.gate_thresh;
@@ -70,7 +70,7 @@
     _agc_settings.mute_lo = _mute_lo;
     _agc_settings.mute_hi = _mute_hi;
     _agc_settings.drive = _drive;
-    _agc_settings.target = _target;
+    _agc_settings.thresh = _thresh;
     _agc_settings.release_master = _release_master;
     _agc_settings.release_bass = _release_bass;
     _agc_settings.gate_thresh = _gate_thresh;

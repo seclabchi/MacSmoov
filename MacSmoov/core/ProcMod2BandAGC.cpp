@@ -166,17 +166,17 @@ void ProcMod2BandAGC::configure(const AGC_PARAMS& _params) {
     params = _params;
     
     COMPRESSOR_PARAMS comp_parms_lo = {
-        .target = _params.target,
+        .thresh = _params.thresh,
         .release = _params.release_bass,
-        .thresh = _params.gate_thresh,
+        .gate_thresh = _params.gate_thresh,
         .ratio = _params.ratio,
         .attack = _params.attack_bass
     };
     
     COMPRESSOR_PARAMS comp_parms_hi = {
-        .target = _params.target,
+        .thresh = _params.thresh,
         .release = _params.release_master,
-        .thresh = _params.gate_thresh,
+        .gate_thresh = _params.gate_thresh,
         .ratio = _params.ratio,
         .attack = _params.attack_master
     };

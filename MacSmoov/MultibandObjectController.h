@@ -58,32 +58,32 @@
 @property (readwrite, assign) float comp_b1_attack;
 @property (readwrite, assign) float comp_b1_release;
 @property (readwrite, assign) float comp_b1_ratio;
+@property (readwrite, assign) float comp_b1_gate_thresh;
 @property (readwrite, assign) float comp_b1_thresh;
-@property (readwrite, assign) float comp_b1_target;
 
 @property (readwrite, assign) float comp_b2_attack;
 @property (readwrite, assign) float comp_b2_release;
 @property (readwrite, assign) float comp_b2_ratio;
+@property (readwrite, assign) float comp_b2_gate_thresh;
 @property (readwrite, assign) float comp_b2_thresh;
-@property (readwrite, assign) float comp_b2_target;
 
 @property (readwrite, assign) float comp_b3_attack;
 @property (readwrite, assign) float comp_b3_release;
 @property (readwrite, assign) float comp_b3_ratio;
+@property (readwrite, assign) float comp_b3_gate_thresh;
 @property (readwrite, assign) float comp_b3_thresh;
-@property (readwrite, assign) float comp_b3_target;
 
 @property (readwrite, assign) float comp_b4_attack;
 @property (readwrite, assign) float comp_b4_release;
 @property (readwrite, assign) float comp_b4_ratio;
+@property (readwrite, assign) float comp_b4_gate_thresh;
 @property (readwrite, assign) float comp_b4_thresh;
-@property (readwrite, assign) float comp_b4_target;
 
 @property (readwrite, assign) float comp_b5_attack;
 @property (readwrite, assign) float comp_b5_release;
 @property (readwrite, assign) float comp_b5_ratio;
+@property (readwrite, assign) float comp_b5_gate_thresh;
 @property (readwrite, assign) float comp_b5_thresh;
-@property (readwrite, assign) float comp_b5_target;
 
 @property (readwrite, retain) NSMutableDictionary* b1_dict;
 @property (readwrite, retain) NSMutableDictionary* b2_dict;
