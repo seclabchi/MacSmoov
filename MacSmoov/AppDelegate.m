@@ -307,14 +307,14 @@ Boolean shutting_down = NO;
     
 }
 
--(void) output_device_changed:(NSNumber*)output_device {
+-(void) output_device_changed:(AudioDevice*)output_device {
     NSLog(@"Got notification from AudioDeviceSelector about new output device: %@", output_device);
     if(nil != output_device) {
  //       [prefs setObject:output_device forKey:@"OUTPUT_DEVICE"];
  //       AudioDevice* sel_outdev = [audio_devices_output objectForKey:output_device];
-  //      [self.sysaudio stop];
- //       [self.sysaudio set_output_device:sel_outdev];
-   //     [self.sysaudio start];
+        [self.sysaudio stop];
+        [self.sysaudio set_output_device:output_device];
+        [self.sysaudio start];
         //[siggenvc outputDeviceChanged:output_device];
         //[process_sys_iface outputDeviceChanged:output_device];
     }
@@ -323,14 +323,14 @@ Boolean shutting_down = NO;
     }
 }
 
--(void) input_device_changed:(NSNumber*)input_device {
+-(void) input_device_changed:(AudioDevice*)input_device {
     NSLog(@"Got notification from AudioDeviceSelector about new input device: %@", input_device);
     if(nil != input_device) {
 //        [prefs setObject:input_device forKey:@"INPUT_DEVICE"];
 //        AudioDevice* sel_indev = [audio_devices_input objectForKey:input_device];
-//        [self.sysaudio stop];
-//        [self.sysaudio set_input_device:sel_indev];
-//        [self.sysaudio start];
+        [self.sysaudio stop];
+        [self.sysaudio set_input_device:input_device];
+        [self.sysaudio start];
         //[process_sys_iface inputDeviceChanged:input_device];
     }
     else {
@@ -344,7 +344,6 @@ Boolean shutting_down = NO;
 
 -(IBAction) showAudioDeviceSelector:(id)sender {
     [audio_device_selector showPanel];
-    [audio_device_selector scanDevices];
 }
 
 -(IBAction) masterBypassSelected:(id)sender {

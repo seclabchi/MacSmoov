@@ -51,6 +51,10 @@ public:
     void set_mb_comp_band23_coupling(float _coupling);
     float get_mb_comp_band21_coupling();
     void set_mb_comp_band21_coupling(float _coupling);
+    bool get_clipper_enabled();
+    void set_clipper_enabled(bool _enable);
+    float get_clip_level();
+    void set_clip_level(float _clip_level);
     bool load_cfg_from_file(const std::string& filename);
     bool write_cfg_to_file();
 private:
@@ -68,6 +72,8 @@ private:
     std::pair<float, float> input_gain;
     AGC_PARAMS agc_params;
     MULTIBAND_PARAMS multiband_params;
+    float clip_level;
+    bool enable_clipper;
 };
 
 }

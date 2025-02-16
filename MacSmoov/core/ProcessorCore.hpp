@@ -25,6 +25,7 @@
 #include "ProcMod5bandCrossover.hpp"
 #include "ProcMod5bandCompressor.hpp"
 #include "ProcModFinalLPF.hpp"
+#include "ProcModClipper.hpp"
 
 
 /*
@@ -61,6 +62,8 @@ public:
     bool change_agc_settings(const AGC_PARAMS& _params);
     void get_multiband_settings(MULTIBAND_PARAMS& _params);
     bool change_multiband_settings(const MULTIBAND_PARAMS& _params);
+    float get_clip_level();
+    void set_clip_level(float _clip_level);
 private:
     ProcessorCore();
     bool write_config_changes_agc(const AGC_PARAMS& _params);
@@ -82,9 +85,10 @@ private:
     ProcModHFEnhance* proc_mod_hf_enhance;
     ProcMod5bandCrossover* proc_mod_5b_crossover;
     ProcMod5bandCompressor* proc_mod_5b_compressor;
-    ProcModLevelMeter* proc_mod_level_main_out;
+    ProcModClipper* proc_mod_clipper;
     ProcModFinalLPF* proc_mod_final_lpf;
-    
+    ProcModLevelMeter* proc_mod_level_main_out;
+
     LogLinConverter* m_loglin;
     LogLinConverter* m_linlog;
     

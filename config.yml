@@ -6,15 +6,15 @@ input_level:
   enabled: true
 stereo_enhance:
   enabled: true
-  drive: 1.58999991
+  drive: 1.33000004
 agc_params:
   enabled: true
   mute_lo: false
   mute_hi: false
   drive: 8
   target: -12
-  release_master: 15
-  release_bass: 15
+  release_master: 20
+  release_bass: 8
   gate_thresh: -24
   bass_coupling: 0.25
   window_size: -6
@@ -22,8 +22,8 @@ agc_params:
   ratio: 100000
   bass_thresh: 0
   idle_gain: 0
-  attack_master: 0.300000012
-  attack_bass: 0.5
+  attack_master: 0.600000024
+  attack_bass: 0.600000024
 hf_enhance:
   enabled: false
 multiband_crossover:
@@ -33,7 +33,7 @@ multiband_params:
   drive: 8
   gate_thresh: -60
   limiters_enabled: true
-  master_post_gain: 3
+  master_post_gain: 6
   band1_solo: false
   band1_mute: false
   band2_solo: false
@@ -96,25 +96,28 @@ multiband_params:
       - band: 1
         target: -26
         release: 0.0250000004
-        ratio: 6
+        ratio: 8
         attack: 0.109999999
       - band: 2
         target: -23
         release: 0.0599999987
-        ratio: 12
+        ratio: 8
         attack: 0.0500000007
       - band: 3
         target: -23
         release: 0.0500000007
-        ratio: 3
+        ratio: 8
         attack: 0.0250000004
       - band: 4
         target: -23
         release: 0.0250000004
-        ratio: 3
+        ratio: 8
         attack: 0.0130000003
       - band: 5
         target: -23
         release: 0.0120000001
-        ratio: 6
+        ratio: 8
         attack: 0.00600000005
+clipper:
+  enabled: true
+  clip_level: 0.850000012

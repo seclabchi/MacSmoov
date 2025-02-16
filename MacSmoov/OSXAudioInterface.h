@@ -31,6 +31,8 @@
 - (OSStatus) discoverDevices;
 - (void) get_all_input_devices:(NSMutableArray*)in_devs;
 - (void) get_all_output_devices:(NSMutableArray*)out_devs;
+- (void) set_input_device:(AudioDevice*)in_dev;
+- (void) set_output_device:(AudioDevice*)out_dev;
 - (OSStatus) set_input_device_from_name:(NSString*)input_dev;
 - (OSStatus) set_output_device_from_name:(NSString*)output_dev;
 - (OSStatus) start;

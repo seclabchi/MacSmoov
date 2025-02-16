@@ -91,8 +91,15 @@ ProcessorCore::ProcessorCore(uint32_t _f_samp, uint32_t _n_channels, uint32_t _n
     chan_map = new ChannelMap();
     chan_map->the_map.push_back(CHANNEL_MAP_ELEMENT {0, 0, "IN_L"});
     chan_map->the_map.push_back(CHANNEL_MAP_ELEMENT {1, 1, "IN_R"});
+    proc_mod_clipper = new ProcModClipper("CLIPPER", f_samp, n_channels, n_samp);
+    proc_mod_clipper->init(core_config, proc_mod_5b_compressor, chan_map);
+    core_stack->add_module(proc_mod_clipper);
+    
+    chan_map = new ChannelMap();
+    chan_map->the_map.push_back(CHANNEL_MAP_ELEMENT {0, 0, "IN_L"});
+    chan_map->the_map.push_back(CHANNEL_MAP_ELEMENT {1, 1, "IN_R"});
     proc_mod_final_lpf = new ProcModFinalLPF("FINAL_LPF", f_samp, n_channels, n_samp);
-    proc_mod_final_lpf->init(core_config, proc_mod_5b_compressor, chan_map);
+    proc_mod_final_lpf->init(core_config, proc_mod_clipper, chan_map);
     core_stack->add_module(proc_mod_final_lpf);
     
     chan_map = new ChannelMap();
@@ -101,10 +108,6 @@ ProcessorCore::ProcessorCore(uint32_t _f_samp, uint32_t _n_channels, uint32_t _n
     proc_mod_level_main_out = new ProcModLevelMeter("LEVEL_MAIN_OUT", f_samp, n_channels, n_samp);
     proc_mod_level_main_out->init(core_config, proc_mod_final_lpf, chan_map);
     core_stack->add_module(proc_mod_level_main_out);
-    
-    
-    
-    
 }
 
 bool ProcessorCore::prepare() {
@@ -255,5 +258,14 @@ bool ProcessorCore::change_multiband_settings(const MULTIBAND_PARAMS& _params) {
     write_config_changes_multiband(mbp);
     
     return true;
+}
+
+float ProcessorCore::get_clip_level() {
+    return core_config->get_clip_level();
+}
+
+void ProcessorCore::set_clip_level(float _clip_level) {
+    proc_mod_clipper->configure(_clip_level);
+    core_config->set_clip_level(_clip_level);
 }
 

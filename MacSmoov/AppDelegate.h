@@ -26,6 +26,7 @@
 @property (strong) IBOutlet NSBox* agc_lo_gate_closed;
 @property (strong) IBOutlet NSBox* agc_hi_gate_closed;
 @property (strong) IBOutlet CompressionMeter5band* comp_5band;
+@property (strong) IBOutlet LevelMeter* clipper_meter;
 @property (strong) IBOutlet LevelMeter* level_main_out;
 
 @property (strong) IBOutlet NSBox* gate_b1;
@@ -37,8 +38,8 @@
 
 @property (nonatomic, strong) OSXAudioInterface * sysaudio;
 
--(void) output_device_changed:(NSNumber*)output_device;
--(void) input_device_changed:(NSNumber*)input_device;
+-(void) output_device_changed:(AudioDevice*)output_device;
+-(void) input_device_changed:(AudioDevice*)input_device;
 -(IBAction) showSignalGenerators:(id)sender;
 -(IBAction) showAudioDeviceSelector:(id)sender;
 

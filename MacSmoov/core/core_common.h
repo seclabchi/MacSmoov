@@ -8,13 +8,22 @@
 #ifndef core_common_h
 #define core_common_h
 
+typedef enum {
+    SOFT_KNEE = 0,
+    HARD_KNEE = 1
+} COMPRESSOR_KNEE_TYPE;
+
+typedef enum {
+    AUTO = 0,
+    MANUAL = 1
+} MAKEUP_GAIN_MODE;
 
 typedef struct {
     bool enabled;  //is the AGC in or out
     bool mute_lo;  //mute the low band
     bool mute_hi;  //mute the hi band
     float drive;  //amount of gain at AGC input
-    float target; //target of AGC
+    float threshold; //threshold of AGC
     float release_master;  //0.5...20 dB/s
     float release_bass;    //1...10 dB/s
     float gate_thresh;  //-80...-15 dB
@@ -32,8 +41,14 @@ typedef struct  {
     float target;
     float release;
     float thresh;
+    float gate_thresh;
     float ratio;
     float attack;
+    COMPRESSOR_KNEE_TYPE knee_type;
+    float knee_width;
+    float idle_gain;
+    MAKEUP_GAIN_MODE makeup_gain_mode;
+    float makeup_gain;
 } COMPRESSOR_PARAMS;
 
 typedef struct  {

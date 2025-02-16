@@ -297,7 +297,13 @@ bool CoreConfig::set_mb_params(const MULTIBAND_PARAMS& params) {
     return true;
 }
 
-
+float CoreConfig::get_clip_level() {
+    return clip_level;
+}
+void CoreConfig::set_clip_level(float _clip_level) {
+    clip_level = _clip_level;
+    write_cfg_to_file();
+}
 
 
 
@@ -522,6 +528,10 @@ bool CoreConfig::load_cfg_from_file(const std::string &filename) {
             multiband_params.lim_params[2].thresh = multiband_params.comp_params[2].target + multiband_params.band3_comp_lim_offset;
             multiband_params.lim_params[3].thresh = multiband_params.comp_params[3].target + multiband_params.band4_comp_lim_offset;
             multiband_params.lim_params[4].thresh = multiband_params.comp_params[4].target + multiband_params.band5_comp_lim_offset;
+            
+            YAML::Node clipper_node = yaml_node["clipper"];
+            enable_clipper = clipper_node["enabled"].as<bool>();
+            clip_level = clipper_node["clip_level"].as<float>();
         }
         
         cfg_file_stream.close();
@@ -662,6 +672,10 @@ bool CoreConfig::write_cfg_to_file() {
                 band_settings["attack"] = multiband_params.lim_params[band].attack;
                 lim_bands[band] = band_settings;
             }
+            
+            YAML::Node clipper_node = yaml_node["clipper"];
+            clipper_node["enabled"] = enable_clipper;
+            clipper_node["clip_level"] = clip_level;
             
             YAML::Emitter emitter(cfg_file_stream);
             emitter << yaml_node;

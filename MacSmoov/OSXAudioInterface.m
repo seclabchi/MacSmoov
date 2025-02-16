@@ -555,6 +555,14 @@ void checkStatus(int status) {
     }
 }
 
+- (void) set_input_device:(AudioDevice*)in_dev {
+    [self set_input_device_from_name:(__bridge NSString*)[in_dev device_name]];
+}
+
+- (void) set_output_device:(AudioDevice*)out_dev {
+    [self set_output_device_from_name:(__bridge NSString*)[out_dev device_name]];
+}
+
 - (AudioDevice*) find_input_device_with_name:(NSString*)name {
     AudioDevice* in_dev = NULL;
     NSArray* dev_keys = [self.input_devices allKeys];

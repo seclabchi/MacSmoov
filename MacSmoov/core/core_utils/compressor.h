@@ -9,6 +9,7 @@
 
 namespace fmsmoov {
 
+
 class Compressor
 {
 public:
@@ -21,7 +22,7 @@ public:
                                float* gainReductionOutput = NULL);
     void compute_gc(float* inL, float* inR, float* _gc_raw = NULL);
     void config(const COMPRESSOR_PARAMS& _params, const bool _use_coupling = false, const float coupling = 0.0, const bool _use_window = false,
-                const float _window_size = 0.001, const float _window_release = 0.001);
+                const float _window_size = 0.001f, const float _window_release = 0.001f);
     void read(float* _gain_reduction, bool* _gate_open);
 
 private:
@@ -30,6 +31,8 @@ private:
     uint32_t samprate, n_samps;
     bool use_coupling, use_window;
     float coupling, window_size, window_release;
+    COMPRESSOR_KNEE_TYPE knee_type;
+    float knee_width;
     float M;
     LogLinConverter* samp_converter_todb;
     float* indbL, *indbR;

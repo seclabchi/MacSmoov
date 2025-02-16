@@ -117,6 +117,7 @@
 		9DD1BF292A9A549900D7C0B2 /* CompressionMeter5band.m in Sources */ = {isa = PBXBuildFile; fileRef = 9DD1BF282A9A549900D7C0B2 /* CompressionMeter5band.m */; };
 		9DD1BF2C2A9A811500D7C0B2 /* ProcMod5bandCompressor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9DD1BF2B2A9A811400D7C0B2 /* ProcMod5bandCompressor.cpp */; };
 		9DD1BF2F2A9AA07700D7C0B2 /* crossover_5_band.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9DD1BF2D2A9AA07700D7C0B2 /* crossover_5_band.cpp */; };
+		9DDB22F12D5DB7CD0071DE8A /* ProcModClipper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9DDB22F02D5DB7CD0071DE8A /* ProcModClipper.cpp */; };
 		9DDD8AFD2AB766CC00F566F0 /* running_rms.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9DDD8AFC2AB766CC00F566F0 /* running_rms.cpp */; };
 		9DE7B6872C86187600313951 /* butterworth.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9DE7B6852C86187600313951 /* butterworth.cpp */; };
 		9DE7B6882C86187600313951 /* butterworth.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9DE7B6852C86187600313951 /* butterworth.cpp */; };
@@ -259,6 +260,8 @@
 		9DD1BF2B2A9A811400D7C0B2 /* ProcMod5bandCompressor.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ProcMod5bandCompressor.cpp; sourceTree = "<group>"; };
 		9DD1BF2D2A9AA07700D7C0B2 /* crossover_5_band.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = crossover_5_band.cpp; sourceTree = "<group>"; };
 		9DD1BF2E2A9AA07700D7C0B2 /* crossover_5_band.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = crossover_5_band.h; sourceTree = "<group>"; };
+		9DDB22EF2D5DB7CD0071DE8A /* ProcModClipper.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = ProcModClipper.hpp; sourceTree = "<group>"; };
+		9DDB22F02D5DB7CD0071DE8A /* ProcModClipper.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ProcModClipper.cpp; sourceTree = "<group>"; };
 		9DDD8AFB2AB766CC00F566F0 /* running_rms.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = running_rms.h; sourceTree = "<group>"; };
 		9DDD8AFC2AB766CC00F566F0 /* running_rms.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = running_rms.cpp; sourceTree = "<group>"; };
 		9DE7B6852C86187600313951 /* butterworth.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = butterworth.cpp; sourceTree = "<group>"; };
@@ -544,6 +547,8 @@
 				9DD1BF2B2A9A811400D7C0B2 /* ProcMod5bandCompressor.cpp */,
 				9D86ADF22C9DD71F0025B964 /* ProcModLookaheadLimiter.h */,
 				9D86ADF32C9DD7330025B964 /* ProcModLookaheadLimiter.cpp */,
+				9DDB22EF2D5DB7CD0071DE8A /* ProcModClipper.hpp */,
+				9DDB22F02D5DB7CD0071DE8A /* ProcModClipper.cpp */,
 				9D791A772D587BEC00791DF8 /* ProcModFinalLPF.hpp */,
 				9D791A762D587BEC00791DF8 /* ProcModFinalLPF.cpp */,
 				9D54D8AE2ADC2F85006C3F57 /* ProcModDelay.hpp */,
@@ -797,6 +802,7 @@
 				9D86ADF42C9DD7330025B964 /* ProcModLookaheadLimiter.cpp in Sources */,
 				9D281A9229E05F57009CF125 /* SignalGenerator.m in Sources */,
 				9DF3B70D2A80088400867EA1 /* LevelMeter.m in Sources */,
+				9DDB22F12D5DB7CD0071DE8A /* ProcModClipper.cpp in Sources */,
 				9DD141072A81C5D60059864D /* LogLinConverter.cpp in Sources */,
 				9DDD8AFD2AB766CC00F566F0 /* running_rms.cpp in Sources */,
 				9D281A9929E1C5B5009CF125 /* AudioDeviceSelector.m in Sources */,
@@ -1043,7 +1049,7 @@
 				CODE_SIGN_ENTITLEMENTS = MacSmoov/MacSmoovDebug.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 538;
+				CURRENT_PROJECT_VERSION = 554;
 				DEVELOPMENT_ASSET_PATHS = "";
 				ENABLE_HARDENED_RUNTIME = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -1076,7 +1082,7 @@
 				CODE_SIGN_ENTITLEMENTS = MacSmoov/MacSmoov.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 538;
+				CURRENT_PROJECT_VERSION = 554;
 				DEVELOPMENT_ASSET_PATHS = "";
 				ENABLE_HARDENED_RUNTIME = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -1105,7 +1111,7 @@
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 538;
+				CURRENT_PROJECT_VERSION = 554;
 				GENERATE_INFOPLIST_FILE = YES;
 				MACOSX_DEPLOYMENT_TARGET = 11.6;
 				MARKETING_VERSION = 1.0;
@@ -1121,7 +1127,7 @@
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 538;
+				CURRENT_PROJECT_VERSION = 554;
 				GENERATE_INFOPLIST_FILE = YES;
 				MACOSX_DEPLOYMENT_TARGET = 11.6;
 				MARKETING_VERSION = 1.0;
@@ -1136,7 +1142,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 538;
+				CURRENT_PROJECT_VERSION = 554;
 				GENERATE_INFOPLIST_FILE = YES;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.tonekids.osx.MacSmoovUITests;
@@ -1150,7 +1156,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 538;
+				CURRENT_PROJECT_VERSION = 554;
 				GENERATE_INFOPLIST_FILE = YES;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.tonekids.osx.MacSmoovUITests;

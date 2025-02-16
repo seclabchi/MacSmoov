@@ -180,4 +180,12 @@ void processor_core_hook(AudioBufferList* ab_list, AudioBufferList* ab_list_core
 #endif
 }
 
+-(float) get_clip_level {
+    return cpp->get_clip_level();
+}
+
+-(void) set_clip_level:(float)_clip_level {
+    cpp->set_clip_level(_clip_level);
+}
+
 @end

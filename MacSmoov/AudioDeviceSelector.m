@@ -43,9 +43,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do view setup here.
-    self->can_select = FALSE;
+    self->can_select = TRUE;
     NSLog(@"AudioDeviceSelector viewDidLoad");
-    [self scanDevices];
 }
 
 -(void) set_watcher_for_output_device_change:(id)object andSelector:(SEL)selector {
@@ -66,15 +65,13 @@
             NSInteger selected_item = [combo indexOfSelectedItem];
             
             AudioDevice* ad = [input_devices objectAtIndex:selected_item];
-            cur_input_device_id = [NSNumber numberWithUnsignedInt: ad.device_id];
-            [input_device_watcher_object performSelector:input_device_watcher_selector withObject:cur_input_device_id];
+            [input_device_watcher_object performSelector:input_device_watcher_selector withObject:ad];
         }
         else {
             NSInteger selected_item = [combo indexOfSelectedItem];
             
             AudioDevice* ad = [output_devices objectAtIndex:selected_item];
-            cur_output_device_id = [NSNumber numberWithUnsignedInt: ad.device_id];
-            [output_device_watcher_object performSelector:output_device_watcher_selector withObject:cur_output_device_id];
+            [output_device_watcher_object performSelector:output_device_watcher_selector withObject:ad];
         }
     
     }
@@ -89,22 +86,6 @@
     _output_device_combo.delegate = self;
     self.output_device_combo.dataSource = self;
     self.input_device_combo.dataSource = self;
-    [self scanDevices];
-}
-
--(void) scanDevices {
-    
-    self->can_select = FALSE;
-    
-    //[self.input_device_combo removeAllItems];
-    //[self.output_device_combo removeAllItems];
-    
-    
-    
-    //[self.outputDeviceComboBox selectItemWithObjectValue:[output_device_dict objectForKey:cur_output_device_id]];
-    //[self.inputDeviceComboBox selectItemWithObjectValue:[input_device_dict objectForKey:cur_input_device_id]];
-    
-    self->can_select = TRUE;
 }
 
 - (NSString*)comboBox:(NSComboBox*)comboBox completedString:(NSString*)string {

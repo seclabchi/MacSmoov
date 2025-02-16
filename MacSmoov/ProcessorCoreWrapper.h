@@ -38,6 +38,8 @@ typedef void(*PROCESSOR_CORE_HOOK)(AudioBufferList* ab_list, AudioBufferList* ab
 -(void) change_agc_settings:(AGC_PARAMS)_params;
 -(void) get_multiband_settings:(MULTIBAND_PARAMS*)_params;
 -(void) change_multiband_settings:(MULTIBAND_PARAMS)_params;
+-(float) get_clip_level;
+-(void) set_clip_level:(float)_clip_level;
 
 
 @end
