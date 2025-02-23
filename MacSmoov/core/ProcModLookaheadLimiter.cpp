@@ -38,9 +38,9 @@ bool ProcModLookaheadLimiter::init_impl(CoreConfig* cfg, ProcessorModule* prev_m
     this->set_bypass(false);
     
     COMPRESSOR_PARAMS comp_params = {
-        .thresh = -9.0f,
+        .thresh = -6.0f,
         .gate_thresh = -100.0f,
-        .attack = 0.008f,
+        .attack = 0.015f,
         .release = 0.040f,
         .ratio = 1000
     };
