@@ -12,6 +12,7 @@
 #include "ProcessorModule.hpp"
 #include "core_common.h"
 #include "filter_lr4.h"
+#include "AudioBuf.hpp"
 
 namespace fmsmoov {
 

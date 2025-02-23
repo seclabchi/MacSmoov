@@ -91,8 +91,15 @@ ProcessorCore::ProcessorCore(uint32_t _f_samp, uint32_t _n_channels, uint32_t _n
     chan_map = new ChannelMap();
     chan_map->the_map.push_back(CHANNEL_MAP_ELEMENT {0, 0, "IN_L"});
     chan_map->the_map.push_back(CHANNEL_MAP_ELEMENT {1, 1, "IN_R"});
+    proc_mod_lookahead_limiter = new ProcModLookaheadLimiter("LOOKAHEAD_LIMITER", f_samp, n_channels, n_samp);
+    proc_mod_lookahead_limiter->init(core_config, proc_mod_5b_compressor, chan_map);
+    core_stack->add_module(proc_mod_lookahead_limiter);
+    
+    chan_map = new ChannelMap();
+    chan_map->the_map.push_back(CHANNEL_MAP_ELEMENT {0, 0, "IN_L"});
+    chan_map->the_map.push_back(CHANNEL_MAP_ELEMENT {1, 1, "IN_R"});
     proc_mod_clipper = new ProcModClipper("CLIPPER", f_samp, n_channels, n_samp);
-    proc_mod_clipper->init(core_config, proc_mod_5b_compressor, chan_map);
+    proc_mod_clipper->init(core_config, proc_mod_lookahead_limiter, chan_map);
     core_stack->add_module(proc_mod_clipper);
     
     chan_map = new ChannelMap();

@@ -14,9 +14,19 @@
 
 namespace fmsmoov {
 
+typedef struct {
+    uint32_t device_id;
+    std::string device_name;
+    std::string device_uid;
+} AUDIO_DEVICE;
+
 class CoreConfig {
 public:
     static CoreConfig* get_instance();
+    void get_input_device(AUDIO_DEVICE& _in_dev);
+    void set_input_device(AUDIO_DEVICE& _in_dev);
+    void get_output_device(AUDIO_DEVICE& _out_dev);
+    void set_output_device(AUDIO_DEVICE& _out_dev);
     void set_input_gain_enabled(bool enabled);
     bool get_input_gain_enabled();
     void get_input_gain(std::pair<float, float>& gain);
@@ -74,6 +84,8 @@ private:
     MULTIBAND_PARAMS multiband_params;
     float clip_level;
     bool enable_clipper;
+    AUDIO_DEVICE audio_device_input;
+    AUDIO_DEVICE audio_device_output;
 };
 
 }

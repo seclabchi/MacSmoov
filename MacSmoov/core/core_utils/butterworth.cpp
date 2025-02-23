@@ -2,8 +2,8 @@
 #include <math.h>
 #include "butterworth.h"
 
-#define DEBUG 1
-#define LOG_OUTPUT 1
+#define DEBUG 0
+#define LOG_OUTPUT 0
 
 namespace tonekids {
 namespace dsp {

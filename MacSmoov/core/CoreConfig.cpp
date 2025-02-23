@@ -296,6 +296,24 @@ CoreConfig* CoreConfig::get_instance() {
     return the_instance;
 }
 
+void CoreConfig::get_input_device(AUDIO_DEVICE& _in_dev) {
+    _in_dev = audio_device_input;
+}
+
+void CoreConfig::set_input_device(AUDIO_DEVICE& _in_dev) {
+    audio_device_input = _in_dev;
+    write_cfg_to_file();
+}
+
+void CoreConfig::get_output_device(AUDIO_DEVICE& _out_dev) {
+    _out_dev = audio_device_output;
+}
+
+void CoreConfig::set_output_device(AUDIO_DEVICE& _out_dev) {
+    audio_device_output = _out_dev;
+    write_cfg_to_file();
+}
+
 void CoreConfig::set_input_gain_enabled(bool enabled) {
     enable_input_gain = enabled;
 }
@@ -434,7 +452,18 @@ bool CoreConfig::load_cfg_from_file(const std::string &filename) {
         else {
             yaml_node = YAML::LoadFile(cfg_file_path);
             
-            std::cout << "Config YAML Dump:\n=================\n" << YAML::Dump(yaml_node).c_str() << std::endl;
+            //std::cout << "Config YAML Dump:\n=================\n" << YAML::Dump(yaml_node).c_str() << std::endl;
+            
+            YAML::Node audio_devices_node = yaml_node["audio_devices"];
+            YAML::Node input_devices_node = audio_devices_node["input"];
+            audio_device_input.device_name = input_devices_node["device_name"].as<std::string>();
+            audio_device_input.device_id = input_devices_node["device_id"].as<uint32_t>();
+            audio_device_input.device_uid = input_devices_node["device_uid"].as<std::string>();
+            
+            YAML::Node output_devices_node = audio_devices_node["output"];
+            audio_device_output.device_name = output_devices_node["device_name"].as<std::string>();
+            audio_device_output.device_id = output_devices_node["device_id"].as<uint32_t>();
+            audio_device_output.device_uid = output_devices_node["device_uid"].as<std::string>();
             
             YAML::Node input_gain_node = yaml_node["input_gain"];
             enable_input_gain = input_gain_node["enabled"].as<bool>();
@@ -533,7 +562,7 @@ bool CoreConfig::load_cfg_from_file(const std::string &filename) {
                     std::string key = band_settings_it->first.as<std::string>();
                     YAML::Node value = band_settings_it->second;
                     
-                    std::cout << "Found setting " << key << std::endl;
+                    //std::cout << "Found setting " << key << std::endl;
                     
                     if(!key.compare("band")) {
                         //don't care, just for human readable purposes
@@ -612,7 +641,7 @@ bool CoreConfig::load_cfg_from_file(const std::string &filename) {
                     std::string key = band_settings_it->first.as<std::string>();
                     YAML::Node value = band_settings_it->second;
                     
-                    std::cout << "Found setting " << key << std::endl;
+                    //std::cout << "Found setting " << key << std::endl;
                     
                     if(!key.compare("band")) {
                         //don't care, just for human readable purposes
@@ -700,6 +729,19 @@ bool CoreConfig::write_cfg_to_file() {
             std::cout << "Can't open config file for reasons..." << strerror(errno) << std::endl;
         }
         else {
+            YAML::Node audio_devices_node = yaml_node["audio_devices"];
+            YAML::Node audio_input_devices_node = audio_devices_node["input"];
+            
+            audio_input_devices_node["device_name"] = audio_device_input.device_name;
+            audio_input_devices_node["device_id"] = audio_device_input.device_id;
+            audio_input_devices_node["device_uid"] = audio_device_input.device_uid;
+            
+            YAML::Node audio_output_devices_node = audio_devices_node["output"];
+            
+            audio_output_devices_node["device_name"] = audio_device_output.device_name;
+            audio_output_devices_node["device_id"] = audio_device_output.device_id;
+            audio_output_devices_node["device_uid"] = audio_device_output.device_uid;
+            
             YAML::Node input_gain_node = yaml_node["input_gain"];
             input_gain_node["enabled"] = enable_input_gain;
             input_gain_node["L"] = input_gain.first;

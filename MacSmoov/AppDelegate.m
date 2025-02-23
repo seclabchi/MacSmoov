@@ -221,7 +221,6 @@ Boolean shutting_down = NO;
         }
     }
     
-    
     proc_core_wrapper = [[ProcessorCoreWrapper alloc] initWithSampleRate:self.sysaudio.sample_rate numberOfChannels:self.sysaudio.num_channels bufferSize:(uint32_t)self.sysaudio.buffer_size configFilename:config_file_path];
     
     //[proc_core_wrapper load_config_from_file:CONFIG_FILENAME];

@@ -24,8 +24,9 @@
 #include "ProcModHFEnhance.hpp"
 #include "ProcMod5bandCrossover.hpp"
 #include "ProcMod5bandCompressor.hpp"
-#include "ProcModFinalLPF.hpp"
+#include "ProcModLookaheadLimiter.h"
 #include "ProcModClipper.hpp"
+#include "ProcModFinalLPF.hpp"
 
 
 /*
@@ -85,6 +86,7 @@ private:
     ProcModHFEnhance* proc_mod_hf_enhance;
     ProcMod5bandCrossover* proc_mod_5b_crossover;
     ProcMod5bandCompressor* proc_mod_5b_compressor;
+    ProcModLookaheadLimiter* proc_mod_lookahead_limiter;
     ProcModClipper* proc_mod_clipper;
     ProcModFinalLPF* proc_mod_final_lpf;
     ProcModLevelMeter* proc_mod_level_main_out;

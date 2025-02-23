@@ -11,6 +11,8 @@
 		9D037C982AB5F723002B2638 /* ProcModHFEnhance.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9D037C962AB5F604002B2638 /* ProcModHFEnhance.cpp */; };
 		9D037C9B2AB60617002B2638 /* filter_3rdorder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9D037C992AB60617002B2638 /* filter_3rdorder.cpp */; };
 		9D037C9E2AB6098B002B2638 /* filter_el.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9D037C9C2AB6098A002B2638 /* filter_el.cpp */; };
+		9D1BC27E2D6432C100FCE4F6 /* delay_line.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9D1BC27C2D6432C100FCE4F6 /* delay_line.cpp */; };
+		9D1BC2812D6B9B0E00FCE4F6 /* lookahead_limiter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9D1BC2802D6B9B0E00FCE4F6 /* lookahead_limiter.cpp */; };
 		9D281A9229E05F57009CF125 /* SignalGenerator.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D281A9129E05F57009CF125 /* SignalGenerator.m */; };
 		9D281A9329E05F57009CF125 /* SignalGenerator.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D281A9129E05F57009CF125 /* SignalGenerator.m */; };
 		9D281A9429E05F57009CF125 /* SignalGenerator.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D281A9129E05F57009CF125 /* SignalGenerator.m */; };
@@ -168,6 +170,10 @@
 		9D037C9A2AB60617002B2638 /* filter_3rdorder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = filter_3rdorder.h; sourceTree = "<group>"; };
 		9D037C9C2AB6098A002B2638 /* filter_el.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = filter_el.cpp; sourceTree = "<group>"; };
 		9D037C9D2AB6098A002B2638 /* filter_el.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = filter_el.h; sourceTree = "<group>"; };
+		9D1BC27C2D6432C100FCE4F6 /* delay_line.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = delay_line.cpp; sourceTree = "<group>"; };
+		9D1BC27D2D6432C100FCE4F6 /* delay_line.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = delay_line.h; sourceTree = "<group>"; };
+		9D1BC27F2D6B9B0E00FCE4F6 /* lookahead_limiter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = lookahead_limiter.h; sourceTree = "<group>"; };
+		9D1BC2802D6B9B0E00FCE4F6 /* lookahead_limiter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = lookahead_limiter.cpp; sourceTree = "<group>"; };
 		9D281A9129E05F57009CF125 /* SignalGenerator.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SignalGenerator.m; sourceTree = "<group>"; };
 		9D281A9529E05F67009CF125 /* SignalGenerator.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SignalGenerator.h; sourceTree = "<group>"; };
 		9D281A9629E1C5B5009CF125 /* AudioDeviceSelector.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AudioDeviceSelector.h; sourceTree = "<group>"; };
@@ -551,12 +557,12 @@
 				9DDB22F02D5DB7CD0071DE8A /* ProcModClipper.cpp */,
 				9D791A772D587BEC00791DF8 /* ProcModFinalLPF.hpp */,
 				9D791A762D587BEC00791DF8 /* ProcModFinalLPF.cpp */,
-				9D54D8AE2ADC2F85006C3F57 /* ProcModDelay.hpp */,
-				9D54D8AF2ADC2F85006C3F57 /* ProcModDelay.cpp */,
 				9DFECDF62A87EAAF00BFB1A2 /* ProcModBassClipper.hpp */,
 				9D6392DB2C8921A000F52366 /* ProcModBassClipper.cpp */,
 				9D037C952AB5F604002B2638 /* ProcModHFEnhance.hpp */,
 				9D037C962AB5F604002B2638 /* ProcModHFEnhance.cpp */,
+				9D54D8AE2ADC2F85006C3F57 /* ProcModDelay.hpp */,
+				9D54D8AF2ADC2F85006C3F57 /* ProcModDelay.cpp */,
 			);
 			path = core;
 			sourceTree = "<group>";
@@ -564,40 +570,44 @@
 		9DFECDF92A87EAC500BFB1A2 /* core_utils */ = {
 			isa = PBXGroup;
 			children = (
-				9D86506B2D43604400F32A87 /* simple_gain.cpp */,
-				9D86506C2D43604400F32A87 /* simple_gain.hpp */,
-				9DB46A982D416328005E238E /* compressor.cpp */,
-				9DB46A992D416328005E238E /* compressor.h */,
-				9DDD8AFC2AB766CC00F566F0 /* running_rms.cpp */,
-				9DDD8AFB2AB766CC00F566F0 /* running_rms.h */,
-				9D037C9C2AB6098A002B2638 /* filter_el.cpp */,
-				9D037C9D2AB6098A002B2638 /* filter_el.h */,
-				9D037C992AB60617002B2638 /* filter_3rdorder.cpp */,
-				9D037C9A2AB60617002B2638 /* filter_3rdorder.h */,
-				9DA7C1272A5E4D4700A01D92 /* LPFSinglePole.cpp */,
-				9DA7C1282A5E4D4700A01D92 /* LPFSinglePole.hpp */,
-				9DB012862A71C376009BFCD8 /* CircularBuffer.cpp */,
-				9DB012872A71C376009BFCD8 /* CircularBuffer.hpp */,
-				9DD1BF2D2A9AA07700D7C0B2 /* crossover_5_band.cpp */,
-				9DD1BF2E2A9AA07700D7C0B2 /* crossover_5_band.h */,
-				9D8EC5482A8C5A86006C1E09 /* vca_proportional.cpp */,
-				9D8EC5472A8C5A86006C1E09 /* vca_proportional.h */,
-				9D8EC5442A8BFFA0006C1E09 /* vca.cpp */,
-				9D8EC5452A8BFFA0006C1E09 /* vca.h */,
-				9DFECDFB2A87EAF800BFB1A2 /* biquad.cpp */,
-				9DFECDFF2A87EAF800BFB1A2 /* biquad.h */,
-				9DFECDFA2A87EAF800BFB1A2 /* filter_lr4.h */,
-				9DFECDFD2A87EAF800BFB1A2 /* filter_lr4.cpp */,
+				9DFECE072A87ECCD00BFB1A2 /* AudioBuf.hpp */,
+				9DFECE062A87ECCD00BFB1A2 /* AudioBuf.cpp */,
 				9DE7B68A2C861CDA00313951 /* allpass_filter_lr4.h */,
 				9DE7B68B2C861CE600313951 /* allpass_filter_lr4.cp */,
-				9DFECE062A87ECCD00BFB1A2 /* AudioBuf.cpp */,
-				9DFECE072A87ECCD00BFB1A2 /* AudioBuf.hpp */,
-				9DD141052A81C5D60059864D /* LogLinConverter.cpp */,
-				9DD141062A81C5D60059864D /* LogLinConverter.hpp */,
-				9DC11C812BCAFFC300263F73 /* channel_map.cpp */,
-				9DC11C822BCAFFC300263F73 /* channel_map.hpp */,
-				9DE7B6852C86187600313951 /* butterworth.cpp */,
+				9DFECDFF2A87EAF800BFB1A2 /* biquad.h */,
+				9DFECDFB2A87EAF800BFB1A2 /* biquad.cpp */,
 				9DE7B6862C86187600313951 /* butterworth.h */,
+				9DE7B6852C86187600313951 /* butterworth.cpp */,
+				9DC11C822BCAFFC300263F73 /* channel_map.hpp */,
+				9DC11C812BCAFFC300263F73 /* channel_map.cpp */,
+				9DB012872A71C376009BFCD8 /* CircularBuffer.hpp */,
+				9DB012862A71C376009BFCD8 /* CircularBuffer.cpp */,
+				9DB46A992D416328005E238E /* compressor.h */,
+				9DB46A982D416328005E238E /* compressor.cpp */,
+				9DD1BF2E2A9AA07700D7C0B2 /* crossover_5_band.h */,
+				9DD1BF2D2A9AA07700D7C0B2 /* crossover_5_band.cpp */,
+				9D1BC27D2D6432C100FCE4F6 /* delay_line.h */,
+				9D1BC27C2D6432C100FCE4F6 /* delay_line.cpp */,
+				9D037C9A2AB60617002B2638 /* filter_3rdorder.h */,
+				9D037C992AB60617002B2638 /* filter_3rdorder.cpp */,
+				9D037C9D2AB6098A002B2638 /* filter_el.h */,
+				9D037C9C2AB6098A002B2638 /* filter_el.cpp */,
+				9DFECDFA2A87EAF800BFB1A2 /* filter_lr4.h */,
+				9DFECDFD2A87EAF800BFB1A2 /* filter_lr4.cpp */,
+				9DD141062A81C5D60059864D /* LogLinConverter.hpp */,
+				9DD141052A81C5D60059864D /* LogLinConverter.cpp */,
+				9D1BC27F2D6B9B0E00FCE4F6 /* lookahead_limiter.h */,
+				9D1BC2802D6B9B0E00FCE4F6 /* lookahead_limiter.cpp */,
+				9DA7C1282A5E4D4700A01D92 /* LPFSinglePole.hpp */,
+				9DA7C1272A5E4D4700A01D92 /* LPFSinglePole.cpp */,
+				9DDD8AFC2AB766CC00F566F0 /* running_rms.cpp */,
+				9DDD8AFB2AB766CC00F566F0 /* running_rms.h */,
+				9D86506C2D43604400F32A87 /* simple_gain.hpp */,
+				9D86506B2D43604400F32A87 /* simple_gain.cpp */,
+				9D8EC5452A8BFFA0006C1E09 /* vca.h */,
+				9D8EC5442A8BFFA0006C1E09 /* vca.cpp */,
+				9D8EC5472A8C5A86006C1E09 /* vca_proportional.h */,
+				9D8EC5482A8C5A86006C1E09 /* vca_proportional.cpp */,
 			);
 			path = core_utils;
 			sourceTree = "<group>";
@@ -785,11 +795,13 @@
 				9D3ED8622AFFF65D008283FC /* AGCControlsView.m in Sources */,
 				9D5C638829D8E5D600E40A60 /* SignalGeneratorEngine.cpp in Sources */,
 				9DA7C1292A5E4D4700A01D92 /* LPFSinglePole.cpp in Sources */,
+				9D1BC2812D6B9B0E00FCE4F6 /* lookahead_limiter.cpp in Sources */,
 				9D5C638C29D9FF5400E40A60 /* SignalGeneratorEngineWrapper.mm in Sources */,
 				9DFECE002A87EAF800BFB1A2 /* biquad.cpp in Sources */,
 				9D037C972AB5F604002B2638 /* ProcModHFEnhance.cpp in Sources */,
 				9D9806D529EB849200B98415 /* ProcessorCore.cpp in Sources */,
 				9DB7A12F29D7949E002E6F4E /* main.m in Sources */,
+				9D1BC27E2D6432C100FCE4F6 /* delay_line.cpp in Sources */,
 				9DC11C7B2BCACCE000263F73 /* CoreConfig.cpp in Sources */,
 				9D791A7D2D58806400791DF8 /* ProcModInputHPF.cpp in Sources */,
 				9D3A20672A9562A800C7C620 /* CompressionMeter.m in Sources */,
@@ -1049,7 +1061,7 @@
 				CODE_SIGN_ENTITLEMENTS = MacSmoov/MacSmoovDebug.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 596;
+				CURRENT_PROJECT_VERSION = 672;
 				DEVELOPMENT_ASSET_PATHS = "";
 				ENABLE_HARDENED_RUNTIME = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -1082,7 +1094,7 @@
 				CODE_SIGN_ENTITLEMENTS = MacSmoov/MacSmoov.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 596;
+				CURRENT_PROJECT_VERSION = 672;
 				DEVELOPMENT_ASSET_PATHS = "";
 				ENABLE_HARDENED_RUNTIME = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -1111,7 +1123,7 @@
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 596;
+				CURRENT_PROJECT_VERSION = 672;
 				GENERATE_INFOPLIST_FILE = YES;
 				MACOSX_DEPLOYMENT_TARGET = 11.6;
 				MARKETING_VERSION = 1.0;
@@ -1127,7 +1139,7 @@
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 596;
+				CURRENT_PROJECT_VERSION = 672;
 				GENERATE_INFOPLIST_FILE = YES;
 				MACOSX_DEPLOYMENT_TARGET = 11.6;
 				MARKETING_VERSION = 1.0;
@@ -1142,7 +1154,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 596;
+				CURRENT_PROJECT_VERSION = 672;
 				GENERATE_INFOPLIST_FILE = YES;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.tonekids.osx.MacSmoovUITests;
@@ -1156,7 +1168,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 596;
+				CURRENT_PROJECT_VERSION = 672;
 				GENERATE_INFOPLIST_FILE = YES;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.tonekids.osx.MacSmoovUITests;
