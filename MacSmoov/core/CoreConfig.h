@@ -61,6 +61,8 @@ public:
     void set_mb_comp_band23_coupling(float _coupling);
     float get_mb_comp_band21_coupling();
     void set_mb_comp_band21_coupling(float _coupling);
+    void get_lookahead_limiter_params(COMPRESSOR_PARAMS& _params);
+    void set_lookahead_limiter_params(const COMPRESSOR_PARAMS& _params);
     bool get_clipper_enabled();
     void set_clipper_enabled(bool _enable);
     float get_clip_level();
@@ -83,6 +85,7 @@ private:
     AGC_PARAMS agc_params;
     MULTIBAND_PARAMS multiband_params;
     float clip_level;
+    COMPRESSOR_PARAMS lookahead_limiter_params;
     bool enable_clipper;
     AUDIO_DEVICE audio_device_input;
     AUDIO_DEVICE audio_device_output;

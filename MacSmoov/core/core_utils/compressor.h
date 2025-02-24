@@ -3,6 +3,7 @@
 
 #include <unistd.h>
 #include <stdint.h>
+#include <string>
 
 #include "core_common.h"
 #include "LogLinConverter.hpp"
@@ -13,7 +14,7 @@ namespace fmsmoov {
 class Compressor
 {
 public:
-    Compressor(uint32_t samprate, uint32_t _n_samps);
+    Compressor(uint32_t samprate, uint32_t _n_samps, const std::string& _name = "UNNAMED");
     Compressor(const Compressor& rhs);
 	virtual ~Compressor();
 
@@ -28,6 +29,7 @@ public:
     void read(float* _gain_reduction, bool* _gate_open);
 
 private:
+    std::string name;
     void recalculate();
     COMPRESSOR_PARAMS params;
     uint32_t samprate, n_samps;

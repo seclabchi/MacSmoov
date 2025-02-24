@@ -43,8 +43,8 @@ ProcMod2BandAGC::ProcMod2BandAGC(const string& _name, uint32_t _f_samp, uint8_t 
     
     gc_hi = new float[_n_samps]();
     
-    comp_lo = new Compressor(this->get_f_samp(), this->get_n_samps());
-    comp_hi = new Compressor(this->get_f_samp(), this->get_n_samps());
+    comp_lo = new Compressor(this->get_f_samp(), this->get_n_samps(), "2 BAND AGC LO");
+    comp_hi = new Compressor(this->get_f_samp(), this->get_n_samps(), "2 BAND AGC HI");
     
     comp_hi_gain_reduction_buf = new float[_n_samps]();
     memset(comp_hi_gain_reduction_buf, 0, n_samps*sizeof(float));
@@ -170,7 +170,12 @@ void ProcMod2BandAGC::configure(const AGC_PARAMS& _params) {
         .release = _params.release_bass,
         .gate_thresh = _params.gate_thresh,
         .ratio = _params.ratio,
-        .attack = _params.attack_bass
+        .attack = _params.attack_bass,
+        .knee_type = _params.bass_knee_type,
+        .knee_width = _params.bass_knee_width,
+        .idle_gain = _params.idle_gain,
+        .makeup_gain_mode = _params.bass_makeup_gain_mode,
+        .makeup_gain = _params.bass_makeup_gain
     };
     
     COMPRESSOR_PARAMS comp_parms_hi = {
@@ -178,7 +183,12 @@ void ProcMod2BandAGC::configure(const AGC_PARAMS& _params) {
         .release = _params.release_master,
         .gate_thresh = _params.gate_thresh,
         .ratio = _params.ratio,
-        .attack = _params.attack_master
+        .attack = _params.attack_master,
+        .knee_type = _params.master_knee_type,
+        .knee_width = _params.master_knee_width,
+        .idle_gain = _params.idle_gain,
+        .makeup_gain_mode = _params.master_makeup_gain_mode,
+        .makeup_gain = _params.master_makeup_gain
     };
     
     bool use_coupling = false;

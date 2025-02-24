@@ -12,34 +12,6 @@ using namespace std;
 
 namespace fmsmoov {
 
-/* 44100 Hz sample rate, 150 Hz LO/HI pass second order sections
- soslo =
-
-    1.0000   2.0000   1.0000   1.0000  -1.9849   0.9850
-
- g = 2.8332e-05
- soshi =
-
-    1.0000  -2.0000   1.0000   1.0000  -1.9849   0.9850
-
- g = 0.9925
- 
-
- 48000 Hz sample rate, 150 Hz LO/HI pass second order sections
- 
-soslo =
-
-   1.0000   2.0000   1.0000   1.0000  -1.9861   0.9862
-
-g = 2.3929e-05
-soshi =
-
-   1.0000  -2.0000   1.0000   1.0000  -1.9861   0.9862
-
-g = 0.9931
- 
-*/
-
 ProcMod5bandCompressor::ProcMod5bandCompressor(const string& _name, uint32_t _f_samp, uint8_t _n_channels, uint32_t _n_samps) : ProcessorModule (_name, _f_samp, _n_channels, _n_samps) {
     
     //inbufs 0 and 1 will be stereo passthrough
@@ -51,11 +23,11 @@ ProcMod5bandCompressor::ProcMod5bandCompressor(const string& _name, uint32_t _f_
     linlogL = new LogLinConverter(LogLinConversionType::LIN_TO_LOG);
     linlogR = new LogLinConverter(LogLinConversionType::LIN_TO_LOG);
     
-    comp_b1 = new Compressor(f_samp, n_samps);
-    comp_b2 = new Compressor(f_samp, n_samps);
-    comp_b3 = new Compressor(f_samp, n_samps);
-    comp_b4 = new Compressor(f_samp, n_samps);
-    comp_b5 = new Compressor(f_samp, n_samps);
+    comp_b1 = new Compressor(f_samp, n_samps, "5B COMP B1");
+    comp_b2 = new Compressor(f_samp, n_samps, "5B COMP B2");
+    comp_b3 = new Compressor(f_samp, n_samps, "5B COMP B3");
+    comp_b4 = new Compressor(f_samp, n_samps, "5B COMP B4");
+    comp_b5 = new Compressor(f_samp, n_samps, "5B COMP B5");
     
     gc_rawb1 = new float[n_samps]();
     gc_rawb2 = new float[n_samps]();
@@ -80,11 +52,11 @@ ProcMod5bandCompressor::ProcMod5bandCompressor(const string& _name, uint32_t _f_
     procb5L = new float[n_samps]();
     procb5R = new float[n_samps]();
     
-    lim_b1 = new Compressor(f_samp, n_samps);
-    lim_b2 = new Compressor(f_samp, n_samps);
-    lim_b3 = new Compressor(f_samp, n_samps);
-    lim_b4 = new Compressor(f_samp, n_samps);
-    lim_b5 = new Compressor(f_samp, n_samps);
+    lim_b1 = new Compressor(f_samp, n_samps, "5B LIM B1");
+    lim_b2 = new Compressor(f_samp, n_samps, "5B LIM B2");
+    lim_b3 = new Compressor(f_samp, n_samps, "5B LIM B3");
+    lim_b4 = new Compressor(f_samp, n_samps, "5B LIM B4");
+    lim_b5 = new Compressor(f_samp, n_samps, "5B LIM B5");
     
     limb1L = new float[n_samps]();
     limb1R = new float[n_samps]();

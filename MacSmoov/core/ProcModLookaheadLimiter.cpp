@@ -36,22 +36,14 @@ bool ProcModLookaheadLimiter::init_impl(CoreConfig* cfg, ProcessorModule* prev_m
     }
     
     this->set_bypass(false);
-    
-    COMPRESSOR_PARAMS comp_params = {
-        .thresh = -6.0f,
-        .gate_thresh = -100.0f,
-        .attack = 0.015f,
-        .release = 0.040f,
-        .ratio = 1000
-    };
-    
+    cfg->get_lookahead_limiter_params(comp_params);
     this->configure(comp_params);
     
     return true;
 }
 
 void ProcModLookaheadLimiter::configure(const COMPRESSOR_PARAMS& _params) {
-    limiter->configure(_params.thresh, _params.attack, 10.0f, _params.release, _params.ratio);
+    limiter->configure(_params);
 }
 
 void ProcModLookaheadLimiter::process() {

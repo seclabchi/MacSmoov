@@ -22,14 +22,10 @@ class LookaheadLimiter {
 public:
     LookaheadLimiter(uint32_t _samp_rate, uint32_t _n_samp);
     virtual ~LookaheadLimiter();
-    virtual void configure(float thresh, float attack, float hold, float release, float ratio);
+    virtual void configure(const COMPRESSOR_PARAMS& _params);
     virtual void process(float* inL, float* inR, float* outL, float* outR);
 private:
-    float thresh;
-    float attack;
-    float hold;
-    float release;
-    float ratio;
+    COMPRESSOR_PARAMS params;
     DelayLine* delay_L;
     DelayLine* delay_R;
     Compressor* comp;

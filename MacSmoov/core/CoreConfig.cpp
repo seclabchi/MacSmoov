@@ -96,6 +96,14 @@ static const AGC_PARAMS agc_params_default = {
     .idle_gain = 0.0,
     .attack_master = 0.3,
     .attack_bass = 0.4,
+    .bass_knee_type = COMPRESSOR_KNEE_TYPE::SOFT_KNEE,
+    .bass_knee_width = 1.0,
+    .master_knee_type = COMPRESSOR_KNEE_TYPE::SOFT_KNEE,
+    .master_knee_width = 1.0,
+    .bass_makeup_gain_mode = MAKEUP_GAIN_MODE::MANUAL,
+    .bass_makeup_gain = 0.0,
+    .master_makeup_gain_mode = MAKEUP_GAIN_MODE::MANUAL,
+    .master_makeup_gain = 0.0
 };
 
 /*===================================*/
@@ -240,6 +248,19 @@ static const COMPRESSOR_PARAMS lim_params_b5_default = {
     .makeup_gain_mode = MAKEUP_GAIN_MODE::MANUAL,
     .makeup_gain = 0.0f
  };
+
+static const COMPRESSOR_PARAMS lookahead_limiter_params_default = {
+    .thresh = -9.0f,
+    .release = .040,
+    .gate_thresh = -100.0f,
+    .ratio = 1000,
+    .attack = .015,
+    .knee_type = COMPRESSOR_KNEE_TYPE::SOFT_KNEE,
+    .knee_width = 1.0f,
+    .idle_gain = 0.0f,
+    .makeup_gain_mode = MAKEUP_GAIN_MODE::MANUAL,
+    .makeup_gain = 0.0f
+};
  
  
 static const MULTIBAND_PARAMS multiband_params_default = {
@@ -286,6 +307,7 @@ CoreConfig::CoreConfig() {
     enable_hf_enhance = false;
     enable_mb_crossover = false;
     multiband_params = multiband_params_default;
+    lookahead_limiter_params = lookahead_limiter_params_default;
 }
 
 CoreConfig* CoreConfig::get_instance() {
@@ -421,6 +443,14 @@ bool CoreConfig::set_mb_params(const MULTIBAND_PARAMS& params) {
     return true;
 }
 
+void CoreConfig::get_lookahead_limiter_params(COMPRESSOR_PARAMS& _params) {
+    _params = lookahead_limiter_params;
+}
+
+void CoreConfig::set_lookahead_limiter_params(const COMPRESSOR_PARAMS& _params) {
+    lookahead_limiter_params = _params;
+}
+
 float CoreConfig::get_clip_level() {
     return clip_level;
 }
@@ -498,6 +528,14 @@ bool CoreConfig::load_cfg_from_file(const std::string &filename) {
             agc_params.idle_gain = agc["idle_gain"].as<float>();
             agc_params.attack_master = agc["attack_master"].as<float>();
             agc_params.attack_bass = agc["attack_bass"].as<float>();
+            agc_params.bass_knee_type = agc["bass_knee_type"].as<COMPRESSOR_KNEE_TYPE>();
+            agc_params.bass_knee_width = agc["bass_knee_width"].as<float>();
+            agc_params.master_knee_type = agc["master_knee_type"].as<COMPRESSOR_KNEE_TYPE>();
+            agc_params.master_knee_width = agc["master_knee_width"].as<float>();
+            agc_params.bass_makeup_gain_mode = agc["bass_makeup_gain_mode"]. as<MAKEUP_GAIN_MODE>();
+            agc_params.bass_makeup_gain = agc["bass_makeup_gain"].as<float>();
+            agc_params.master_makeup_gain_mode = agc["master_makeup_gain_mode"]. as<MAKEUP_GAIN_MODE>();
+            agc_params.master_makeup_gain = agc["master_makeup_gain"].as<float>();
         
             std::cout << "Loaded 2-band AGC settings." << std::endl;
             
@@ -698,6 +736,49 @@ bool CoreConfig::load_cfg_from_file(const std::string &filename) {
             //multiband_params.lim_params[3].thresh = multiband_params.comp_params[3].thresh + multiband_params.band4_comp_lim_offset;
             //multiband_params.lim_params[4].thresh = multiband_params.comp_params[4].thresh + multiband_params.band5_comp_lim_offset;
             
+            YAML::Node lookahead_limiter_node = yaml_node["lookahead_limiter"];
+            for(YAML::iterator ll_settings_it = lookahead_limiter_node.begin(); ll_settings_it != lookahead_limiter_node.end(); ++ll_settings_it) {
+                std::string key = ll_settings_it->first.as<std::string>();
+                YAML::Node value = ll_settings_it->second;
+                
+                //std::cout << "Found setting " << key << std::endl;
+                
+                if(!key.compare("thresh")) {
+                    lookahead_limiter_params.thresh = value.as<float>();
+                }
+                else if(!key.compare("gate_thresh")) {
+                    lookahead_limiter_params.gate_thresh = value.as<float>();
+                }
+                else if(!key.compare("release")) {
+                    lookahead_limiter_params.release = value.as<float>();
+                }
+                else if(!key.compare("ratio")) {
+                    lookahead_limiter_params.ratio = value.as<float>();
+                }
+                else if(!key.compare("attack")) {
+                    lookahead_limiter_params.attack = value.as<float>();
+                }
+                else if(!key.compare("knee_type")) {
+                    lookahead_limiter_params.knee_type = value.as<COMPRESSOR_KNEE_TYPE>();
+                }
+                else if(!key.compare("knee_width")) {
+                    lookahead_limiter_params.knee_width = value.as<float>();
+                }
+                else if(!key.compare("idle_gain")) {
+                    lookahead_limiter_params.idle_gain = value.as<float>();
+                }
+                else if(!key.compare("makeup_gain_mode")) {
+                    lookahead_limiter_params.makeup_gain_mode = value.as<MAKEUP_GAIN_MODE>();
+                }
+                else if(!key.compare("makeup_gain")) {
+                    lookahead_limiter_params.makeup_gain = value.as<float>();
+                }
+                else {
+                    //unknown cfg element in COMPRESSOR params
+                    std::cout << "UNKNOWN ELEMENT " << key << " IN LOOKAHEAD_LIMITER PARAMS" << std::endl;
+                }
+            }
+            
             YAML::Node clipper_node = yaml_node["clipper"];
             enable_clipper = clipper_node["enabled"].as<bool>();
             clip_level = clipper_node["clip_level"].as<float>();
@@ -772,6 +853,14 @@ bool CoreConfig::write_cfg_to_file() {
             agc["idle_gain"] = agc_params.idle_gain;
             agc["attack_master"] = agc_params.attack_master;
             agc["attack_bass"] = agc_params.attack_bass;
+            agc["bass_knee_type"] = agc_params.bass_knee_type;
+            agc["bass_knee_width"] = agc_params.bass_knee_width;
+            agc["master_knee_type"] = agc_params.master_knee_type;
+            agc["master_knee_width"] = agc_params.master_knee_width;
+            agc["bass_makeup_gain_mode"] = agc_params.bass_makeup_gain_mode;
+            agc["bass_makeup_gain"] = agc_params.bass_makeup_gain;
+            agc["master_makeup_gain_mode"] = agc_params.master_makeup_gain_mode;
+            agc["master_makeup_gain"] = agc_params.master_makeup_gain;
         
             std::cout << "Saved 2-band AGC settings." << std::endl;
             
@@ -866,6 +955,18 @@ bool CoreConfig::write_cfg_to_file() {
                 band_settings["makeup_gain"] = multiband_params.lim_params[band].makeup_gain;
                 lim_bands[band] = band_settings;
             }
+            
+            YAML::Node lookahead_limiter_settings = yaml_node["lookahead_limiter"];
+            lookahead_limiter_settings["thresh"] = lookahead_limiter_params.thresh;
+            lookahead_limiter_settings["gate_thresh"] = lookahead_limiter_params.gate_thresh;
+            lookahead_limiter_settings["release"] = lookahead_limiter_params.release;
+            lookahead_limiter_settings["ratio"] = lookahead_limiter_params.ratio;
+            lookahead_limiter_settings["attack"] = lookahead_limiter_params.attack;
+            lookahead_limiter_settings["knee_type"] = lookahead_limiter_params.knee_type;
+            lookahead_limiter_settings["knee_width"] = lookahead_limiter_params.knee_width;
+            lookahead_limiter_settings["idle_gain"] = lookahead_limiter_params.idle_gain;
+            lookahead_limiter_settings["makeup_gain_mode"] = lookahead_limiter_params.makeup_gain_mode;
+            lookahead_limiter_settings["makeup_gain"] = lookahead_limiter_params.makeup_gain;
             
             YAML::Node clipper_node = yaml_node["clipper"];
             clipper_node["enabled"] = enable_clipper;

@@ -35,6 +35,14 @@ typedef struct {
     float idle_gain;  //-10...+10 dB
     float attack_master;  //0.2...6 seconds
     float attack_bass;   //1...10 seconds
+    COMPRESSOR_KNEE_TYPE bass_knee_type;
+    float bass_knee_width;
+    COMPRESSOR_KNEE_TYPE master_knee_type;
+    float master_knee_width;
+    MAKEUP_GAIN_MODE bass_makeup_gain_mode;
+    float bass_makeup_gain;
+    MAKEUP_GAIN_MODE master_makeup_gain_mode;
+    float master_makeup_gain;
 } AGC_PARAMS;
 
 typedef struct  {

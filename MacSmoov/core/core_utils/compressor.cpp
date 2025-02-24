@@ -2,13 +2,14 @@
 #include <stdexcept>
 #include <iostream>
 #include <math.h>
+#include <cmath>
 
 using namespace std;
 
 namespace fmsmoov {
 
-Compressor::Compressor(uint32_t _samprate, uint32_t _n_samps)
-: samprate(_samprate), n_samps(_n_samps)
+Compressor::Compressor(uint32_t _samprate, uint32_t _n_samps, const std::string& _name)
+: samprate(_samprate), n_samps(_n_samps), name(_name)
 {
     samp_converter_todb = new LogLinConverter(LogLinConversionType::LIN_TO_LOG);
     indbL = new float[n_samps]();
@@ -32,6 +33,7 @@ Compressor::Compressor(uint32_t _samprate, uint32_t _n_samps)
     gc = 0.0f;
     gs = -10.0f;
     gsPrev = -10.0f;
+    gs_prev = -10.0f;
     alphaA = 1.0f;
     alphaR_norm = 1.0f;
     alphaR_window = 1.0f;
@@ -65,7 +67,7 @@ Compressor::Compressor(const Compressor& rhs)  {
     gc = 0.0;
     gs = -10.0f;
     gsPrev = -10.0f;
-    gs_prev = 0.0f;
+    gs_prev = -10.0f;
     alphaA = rhs.alphaA;
     alphaR_norm = rhs.alphaR_norm;
     alphaR_window = rhs.alphaR_window;
@@ -99,7 +101,7 @@ void Compressor::config(const COMPRESSOR_PARAMS& _params, const bool _use_coupli
     compute_gc_has_been_called = false;
     compute_gs_has_been_called = false;
 
-    std::cout << "Compressor->config: " << params.thresh << ","
+    std::cout << "Compressor->config: " << name << ": " << params.thresh << ","
         << params.gate_thresh << "," << params.attack << "," << params.release
         << "," << params.ratio << std::endl;
 }
@@ -115,15 +117,32 @@ void Compressor::compute_gc(float* inL, float* inR, float* _gc_raw) {
         else {
             indb = indbR[i];
         }
-
-        if(indb < params.thresh) {
-            sc = indb;
+        
+        if(params.knee_type == COMPRESSOR_KNEE_TYPE::HARD_KNEE) {
+            if(indb < params.thresh) {
+                sc = indb;
+            }
+            else {
+                sc = params.thresh + ((indb - params.thresh) / params.ratio);
+            }
         }
         else {
-            sc = params.thresh + ((indb - params.thresh) / params.ratio);
+            if(indb < (params.thresh - (params.knee_width/2.0f))) {
+                sc = indb;
+            }
+            else if((indb >= (params.thresh - (params.knee_width/2.0f))) && (indb <= (params.thresh + (params.knee_width/2.0f)))) {
+                sc = indb + (((1.0f/params.ratio) - 1.0f) * (powf(indb - params.thresh + (params.knee_width/2.0f), 2.0))/(2.0f * params.knee_width));
+            }
+            else {
+                sc = params.thresh + ((indb - params.thresh) / params.ratio);
+            }
         }
 
         gc_raw[i] = sc - indb;
+        
+        if(std::isnan(gc_raw[i])) {
+            std::cout << "GOT ISNAN in compressor gc calc" << std::endl;
+        }
 
         if(_gc_raw) {
             _gc_raw[i] = gc_raw[i];
@@ -156,6 +175,10 @@ void Compressor::compute_gs(float* in, float* out, float* _gc_in, float* _gs_out
             _gs_out[i] = alphaR_norm * gs_prev + (1.0f - alphaR_norm) * _gc_in[i];
         }
 
+        if(std::isnan(_gs_out[i])) {
+            std::cout << "GOT ISNAN in compressor gs calc" << std::endl;
+        }
+        
         gs_prev =  _gs_out[i];
 
     }
@@ -170,6 +193,9 @@ void Compressor::apply_gs(float* inL, float* inR, float* outL, float* outR, floa
     }
 
     for(uint32_t i = 0; i < n_samps; i++) {
+        if(std::isnan(_gs_in[i])) {
+            std::cout << "GOT ISNAN in compressor gs apply" << std::endl;
+        }
         outL[i] = inL[i] * powf(10.0f, _gs_in[i]/20.0f);
         outR[i] = inR[i] * powf(10.0f, _gs_in[i]/20.0f);
     }
