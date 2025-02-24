@@ -50,7 +50,7 @@ multiband_params:
   drive: 12
   gate_thresh: -60
   limiters_enabled: true
-  master_post_gain: 12
+  master_post_gain: 9
   band1_solo: false
   band1_mute: false
   band2_solo: false
