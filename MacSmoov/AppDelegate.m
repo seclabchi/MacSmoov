@@ -147,6 +147,7 @@ Boolean shutting_down = NO;
     
     [_level_main_in setMeterDbMinVal:-30.0f maxVal:1.0f];
     [_stereo_enhance_lr_diff setMeterLinearMinVal:0.0f maxVal:0.5f];
+    [_stereo_enhance_lr_diff set_meter_colors_rms:[NSColor greenColor] peak:[NSColor greenColor]];
     [_comp_2band_agc set_meter_range:-24.0];
     [_comp_5band set_meter_color:[NSColor magentaColor]];
     [_comp_5band set_meter_range:-12.0];

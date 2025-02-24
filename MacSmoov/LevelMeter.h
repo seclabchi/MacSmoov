@@ -17,6 +17,7 @@ NS_ASSUME_NONNULL_BEGIN
 }
 
 - (void)awakeFromNib;
+- (void)set_meter_colors_rms:(NSColor* _Nonnull)colorRms peak:(NSColor* _Nonnull)colorPeak;
 - (void)setMeterDbMinVal:(Float32)minVal maxVal:(Float32)maxVal;
 - (void)setMeterLinearMinVal:(Float32)minVal maxVal:(Float32)maxVal;
 - (void)set_levels_Lrms:(Float32)lrms Rrms:(Float32)rrms Lpeak:(Float32)lpeak Rpeak:(Float32)rpeak;

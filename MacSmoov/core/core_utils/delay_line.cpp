@@ -28,8 +28,6 @@ DelayLine::DelayLine(uint32_t _max_delay, uint32_t _samp_rate, uint32_t _n_samps
 
     r_ptr_offset = 0;
     w_ptr_offset = 0;
-
-    recalculate();
 }
 
 DelayLine::DelayLine(const DelayLine& rhs)  {

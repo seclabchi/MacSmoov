@@ -21,8 +21,6 @@ LookaheadLimiter::LookaheadLimiter(uint32_t _samp_rate, uint32_t _n_samp)
 
     input_delayed_L = new float[n_samp]();
     input_delayed_R = new float[n_samp]();
-
-    comp->config(comp_params);
 }
 
 LookaheadLimiter::~LookaheadLimiter() {
@@ -38,8 +36,8 @@ LookaheadLimiter::~LookaheadLimiter() {
 void LookaheadLimiter::configure(const COMPRESSOR_PARAMS& _params) {
     params = _params;
     comp->config(params);
-    delay_L->config(params.attack);
-    delay_R->config(comp_params.attack);
+    delay_L->config((uint32_t)(params.attack * 1000.0f));
+    delay_R->config((uint32_t)(params.attack * 1000.0f));
 }
 
 void LookaheadLimiter::process(float* inL, float* inR, float* outL, float* outR) {

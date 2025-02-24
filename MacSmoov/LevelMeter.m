@@ -11,6 +11,8 @@
     Float32 max_lev;
     Float32 min_lev;
     bool is_linear;
+    NSColor* color_rms;
+    NSColor* color_peak;
 }
 @end
 
@@ -24,6 +26,8 @@
     self->max_lev = 0.0;
     self->min_lev = -30.0;
     self->is_linear = false;
+    self->color_rms = [NSColor cyanColor];
+    self->color_peak = [NSColor colorWithRed:1.0 green:0.7 blue:0.7 alpha:1.0];
 }
 
 - (id)initWithFrame:(NSRect)frame {
@@ -86,11 +90,11 @@
     rect_l_peak.size.height = scaleFactor_l_peak;
     rect_r_peak.size.height = scaleFactor_r_peak;
     
-    [[NSColor colorWithRed:1.0 green:0.7 blue:0.7 alpha:1.0] set];
+    [self->color_peak set];
     [NSBezierPath fillRect:rect_l_peak];
     [NSBezierPath fillRect:rect_r_peak];
     
-    [[NSColor cyanColor] set];
+    [self->color_rms set];
     [NSBezierPath fillRect:rect_l_rms];
     [NSBezierPath fillRect:rect_r_rms];
     
@@ -111,6 +115,12 @@
     level_r_peak = level;
     self.needsDisplay = true;
 }
+
+- (void)set_meter_colors_rms:(NSColor* _Nonnull)colorRms peak:(NSColor* _Nonnull)colorPeak {
+    self->color_rms = colorRms;
+    self->color_peak = colorPeak;
+}
+
 
 
 @end

@@ -33,7 +33,6 @@ private:
     float* gs_buf;
     float* input_delayed_L;
     float* input_delayed_R;
-    COMPRESSOR_PARAMS comp_params;
 
     LogLinConverter* dbToLinL, *dbToLinR;
     LogLinConverter* linToDbL, *linToDbR;
