@@ -321,11 +321,11 @@ void ProcMod5bandCompressor::configure(const MULTIBAND_PARAMS _params) {
     
     this->set_bypass(!_params.enabled);
     
-    comp_b1->config(params.comp_params[0]);
-    comp_b2->config(params.comp_params[1]);
-    comp_b3->config(params.comp_params[2]);
-    comp_b4->config(params.comp_params[3]);
-    comp_b5->config(params.comp_params[4]);
+    comp_b1->config(params.comp_params[0], true);
+    comp_b2->config(params.comp_params[1], true);
+    comp_b3->config(params.comp_params[2], true);
+    comp_b4->config(params.comp_params[3], true);
+    comp_b5->config(params.comp_params[4], true);
     
     //params.lim_params[0].thresh = params.comp_params[0].thresh + params.band1_comp_lim_offset;
     //params.lim_params[1].thresh = params.comp_params[1].thresh + params.band1_comp_lim_offset;
