@@ -24,6 +24,7 @@ public:
     virtual ~LookaheadLimiter();
     virtual void configure(const COMPRESSOR_PARAMS& _params);
     virtual void process(float* inL, float* inR, float* outL, float* outR);
+    void read(float* _gr);
 private:
     COMPRESSOR_PARAMS params;
     DelayLine* delay_L;

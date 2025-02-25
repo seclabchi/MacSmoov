@@ -191,6 +191,8 @@ void Compressor::apply_gs(float* inL, float* inR, float* outL, float* outR, floa
     if(!compute_gs_has_been_called) {
         throw std::runtime_error("compute_gs has not been called yet on this frame");
     }
+    
+    gain_reduction = 0.0;
 
     for(uint32_t i = 0; i < n_samps; i++) {
         if(std::isnan(_gs_in[i])) {
@@ -198,7 +200,11 @@ void Compressor::apply_gs(float* inL, float* inR, float* outL, float* outR, floa
         }
         outL[i] = inL[i] * powf(10.0f, _gs_in[i]/20.0f);
         outR[i] = inR[i] * powf(10.0f, _gs_in[i]/20.0f);
+        
+        gain_reduction += _gs_in[i];
     }
+    
+    avg_gain_reduction = gain_reduction / (float)n_samps;
 
 }
 

@@ -23,8 +23,11 @@ typedef void(*PROCESSOR_CORE_HOOK)(AudioBufferList* ab_list, AudioBufferList* ab
 //-(void) processWithInput:(float*)in_buf output:(float*)out_buf ofSize:(uint32_t) n_samp;
 -(void) getMainInLevelsLrms:(float*)lrms Rrms:(float*)rrms Lpeak:(float*)lpeak Rpeak:(float*)rpeak;
 -(void) getMainOutLevelsLrms:(float*)lrms Rrms:(float*)rrms Lpeak:(float*)lpeak Rpeak:(float*)rpeak;
+-(void) getLookaheadLimiterGainReduction:(float*)_lookahead_limiter_gr;
+-(void) getClipperActionL:(float*)_action_l R:(float*)_action_r;
 -(void) setMainInGainDBL:(float)mainInL R:(float)mainInR;
 -(void) mainInGainChangeDoneL:(float)mainInL R:(float)mainInR; /* Only fired when the mouse button is lifted or a key is pressed on the control to minimize cfg file writes */
+-(void) getMainInGainDBL:(float*)mainInL R:(float*)mainInR;
 -(bool) getStereoEnhanceEnabled;
 -(void) setStereoEnhanceEnabled:(NSControlStateValue) _se_enabled;
 -(void) getStereoEnhanceLRDiff:(float*)_lr_diff;
@@ -40,6 +43,9 @@ typedef void(*PROCESSOR_CORE_HOOK)(AudioBufferList* ab_list, AudioBufferList* ab
 -(void) change_multiband_settings:(MULTIBAND_PARAMS)_params;
 -(float) get_clip_level;
 -(void) set_clip_level:(float)_clip_level;
+-(void) setMainOutGainDBL:(float)mainInL R:(float)mainInR;
+-(void) mainOutGainChangeDoneL:(float)mainInL R:(float)mainInR; /* Only fired when the mouse button is lifted or a key is pressed on the control to minimize cfg file writes */
+-(void) getMainOutGainDBL:(float*)mainOutL R:(float*)mainOutR;
 
 
 @end

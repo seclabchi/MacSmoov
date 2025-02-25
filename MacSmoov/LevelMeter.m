@@ -116,6 +116,14 @@
     self.needsDisplay = true;
 }
 
+- (void)set_levelsL:(Float32)level_l R:(Float32)level_r {
+    level_l_rms = 0.0;
+    level_r_rms = 0.0;
+    level_l_peak = level_l;
+    level_r_peak = level_r;
+    self.needsDisplay = true;
+}
+
 - (void)set_meter_colors_rms:(NSColor* _Nonnull)colorRms peak:(NSColor* _Nonnull)colorPeak {
     self->color_rms = colorRms;
     self->color_peak = colorPeak;

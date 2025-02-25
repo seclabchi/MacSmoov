@@ -9,13 +9,13 @@ audio_devices:
     device_uid: UNKNOWN
 input_gain:
   enabled: true
-  L: 0.678274393
-  R: 0.678274393
+  L: -0.377302349
+  R: -0.377302349
 input_level:
   enabled: true
 stereo_enhance:
   enabled: true
-  drive: 1.22000003
+  drive: 1.26999998
 agc_params:
   enabled: true
   mute_lo: false
@@ -28,7 +28,7 @@ agc_params:
   bass_coupling: 0.200000003
   window_size: -6
   window_release: 60
-  ratio: 50
+  ratio: 2000
   bass_thresh: -14
   idle_gain: 0
   attack_master: 3
@@ -47,10 +47,10 @@ multiband_crossover:
   enabled: true
 multiband_params:
   enabled: true
-  drive: 12
+  drive: 6
   gate_thresh: -60
   limiters_enabled: true
-  master_post_gain: 9
+  master_post_gain: 8
   band1_solo: false
   band1_mute: false
   band2_solo: false
@@ -82,54 +82,54 @@ multiband_params:
         thresh: -32
         gate_thresh: -60
         release: 0.0199999996
-        ratio: 1.29999995
+        ratio: 1.79999995
         attack: 0.125
         knee_type: soft
-        knee_width: 6
+        knee_width: 9
         idle_gain: 0
         makeup_gain_mode: manual
         makeup_gain: 0
       - band: 2
         thresh: -32
         gate_thresh: -60
-        release: 0.0500000007
-        ratio: 1.29999995
+        release: 0.100000001
+        ratio: 1.79999995
         attack: 0.0900000036
         knee_type: soft
-        knee_width: 6
+        knee_width: 9
         idle_gain: 0
         makeup_gain_mode: manual
         makeup_gain: 0
       - band: 3
         thresh: -32
         gate_thresh: -60
-        release: 0.0599999987
-        ratio: 1.29999995
-        attack: 0.0500000007
+        release: 0.0799999982
+        ratio: 1.79999995
+        attack: 0.0599999987
         knee_type: soft
-        knee_width: 6
+        knee_width: 9
         idle_gain: 0
         makeup_gain_mode: manual
         makeup_gain: 0
       - band: 4
         thresh: -32
         gate_thresh: -60
-        release: 0.0399999991
-        ratio: 1.29999995
-        attack: 0.0299999993
+        release: 0.0599999987
+        ratio: 1.79999995
+        attack: 0.0399999991
         knee_type: soft
-        knee_width: 6
+        knee_width: 9
         idle_gain: 0
         makeup_gain_mode: manual
         makeup_gain: 0
       - band: 5
         thresh: -30
         gate_thresh: -60
-        release: 0.00039999999
-        ratio: 1.29999995
-        attack: 9.99999975e-05
+        release: 0.00079999998
+        ratio: 1.79999995
+        attack: 0.000500000024
         knee_type: soft
-        knee_width: 6
+        knee_width: 9
         idle_gain: 0
         makeup_gain_mode: manual
         makeup_gain: 0
@@ -141,9 +141,9 @@ multiband_params:
     band5_limiter_enabled: true
     bands:
       - band: 1
-        thresh: -22
+        thresh: -23
         gate_thresh: -60
-        release: 0.00999999978
+        release: 0.129999995
         ratio: 12
         attack: 0.125
         knee_type: soft
@@ -152,10 +152,10 @@ multiband_params:
         makeup_gain_mode: manual
         makeup_gain: 0
       - band: 2
-        thresh: -22
+        thresh: -23
         gate_thresh: -60
-        release: 0.0199999996
-        ratio: 18
+        release: 0.100000001
+        ratio: 12
         attack: 0.0900000036
         knee_type: soft
         knee_width: 6
@@ -163,49 +163,53 @@ multiband_params:
         makeup_gain_mode: manual
         makeup_gain: 0
       - band: 3
-        thresh: -22
+        thresh: -23
         gate_thresh: -60
-        release: 0.0125000002
-        ratio: 25
-        attack: 0.0500000007
+        release: 0.0799999982
+        ratio: 12
+        attack: 0.0599999987
         knee_type: soft
         knee_width: 6
         idle_gain: 0
         makeup_gain_mode: manual
         makeup_gain: 0
       - band: 4
-        thresh: -22
+        thresh: -23
         gate_thresh: -60
-        release: 0.00079999998
-        ratio: 25
-        attack: 0.00300000003
+        release: 0.0599999987
+        ratio: 12
+        attack: 0.0399999991
         knee_type: soft
         knee_width: 6
         idle_gain: 0
         makeup_gain_mode: manual
         makeup_gain: 0
       - band: 5
-        thresh: -22
+        thresh: -23
         gate_thresh: -60
-        release: 0.00039999999
-        ratio: 25
-        attack: 9.99999975e-05
+        release: 0.00079999998
+        ratio: 12
+        attack: 0.000500000024
         knee_type: soft
         knee_width: 6
         idle_gain: 0
         makeup_gain_mode: manual
         makeup_gain: 0
 lookahead_limiter:
-  thresh: -9
+  thresh: -6
   gate_thresh: -100
-  release: 0.0250000004
-  ratio: 50
-  attack: 0.00499999989
+  release: 0.0500000007
+  ratio: 150
+  attack: 0.0100000007
   knee_type: soft
-  knee_width: 1
+  knee_width: 6
   idle_gain: 0
   makeup_gain_mode: manual
   makeup_gain: 0
 clipper:
   enabled: true
   clip_level: 0.920000017
+output_gain:
+  enabled: true
+  L: -2.26381421
+  R: -2.26381421

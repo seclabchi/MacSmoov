@@ -105,8 +105,15 @@ ProcessorCore::ProcessorCore(uint32_t _f_samp, uint32_t _n_channels, uint32_t _n
     chan_map = new ChannelMap();
     chan_map->the_map.push_back(CHANNEL_MAP_ELEMENT {0, 0, "IN_L"});
     chan_map->the_map.push_back(CHANNEL_MAP_ELEMENT {1, 1, "IN_R"});
+    proc_mod_gain_main_out = new ProcModGain("GAIN_MAIN_OUT", f_samp, n_channels, n_samp);
+    proc_mod_gain_main_out->init(core_config, proc_mod_clipper, chan_map);
+    core_stack->add_module(proc_mod_gain_main_out);
+    
+    chan_map = new ChannelMap();
+    chan_map->the_map.push_back(CHANNEL_MAP_ELEMENT {0, 0, "IN_L"});
+    chan_map->the_map.push_back(CHANNEL_MAP_ELEMENT {1, 1, "IN_R"});
     proc_mod_final_lpf = new ProcModFinalLPF("FINAL_LPF", f_samp, n_channels, n_samp);
-    proc_mod_final_lpf->init(core_config, proc_mod_clipper, chan_map);
+    proc_mod_final_lpf->init(core_config, proc_mod_gain_main_out, chan_map);
     core_stack->add_module(proc_mod_final_lpf);
     
     chan_map = new ChannelMap();
@@ -193,6 +200,13 @@ void ProcessorCore::main_in_gain_db_change_done(float loggain_l, float loggain_r
     core_config->set_input_gain(std::pair<float,float>(loggain_l, loggain_r));
 }
 
+void ProcessorCore::get_main_in_gain_db(float* gain_in_db_L, float* gain_in_db_R) {
+    std::pair<float, float> input_gain_db;
+    core_config->get_input_gain(input_gain_db);
+    *gain_in_db_L = input_gain_db.first;
+    *gain_in_db_R = input_gain_db.second;
+}
+
 void ProcessorCore::set_stereo_enhance_enabled(bool enabled) {
     proc_mod_stereo_enhance->set_bypass(!enabled);
     core_config->set_stereo_enhance_enabled(enabled);
@@ -222,6 +236,14 @@ void ProcessorCore::get2bandAGCGainReduction(float* gainReduct2blo, float* gainR
 
 void ProcessorCore::get5bandCompressorGainReduction(float** _bands_gr, float** _bands_lim, bool** _bands_gate_open) {
     proc_mod_5b_compressor->read(_bands_gr, _bands_lim, _bands_gate_open);
+}
+
+void ProcessorCore::getLookaheadLimiterGainReduction(float* _lookahead_gr) {
+    proc_mod_lookahead_limiter->read(_lookahead_gr);
+}
+
+void ProcessorCore::getClipperAction(float* _action_l, float* _action_r) {
+    proc_mod_clipper->read(_action_l, _action_r);
 }
 
 void ProcessorCore::set_bands_enabled(bool _bands_enabled[]) {
@@ -276,3 +298,17 @@ void ProcessorCore::set_clip_level(float _clip_level) {
     core_config->set_clip_level(_clip_level);
 }
 
+void ProcessorCore::set_main_out_gain_db(float loggain_l, float loggain_r) {
+    proc_mod_gain_main_out->set_gain_db(loggain_l, loggain_r);
+}
+
+void ProcessorCore::main_out_gain_db_change_done(float loggain_l, float loggain_r) {
+    core_config->set_output_gain(std::pair<float,float>(loggain_l, loggain_r));
+}
+
+void ProcessorCore::get_main_out_gain_db(float* gain_out_db_L, float* gain_out_db_R) {
+    std::pair<float, float> output_gain_db;
+    core_config->get_output_gain(output_gain_db);
+    *gain_out_db_L = output_gain_db.first;
+    *gain_out_db_R = output_gain_db.second;
+}

@@ -20,9 +20,11 @@ public:
     virtual ~ProcModLookaheadLimiter();
     virtual bool init_impl(CoreConfig* cfg, ProcessorModule* prev_mod, ChannelMap* _channel_map);
     virtual void configure(const COMPRESSOR_PARAMS& _params);
+    void read(float* _lookahead_gr);
     //TODO: Figure this shit out to make it universal. */
     virtual void process();
 private:
+    float gr;
     LookaheadLimiter* limiter;
     COMPRESSOR_PARAMS comp_params;
 };

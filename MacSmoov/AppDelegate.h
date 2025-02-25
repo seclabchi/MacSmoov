@@ -26,7 +26,9 @@
 @property (strong) IBOutlet NSBox* agc_lo_gate_closed;
 @property (strong) IBOutlet NSBox* agc_hi_gate_closed;
 @property (strong) IBOutlet CompressionMeter5band* comp_5band;
-@property (strong) IBOutlet LevelMeter* clipper_meter;
+@property (strong) IBOutlet CompressionMeter* lookahead_limiter_meter;
+@property (strong) IBOutlet CompressionMeter* clipper_meter;
+@property (strong) IBOutlet NSSlider* slider_gain_main_out;
 @property (strong) IBOutlet LevelMeter* level_main_out;
 
 @property (strong) IBOutlet NSBox* gate_b1;
@@ -52,6 +54,8 @@
 
 -(IBAction) agcFactoryMenuSelected:(id)sender;
 -(IBAction) multibandAdjustMenuSelected:(id)sender;
+
+-(IBAction) adjustGainMainOut:(id)sender;
 
 -(void) queryMeterLevels:(id)param;
 -(void) openAudioFile:(NSURL*)fileUrl;

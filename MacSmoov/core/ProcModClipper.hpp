@@ -24,8 +24,12 @@ public:
      TODO: Figure this shit out to make it universal. */
     virtual void process();
     virtual void configure(float _clip_level);
+    void read(float* _actionL, float* _actionR);
+
 private:
     float clip_level;
+    float avg_clip_linear_L, avg_clip_linear_R;
+    float avg_clip_db_L, avg_clip_db_R;;
 };
 
 }

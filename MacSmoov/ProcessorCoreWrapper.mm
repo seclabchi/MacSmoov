@@ -97,6 +97,10 @@ void processor_core_hook(AudioBufferList* ab_list, AudioBufferList* ab_list_core
     cpp->main_in_gain_db_change_done(mainInL, mainInR);
 }
 
+-(void) getMainInGainDBL:(float*)mainInL R:(float*)mainInR {
+    cpp->get_main_in_gain_db(mainInL, mainInR);
+}
+
 -(bool) getStereoEnhanceEnabled {
     return cpp->get_stereo_enhance_enabled();
 }
@@ -134,6 +138,14 @@ void processor_core_hook(AudioBufferList* ab_list, AudioBufferList* ab_list_core
 #else
     cpp->get5bandCompressorGainReduction(_bands_gr, _bands_lim, _bands_gate_open);
 #endif
+}
+
+-(void) getLookaheadLimiterGainReduction:(float*)_lookahead_limiter_gr {
+    cpp->getLookaheadLimiterGainReduction(_lookahead_limiter_gr);
+}
+
+-(void) getClipperActionL:(float*)_action_l R:(float*)_action_r {
+    cpp->getClipperAction(_action_l, _action_r);
 }
 
 -(void) setBandEnablement:(NSControlStateValue[]) _bands_enabled {
@@ -187,5 +199,18 @@ void processor_core_hook(AudioBufferList* ab_list, AudioBufferList* ab_list_core
 -(void) set_clip_level:(float)_clip_level {
     cpp->set_clip_level(_clip_level);
 }
+
+-(void) setMainOutGainDBL:(float)mainInL R:(float)mainInR {
+    cpp->set_main_out_gain_db(mainInL, mainInR);
+}
+
+-(void) mainOutGainChangeDoneL:(float)mainInL R:(float)mainInR { /* Only fired when the mouse button is lifted or a key is pressed on the control to minimize cfg file writes */
+    cpp->main_out_gain_db_change_done(mainInL, mainInR);
+}
+
+-(void) getMainOutGainDBL:(float*)mainOutL R:(float*)mainOutR {
+    cpp->get_main_out_gain_db(mainOutL, mainOutR);
+}
+
 
 @end

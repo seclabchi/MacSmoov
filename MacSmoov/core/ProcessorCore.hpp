@@ -49,6 +49,7 @@ public:
     void get_main_in_levels(float* lrms, float* rrms, float* lpeak, float* rpeak);
     void get_main_out_levels(float* lrms, float* rrms, float* lpeak, float* rpeak);
     void set_main_in_gain_db(float loggain_l, float loggain_r);
+    void get_main_in_gain_db(float* gain_in_db_L, float* gain_in_db_R);
     void main_in_gain_db_change_done(float loggain_l, float loggain_r);
     void set_stereo_enhance_enabled(bool enabled);
     bool get_stereo_enhance_enabled();
@@ -57,6 +58,8 @@ public:
     void set_stereo_enhance_drive(float _drive);
     void get2bandAGCGainReduction(float* gainReduct2blo, float* gainReduct2bhi, bool* gateOpenLo, bool* gateOpenHi);
     void get5bandCompressorGainReduction(float** _bands_gr, float** _bands_lim, bool** _bands_gate_open);
+    void getLookaheadLimiterGainReduction(float* _lookahead_gr);
+    void getClipperAction(float* _action_l, float* _action_r);
     void set_bands_enabled(bool _bands_enabled[]);
     void set_master_bypass(bool _master_bypass);
     void get_agc_settings(AGC_PARAMS& _params);
@@ -65,6 +68,9 @@ public:
     bool change_multiband_settings(const MULTIBAND_PARAMS& _params);
     float get_clip_level();
     void set_clip_level(float _clip_level);
+    void set_main_out_gain_db(float loggain_l, float loggain_r);
+    void main_out_gain_db_change_done(float loggain_l, float loggain_r);
+    void get_main_out_gain_db(float* gain_out_db_L, float* gain_out_db_R);
 private:
     ProcessorCore();
     bool write_config_changes_agc(const AGC_PARAMS& _params);
@@ -88,6 +94,7 @@ private:
     ProcMod5bandCompressor* proc_mod_5b_compressor;
     ProcModLookaheadLimiter* proc_mod_lookahead_limiter;
     ProcModClipper* proc_mod_clipper;
+    ProcModGain* proc_mod_gain_main_out;
     ProcModFinalLPF* proc_mod_final_lpf;
     ProcModLevelMeter* proc_mod_level_main_out;
 

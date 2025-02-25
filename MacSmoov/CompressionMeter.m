@@ -65,7 +65,7 @@
     rect_hi.size.height = dirtyRect.size.height - rect_hi.origin.y;
     
     
-    [[NSColor magentaColor] set];
+    [meter_color set];
     [NSBezierPath fillRect:rect_lo];
     [NSBezierPath fillRect:rect_hi];
 }

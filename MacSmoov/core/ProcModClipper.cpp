@@ -50,6 +50,11 @@ void ProcModClipper::configure(float _clip_level) {
 void ProcModClipper::process() {
     uint32_t n_samps = this->get_n_samps();
     
+    avg_clip_db_L = 0.0f;
+    avg_clip_db_R = 0.0f;
+    avg_clip_linear_L = 0.0f;
+    avg_clip_linear_R = 0.0f;
+    
     if(this->get_bypass()) {
         memcpy(this->get_out_buf(0)->getbuf(), this->get_in_buf(0)->getbuf(), n_samps * sizeof(float));
         memcpy(this->get_out_buf(1)->getbuf(), this->get_in_buf(1)->getbuf(), n_samps * sizeof(float));
@@ -63,9 +68,11 @@ void ProcModClipper::process() {
     
     for(size_t i = 0; i < n_samps; i++) {
         if(inL[i] < -clip_level) {
+            avg_clip_linear_L += -(inL[i]) - clip_level;
             outL[i] = -clip_level;
         }
         else if(inL[i] > clip_level) {
+            avg_clip_linear_L += inL[i] - clip_level;
             outL[i] = clip_level;
         }
         else {
@@ -73,17 +80,41 @@ void ProcModClipper::process() {
         }
         
         if(inR[i] < -clip_level) {
+            avg_clip_linear_R += -(inR[i]) - clip_level;
             outR[i] = -clip_level;
         }
         else if(inR[i] > clip_level) {
+            avg_clip_linear_R += inR[i] - clip_level;
             outR[i] = clip_level;
         }
         else {
             outR[i] = inR[i];
         }
+        
+        outL[i] = 1.5 * outL[i] - (0.5 * powf(outL[i], 3));
+        outR[i] = 1.5 * outR[i] - (0.5 * powf(outR[i], 3));
+        
     }
     
+    if(avg_clip_linear_L > 0 || avg_clip_linear_R > 0) {
+        uint32_t x = 1.0;
+    }
     
+    avg_clip_linear_L = avg_clip_linear_L / (float)n_samps;
+    avg_clip_linear_R = avg_clip_linear_R / (float)n_samps;
+    
+    avg_clip_db_L = 20*log10((1.0f - avg_clip_linear_L));
+    avg_clip_db_R = 20*log10((1.0f - avg_clip_linear_R));
+}
+
+void ProcModClipper::read(float* _actionL, float* _actionR) {
+    if(NULL != _actionL) {
+        *_actionL = avg_clip_db_L;
+    }
+    
+    if(NULL != _actionR) {
+        *_actionR = avg_clip_db_R;
+    }
 }
 
 }

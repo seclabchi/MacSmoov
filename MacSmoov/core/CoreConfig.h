@@ -67,6 +67,10 @@ public:
     void set_clipper_enabled(bool _enable);
     float get_clip_level();
     void set_clip_level(float _clip_level);
+    void set_output_gain_enabled(bool enabled);
+    bool get_output_gain_enabled();
+    void get_output_gain(std::pair<float, float>& gain);
+    void set_output_gain(const std::pair<float, float>& gain);
     bool load_cfg_from_file(const std::string& filename);
     bool write_cfg_to_file();
 private:
@@ -76,17 +80,19 @@ private:
     std::string version;
     std::string cfg_name;
     bool enable_input_gain;
+    std::pair<float, float> input_gain;
     bool enable_input_level;
     bool enable_stereo_enhance;
     float stereo_enhance_drive;
     bool enable_hf_enhance;
     bool enable_mb_crossover;
-    std::pair<float, float> input_gain;
     AGC_PARAMS agc_params;
     MULTIBAND_PARAMS multiband_params;
     float clip_level;
     COMPRESSOR_PARAMS lookahead_limiter_params;
     bool enable_clipper;
+    bool enable_output_gain;
+    std::pair<float, float> output_gain;
     AUDIO_DEVICE audio_device_input;
     AUDIO_DEVICE audio_device_output;
 };

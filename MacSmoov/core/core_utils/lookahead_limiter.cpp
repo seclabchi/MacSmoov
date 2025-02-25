@@ -51,4 +51,8 @@ void LookaheadLimiter::process(float* inL, float* inR, float* outL, float* outR)
     comp->apply_gs(input_delayed_L, input_delayed_R, outL, outR, gs_buf);
 }
 
+void LookaheadLimiter::read(float* _gr) {
+    comp->read(_gr, NULL);
+}
+
 } //namespace FMSMOOV

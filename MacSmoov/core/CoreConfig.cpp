@@ -459,6 +459,23 @@ void CoreConfig::set_clip_level(float _clip_level) {
     write_cfg_to_file();
 }
 
+void CoreConfig::set_output_gain_enabled(bool enabled) {
+    enable_output_gain = enabled;
+}
+
+bool CoreConfig::get_output_gain_enabled() {
+    return enable_output_gain;
+}
+
+void CoreConfig::get_output_gain(std::pair<float, float>& gain) {
+    gain = output_gain;
+}
+
+void CoreConfig::set_output_gain(const std::pair<float, float>& gain) {
+    output_gain = gain;
+    write_cfg_to_file();
+}
+
 /*
  * TODO: Rework the config file read
  * This entire section is hokey, we don't need to iterate through the map
@@ -782,6 +799,12 @@ bool CoreConfig::load_cfg_from_file(const std::string &filename) {
             YAML::Node clipper_node = yaml_node["clipper"];
             enable_clipper = clipper_node["enabled"].as<bool>();
             clip_level = clipper_node["clip_level"].as<float>();
+            
+            YAML::Node output_gain_node = yaml_node["output_gain"];
+            enable_output_gain = output_gain_node["enabled"].as<bool>();
+            float output_gain_L = output_gain_node["L"].as<float>();
+            float output_gain_R = output_gain_node["R"].as<float>();
+            output_gain = std::make_pair(output_gain_L, output_gain_R);
         }
         
         cfg_file_stream.close();
@@ -971,6 +994,11 @@ bool CoreConfig::write_cfg_to_file() {
             YAML::Node clipper_node = yaml_node["clipper"];
             clipper_node["enabled"] = enable_clipper;
             clipper_node["clip_level"] = clip_level;
+            
+            YAML::Node output_gain_node = yaml_node["output_gain"];
+            output_gain_node["enabled"] = enable_output_gain;
+            output_gain_node["L"] = output_gain.first;
+            output_gain_node["R"] = output_gain.second;
             
             YAML::Emitter emitter(cfg_file_stream);
             emitter << yaml_node;

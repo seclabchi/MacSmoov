@@ -67,6 +67,9 @@ Boolean shutting_down = NO;
     bands_gate_open[3] = malloc(sizeof(bool));
     bands_gate_open[4] = malloc(sizeof(bool));
     
+    float lookahead_limiter_gr;
+    float clipper_action_l, clipper_action_r;
+    
     float mainOutLrms, mainOutRrms, mainOutLpeak, mainOutRpeak;
     
     while(false == shutting_down) {
@@ -75,6 +78,8 @@ Boolean shutting_down = NO;
         [proc_core_wrapper getStereoEnhanceLRDiff:&stereoEnhanceLRDiff];
         [proc_core_wrapper get2bandAGCGainReductionlo:&gainReduct2blo hi:&gainReduct2bhi gatelo:&gate_open_agc2_lo gatehi:&gate_open_agc2_hi];
         [proc_core_wrapper get5bandCompressorGainReduction:bands_gr limiters:bands_lim gates:bands_gate_open];
+        [proc_core_wrapper getLookaheadLimiterGainReduction:&lookahead_limiter_gr];
+        [proc_core_wrapper getClipperActionL:&clipper_action_l R:&clipper_action_r];
         [proc_core_wrapper getMainOutLevelsLrms:&mainOutLrms Rrms:&mainOutRrms Lpeak:&mainOutLpeak Rpeak:&mainOutRpeak];
         
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void){
@@ -128,7 +133,9 @@ Boolean shutting_down = NO;
                 else {
                     [self->_gate_b5 setFillColor:[NSColor blackColor]];
                 }
-                
+                              
+                [self->_lookahead_limiter_meter set_comp_lo:lookahead_limiter_gr hi:lookahead_limiter_gr];
+                [self->_clipper_meter set_comp_lo:clipper_action_l hi:clipper_action_r];
                 [self->_level_main_out set_levels_Lrms:mainOutLrms Rrms:mainOutRrms Lpeak:mainOutLpeak Rpeak:mainOutRpeak];
             });
         });
@@ -149,10 +156,15 @@ Boolean shutting_down = NO;
     [_stereo_enhance_lr_diff setMeterLinearMinVal:0.0f maxVal:0.5f];
     [_stereo_enhance_lr_diff set_meter_colors_rms:[NSColor greenColor] peak:[NSColor greenColor]];
     [_comp_2band_agc set_meter_range:-24.0];
+    [_comp_2band_agc set_meter_color:[NSColor magentaColor]];
     [_comp_5band set_meter_color:[NSColor magentaColor]];
     [_comp_5band set_meter_range:-12.0];
     [_lim_5band set_meter_color:[NSColor yellowColor]];
     [_lim_5band set_meter_range:-12.0];
+    [_lookahead_limiter_meter set_meter_range:-10.0];
+    [_lookahead_limiter_meter set_meter_color:[NSColor magentaColor]];
+    [_clipper_meter set_meter_range: -0.1f];
+    [_clipper_meter set_meter_color:[NSColor yellowColor]];
     
     //TODO:  initialize signal generators here
     //siggenvc = [[SignalGeneratorViewController alloc] init];
@@ -224,7 +236,11 @@ Boolean shutting_down = NO;
     
     proc_core_wrapper = [[ProcessorCoreWrapper alloc] initWithSampleRate:self.sysaudio.sample_rate numberOfChannels:self.sysaudio.num_channels bufferSize:(uint32_t)self.sysaudio.buffer_size configFilename:config_file_path];
     
-    //[proc_core_wrapper load_config_from_file:CONFIG_FILENAME];
+    
+    float input_gain_L, input_gain_R;
+    //[proc_core_wrapper getInputGainLdB:&input_gain_L RdB:&input_gain_R];
+    
+    
     bool se_enabled = [proc_core_wrapper getStereoEnhanceEnabled];
     float se_drive = [proc_core_wrapper getStereoEnhanceDrive];
     int se_slider_val = ((se_drive * 100.0f) - 100.0f);
@@ -245,6 +261,8 @@ Boolean shutting_down = NO;
     [proc_core_wrapper get_multiband_settings:&mb_settings];
     multiband_controls_view = [[MultibandControlsView alloc] initWithSettings:mb_settings delegate:self];
     
+    float output_gain_L, output_gain_R;
+    //[proc_core_wrapper getOutputGainLdB:&output_gain_L R:&output_gain_RdB];
         
     [self.sysaudio set_processor_hook:[proc_core_wrapper get_proc_core_hook]];
     
@@ -438,6 +456,18 @@ Boolean shutting_down = NO;
 -(void) band_enablement_changed:(NSControlStateValue[]) band_states {
     NSLog(@"band_enablement_changed delegate called on app delegate!");
     [proc_core_wrapper setBandEnablement:band_states];
+}
+
+-(IBAction) adjustGainMainOut:(id)sender {
+    NSSlider* gmi = sender;
+    //NSLog(@"GainMainOut value changed: %4.2f dB", gmo.cell.floatValue);
+    [proc_core_wrapper setMainOutGainDBL:gmi.cell.floatValue R:gmi.cell.floatValue];
+    NSEvent *event = [[NSApplication sharedApplication] currentEvent];
+    BOOL mouseUp = event.type == NSEventTypeLeftMouseUp;
+    
+    if(mouseUp) {
+        [proc_core_wrapper mainOutGainChangeDoneL:gmi.cell.floatValue R:gmi.cell.floatValue];
+    }
 }
 
 -(void) setup_ui_from_defaults {

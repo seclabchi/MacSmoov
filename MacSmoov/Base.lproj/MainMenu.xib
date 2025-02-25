@@ -17,6 +17,7 @@
             <connections>
                 <outlet property="agc_hi_gate_closed" destination="08h-Af-GEY" id="6ny-o2-Cyp"/>
                 <outlet property="agc_lo_gate_closed" destination="cPC-Og-KrE" id="WWl-wb-lXd"/>
+                <outlet property="clipper_meter" destination="S38-oD-dKh" id="xKK-hz-dDb"/>
                 <outlet property="comp_2band_agc" destination="zwt-md-HTN" id="Hjd-YR-6eA"/>
                 <outlet property="comp_5band" destination="OZU-2m-L3C" id="IOy-YF-0fZ"/>
                 <outlet property="gate_b1" destination="fgD-Yv-iIX" id="yPs-up-1ba"/>
@@ -27,7 +28,9 @@
                 <outlet property="level_main_in" destination="mc0-9Q-64D" id="XWR-zu-Bad"/>
                 <outlet property="level_main_out" destination="MhY-PZ-2Lw" id="Rb9-84-3ni"/>
                 <outlet property="lim_5band" destination="dBL-p2-MUT" id="Hsi-8Y-c99"/>
+                <outlet property="lookahead_limiter_meter" destination="S3Z-pB-cQ4" id="0Eq-Rn-cTw"/>
                 <outlet property="slider_gain_main_in" destination="yiT-KE-WWL" id="qnY-BY-rcS"/>
+                <outlet property="slider_gain_main_out" destination="oA4-cy-61Q" id="Tyr-uV-fzX"/>
                 <outlet property="slider_stereo_enhance" destination="EAw-u0-3zD" id="lxc-nL-YIT"/>
                 <outlet property="stereo_enhance_enabled" destination="9pC-cV-Eb0" id="wNm-HH-oLM"/>
                 <outlet property="stereo_enhance_lr_diff" destination="JsH-Ey-PbR" id="uen-Km-xbS"/>
@@ -440,17 +443,50 @@
                 <rect key="frame" x="0.0" y="0.0" width="940" height="543"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
+                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="uKs-Ls-c1u">
+                        <rect key="frame" x="18" y="101" width="49" height="26"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <textFieldCell key="cell" alignment="center" title="Input Gain" id="Pkj-ue-wNp">
+                            <font key="font" metaFont="system" size="10"/>
+                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                    </textField>
                     <slider horizontalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="yiT-KE-WWL" userLabel="Gain Main In">
                         <rect key="frame" x="30" y="129" width="24" height="167"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <shadow key="shadow" blurRadius="2">
                             <color key="color" name="labelColor" catalog="System" colorSpace="catalog"/>
                         </shadow>
-                        <sliderCell key="cell" continuous="YES" state="on" alignment="left" minValue="-40" maxValue="40" doubleValue="-4.869877897350996" tickMarkPosition="right" numberOfTickMarks="10" sliderType="linear" id="Kku-xN-i9R"/>
+                        <sliderCell key="cell" continuous="YES" state="on" alignment="left" minValue="-40" maxValue="40" tickMarkPosition="right" numberOfTickMarks="10" sliderType="linear" id="Kku-xN-i9R"/>
                         <connections>
                             <action selector="adjustGainMainIn:" target="Voe-Tx-rLC" id="SuW-Qo-1yr"/>
                         </connections>
                     </slider>
+                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="k8d-mh-6hd">
+                        <rect key="frame" x="64" y="502" width="58" height="35"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <textFieldCell key="cell" alignment="center" title="STEREO ENH" id="R22-rg-WUR">
+                            <font key="font" metaFont="cellTitle"/>
+                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                    </textField>
+                    <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="JsH-Ey-PbR" userLabel="Stereo Enhance Level" customClass="LevelMeter">
+                        <rect key="frame" x="75" y="302" width="34" height="192"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    </customView>
+                    <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="9pC-cV-Eb0" userLabel="STEREO_EN_ENABLE">
+                        <rect key="frame" x="62" y="97" width="63" height="32"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <buttonCell key="cell" type="push" title="EN" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="JYX-Yt-1Kd">
+                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES" changeBackground="YES" changeGray="YES"/>
+                            <font key="font" metaFont="system"/>
+                        </buttonCell>
+                        <connections>
+                            <action selector="stereoEnhanceEnableChanged:" target="Voe-Tx-rLC" id="lJs-gT-Rec"/>
+                        </connections>
+                    </button>
                     <slider horizontalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="EAw-u0-3zD" userLabel="Stereo Enhance Drive">
                         <rect key="frame" x="80" y="129" width="24" height="167"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
@@ -462,15 +498,6 @@
                             <action selector="stereoEnhanceSliderChanged:" target="Voe-Tx-rLC" id="eHC-gy-xbk"/>
                         </connections>
                     </slider>
-                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="uKs-Ls-c1u">
-                        <rect key="frame" x="18" y="101" width="49" height="26"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <textFieldCell key="cell" alignment="center" title="Input Gain" id="Pkj-ue-wNp">
-                            <font key="font" metaFont="system" size="10"/>
-                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                        </textFieldCell>
-                    </textField>
                     <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="aJZ-8z-X3w">
                         <rect key="frame" x="155" y="13" width="144" height="32"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
@@ -502,15 +529,6 @@
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <textFieldCell key="cell" alignment="center" title="PROC IN" id="otR-fZ-V3j">
                             <font key="font" metaFont="system"/>
-                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                        </textFieldCell>
-                    </textField>
-                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="k8d-mh-6hd">
-                        <rect key="frame" x="64" y="502" width="58" height="35"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <textFieldCell key="cell" alignment="center" title="STEREO ENH" id="R22-rg-WUR">
-                            <font key="font" metaFont="cellTitle"/>
                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
@@ -720,38 +738,6 @@
                             </subviews>
                         </view>
                     </box>
-                    <box fixedFrame="YES" title="CLIPPER" translatesAutoresizingMaskIntoConstraints="NO" id="xku-2O-rxo" userLabel="CLIPPER">
-                        <rect key="frame" x="441" y="156" width="81" height="379"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <view key="contentView" id="Jtg-db-Cyr">
-                            <rect key="frame" x="3" y="3" width="75" height="361"/>
-                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                            <subviews>
-                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Iga-kT-2wY">
-                                    <rect key="frame" x="34" y="12" width="22" height="15"/>
-                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                    <textFieldCell key="cell" alignment="center" title="H" id="fFg-C8-OkN">
-                                        <font key="font" metaFont="cellTitle"/>
-                                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                    </textFieldCell>
-                                </textField>
-                                <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="W8T-Xr-tvA" userLabel="Clipper Level" customClass="LevelMeter">
-                                    <rect key="frame" x="20" y="43" width="34" height="307"/>
-                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                </customView>
-                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="nHC-4M-97f">
-                                    <rect key="frame" x="18" y="12" width="22" height="15"/>
-                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                    <textFieldCell key="cell" alignment="center" title="L" id="CO2-oN-YWR">
-                                        <font key="font" metaFont="cellTitle"/>
-                                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                    </textFieldCell>
-                                </textField>
-                            </subviews>
-                        </view>
-                    </box>
                     <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="a42-f6-UMw">
                         <rect key="frame" x="13" y="54" width="144" height="32"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
@@ -763,27 +749,21 @@
                             <action selector="masterBypassSelected:" target="Voe-Tx-rLC" id="Dc2-mC-Wfq"/>
                         </connections>
                     </button>
-                    <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="MhY-PZ-2Lw" userLabel="OutputLevel" customClass="LevelMeter">
-                        <rect key="frame" x="664" y="302" width="34" height="192"/>
+                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Bnk-fb-f4h">
+                        <rect key="frame" x="450" y="505" width="84" height="30"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    </customView>
-                    <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="9pC-cV-Eb0" userLabel="STEREO_EN_ENABLE">
-                        <rect key="frame" x="62" y="97" width="63" height="32"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <buttonCell key="cell" type="push" title="EN" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="JYX-Yt-1Kd">
-                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES" changeBackground="YES" changeGray="YES"/>
-                            <font key="font" metaFont="system"/>
-                        </buttonCell>
-                        <connections>
-                            <action selector="stereoEnhanceEnableChanged:" target="Voe-Tx-rLC" id="lJs-gT-Rec"/>
-                        </connections>
-                    </button>
-                    <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="JsH-Ey-PbR" userLabel="Stereo Enhance Level" customClass="LevelMeter">
-                        <rect key="frame" x="75" y="302" width="34" height="192"/>
+                        <textFieldCell key="cell" alignment="center" title="LOOKAHEAD LIMITER" id="IGr-t9-MJv">
+                            <font key="font" metaFont="cellTitle"/>
+                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                    </textField>
+                    <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="S3Z-pB-cQ4" userLabel="lookahead_limiter" customClass="CompressionMeter">
+                        <rect key="frame" x="475" y="185" width="34" height="307"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     </customView>
                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="9KO-xK-7I3">
-                        <rect key="frame" x="656" y="502" width="50" height="35"/>
+                        <rect key="frame" x="658" y="500" width="50" height="35"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <textFieldCell key="cell" alignment="center" title="PROC OUT" id="CHm-gR-NDF">
                             <font key="font" metaFont="system"/>
@@ -791,6 +771,43 @@
                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                     </textField>
+                    <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="MhY-PZ-2Lw" userLabel="OutputLevel" customClass="LevelMeter">
+                        <rect key="frame" x="666" y="300" width="34" height="192"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    </customView>
+                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="CU4-Yx-EKh">
+                        <rect key="frame" x="538" y="506" width="58" height="15"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <textFieldCell key="cell" alignment="center" title="CLIPPER" id="yIy-Ac-2qB">
+                            <font key="font" metaFont="cellTitle"/>
+                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                    </textField>
+                    <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="S38-oD-dKh" userLabel="clipper" customClass="CompressionMeter">
+                        <rect key="frame" x="550" y="185" width="34" height="307"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    </customView>
+                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="BD6-al-nLt" userLabel="Output Gain">
+                        <rect key="frame" x="658" y="99" width="49" height="26"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <textFieldCell key="cell" alignment="center" title="Output Gain" id="FOC-2b-e0N">
+                            <font key="font" metaFont="system" size="10"/>
+                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                    </textField>
+                    <slider horizontalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="oA4-cy-61Q" userLabel="Gain Main Out">
+                        <rect key="frame" x="670" y="127" width="24" height="167"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <shadow key="shadow" blurRadius="2">
+                            <color key="color" name="labelColor" catalog="System" colorSpace="catalog"/>
+                        </shadow>
+                        <sliderCell key="cell" continuous="YES" state="on" alignment="left" minValue="-40" maxValue="40" tickMarkPosition="right" numberOfTickMarks="10" sliderType="linear" id="EOf-Rr-vJc"/>
+                        <connections>
+                            <action selector="adjustGainMainOut:" target="Voe-Tx-rLC" id="1IT-uL-g6I"/>
+                        </connections>
+                    </slider>
                 </subviews>
             </view>
             <connections>
@@ -799,5 +816,15 @@
             <point key="canvasLocation" x="269" y="-54.5"/>
         </window>
         <userDefaultsController representsSharedInstance="YES" id="wr1-wQ-GCJ"/>
+        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="rYy-NS-cZP">
+            <rect key="frame" x="0.0" y="0.0" width="58" height="35"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+            <textFieldCell key="cell" alignment="center" title="STEREO ENH" id="8TM-rp-ju3">
+                <font key="font" metaFont="cellTitle"/>
+                <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+            </textFieldCell>
+            <point key="canvasLocation" x="141" y="-440"/>
+        </textField>
     </objects>
 </document>

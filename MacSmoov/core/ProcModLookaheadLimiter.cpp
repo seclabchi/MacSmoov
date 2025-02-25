@@ -55,4 +55,9 @@ void ProcModLookaheadLimiter::process() {
     limiter->process(inL, inR, outL, outR);
 }
 
+void ProcModLookaheadLimiter::read(float* _lookahead_gr) {
+    limiter->read(_lookahead_gr);
+}
+
+
 }
