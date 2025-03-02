@@ -26,8 +26,21 @@ ProcModGain::~ProcModGain() {
 }
 
 bool ProcModGain::init_impl(CoreConfig* cfg, ProcessorModule* prev_mod, ChannelMap* _channel_map) {
+    std::pair<float, float> gain;
+    gain.first = 0.0f;
+    gain.second = 0.0f;
+    
     if(nullptr != cfg) {
-        this->set_bypass(!cfg->get_input_gain_enabled());
+        if(!(this->name.compare("GAIN_MAIN_IN"))) {
+            this->set_bypass(!cfg->get_input_gain_enabled());
+            cfg->get_input_gain(gain);
+            this->set_gain_db(gain.first, gain.second);
+        }
+        else if(!(this->name.compare("GAIN_MAIN_OUT"))) {
+            this->set_bypass(!cfg->get_output_gain_enabled());
+            cfg->get_output_gain(gain);
+            this->set_gain_db(gain.first, gain.second);
+        }
     }
     if((nullptr != _channel_map) && (nullptr != prev_mod)) {
         for(CHANNEL_MAP_ELEMENT e : _channel_map->the_map)

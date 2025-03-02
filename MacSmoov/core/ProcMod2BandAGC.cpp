@@ -54,6 +54,8 @@ ProcMod2BandAGC::ProcMod2BandAGC(const string& _name, uint32_t _f_samp, uint8_t 
     master_outR = new float[_n_samps]();
     memset(master_outR, 0, _n_samps*sizeof(float));
     
+    this->set_in_buf(0, new AudioBuf(AudioBufType::REFERENCE, "IN_L", _n_samps));
+    this->set_in_buf(1, new AudioBuf(AudioBufType::REFERENCE, "IN_R", _n_samps));
     this->set_out_buf(0, new AudioBuf(AudioBufType::REAL, "OUT_L", _n_samps));
     this->set_out_buf(1, new AudioBuf(AudioBufType::REAL, "OUT_R", _n_samps));
     

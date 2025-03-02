@@ -34,6 +34,16 @@ class Butterworth {
         bool hiPass(double fs, double f1, double f2, int filterOrder, std::vector <Biquad> & coeffs, double & overallGain) {
             return coefficients(kHiPass, fs, f1, f2, filterOrder, coeffs, overallGain);
         }
+    
+        bool bandPass(double fs, double f1, double f2, int filterOrder,
+                      std::vector <Biquad> & coeffs, double & overallGain){
+            return coefficients(kBandPass, fs, f1, f2, filterOrder, coeffs, overallGain);
+        }
+        
+        bool bandStop(double fs, double f1, double f2, int filterOrder,
+                      std::vector <Biquad> & coeffs, double & overallGain){
+            return coefficients(kBandStop, fs, f1, f2, filterOrder, coeffs, overallGain);
+        }
 
         // generic coeffs
         bool coefficients(BUTTERWORTH_TYPE filter, const double fs, const double freq1_cutoff, const double freq2_cutoff, const int filterOrder,

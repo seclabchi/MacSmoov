@@ -12,18 +12,25 @@ namespace fmsmoov {
    algorithms that we want to use (purely proportional, declinear, etc.)
  */
 
+typedef enum {
+  LINEAR = 0,
+  DECILINEAR = 1
+} VCA_TYPE;
+
 class VCA
 {
 public:
     VCA(uint32_t samprate, uint32_t _n_samps);
-    VCA(const VCA& rhs);
+    virtual void config(VCA_TYPE _type);
 	virtual ~VCA();
-    virtual void process(float* in, float* control, float* out, uint32_t n_samps) = 0;
+    virtual void process(float* input, float* control, float* output);
 
 protected:
     uint32_t samprate, n_samps;
 private:
     VCA();
+    VCA_TYPE type;
+    float* tmp_buf;
 };
 
 }

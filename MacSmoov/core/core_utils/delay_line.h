@@ -6,8 +6,6 @@
 
 #include "core_common.h"
 
-#include <cstdint>
-
 namespace fmsmoov {
 
 

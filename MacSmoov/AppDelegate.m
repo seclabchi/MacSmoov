@@ -73,6 +73,7 @@ Boolean shutting_down = NO;
     float mainOutLrms, mainOutRrms, mainOutLpeak, mainOutRpeak;
     
     while(false == shutting_down) {
+        usleep(33000);
         
         [proc_core_wrapper getMainInLevelsLrms:&mainInLrms Rrms:&mainInRrms Lpeak:&mainInLpeak Rpeak:&mainInRpeak];
         [proc_core_wrapper getStereoEnhanceLRDiff:&stereoEnhanceLRDiff];
@@ -139,9 +140,6 @@ Boolean shutting_down = NO;
                 [self->_level_main_out set_levels_Lrms:mainOutLrms Rrms:mainOutRrms Lpeak:mainOutLpeak Rpeak:mainOutRpeak];
             });
         });
-         
-        
-        usleep(33000);
     }
     
     NSLog(@"Exiting meter driver thread.");
@@ -238,7 +236,8 @@ Boolean shutting_down = NO;
     
     
     float input_gain_L, input_gain_R;
-    //[proc_core_wrapper getInputGainLdB:&input_gain_L RdB:&input_gain_R];
+    [proc_core_wrapper getMainInGainDBL:&input_gain_L R:&input_gain_R];
+    [_slider_gain_main_in setIntValue:input_gain_L];
     
     
     bool se_enabled = [proc_core_wrapper getStereoEnhanceEnabled];
@@ -262,7 +261,8 @@ Boolean shutting_down = NO;
     multiband_controls_view = [[MultibandControlsView alloc] initWithSettings:mb_settings delegate:self];
     
     float output_gain_L, output_gain_R;
-    //[proc_core_wrapper getOutputGainLdB:&output_gain_L R:&output_gain_RdB];
+    [proc_core_wrapper getMainOutGainDBL:&output_gain_L R:&output_gain_R];
+    [_slider_gain_main_out setIntValue:output_gain_L];
         
     [self.sysaudio set_processor_hook:[proc_core_wrapper get_proc_core_hook]];
     
@@ -378,11 +378,11 @@ Boolean shutting_down = NO;
 }
 
 -(IBAction) agcFactoryMenuSelected:(id)sender {
-    [agc_controls_view showPanel];
+    //[agc_controls_view showPanel];
 }
 
 -(IBAction) multibandAdjustMenuSelected:(id)sender {
-    [multiband_controls_view showPanel];
+    //[multiband_controls_view showPanel];
 }
 
 -(void) openAudioFile:(NSURL*)fileUrl {

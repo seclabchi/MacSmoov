@@ -9,8 +9,8 @@ audio_devices:
     device_uid: UNKNOWN
 input_gain:
   enabled: true
-  L: -0.377302349
-  R: -0.377302349
+  L: 2.74658394
+  R: 2.74658394
 input_level:
   enabled: true
 stereo_enhance:
@@ -22,17 +22,17 @@ agc_params:
   mute_hi: false
   drive: 6
   thresh: -14
-  release_master: 20
-  release_bass: 25
+  release_master: 7
+  release_bass: 9
   gate_thresh: -28
   bass_coupling: 0.200000003
   window_size: -6
   window_release: 60
-  ratio: 2000
+  ratio: 500
   bass_thresh: -14
   idle_gain: 0
-  attack_master: 3
-  attack_bass: 4
+  attack_master: 0.600000024
+  attack_bass: 0.600000024
   bass_knee_type: soft
   bass_knee_width: 3
   master_knee_type: soft
@@ -47,10 +47,10 @@ multiband_crossover:
   enabled: true
 multiband_params:
   enabled: true
-  drive: 6
+  drive: 5
   gate_thresh: -60
   limiters_enabled: true
-  master_post_gain: 8
+  master_post_gain: 7
   band1_solo: false
   band1_mute: false
   band2_solo: false
@@ -81,8 +81,8 @@ multiband_params:
       - band: 1
         thresh: -32
         gate_thresh: -60
-        release: 0.0199999996
-        ratio: 1.79999995
+        release: 0.140000001
+        ratio: 1.60000002
         attack: 0.125
         knee_type: soft
         knee_width: 9
@@ -92,7 +92,7 @@ multiband_params:
       - band: 2
         thresh: -32
         gate_thresh: -60
-        release: 0.100000001
+        release: 0.109999999
         ratio: 1.79999995
         attack: 0.0900000036
         knee_type: soft
@@ -143,8 +143,8 @@ multiband_params:
       - band: 1
         thresh: -23
         gate_thresh: -60
-        release: 0.129999995
-        ratio: 12
+        release: 0.140000001
+        ratio: 20
         attack: 0.125
         knee_type: soft
         knee_width: 6
@@ -154,8 +154,8 @@ multiband_params:
       - band: 2
         thresh: -23
         gate_thresh: -60
-        release: 0.100000001
-        ratio: 12
+        release: 0.109999999
+        ratio: 20
         attack: 0.0900000036
         knee_type: soft
         knee_width: 6
@@ -166,7 +166,7 @@ multiband_params:
         thresh: -23
         gate_thresh: -60
         release: 0.0799999982
-        ratio: 12
+        ratio: 20
         attack: 0.0599999987
         knee_type: soft
         knee_width: 6
@@ -177,7 +177,7 @@ multiband_params:
         thresh: -23
         gate_thresh: -60
         release: 0.0599999987
-        ratio: 12
+        ratio: 20
         attack: 0.0399999991
         knee_type: soft
         knee_width: 6
@@ -188,7 +188,7 @@ multiband_params:
         thresh: -23
         gate_thresh: -60
         release: 0.00079999998
-        ratio: 12
+        ratio: 20
         attack: 0.000500000024
         knee_type: soft
         knee_width: 6
@@ -208,8 +208,8 @@ lookahead_limiter:
   makeup_gain: 0
 clipper:
   enabled: true
-  clip_level: 0.920000017
+  clip_level: 0.879999995
 output_gain:
   enabled: true
-  L: -2.26381421
-  R: -2.26381421
+  L: -2.24539518
+  R: -2.24539518

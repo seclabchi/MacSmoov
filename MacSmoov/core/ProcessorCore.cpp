@@ -29,73 +29,73 @@ ProcessorCore::ProcessorCore(uint32_t _f_samp, uint32_t _n_channels, uint32_t _n
     proc_mod_gain_main_in->init(core_config, nullptr, nullptr);
     core_stack->add_module(proc_mod_gain_main_in);
     
-    ChannelMap* chan_map = new ChannelMap();
-    chan_map->the_map.push_back(CHANNEL_MAP_ELEMENT {0, 0, "IN_L"});
-    chan_map->the_map.push_back(CHANNEL_MAP_ELEMENT {1, 1, "IN_R"});
+    ChannelMap* chan_map_pm_ihpf = new ChannelMap();
+    chan_map_pm_ihpf->the_map.push_back(CHANNEL_MAP_ELEMENT {0, 0, "IN_L"});
+    chan_map_pm_ihpf->the_map.push_back(CHANNEL_MAP_ELEMENT {1, 1, "IN_R"});
     proc_mod_input_hpf = new ProcModInputHPF("INPUT_HPF", f_samp, n_channels, n_samp);
-    proc_mod_input_hpf->init(core_config, proc_mod_gain_main_in, chan_map);
+    proc_mod_input_hpf->init(core_config, proc_mod_gain_main_in, chan_map_pm_ihpf);
     core_stack->add_module(proc_mod_input_hpf);
     
-    chan_map = new ChannelMap();
-    chan_map->the_map.push_back(CHANNEL_MAP_ELEMENT {0, 0, "IN_L"});
-    chan_map->the_map.push_back(CHANNEL_MAP_ELEMENT {1, 1, "IN_R"});
+    ChannelMap* chan_map_pm_lmi = new ChannelMap();
+    chan_map_pm_lmi->the_map.push_back(CHANNEL_MAP_ELEMENT {0, 0, "IN_L"});
+    chan_map_pm_lmi->the_map.push_back(CHANNEL_MAP_ELEMENT {1, 1, "IN_R"});
     proc_mod_level_main_in = new ProcModLevelMeter("LEVEL_MAIN_IN", f_samp, n_channels, n_samp);
-    proc_mod_level_main_in->init(core_config, proc_mod_input_hpf, chan_map);
+    proc_mod_level_main_in->init(core_config, proc_mod_input_hpf, chan_map_pm_lmi);
     core_stack->add_module(proc_mod_level_main_in);
     
-    chan_map = new ChannelMap();
-    chan_map->the_map.push_back(CHANNEL_MAP_ELEMENT {0, 0, "IN_L"});
-    chan_map->the_map.push_back(CHANNEL_MAP_ELEMENT {1, 1, "IN_R"});
+    ChannelMap* chan_map_pm_se = new ChannelMap();
+    chan_map_pm_se->the_map.push_back(CHANNEL_MAP_ELEMENT {0, 0, "IN_L"});
+    chan_map_pm_se->the_map.push_back(CHANNEL_MAP_ELEMENT {1, 1, "IN_R"});
     proc_mod_stereo_enhance = new ProcModStereoEnhance("STEREO_ENHANCE", f_samp, n_channels, n_samp);
-    proc_mod_stereo_enhance->init(core_config, proc_mod_level_main_in, chan_map);
+    proc_mod_stereo_enhance->init(core_config, proc_mod_level_main_in, chan_map_pm_se);
     core_stack->add_module(proc_mod_stereo_enhance);
     
-    chan_map = new ChannelMap();
-    chan_map->the_map.push_back(CHANNEL_MAP_ELEMENT {0, 0, "IN_L"});
-    chan_map->the_map.push_back(CHANNEL_MAP_ELEMENT {1, 1, "IN_R"});
+    ChannelMap* chan_map_pm_2ba = new ChannelMap();
+    chan_map_pm_2ba->the_map.push_back(CHANNEL_MAP_ELEMENT {0, 0, "IN_L"});
+    chan_map_pm_2ba->the_map.push_back(CHANNEL_MAP_ELEMENT {1, 1, "IN_R"});
     proc_mod_2band_agc = new ProcMod2BandAGC("2BAND_AGC", f_samp, n_channels, n_samp);
-    proc_mod_2band_agc->init(core_config, proc_mod_stereo_enhance, chan_map);
+    proc_mod_2band_agc->init(core_config, proc_mod_stereo_enhance, chan_map_pm_2ba);
     core_stack->add_module(proc_mod_2band_agc);
 
-    chan_map = new ChannelMap();
-    chan_map->the_map.push_back(CHANNEL_MAP_ELEMENT {0, 0, "IN_L"});
-    chan_map->the_map.push_back(CHANNEL_MAP_ELEMENT {1, 1, "IN_R"});
+    ChannelMap* chan_map_he = new ChannelMap();
+    chan_map_he->the_map.push_back(CHANNEL_MAP_ELEMENT {0, 0, "IN_L"});
+    chan_map_he->the_map.push_back(CHANNEL_MAP_ELEMENT {1, 1, "IN_R"});
     proc_mod_hf_enhance = new ProcModHFEnhance("HF_ENHANCE", f_samp, n_channels, n_samp);
-    proc_mod_hf_enhance->init(core_config, proc_mod_2band_agc, chan_map);
+    proc_mod_hf_enhance->init(core_config, proc_mod_2band_agc, chan_map_he);
     core_stack->add_module(proc_mod_hf_enhance);
     
-    chan_map = new ChannelMap();
-    chan_map->the_map.push_back(CHANNEL_MAP_ELEMENT {0, 0, "IN_L"});
-    chan_map->the_map.push_back(CHANNEL_MAP_ELEMENT {1, 1, "IN_R"});
+    ChannelMap* chan_map_5bcross = new ChannelMap();
+    chan_map_5bcross->the_map.push_back(CHANNEL_MAP_ELEMENT {0, 0, "IN_L"});
+    chan_map_5bcross->the_map.push_back(CHANNEL_MAP_ELEMENT {1, 1, "IN_R"});
     proc_mod_5b_crossover = new ProcMod5bandCrossover("5BAND_CROSSOVER", f_samp, n_channels, n_samp);
-    proc_mod_5b_crossover->init(core_config, proc_mod_hf_enhance, chan_map);
+    proc_mod_5b_crossover->init(core_config, proc_mod_hf_enhance, chan_map_5bcross);
     core_stack->add_module(proc_mod_5b_crossover);
     
-    chan_map = new ChannelMap();
-    chan_map->the_map.push_back(CHANNEL_MAP_ELEMENT {0, 0, "IN_L"});
-    chan_map->the_map.push_back(CHANNEL_MAP_ELEMENT {1, 1, "IN_R"});
-    chan_map->the_map.push_back(CHANNEL_MAP_ELEMENT {2, 2, "IN_B1_L"});
-    chan_map->the_map.push_back(CHANNEL_MAP_ELEMENT {3, 3, "IN_B1_R"});
-    chan_map->the_map.push_back(CHANNEL_MAP_ELEMENT {4, 4, "IN_B2_L"});
-    chan_map->the_map.push_back(CHANNEL_MAP_ELEMENT {5, 5, "IN_B2_R"});
-    chan_map->the_map.push_back(CHANNEL_MAP_ELEMENT {6, 6, "IN_B3_L"});
-    chan_map->the_map.push_back(CHANNEL_MAP_ELEMENT {7, 7, "IN_B3_R"});
-    chan_map->the_map.push_back(CHANNEL_MAP_ELEMENT {8, 8, "IN_B4_L"});
-    chan_map->the_map.push_back(CHANNEL_MAP_ELEMENT {9, 9, "IN_B4_R"});
-    chan_map->the_map.push_back(CHANNEL_MAP_ELEMENT {10, 10, "IN_B5_L"});
-    chan_map->the_map.push_back(CHANNEL_MAP_ELEMENT {11, 11, "IN_B5_R"});
+    ChannelMap* chan_map_5bcomp = new ChannelMap();
+    chan_map_5bcomp->the_map.push_back(CHANNEL_MAP_ELEMENT {0, 0, "IN_L"});
+    chan_map_5bcomp->the_map.push_back(CHANNEL_MAP_ELEMENT {1, 1, "IN_R"});
+    chan_map_5bcomp->the_map.push_back(CHANNEL_MAP_ELEMENT {2, 2, "IN_B1_L"});
+    chan_map_5bcomp->the_map.push_back(CHANNEL_MAP_ELEMENT {3, 3, "IN_B1_R"});
+    chan_map_5bcomp->the_map.push_back(CHANNEL_MAP_ELEMENT {4, 4, "IN_B2_L"});
+    chan_map_5bcomp->the_map.push_back(CHANNEL_MAP_ELEMENT {5, 5, "IN_B2_R"});
+    chan_map_5bcomp->the_map.push_back(CHANNEL_MAP_ELEMENT {6, 6, "IN_B3_L"});
+    chan_map_5bcomp->the_map.push_back(CHANNEL_MAP_ELEMENT {7, 7, "IN_B3_R"});
+    chan_map_5bcomp->the_map.push_back(CHANNEL_MAP_ELEMENT {8, 8, "IN_B4_L"});
+    chan_map_5bcomp->the_map.push_back(CHANNEL_MAP_ELEMENT {9, 9, "IN_B4_R"});
+    chan_map_5bcomp->the_map.push_back(CHANNEL_MAP_ELEMENT {10, 10, "IN_B5_L"});
+    chan_map_5bcomp->the_map.push_back(CHANNEL_MAP_ELEMENT {11, 11, "IN_B5_R"});
     proc_mod_5b_compressor = new ProcMod5bandCompressor("5BAND_COMPRESSOR", f_samp, n_channels, n_samp);
-    proc_mod_5b_compressor->init(core_config, proc_mod_5b_crossover, chan_map);
+    proc_mod_5b_compressor->init(core_config, proc_mod_5b_crossover, chan_map_5bcomp);
     core_stack->add_module(proc_mod_5b_compressor);
     
-    chan_map = new ChannelMap();
-    chan_map->the_map.push_back(CHANNEL_MAP_ELEMENT {0, 0, "IN_L"});
-    chan_map->the_map.push_back(CHANNEL_MAP_ELEMENT {1, 1, "IN_R"});
+    ChannelMap* chan_map_ll = new ChannelMap();
+    chan_map_ll->the_map.push_back(CHANNEL_MAP_ELEMENT {0, 0, "IN_L"});
+    chan_map_ll->the_map.push_back(CHANNEL_MAP_ELEMENT {1, 1, "IN_R"});
     proc_mod_lookahead_limiter = new ProcModLookaheadLimiter("LOOKAHEAD_LIMITER", f_samp, n_channels, n_samp);
-    proc_mod_lookahead_limiter->init(core_config, proc_mod_5b_compressor, chan_map);
+    proc_mod_lookahead_limiter->init(core_config, proc_mod_5b_compressor, chan_map_ll);
     core_stack->add_module(proc_mod_lookahead_limiter);
     
-    chan_map = new ChannelMap();
+    ChannelMap* chan_map = new ChannelMap();
     chan_map->the_map.push_back(CHANNEL_MAP_ELEMENT {0, 0, "IN_L"});
     chan_map->the_map.push_back(CHANNEL_MAP_ELEMENT {1, 1, "IN_R"});
     proc_mod_clipper = new ProcModClipper("CLIPPER", f_samp, n_channels, n_samp);
@@ -169,19 +169,7 @@ void ProcessorCore::process(float* in_L, float* in_R, float* out_L, float* out_R
     }
     
     core_stack->process(in_L, in_R, out_L, out_R, n_samp);
-    //proc_mod_gain_main_in->update_in_buf_ref(0, in_L);
-    //proc_mod_gain_main_in->update_in_buf_ref(1, in_R);
     
-    //proc_mod_5b_compressor->update_out_buf_ref(0, out_L);
-    //proc_mod_5b_compressor->update_out_buf_ref(1, out_R);
-    
-    //proc_mod_gain_main_in->process();
-    //proc_mod_level_main_in->process();
-    //proc_mod_stereo_enhance->process();
-    //proc_mod_2band_agc->process();
-    //proc_mod_hf_enhance->process();
-    //proc_mod_5b_crossover->process();
-    //proc_mod_5b_compressor->process();
 }
 
 void ProcessorCore::get_main_in_levels(float* lrms, float* rrms, float* lpeak, float* rpeak) {
@@ -225,7 +213,7 @@ float ProcessorCore::get_stereo_enhance_drive() {
 }
 
 void ProcessorCore::set_stereo_enhance_drive(float _drive) {
-    proc_mod_stereo_enhance->configure(_drive);
+    proc_mod_stereo_enhance->configure();
     core_config->set_stereo_enhance_drive(_drive);
 }
 
